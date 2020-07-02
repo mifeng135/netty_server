@@ -1,0 +1,9 @@
+gate/WebRoot/WEB-INF/classes/
+login/WebRoot/WEB-INF/classes/
+db/WebRoot/WEB-INF/classes/
+
+login/jarPack/login.jar
+gate/jarPack/gate.jar
+login_server/WebRoot/WEB-INF/classes/
+gate_server/WebRoot/WEB-INF/classes/
+login_server/package/login_server.jar
