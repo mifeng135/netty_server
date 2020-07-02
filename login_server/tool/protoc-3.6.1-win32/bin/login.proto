@@ -1,0 +1,14 @@
+syntax = "proto3";
+option java_package = "com.game.login.proto"; 
+option java_outer_classname = "LoginMsg";
+
+message loginR {
+    string account = 1;
+    string password = 2;
+}
+
+message loginS {
+	int32 ret = 1;
+	int32 playerIndex = 2;
+	string ip = 3;
+}
