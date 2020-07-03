@@ -20,7 +20,7 @@ public class GateServerHandler extends ServerHandler {
 
     @Override
     public boolean swallowDispatchMsg(ChannelHandlerContext context, MsgBean msgBean) {
-        if (msgBean.getCmd() == MsgCmdConstant.MSG_CMD_LOGIN_TO_GATE) {
+        if (msgBean.getCmd() == MsgCmdConstant.MSG_CMD_LOGIN_TO_GATE_R) {
             try {
                 LoginMsg.loginToGateR loginToGateR = LoginMsg.loginToGateR.parseFrom(msgBean.getData());
                 int playerIndex = loginToGateR.getPlayerIndex();

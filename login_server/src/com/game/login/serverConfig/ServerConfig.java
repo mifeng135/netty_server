@@ -11,7 +11,6 @@ public class ServerConfig {
 
     public static final String SERVER_PACKAGE = "com.game.login";
 
-
     public static final String HTTP_SERVER_IP = "192.168.1.217";
 
     public static final int HTTP_PORT = 8000;

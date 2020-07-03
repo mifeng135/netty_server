@@ -21,6 +21,6 @@ public class SendToDB extends SocketSend {
     }
     @Override
     protected String getSocketIp() {
-        return ServerConfig.SEND_FROM_GATE_1;
+        return ServerConfig.SEND_TO_GATE_1;
     }
 }

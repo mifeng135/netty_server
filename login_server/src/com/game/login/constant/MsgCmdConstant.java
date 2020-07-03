@@ -13,6 +13,6 @@ public class MsgCmdConstant {
 
     public static final int MSG_CMD_LOGIN_S = 1002;
 
-    public static final int MSG_CMD_LINK_SYN_R = 2001;
+    public static final int MSG_CMD_LINK_SYN_R = 100;
 
 }

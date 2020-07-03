@@ -11,7 +11,7 @@ public class ReceiveFromDB extends SocketReceive {
 
     @Override
     protected String getSocketIp() {
-        return ServerConfig.RECEIVE_TO_GATE_1;
+        return ServerConfig.RECEIVE_FROM_GATE_1;
     }
 
     @Override

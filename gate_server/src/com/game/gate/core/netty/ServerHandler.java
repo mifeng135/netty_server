@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  * Created by Administrator on 2020/5/28.
  */
 
-public abstract class ServerHandler extends ChannelHandlerAdapter {
+public abstract class ServerHandler extends ChannelInboundHandlerAdapter {
 
     private static Logger logger = Logger.getLogger(ServerHandler.class);
 
@@ -94,38 +94,38 @@ public abstract class ServerHandler extends ChannelHandlerAdapter {
     }
 
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req) {
-        if (!req.getDecoderResult().isSuccess()) {
+        if (!req.decoderResult().isSuccess()) {
             sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
             return;
         }
-        if (req.getMethod() != HttpMethod.GET) {
+        if (req.method() != HttpMethod.GET) {
             sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.FORBIDDEN));
             return;
         }
         WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(getWebSocketLocation(req), null, true, 5 * 1024 * 1024);
         handShaker = wsFactory.newHandshaker(req);
         if (handShaker == null) {
-            WebSocketServerHandshakerFactory.sendUnsupportedWebSocketVersionResponse(ctx.channel());
+            WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
         } else {
             handShaker.handshake(ctx.channel(), req);
         }
     }
 
     private void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, FullHttpResponse res) {
-        if (res.getStatus().code() != HttpResponseStatus.OK.code()) {
-            ByteBuf buf = Unpooled.copiedBuffer(res.getStatus().toString(), CharsetUtil.UTF_8);
+        if (res.status().code() != HttpResponseStatus.OK.code()) {
+            ByteBuf buf = Unpooled.copiedBuffer(res.status().toString(), CharsetUtil.UTF_8);
             res.content().writeBytes(buf);
             buf.release();
-            HttpHeaders.setContentLength(res, res.content().readableBytes());
+            HttpUtil.setContentLength(res, res.content().readableBytes());
         }
         ChannelFuture f = ctx.channel().writeAndFlush(res);
-        if (!HttpHeaders.isKeepAlive(req) || res.getStatus().code() != HttpResponseStatus.OK.code()) {
+        if (!HttpUtil.isKeepAlive(req) || res.status().code() != HttpResponseStatus.OK.code()) {
             f.addListener(ChannelFutureListener.CLOSE);
         }
     }
 
     private String getWebSocketLocation(FullHttpRequest req) {
-        String location = req.headers().get(HttpHeaders.Names.HOST) + "/websocket";
+        String location = req.headers().get("Host") + "/websocket";
         return "ws://" + location;
     }
 

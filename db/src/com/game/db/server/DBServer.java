@@ -23,5 +23,7 @@ public class DBServer {
         new DBEventGroup(DBEventHandler.class, 2);
         SendToGate1.getInstance().start();
         new ReceiveFromGate1().start();
+
+        System.out.println("db start success");
     }
 }
