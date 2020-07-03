@@ -48,7 +48,6 @@ public abstract class NettyServer {
                 .childOption(ChannelOption.SO_KEEPALIVE, Configs.TCP_SO_KEEP_ALIVE_DEFAULT)
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 
-        doInitWriteBufferWaterMark();
         mServerBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
             @Override
             protected void initChannel(SocketChannel channel) throws Exception {
@@ -65,12 +64,6 @@ public abstract class NettyServer {
         doStart();
     }
 
-    private void doInitWriteBufferWaterMark() {
-        if (Configs.NETTY_BUFFER_HIGH_WATERMARK_DEFAULT > Configs.NETTY_BUFFER_LOW_WATERMARK_DEFAULT) {
-            mServerBootstrap.childOption(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK, Configs.NETTY_BUFFER_HIGH_WATERMARK_DEFAULT)
-                    .childOption(ChannelOption.WRITE_BUFFER_LOW_WATER_MARK, Configs.NETTY_BUFFER_LOW_WATERMARK_DEFAULT);
-        }
-    }
 
     /**
      * start server server

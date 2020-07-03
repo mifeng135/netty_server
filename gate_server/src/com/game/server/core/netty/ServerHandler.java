@@ -70,6 +70,7 @@ public abstract class ServerHandler extends ChannelInboundHandlerAdapter {
         if (evt instanceof IdleStateHandler) {
             ctx.close();
             ConnectionManager.mfdChannelGroup.remove(ctx.channel().attr(Configs.PLAYER_INDEX).get());
+            channelClose(ctx);
         } else {
             super.userEventTriggered(ctx, evt);
         }
@@ -85,6 +86,7 @@ public abstract class ServerHandler extends ChannelInboundHandlerAdapter {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
         ConnectionManager.mfdChannelGroup.remove(ctx.channel().attr(Configs.PLAYER_INDEX).get());
+        channelClose(ctx);
     }
 
     @Override
@@ -132,4 +134,7 @@ public abstract class ServerHandler extends ChannelInboundHandlerAdapter {
     public abstract boolean swallowDispatchMsg(ChannelHandlerContext context, MsgBean msgBean);
 
     public abstract void dispatchMsg(MsgBean msgBean);
+
+    public abstract void channelClose(ChannelHandlerContext context);
+
 }

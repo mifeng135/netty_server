@@ -5,13 +5,13 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Administrator on 2020/7/3.
  */
-public class RoomManger {
+public class RoomManager {
 
     private static class DefaultInstance {
-        static final RoomManger INSTANCE = new RoomManger();
+        static final RoomManager INSTANCE = new RoomManager();
     }
 
-    public static RoomManger getInstance() {
+    public static RoomManager getInstance() {
         return DefaultInstance.INSTANCE;
     }
 
@@ -23,6 +23,10 @@ public class RoomManger {
 
     public Room removeRoom(int roomId) {
         return gameRoom.remove(roomId);
+    }
+
+    public ConcurrentHashMap getGameRoom() {
+        return gameRoom;
     }
 
 }

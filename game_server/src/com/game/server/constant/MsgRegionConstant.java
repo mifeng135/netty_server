@@ -5,5 +5,8 @@ package com.game.server.constant;
  */
 public class MsgRegionConstant {
 
-    public static final String MSG_REGION_DB = "DB";
+
+    public static final String MSG_REGION_ROOM = "ROOM";
+
+    public static final String MSG_REGION_GAME = "GAME";
 }

@@ -1,0 +1,24 @@
+syntax = "proto3";
+option java_package = "com.game.server.proto"; 
+option java_outer_classname = "RoomMsg";
+
+message createRoomR {
+
+}
+
+message createRoomS {
+	int32 ret = 1;
+}
+
+message joinRoomR {
+	
+}
+
+message joinRoomS {
+	int32 ret = 1;
+}
+
+message playerLeftS {
+	int32 leftId = 1;
+}
+

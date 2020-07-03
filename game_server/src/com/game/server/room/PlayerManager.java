@@ -25,4 +25,10 @@ public class PlayerManager {
     public Player removePlayer(int id) {
         return playerMap.remove(id);
     }
+
+
+    public Player getPlayer(int id) {
+        return playerMap.get(id);
+    }
+
 }

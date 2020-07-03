@@ -32,5 +32,5 @@ public class Configs {
 
     public static final AttributeKey<Integer> PLAYER_INDEX =  AttributeKey.valueOf("PLAYER_INDEX");
 
-    public static final String SERVER_PACKAGE_NAME = "com.server.server";
+    public static final String SERVER_PACKAGE_NAME = "com.game.server";
 }

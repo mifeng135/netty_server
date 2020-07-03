@@ -5,10 +5,10 @@ package com.game.server.constant;
  */
 public class Constant {
 
-    public static final String MESSAGE_REGION_LOGIN = "LOGIN";
-
-
-
     public static final String REDIS_PLAYER_KEY = "PLAYER";
+
+
+    public static final int GAME_STATE_WAIT = 1;
+    public static final int GAME_STATE_PLAYING = 2;
 
 }

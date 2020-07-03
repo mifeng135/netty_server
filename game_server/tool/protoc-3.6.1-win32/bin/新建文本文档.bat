@@ -1,1 +1,1 @@
-protoc --java_out=out linksyn.proto login.proto
+protoc --java_out=out game.proto room.proto
