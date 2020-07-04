@@ -1,9 +1,0 @@
-syntax = "proto3";
-option java_package = "com.game.login.proto"; 
-option java_outer_classname = "LinkSynMsg";
-
-message linkSynR {
-    string ip = 1;
-	int32 connectCount = 2;
-}
-

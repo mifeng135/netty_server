@@ -7,10 +7,12 @@ import com.game.server.core.annotation.CtrlCmd;
 import com.game.server.core.annotation.Ctrl;
 import com.game.server.core.annotation.SqlAnnotation;
 import com.game.server.core.msg.MsgUtil;
+import com.game.server.core.proto.ProtoUtil;
 import com.game.server.core.redis.RedisManager;
 import com.game.server.bean.PlayerBean;
 import com.game.server.manager.LinkSynManager;
-import com.game.server.proto.LoginMsg;
+import com.game.server.proto.ProtoLoginR;
+import com.game.server.proto.ProtoLoginS;
 import io.netty.channel.ChannelHandlerContext;
 import org.redisson.api.RMap;
 
@@ -23,8 +25,8 @@ public class LoginController {
 
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_LOGIN_R)
     public void login(ChannelHandlerContext context, byte[] data) throws Exception {
-        LoginMsg.loginR loginR = LoginMsg.loginR.parseFrom(data);
 
+        ProtoLoginR loginR = ProtoUtil.deserializer(data, ProtoLoginR.class);
         String account = loginR.getAccount();
         String password = loginR.getPassword();
 
@@ -42,23 +44,23 @@ public class LoginController {
                 RMap playerMap = RedisManager.getInstance().getRedisSon().getMap(RedisConstant.REDIS_PLAYER_KYE);
                 playerBean = result;
                 map.fastPutIfAbsent(result.getAccount(), result);
-                playerMap.fastPutIfAbsent(result.getId(),result);
+                playerMap.fastPutIfAbsent(result.getId(), result);
                 loginSuc = true;
             }
         } else {
             loginSuc = true;
         }
 
-        LoginMsg.loginS.Builder loginS = LoginMsg.loginS.newBuilder();
+        ProtoLoginS loginS = new ProtoLoginS();
         if (loginSuc) {
-            loginS.setRet(MsgCmdConstant.MSG_RET_CODE_SUCCESS);
+            loginS.setRet(-1);
             String ip = LinkSynManager.getInstance().getMinLinkCountIp();
             loginS.setIp(ip);
             loginS.setPlayerIndex(playerBean.getId());
         } else {
             loginS.setRet(-1);
         }
-        MsgUtil.sendMsg(context, MsgCmdConstant.MSG_CMD_LOGIN_S, loginS.build().toByteArray());
+        MsgUtil.sendMsg(context, MsgCmdConstant.MSG_CMD_LOGIN_S, ProtoUtil.serialize(loginS));
     }
 }
 
