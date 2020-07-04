@@ -6,8 +6,11 @@ import com.game.server.constant.MsgCmdConstant;
 import com.game.server.core.annotation.Ctrl;
 import com.game.server.core.annotation.CtrlCmd;
 import com.game.server.core.msg.MsgBean;
+import com.game.server.core.proto.ProtoUtil;
 import com.game.server.core.redis.RedisManager;
-import com.game.server.proto.RoomMsg;
+import com.game.server.proto.ProtoCreateRoomS;
+import com.game.server.proto.ProtoJoinRoomS;
+import com.game.server.proto.ProtoPlayerLeftS;
 import com.game.server.room.Player;
 import com.game.server.room.PlayerManager;
 import com.game.server.room.Room;
@@ -35,13 +38,15 @@ public class RoomController {
      */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_CREATE_ROOM_R)
     public void createRoom(int id, byte[] data) {
-        RoomMsg.createRoomS.Builder createRoomS = RoomMsg.createRoomS.newBuilder();
+
+        ProtoCreateRoomS protoCreateRoomS = new ProtoCreateRoomS();
+
         if (PlayerManager.getInstance().getPlayer(id) != null) {
-            createRoomS.setRet(-1);
+            protoCreateRoomS.setRet(-1);
             MsgBean msgBean = new MsgBean();
             msgBean.setId(id);
             msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_CREATE_ROOM_S);
-            msgBean.setData(createRoomS.build().toByteArray());
+            msgBean.setData(ProtoUtil.serialize(protoCreateRoomS));
             SendToGate.getInstance().pushSendMsg(msgBean);
             return;
         }
@@ -62,12 +67,12 @@ public class RoomController {
 
         PlayerManager.getInstance().putPlayer(player);
 
-        createRoomS.setRet(0);
+        protoCreateRoomS.setRet(0);
 
         MsgBean msgBean = new MsgBean();
         msgBean.setId(id);
         msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_CREATE_ROOM_S);
-        msgBean.setData(createRoomS.build().toByteArray());
+        msgBean.setData(ProtoUtil.serialize(protoCreateRoomS));
         SendToGate.getInstance().pushSendMsg(msgBean);
     }
 
@@ -87,8 +92,7 @@ public class RoomController {
         }
         Room room = this.findWaitJoinRoom();
 
-
-        RoomMsg.joinRoomS.Builder joinRoomS = RoomMsg.joinRoomS.newBuilder();
+        ProtoJoinRoomS joinRoomS = new ProtoJoinRoomS();
         if (room != null) {
             joinRoomS.setRet(0);
             room.addPlayer(player);
@@ -98,7 +102,7 @@ public class RoomController {
         MsgBean msgBean = new MsgBean();
         msgBean.setId(id);
         msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_JOIN_ROOM_S);
-        msgBean.setData(joinRoomS.build().toByteArray());
+        msgBean.setData(ProtoUtil.serialize(joinRoomS));
         SendToGate.getInstance().pushSendMsg(msgBean);
     }
 
@@ -114,17 +118,16 @@ public class RoomController {
         Room room = RoomManager.getInstance().removeRoom(roomId);
         List<Player> players = room.getRoomPlayer();
 
-        RoomMsg.playerLeftS.Builder playerLeftS = RoomMsg.playerLeftS.newBuilder();
-        playerLeftS.setLeftId(id);
-        byte[] leftData = playerLeftS.build().toByteArray();
 
+        ProtoPlayerLeftS playerLeftS = new ProtoPlayerLeftS();
+        playerLeftS.setLeftId(id);
         MsgBean msgBean = new MsgBean();
 
         for (int i = 0; i < players.size(); i++) {
             Player pl = players.get(i);
             msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_PLAYER_LEFT_ROOM_S);
             msgBean.setId(pl.getId());
-            msgBean.setData(leftData);
+            msgBean.setData(ProtoUtil.serialize(playerLeftS));
             SendToGate.getInstance().pushSendMsg(msgBean);
         }
     }

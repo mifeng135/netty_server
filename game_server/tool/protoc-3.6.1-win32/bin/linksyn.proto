@@ -1,9 +1,0 @@
-syntax = "proto3";
-option java_package = "com.game.server.proto"; 
-option java_outer_classname = "LinkSynMsg";
-
-
-message linkStateR {
-	int32 id = 1; // 玩家id
-	int32 state = 2; // 玩家链接状态 0掉线
-}

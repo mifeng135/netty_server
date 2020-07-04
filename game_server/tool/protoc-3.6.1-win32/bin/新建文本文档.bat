@@ -1,1 +1,0 @@
-protoc --java_out=out game.proto room.proto
