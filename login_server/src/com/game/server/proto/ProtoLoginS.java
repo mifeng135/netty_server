@@ -1,8 +1,6 @@
 package com.game.server.proto;
 
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2020/7/4.
@@ -11,8 +9,9 @@ import java.util.List;
 
 public class ProtoLoginS {
     private int ret;
-    private int playerIndex;
     private String ip;
+    private int playerIndex;
+    private String name;
 
     public int getRet() {
         return ret;
@@ -37,5 +36,15 @@ public class ProtoLoginS {
     public void setIp(String ip) {
         this.ip = ip;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 }
 

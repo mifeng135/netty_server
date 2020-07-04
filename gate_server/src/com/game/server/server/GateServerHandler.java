@@ -25,15 +25,15 @@ public class GateServerHandler extends ServerHandler {
     public boolean swallowDispatchMsg(ChannelHandlerContext context, MsgBean msgBean) {
         if (msgBean.getCmd() == MsgCmdConstant.MSG_CMD_LOGIN_TO_GATE_R) {
             try {
-                ProtoLoginR protoLoginR = ProtoUtil.deserializer(msgBean.getData(),ProtoLoginR.class);
-                int playerIndex = protoLoginR.getPlayerIndex();
-                context.channel().attr(Configs.PLAYER_INDEX).setIfAbsent(playerIndex);
+                ProtoLoginR protoLoginR = ProtoUtil.deserializer(msgBean.getData(), ProtoLoginR.class);
+                int playerId = protoLoginR.getPlayerId();
+                context.channel().attr(Configs.PLAYER_INDEX).setIfAbsent(playerId);
 
-                Channel oldChannel = ConnectionManager.getChannelById(playerIndex);
+                Channel oldChannel = ConnectionManager.getChannelById(playerId);
                 if (oldChannel != null) {
-                    ConnectionManager.mfdChannelGroup.remove(playerIndex);
+                    ConnectionManager.mfdChannelGroup.remove(playerId);
                 }
-                ConnectionManager.mfdChannelGroup.putIfAbsent(playerIndex, context.channel().id());
+                ConnectionManager.mfdChannelGroup.putIfAbsent(playerId, context.channel().id());
             } catch (Exception e) {
                 e.printStackTrace();
             }

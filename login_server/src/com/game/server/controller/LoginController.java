@@ -13,6 +13,7 @@ import com.game.server.bean.PlayerBean;
 import com.game.server.manager.LinkSynManager;
 import com.game.server.proto.ProtoLoginR;
 import com.game.server.proto.ProtoLoginS;
+import com.game.server.proto.ProtoPlayerInfo;
 import io.netty.channel.ChannelHandlerContext;
 import org.redisson.api.RMap;
 
@@ -52,11 +53,13 @@ public class LoginController {
         }
 
         ProtoLoginS loginS = new ProtoLoginS();
+
         if (loginSuc) {
             loginS.setRet(0);
             String ip = LinkSynManager.getInstance().getMinLinkCountIp();
             loginS.setIp(ip);
             loginS.setPlayerIndex(playerBean.getId());
+            loginS.setName(playerBean.getName());
         } else {
             loginS.setRet(-1);
         }
