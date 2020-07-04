@@ -1,8 +1,0 @@
-syntax = "proto3";
-option java_package = "com.game.gate.proto"; 
-option java_outer_classname = "LoginMsg";
-
-message loginToGateR {
-	int32 playerIndex = 1;
-}
-

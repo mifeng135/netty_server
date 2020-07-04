@@ -5,8 +5,9 @@ import com.game.server.core.config.Configs;
 import com.game.server.core.connect.ConnectionManager;
 import com.game.server.core.msg.MsgBean;
 import com.game.server.core.netty.ServerHandler;
-import com.game.server.proto.LinkSynMsg;
-import com.game.server.proto.LoginMsg;
+import com.game.server.core.proto.ProtoUtil;
+import com.game.server.proto.ProtoLinkStateS;
+import com.game.server.proto.ProtoLoginR;
 import com.game.server.socket.login.SendToDB;
 import com.game.server.socket.login.SendToGame;
 import io.netty.channel.Channel;
@@ -24,8 +25,8 @@ public class GateServerHandler extends ServerHandler {
     public boolean swallowDispatchMsg(ChannelHandlerContext context, MsgBean msgBean) {
         if (msgBean.getCmd() == MsgCmdConstant.MSG_CMD_LOGIN_TO_GATE_R) {
             try {
-                LoginMsg.loginToGateR loginToGateR = LoginMsg.loginToGateR.parseFrom(msgBean.getData());
-                int playerIndex = loginToGateR.getPlayerIndex();
+                ProtoLoginR protoLoginR = ProtoUtil.deserializer(msgBean.getData(),ProtoLoginR.class);
+                int playerIndex = protoLoginR.getPlayerIndex();
                 context.channel().attr(Configs.PLAYER_INDEX).setIfAbsent(playerIndex);
 
                 Channel oldChannel = ConnectionManager.getChannelById(playerIndex);
@@ -53,10 +54,12 @@ public class GateServerHandler extends ServerHandler {
     @Override
     public void channelClose(ChannelHandlerContext context) {
         int id = context.channel().attr(Configs.PLAYER_INDEX).get();
-        LinkSynMsg.linkState.Builder linkState = LinkSynMsg.linkState.newBuilder();
+
+        ProtoLinkStateS protoLinkStateS = new ProtoLinkStateS();
+        protoLinkStateS.setState(0);
         MsgBean msgBean = new MsgBean();
         msgBean.setId(id);
-        msgBean.setData(linkState.build().toByteArray());
+        msgBean.setData(ProtoUtil.serialize(protoLinkStateS));
         msgBean.setCmd(MsgCmdConstant.MSG_CMD_SERVER_LINK_STATE);
         SendToGame.getInstance().pushSendMsg(msgBean);
     }

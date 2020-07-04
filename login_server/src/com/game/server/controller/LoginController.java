@@ -53,7 +53,7 @@ public class LoginController {
 
         ProtoLoginS loginS = new ProtoLoginS();
         if (loginSuc) {
-            loginS.setRet(-1);
+            loginS.setRet(1);
             String ip = LinkSynManager.getInstance().getMinLinkCountIp();
             loginS.setIp(ip);
             loginS.setPlayerIndex(playerBean.getId());

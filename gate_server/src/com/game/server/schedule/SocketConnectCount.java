@@ -4,7 +4,8 @@ package com.game.server.schedule;
 import com.game.server.constant.MsgCmdConstant;
 import com.game.server.core.connect.ConnectionManager;
 import com.game.server.core.msg.MsgBean;
-import com.game.server.proto.LinkSynMsg;
+import com.game.server.core.proto.ProtoUtil;
+import com.game.server.proto.ProtoLinkSynS;
 import com.game.server.serverConfig.ServerConfig;
 import com.game.server.socket.login.SendToLogin;
 
@@ -25,14 +26,13 @@ public class SocketConnectCount {
             public void run() {
                 int size = ConnectionManager.getConnectSize();
 
-                LinkSynMsg.linkSynS.Builder linkSynS = LinkSynMsg.linkSynS.newBuilder();
-                linkSynS.setIp(ServerConfig.SERVER_IP + ":" + ServerConfig.SERVER_PORT);
-                linkSynS.setConnectCount(size);
-                byte[] data = linkSynS.build().toByteArray();
+                ProtoLinkSynS protoLinkSynS = new ProtoLinkSynS();
+                protoLinkSynS.setIp(ServerConfig.SERVER_IP + ":" + ServerConfig.SERVER_PORT);
+                protoLinkSynS.setConnectCount(size);
 
                 MsgBean msgBean = new MsgBean();
                 msgBean.setCmd(MsgCmdConstant.MSG_CMD_LINK_SYN_S);
-                msgBean.setData(data);
+                msgBean.setData(ProtoUtil.serialize(protoLinkSynS));
                 SendToLogin.getInstance().pushSendMsg(msgBean);
             }
         }, 0, 30, TimeUnit.SECONDS);
