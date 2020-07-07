@@ -15,20 +15,13 @@ import java.util.List;
  */
 public interface PlayerMapper {
 
-    @SqlCmd(sqlCmd = 4444, sqlType = SqlConstant.SELECT_ONE)
-    @Select("select * from t_player where player_index = #{playerIndex}")
-    public PlayerBean findPlayerByIndex(@Param("playerIndex") int playerIndex);
-
-
-    @SqlCmd(sqlCmd = 5555, sqlType = SqlConstant.SELECT_LIST)
-    @Select("select * from t_player")
-    public List<PlayerBean> findAll();
-
-    @SqlCmd(sqlCmd = 6666, sqlType = SqlConstant.UPDATE)
-    @Update("update t_player set platform_type = #{platform_type} where player_index = #{player_index}")
-    public void updatePlayerPlatformTypeByIndex(PlayerBean playerBean);
-
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_SELECT_ACCOUNT_PASSWORD, sqlType = SqlConstant.SELECT_ONE)
     @Select("select * from game_player where account = #{account} and password = #{password}")
     public PlayerBean findPlayerWithAccountAndPassword(PlayerBean playerBean);
+
+
+    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_UPDATE_LOGIN_INFO, sqlType = SqlConstant.UPDATE)
+    @Update("update game_player set loginIp = #{loginIp},lastLoginTime = #{lastLoginTime} where id = #{id}")
+    public void updatePlayerInfo(PlayerBean playerBean);
+
 }

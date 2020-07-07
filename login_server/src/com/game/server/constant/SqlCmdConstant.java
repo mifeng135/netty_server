@@ -10,4 +10,5 @@ public class SqlCmdConstant {
 
 
     public static final int PLAYER_SELECT_ACCOUNT_PASSWORD = 1;
+    public static final int PLAYER_UPDATE_LOGIN_INFO = 2;
 }

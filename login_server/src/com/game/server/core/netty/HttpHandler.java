@@ -1,5 +1,6 @@
 package com.game.server.core.netty;
 
+import com.game.server.core.config.Configs;
 import com.game.server.core.msg.MsgBean;
 import com.game.server.eventGroup.EventDispatch;
 import io.netty.buffer.ByteBuf;
@@ -9,6 +10,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
 
+import java.net.InetSocketAddress;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -17,7 +19,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @ChannelHandler.Sharable
 public class HttpHandler extends ChannelInboundHandlerAdapter {
-
 
     private static AtomicInteger fd = new AtomicInteger(0);
 
@@ -44,6 +45,14 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
         } finally {
             request.release();
         }
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        ctx.fireChannelActive();
+        InetSocketAddress address = (InetSocketAddress) ctx.channel().remoteAddress();
+        String ip = address.getAddress().getHostAddress();
+        ctx.channel().attr(Configs.REMOTE_ADDRESS).setIfAbsent(ip);
     }
 
     private void send(ChannelHandlerContext ctx, ByteBuf buf) {

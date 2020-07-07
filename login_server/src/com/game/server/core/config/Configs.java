@@ -34,5 +34,8 @@ public class Configs {
 
     public static final AttributeKey<Integer> SOCKET_FD = AttributeKey.valueOf("SOCKET_FD");
 
+    public static final AttributeKey<String> REMOTE_ADDRESS =  AttributeKey.valueOf("REMOTE_ADDRESS");
+
+
     public static final String SERVER_PACKAGE_NAME = "com.game.gate";
 }

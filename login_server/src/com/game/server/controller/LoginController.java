@@ -6,14 +6,17 @@ import com.game.server.constant.SqlCmdConstant;
 import com.game.server.core.annotation.CtrlCmd;
 import com.game.server.core.annotation.Ctrl;
 import com.game.server.core.annotation.SqlAnnotation;
+import com.game.server.core.config.Configs;
 import com.game.server.core.msg.MsgUtil;
 import com.game.server.core.proto.ProtoUtil;
 import com.game.server.core.redis.RedisManager;
 import com.game.server.bean.PlayerBean;
+import com.game.server.core.sql.MysqlBatchHandle;
+import com.game.server.core.sql.MysqlBean;
+import com.game.server.core.util.TimeUtil;
 import com.game.server.manager.LinkSynManager;
 import com.game.server.proto.ProtoLoginR;
 import com.game.server.proto.ProtoLoginS;
-import com.game.server.proto.ProtoPlayerInfo;
 import io.netty.channel.ChannelHandlerContext;
 import org.redisson.api.RMap;
 
@@ -31,10 +34,17 @@ public class LoginController {
         String account = loginR.getAccount();
         String password = loginR.getPassword();
 
-        boolean loginSuc = false;
 
-        RMap map = RedisManager.getInstance().getRedisSon().getMap(RedisConstant.REDIS_LOGIN_KEY);
-        PlayerBean playerBean = (PlayerBean) map.get(account);
+        RMap<String, PlayerBean> loginMap = RedisManager.getInstance().getRedisSon().getMap(RedisConstant.REDIS_LOGIN_KEY);
+        RMap<Integer, PlayerBean> playerMap = RedisManager.getInstance().getRedisSon().getMap(RedisConstant.REDIS_PLAYER_KYE);
+
+
+        PlayerBean playerBean = loginMap.get(account);
+
+        int loginTime = TimeUtil.getCurrentTimeSecond();
+        String loginIp = context.channel().attr(Configs.REMOTE_ADDRESS).get();
+
+        boolean loginSuc = false;
 
         if (playerBean == null) {
             playerBean = new PlayerBean();
@@ -42,15 +52,24 @@ public class LoginController {
             playerBean.setPassword(password);
             PlayerBean result = (PlayerBean) SqlAnnotation.getInstance().executeSelectSql(SqlCmdConstant.PLAYER_SELECT_ACCOUNT_PASSWORD, playerBean);
             if (result != null) {
-                RMap playerMap = RedisManager.getInstance().getRedisSon().getMap(RedisConstant.REDIS_PLAYER_KYE);
                 playerBean = result;
-                map.fastPutIfAbsent(result.getAccount(), result);
-                playerMap.fastPutIfAbsent(result.getId(), result);
                 loginSuc = true;
             }
-        } else {
+        } else if (playerBean.getPassword().equals(password)) {
             loginSuc = true;
         }
+
+        if (loginSuc) {
+            playerBean.setLoginIp(loginIp);
+            playerBean.setLastLoginTime(loginTime);
+            loginMap.fastPut(playerBean.getAccount(), playerBean);
+            playerMap.fastPut(playerBean.getId(), playerBean);
+        }
+
+        MysqlBean sqlBean = new MysqlBean();
+        sqlBean.setCmd(SqlCmdConstant.PLAYER_UPDATE_LOGIN_INFO);
+        sqlBean.setData(playerBean);
+        MysqlBatchHandle.getInstance().pushMsg(sqlBean);
 
         ProtoLoginS loginS = new ProtoLoginS();
 
