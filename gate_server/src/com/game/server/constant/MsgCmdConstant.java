@@ -5,20 +5,14 @@ package com.game.server.constant;
  */
 public class MsgCmdConstant {
 
-    /**
-     * 发送登录消息
-     */
+    /**发送登录消息*/
     public static final int MSG_CMD_LOGIN_TO_GATE_R = 1;
     public static final int MSG_CMD_SERVER_LINK_STATE = 2;
 
-    /**
-     * 同步连接数 发送
-     */
-
+    /**同步连接数 发送给登录服*/
     public static final int MSG_CMD_LINK_SYN_S = 100;
-
-
-
+    /** 顶号*/
+    public static final int MSG_CMD_REPLACE_ACCOUNT_S = 101;
 
     public static final int MSG_CMD_DB_BEGIN = 3000;
     public static final int MSG_CMD_DB_PLAYER_INFO_R = 3001;

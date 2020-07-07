@@ -65,7 +65,7 @@ public class MsgBean {
         buf.release();
     }
 
-    public ByteBuf packClienMsg() {
+    public ByteBuf packClientMsg() {
         ByteBuf buf = Unpooled.buffer(8 + dataLength);
         buf.writeInt(cmd);
         buf.writeInt(dataLength);

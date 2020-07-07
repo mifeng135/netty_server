@@ -11,6 +11,6 @@ public class GameEventHandler implements EventHandler {
 
     @Override
     public void onEvent(MsgBean msgBean) {
-        ConnectionManager.send2ClientByFD(msgBean.getId(), msgBean.packClienMsg());
+        ConnectionManager.send2ClientByFD(msgBean.getId(), msgBean.packClientMsg());
     }
 }

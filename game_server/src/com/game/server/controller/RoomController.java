@@ -53,12 +53,14 @@ public class RoomController {
 
         RMap map = RedisManager.getInstance().getRedisSon().getMap(Constant.REDIS_PLAYER_KEY);
         PlayerBean bean = (PlayerBean) map.get(id);
+        int roomId = generatorRoomId();
+
         Player player = new Player();
         player.setId(id);
+        player.setRoomId(roomId);
         if (bean != null) {
             player.setName(bean.getName());
         }
-        int roomId = generatorRoomId();
         Room room = new Room();
         room.setRoomId(roomId);
 
@@ -91,9 +93,9 @@ public class RoomController {
             player.setName(bean.getName());
         }
         Room room = this.findWaitJoinRoom();
-
         ProtoJoinRoomS joinRoomS = new ProtoJoinRoomS();
         if (room != null) {
+            player.setRoomId(room.getRoomId());
             joinRoomS.setRet(0);
             room.addPlayer(player);
         }else {

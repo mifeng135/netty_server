@@ -10,6 +10,6 @@ import com.game.server.core.msg.MsgBean;
 public class DBEventHandler implements EventHandler {
     @Override
     public void onEvent(MsgBean msgBean) {
-        ConnectionManager.send2ClientByFD(msgBean.getId(), msgBean.packClienMsg());
+        ConnectionManager.send2ClientByFD(msgBean.getId(), msgBean.packClientMsg());
     }
 }

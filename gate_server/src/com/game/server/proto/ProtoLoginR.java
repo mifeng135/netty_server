@@ -13,7 +13,4 @@ public class ProtoLoginR {
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
-
-
-
 }
