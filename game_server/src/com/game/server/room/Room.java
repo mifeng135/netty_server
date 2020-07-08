@@ -1,15 +1,17 @@
 package com.game.server.room;
 
-import java.util.ArrayList;
+import com.game.server.constant.Constant;
+
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Administrator on 2020/7/3.
  */
 public class Room {
 
-    private int gameState = -1;
-    private List<Player> roomPlayer = new ArrayList<>();
+    private int gameState = Constant.GAME_STATE_WAIT;
+    private List<Player> roomPlayer = new CopyOnWriteArrayList<>();
     private int roomId;
 
     private int maxPlayer = 2;
@@ -34,6 +36,14 @@ public class Room {
         roomPlayer.add(player);
     }
 
+    public void removePlyaer(int playerId) {
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            if (roomPlayer.get(i).getId() == playerId) {
+                roomPlayer.remove(i);
+                break;
+            }
+        }
+    }
     public int getRoomId() {
         return roomId;
     }
@@ -45,4 +55,23 @@ public class Room {
     public boolean getFull() {
         return roomPlayer.size() >= maxPlayer;
     }
+
+    public void updatePlayerReadyState(int id,int state) {
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            if (roomPlayer.get(i).getId() == id) {
+                roomPlayer.get(i).setReady(state);
+                break;
+            }
+        }
+    }
+
+    public boolean getPlayerAllReady() {
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            if (roomPlayer.get(i).getReady() != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

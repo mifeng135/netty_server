@@ -48,17 +48,26 @@ public abstract class SocketReceive extends Thread {
         }
     }
 
-    private void dispatch(byte[] data) {
+    protected int getSectionId(MsgBean bean) {
+        return bean.getId();
+    }
 
+    protected boolean swallowDispatchMsg(MsgBean bean) {
+        return false;
+    }
+
+    private void dispatch(byte[] data) {
         MsgBean msgBean = new MsgBean();
         msgBean.serializeMsg(data);
-
+        if (swallowDispatchMsg(msgBean)) {
+            return;
+        }
         String regionString = getRegionString(msgBean.getCmd());
         if (regionString != null) {
             MessageGroup messageGroup = MessageDispatchRegion.getInstance().getMessageGroupByTag(regionString);
             String prefix = messageGroup.getPrefix();
             int count = messageGroup.getCount();
-            String section = prefix + msgBean.getId() % count;
+            String section = prefix + getSectionId(msgBean) % count;
             messageGroup.pushMessageWithTag(section, msgBean);
         }
     }

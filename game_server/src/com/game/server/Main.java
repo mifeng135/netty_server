@@ -10,5 +10,6 @@ public class Main {
 
     public static void main(String[] arg) {
         new GameServer().start();
+        System.out.println("game_server success");
     }
 }

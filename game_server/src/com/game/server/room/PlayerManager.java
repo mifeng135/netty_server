@@ -17,7 +17,6 @@ public class PlayerManager {
 
     private ConcurrentHashMap<Integer,Player> playerMap = new ConcurrentHashMap<>();
 
-
     public void putPlayer(Player player) {
         playerMap.putIfAbsent(player.getId(),player);
     }

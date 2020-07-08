@@ -40,7 +40,7 @@ public abstract class SocketSend extends Thread {
                 mSocket.send(buf.array());
                 buf.release();
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
         }
     }

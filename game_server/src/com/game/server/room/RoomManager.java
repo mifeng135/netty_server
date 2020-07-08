@@ -25,6 +25,10 @@ public class RoomManager {
         return gameRoom.remove(roomId);
     }
 
+
+    public Room getRoom(int roomId) {
+        return gameRoom.get(roomId);
+    }
     public ConcurrentHashMap getGameRoom() {
         return gameRoom;
     }

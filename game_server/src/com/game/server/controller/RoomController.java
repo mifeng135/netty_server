@@ -8,9 +8,7 @@ import com.game.server.core.annotation.CtrlCmd;
 import com.game.server.core.msg.MsgBean;
 import com.game.server.core.proto.ProtoUtil;
 import com.game.server.core.redis.RedisManager;
-import com.game.server.proto.ProtoCreateRoomS;
-import com.game.server.proto.ProtoJoinRoomS;
-import com.game.server.proto.ProtoPlayerLeftS;
+import com.game.server.proto.*;
 import com.game.server.room.Player;
 import com.game.server.room.PlayerManager;
 import com.game.server.room.Room;
@@ -18,6 +16,7 @@ import com.game.server.room.RoomManager;
 import com.game.server.socket.SendToGate;
 import org.redisson.api.RMap;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,17 +29,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Ctrl
 public class RoomController {
-
     /**
      * 创建房间
+     *
      * @param id
      * @param data
      */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_CREATE_ROOM_R)
     public void createRoom(int id, byte[] data) {
-
         ProtoCreateRoomS protoCreateRoomS = new ProtoCreateRoomS();
-
         if (PlayerManager.getInstance().getPlayer(id) != null) {
             protoCreateRoomS.setRet(-1);
             MsgBean msgBean = new MsgBean();
@@ -53,23 +50,22 @@ public class RoomController {
 
         RMap map = RedisManager.getInstance().getRedisSon().getMap(Constant.REDIS_PLAYER_KEY);
         PlayerBean bean = (PlayerBean) map.get(id);
-        int roomId = generatorRoomId();
 
+        int roomId = generatorRoomId();
         Player player = new Player();
         player.setId(id);
         player.setRoomId(roomId);
-        if (bean != null) {
-            player.setName(bean.getName());
-        }
+        player.setName(bean.getName());
+        player.setPosition(0);
+
         Room room = new Room();
         room.setRoomId(roomId);
-
-        RoomManager.getInstance().putRoom(roomId, room);
         room.addPlayer(player);
+        RoomManager.getInstance().putRoom(roomId, room);
 
         PlayerManager.getInstance().putPlayer(player);
-
         protoCreateRoomS.setRet(0);
+
 
         MsgBean msgBean = new MsgBean();
         msgBean.setId(id);
@@ -80,6 +76,7 @@ public class RoomController {
 
     /**
      * 加入房间
+     *
      * @param id
      * @param data
      */
@@ -89,16 +86,19 @@ public class RoomController {
         PlayerBean bean = (PlayerBean) map.get(id);
         Player player = new Player();
         player.setId(id);
-        if (bean != null) {
-            player.setName(bean.getName());
-        }
+        player.setName(bean.getName());
+        player.setPosition(1);
+
+
+        PlayerManager.getInstance().putPlayer(player);
+
         Room room = this.findWaitJoinRoom();
         ProtoJoinRoomS joinRoomS = new ProtoJoinRoomS();
         if (room != null) {
             player.setRoomId(room.getRoomId());
             joinRoomS.setRet(0);
             room.addPlayer(player);
-        }else {
+        } else {
             joinRoomS.setRet(-1);
         }
         MsgBean msgBean = new MsgBean();
@@ -110,7 +110,8 @@ public class RoomController {
 
     /**
      * 玩家掉线
-     * @param id 玩家id
+     *
+     * @param id   玩家id
      * @param data
      */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_SERVER_LINK_STATE_R)
@@ -119,7 +120,6 @@ public class RoomController {
         int roomId = removePlayer.getRoomId();
         Room room = RoomManager.getInstance().removeRoom(roomId);
         List<Player> players = room.getRoomPlayer();
-
 
         ProtoPlayerLeftS playerLeftS = new ProtoPlayerLeftS();
         playerLeftS.setLeftId(id);
@@ -134,8 +134,99 @@ public class RoomController {
         }
     }
 
+    @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_ROOM_PLAYER_LIST_R)
+    public void getRoomPlayerList(int id, byte[] data) {
+        Player player = PlayerManager.getInstance().getPlayer(id);
+        int roomId = player.getRoomId();
+        Room room = RoomManager.getInstance().getRoom(roomId);
+        sendRoomPlayerList(room);
+    }
+
+
+    private void sendRoomPlayerList(Room room) {
+
+        List<Player> roomPlayer = room.getRoomPlayer();
+        ProtoRoomPlayerListS playerListS = new ProtoRoomPlayerListS();
+        List<ProtoPlayer> tempList = new ArrayList<>();
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            Player pl = roomPlayer.get(i);
+            ProtoPlayer protoPlayer = new ProtoPlayer();
+            protoPlayer.setId(pl.getId());
+            protoPlayer.setPosition(pl.getPosition());
+            protoPlayer.setName(pl.getName());
+            tempList.add(protoPlayer);
+        }
+
+        playerListS.setPlayerList(tempList);
+
+        MsgBean msgBean = new MsgBean();
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            Player pl = roomPlayer.get(i);
+            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_ROOM_PLAYER_LIST_S);
+            msgBean.setId(pl.getId());
+            msgBean.setData(ProtoUtil.serialize(playerListS));
+            SendToGate.getInstance().pushSendMsg(msgBean);
+        }
+    }
+
+    @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_READY_R)
+    public void ready(int id, byte[] data) {
+        Player player = PlayerManager.getInstance().getPlayer(id);
+        int roomId = player.getRoomId();
+        Room room = RoomManager.getInstance().getRoom(roomId);
+        room.updatePlayerReadyState(id, 1);
+
+        if (room.getPlayerAllReady() && room.getFull()) {
+            sendGameStart(room);
+        }
+    }
+
+    private void sendGameStart(Room room) {
+        List<Player> roomPlayer = room.getRoomPlayer();
+        ProtoGameStartS gameStartS = new ProtoGameStartS();
+        List<ProtoPlayer> tempList = new ArrayList<>();
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            Player pl = roomPlayer.get(i);
+            ProtoPlayer protoPlayer = new ProtoPlayer();
+            protoPlayer.setId(pl.getId());
+            protoPlayer.setPosition(pl.getPosition());
+            protoPlayer.setName(pl.getName());
+            tempList.add(protoPlayer);
+        }
+
+        gameStartS.setPlayerList(tempList);
+
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            MsgBean msgBean = new MsgBean();
+            Player pl = roomPlayer.get(i);
+            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_START_S);
+            msgBean.setId(pl.getId());
+            msgBean.setData(ProtoUtil.serialize(gameStartS));
+            SendToGate.getInstance().pushSendMsg(msgBean);
+        }
+    }
+
+    /**
+     * 查找是否有人等待的房间
+     *
+     * @return
+     */
+    private Room findWaitJoinRoom() {
+        Room room = null;
+        ConcurrentHashMap<Integer, Room> gameRoom = RoomManager.getInstance().getGameRoom();
+        for (ConcurrentHashMap.Entry<Integer, Room> entry : gameRoom.entrySet()) {
+            Room value = entry.getValue();
+            if (value.getGameState() == Constant.GAME_STATE_WAIT && !value.getFull()) {
+                room = value;
+                break;
+            }
+        }
+        return room;
+    }
+
     /**
      * 生成房间号
+     *
      * @return
      */
     private int generatorRoomId() {
@@ -153,19 +244,5 @@ public class RoomController {
         return roomId;
     }
 
-    /**
-     * 查找是否有人等待的房间
-     * @return
-     */
-    private Room findWaitJoinRoom() {
-        Room room = null;
-        ConcurrentHashMap<Integer, Room> gameRoom = RoomManager.getInstance().getGameRoom();
-        for (ConcurrentHashMap.Entry<Integer, Room> entry : gameRoom.entrySet()) {
-            room = entry.getValue();
-            if (room.getGameState() == Constant.GAME_STATE_WAIT && !room.getFull()) {
-                break;
-            }
-        }
-        return room;
-    }
+
 }

@@ -65,10 +65,9 @@ public class GateServerHandler extends ServerHandler {
         MsgBean msgBean = new MsgBean();
         msgBean.setId(id);
         msgBean.setData(ProtoUtil.serialize(protoLinkStateS));
-        msgBean.setCmd(MsgCmdConstant.MSG_CMD_SERVER_LINK_STATE);
+        msgBean.setCmd(MsgCmdConstant.MSG_CMD_SERVER_LINK_STATE_S);
         SendToGame.getInstance().pushSendMsg(msgBean);
     }
-
 
     private void samePlayerLogin(Channel channel) {
 
