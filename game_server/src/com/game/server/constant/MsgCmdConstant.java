@@ -24,8 +24,16 @@ public class MsgCmdConstant {
 
     public static final int MSG_CMD_GAME_READY_R = 4008;
     public static final int MSG_CMD_GAME_READY_S = 4009;
-
     public static final int MSG_CMD_GAME_START_S = 4010;
+
+
+
+    public static final int MSG_CMD_PLAYER_BOMB_PLACE_R = 4011;
+    public static final int MSG_CMD_PLAYER_BOMB_PLACE_S = 4012;
+
+
+    public static final int MSG_CMD_PLAYER_POSITION_R = 4013;
+    public static final int MSG_CMD_PLAYER_POSITION_S = 4014;
 
     public static final int MSG_CMD_GAME_END = 4999;
 }

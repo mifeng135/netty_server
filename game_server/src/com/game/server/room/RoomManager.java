@@ -29,8 +29,14 @@ public class RoomManager {
     public Room getRoom(int roomId) {
         return gameRoom.get(roomId);
     }
+
     public ConcurrentHashMap getGameRoom() {
         return gameRoom;
     }
 
+
+    public Room getRoomByPlayerId(int id) {
+        Player player = PlayerManager.getInstance().getPlayer(id);
+        return gameRoom.get(player.getRoomId());
+    }
 }
