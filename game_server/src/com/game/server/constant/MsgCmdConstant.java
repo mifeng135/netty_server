@@ -35,5 +35,8 @@ public class MsgCmdConstant {
     public static final int MSG_CMD_PLAYER_POSITION_R = 4013;
     public static final int MSG_CMD_PLAYER_POSITION_S = 4014;
 
+    public static final int MSG_CMD_PLAYER_SYN_POSITION_R = 4015;
+    public static final int MSG_CMD_PLAYER_SYN_POSITION_S = 4016;
+
     public static final int MSG_CMD_GAME_END = 4999;
 }
