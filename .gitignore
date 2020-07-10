@@ -8,3 +8,5 @@ login_server/WebRoot/WEB-INF/classes/
 gate_server/WebRoot/WEB-INF/classes/
 login_server/package/login_server.jar
 game_server/WebRoot/WEB-INF/classes/
+game_server/jarPack/game_server.jar
+gate_server/jarPack/gate_server.jar
