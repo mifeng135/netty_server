@@ -37,6 +37,9 @@ public class RoomManager {
 
     public Room getRoomByPlayerId(int id) {
         Player player = PlayerManager.getInstance().getPlayer(id);
+        if (player == null) {
+            return null;
+        }
         return gameRoom.get(player.getRoomId());
     }
 }

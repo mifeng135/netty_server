@@ -150,7 +150,7 @@ public class RoomController {
         Room room = RoomManager.getInstance().getRoom(roomId);
         room.updatePlayerReadyState(id, 1);
 
-        if (room.getPlayerAllReady() && room.getFull()) {
+        if (room.getPlayerAllReady() && room.getFull() && room.getGameState() != GameConstant.GAME_STATE_PLAYING) {
             room.setGameState(GameConstant.GAME_STATE_PLAYING);
             sendGameStart(room);
         }

@@ -68,6 +68,10 @@ public class GameController {
         ProtoPlayerSynPositionR protoPlayerPositionR = ProtoUtil.deserializer(data, ProtoPlayerSynPositionR.class);
         Room room = RoomManager.getInstance().getRoomByPlayerId(id);
 
+
+        if (room == null) {
+            return;
+        }
         List<Player> playerList = room.getRoomPlayer();
 
         Player player = PlayerManager.getInstance().getPlayer(id);
