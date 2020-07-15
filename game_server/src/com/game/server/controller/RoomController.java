@@ -2,12 +2,14 @@ package com.game.server.controller;
 
 import com.game.server.bean.PlayerBean;
 import com.game.server.constant.Constant;
+import com.game.server.constant.GameConstant;
 import com.game.server.constant.MsgCmdConstant;
 import com.game.server.core.annotation.Ctrl;
 import com.game.server.core.annotation.CtrlCmd;
 import com.game.server.core.msg.MsgBean;
 import com.game.server.core.proto.ProtoUtil;
 import com.game.server.core.redis.RedisManager;
+import com.game.server.map.MapConfig;
 import com.game.server.proto.*;
 import com.game.server.room.Player;
 import com.game.server.room.PlayerManager;
@@ -31,7 +33,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RoomController {
     /**
      * 创建房间
-     *
      * @param id
      * @param data
      */
@@ -57,6 +58,8 @@ public class RoomController {
         player.setRoomId(roomId);
         player.setName(bean.getName());
         player.setPosition(0);
+        player.setX(MapConfig.PLAYER1_X);
+        player.setY(MapConfig.PLAYER1_Y);
 
         Room room = new Room();
         room.setRoomId(roomId);
@@ -88,13 +91,14 @@ public class RoomController {
         player.setId(id);
         player.setName(bean.getName());
         player.setPosition(1);
+        player.setX(MapConfig.PLAYER2_X);
+        player.setY(MapConfig.PLAYER2_Y);
 
-
-        PlayerManager.getInstance().putPlayer(player);
 
         Room room = this.findWaitJoinRoom();
         ProtoJoinRoomS joinRoomS = new ProtoJoinRoomS();
         if (room != null) {
+            PlayerManager.getInstance().putPlayer(player);
             player.setRoomId(room.getRoomId());
             joinRoomS.setRet(0);
             room.addPlayer(player);
@@ -119,6 +123,10 @@ public class RoomController {
         Player removePlayer = PlayerManager.getInstance().removePlayer(id);
         int roomId = removePlayer.getRoomId();
         Room room = RoomManager.getInstance().removeRoom(roomId);
+
+        if (room == null) {
+            return;
+        }
         List<Player> players = room.getRoomPlayer();
 
         ProtoPlayerLeftS playerLeftS = new ProtoPlayerLeftS();
@@ -132,41 +140,7 @@ public class RoomController {
             msgBean.setData(ProtoUtil.serialize(playerLeftS));
             SendToGate.getInstance().pushSendMsg(msgBean);
         }
-    }
-
-    @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_ROOM_PLAYER_LIST_R)
-    public void getRoomPlayerList(int id, byte[] data) {
-        Player player = PlayerManager.getInstance().getPlayer(id);
-        int roomId = player.getRoomId();
-        Room room = RoomManager.getInstance().getRoom(roomId);
-        sendRoomPlayerList(room);
-    }
-
-
-    private void sendRoomPlayerList(Room room) {
-
-        List<Player> roomPlayer = room.getRoomPlayer();
-        ProtoRoomPlayerListS playerListS = new ProtoRoomPlayerListS();
-        List<ProtoPlayer> tempList = new ArrayList<>();
-        for (int i = 0; i < roomPlayer.size(); i++) {
-            Player pl = roomPlayer.get(i);
-            ProtoPlayer protoPlayer = new ProtoPlayer();
-            protoPlayer.setId(pl.getId());
-            protoPlayer.setPosition(pl.getPosition());
-            protoPlayer.setName(pl.getName());
-            tempList.add(protoPlayer);
-        }
-
-        playerListS.setPlayerList(tempList);
-
-        MsgBean msgBean = new MsgBean();
-        for (int i = 0; i < roomPlayer.size(); i++) {
-            Player pl = roomPlayer.get(i);
-            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_ROOM_PLAYER_LIST_S);
-            msgBean.setId(pl.getId());
-            msgBean.setData(ProtoUtil.serialize(playerListS));
-            SendToGate.getInstance().pushSendMsg(msgBean);
-        }
+        room.dismiss();
     }
 
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_READY_R)
@@ -177,6 +151,7 @@ public class RoomController {
         room.updatePlayerReadyState(id, 1);
 
         if (room.getPlayerAllReady() && room.getFull()) {
+            room.setGameState(GameConstant.GAME_STATE_PLAYING);
             sendGameStart(room);
         }
     }
@@ -191,6 +166,8 @@ public class RoomController {
             protoPlayer.setId(pl.getId());
             protoPlayer.setPosition(pl.getPosition());
             protoPlayer.setName(pl.getName());
+            protoPlayer.setX(pl.getX());
+            protoPlayer.setY(pl.getY());
             tempList.add(protoPlayer);
         }
 
@@ -216,7 +193,7 @@ public class RoomController {
         ConcurrentHashMap<Integer, Room> gameRoom = RoomManager.getInstance().getGameRoom();
         for (ConcurrentHashMap.Entry<Integer, Room> entry : gameRoom.entrySet()) {
             Room value = entry.getValue();
-            if (value.getGameState() == Constant.GAME_STATE_WAIT && !value.getFull()) {
+            if (value.getGameState() == GameConstant.GAME_STATE_WAIT && !value.getFull()) {
                 room = value;
                 break;
             }
@@ -243,6 +220,4 @@ public class RoomController {
         }
         return roomId;
     }
-
-
 }

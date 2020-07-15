@@ -1,20 +1,32 @@
 package com.game.server.room;
 
-import com.game.server.constant.Constant;
+
+import com.game.server.constant.GameConstant;
+import com.game.server.constant.MsgCmdConstant;
+import com.game.server.core.coreUtil.TimerHolder;
+import com.game.server.core.msg.MsgBean;
+import com.game.server.core.proto.ProtoUtil;
+import com.game.server.proto.ProtoGameOverS;
+import com.game.server.socket.SendToGate;
+import io.netty.util.Timeout;
+import io.netty.util.TimerTask;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Administrator on 2020/7/3.
  */
 public class Room {
 
-    private int gameState = Constant.GAME_STATE_WAIT;
+
+    private int gameState = GameConstant.GAME_STATE_WAIT;
     private List<Player> roomPlayer = new CopyOnWriteArrayList<>();
     private int roomId;
 
     private int maxPlayer = 2;
+    private int winId = -1;
 
     public List<Player> getRoomPlayer() {
         return roomPlayer;
@@ -44,6 +56,7 @@ public class Room {
             }
         }
     }
+
     public int getRoomId() {
         return roomId;
     }
@@ -56,7 +69,7 @@ public class Room {
         return roomPlayer.size() >= maxPlayer;
     }
 
-    public void updatePlayerReadyState(int id,int state) {
+    public void updatePlayerReadyState(int id, int state) {
         for (int i = 0; i < roomPlayer.size(); i++) {
             if (roomPlayer.get(i).getId() == id) {
                 roomPlayer.get(i).setReady(state);
@@ -74,4 +87,45 @@ public class Room {
         return true;
     }
 
+    public void dismiss() {
+        roomPlayer.clear();
+    }
+
+    public int getWinId() {
+        return winId;
+    }
+
+    public void setWinId(int winId) {
+        this.winId = winId;
+    }
+
+    public void gameOver() {
+        TimerHolder.getTimer().newTimeout(new TimerTask() {
+            @Override
+            public void run(Timeout timeout) throws Exception {
+                sendGameOverMsg();
+            }
+        }, 3, TimeUnit.SECONDS);
+    }
+
+
+    private void sendGameOverMsg() {
+        RoomManager.getInstance().removeRoom(getRoomId());
+        ProtoGameOverS protoGameOverS = new ProtoGameOverS();
+        protoGameOverS.setWinId(getWinId());
+
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            Player player = roomPlayer.get(i);
+            MsgBean msgBean = new MsgBean();
+            msgBean.setId(player.getId());
+            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_OVER_S);
+            msgBean.setData(ProtoUtil.serialize(protoGameOverS));
+            SendToGate.getInstance().pushSendMsg(msgBean);
+        }
+
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            PlayerManager.getInstance().removePlayer(roomPlayer.get(i).getId());
+        }
+        roomPlayer.clear();
+    }
 }

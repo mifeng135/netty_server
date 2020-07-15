@@ -25,7 +25,6 @@ public class ReceiveFromGate extends SocketReceive {
             case MsgCmdConstant.MSG_CMD_GAME_CREATE_ROOM_R:
             case MsgCmdConstant.MSG_CMD_GAME_JOIN_ROOM_R:
             case MsgCmdConstant.MSG_CMD_SERVER_LINK_STATE_R:
-            case MsgCmdConstant.MSG_CMD_GAME_ROOM_PLAYER_LIST_R:
             case MsgCmdConstant.MSG_CMD_GAME_READY_R:
                 regionString = MsgRegionConstant.MSG_REGION_ROOM;
                 break;
@@ -51,7 +50,6 @@ public class ReceiveFromGate extends SocketReceive {
             case MsgCmdConstant.MSG_CMD_GAME_CREATE_ROOM_R:
             case MsgCmdConstant.MSG_CMD_GAME_JOIN_ROOM_R:
             case MsgCmdConstant.MSG_CMD_SERVER_LINK_STATE_R:
-            case MsgCmdConstant.MSG_CMD_GAME_ROOM_PLAYER_LIST_R:
             case MsgCmdConstant.MSG_CMD_GAME_READY_R:
                 return super.getSectionId(bean);
         }

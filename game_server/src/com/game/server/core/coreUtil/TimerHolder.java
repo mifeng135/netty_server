@@ -10,10 +10,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimerHolder {
 
-    private final static long defaultTickDuration = 1000L;
+    private final static long defaultTickDuration = 10;
 
     private static class DefaultInstance {
-        static final Timer INSTANCE = new HashedWheelTimer(defaultTickDuration, TimeUnit.SECONDS);
+        static final Timer INSTANCE = new HashedWheelTimer(defaultTickDuration, TimeUnit.MILLISECONDS);
     }
 
     private TimerHolder() {
