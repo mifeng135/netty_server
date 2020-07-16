@@ -8,6 +8,7 @@ public class MsgCmdConstant {
     /**发送登录消息*/
     public static final int MSG_CMD_LOGIN_TO_GATE_R = 1;
     public static final int MSG_CMD_SERVER_LINK_STATE_S = 2;
+    public static final short MSG_BROADCASE = 3;
 
     /**同步连接数 发送给登录服*/
     public static final int MSG_CMD_LINK_SYN_S = 100;

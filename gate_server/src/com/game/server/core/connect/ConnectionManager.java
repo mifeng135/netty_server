@@ -33,7 +33,8 @@ public class ConnectionManager {
     }
 
     public static void send2AllClient(ByteBuf buf) {
-        mClientChannelGroup.writeAndFlush(buf);
+        BinaryWebSocketFrame webSocketFrame = new BinaryWebSocketFrame(buf);
+        mClientChannelGroup.writeAndFlush(webSocketFrame);
     }
 
     public static void send2ClientByFD(int id, ByteBuf buf) {

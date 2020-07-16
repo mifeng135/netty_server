@@ -35,7 +35,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
             if (HttpMethod.POST.equals(method)) {
                 ByteBuf buf = request.content();
                 MsgBean msgBean = new MsgBean();
-                msgBean.serializeMsg(buf);
+                msgBean.serializeMsgLogin(buf);
                 msgBean.setFd(socketFd);
                 msgBean.setContext(ctx);
                 EventDispatch.getInstance().pushMsg(msgBean);

@@ -33,6 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RoomController {
     /**
      * 创建房间
+     *
      * @param id
      * @param data
      */
@@ -40,6 +41,7 @@ public class RoomController {
     public void createRoom(int id, byte[] data) {
         ProtoCreateRoomS protoCreateRoomS = new ProtoCreateRoomS();
         if (PlayerManager.getInstance().getPlayer(id) != null) {
+
             protoCreateRoomS.setRet(-1);
             MsgBean msgBean = new MsgBean();
             msgBean.setId(id);
@@ -94,7 +96,6 @@ public class RoomController {
         player.setX(MapConfig.PLAYER2_X);
         player.setY(MapConfig.PLAYER2_Y);
 
-
         Room room = this.findWaitJoinRoom();
         ProtoJoinRoomS joinRoomS = new ProtoJoinRoomS();
         if (room != null) {
@@ -148,12 +149,19 @@ public class RoomController {
         Player player = PlayerManager.getInstance().getPlayer(id);
         int roomId = player.getRoomId();
         Room room = RoomManager.getInstance().getRoom(roomId);
+        if (room.getGameState() == GameConstant.GAME_STATE_PLAYING) {
+            return;
+        }
         room.updatePlayerReadyState(id, 1);
-
-        if (room.getPlayerAllReady() && room.getFull() && room.getGameState() != GameConstant.GAME_STATE_PLAYING) {
+        if (room.getPlayerAllReady() && room.getFull()) {
             room.setGameState(GameConstant.GAME_STATE_PLAYING);
             sendGameStart(room);
         }
+    }
+
+    @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_ROOM_LIST_R)
+    public void roomList(int id, byte[] data) {
+        sendRoomList(false, id);
     }
 
     private void sendGameStart(Room room) {
@@ -219,5 +227,29 @@ public class RoomController {
             }
         }
         return roomId;
+    }
+
+
+    private void sendRoomList(boolean broadcast, int id) {
+        List<ProtoRoomListS.RoomInfo> roomList = new ArrayList<>();
+        ConcurrentHashMap<Integer, Room> gameRoom = RoomManager.getInstance().getGameRoom();
+        for (ConcurrentHashMap.Entry<Integer, Room> entry : gameRoom.entrySet()) {
+            Room value = entry.getValue();
+            ProtoRoomListS.RoomInfo roomInfo = new ProtoRoomListS.RoomInfo();
+            roomInfo.setRoomId(value.getRoomId());
+            roomInfo.setRoomState(value.getGameState());
+            roomList.add(roomInfo);
+        }
+        ProtoRoomListS protoRoomListS = new ProtoRoomListS();
+        protoRoomListS.setRoomList(roomList);
+
+        MsgBean msgBean = new MsgBean();
+        msgBean.setId(id);
+        if (broadcast) {
+            msgBean.setSubCmd(MsgCmdConstant.MSG_BROADCASE);
+        }
+        msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_ROOM_LIST_S);
+        msgBean.setData(ProtoUtil.serialize(protoRoomListS));
+        SendToGate.getInstance().pushSendMsg(msgBean);
     }
 }

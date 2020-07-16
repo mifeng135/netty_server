@@ -8,13 +8,20 @@ import io.netty.channel.ChannelHandlerContext;
  * Created by Administrator on 2020/6/19.
  */
 public class MsgBean {
-    private int fd;
-    private int playerIndex;
+    private int id;
     private int cmd;
+    private short subCmd;
     private int dataLength;
     private byte[] data;
 
+
+    /**
+     * 下面两个是专门给登录定制的
+     */
+    private int fd;
     private ChannelHandlerContext context;
+
+
 
     public byte[] getData() {
         return data;
@@ -32,12 +39,12 @@ public class MsgBean {
         this.fd = fd;
     }
 
-    public int getPlayerIndex() {
-        return playerIndex;
+    public int getId() {
+        return id;
     }
 
-    public void setPlayerIndex(int playerIndex) {
-        this.playerIndex = playerIndex;
+    public void setId(int playerIndex) {
+        this.id = playerIndex;
     }
 
     public int getCmd() {
@@ -48,6 +55,13 @@ public class MsgBean {
         this.cmd = cmd;
     }
 
+    public short getSubCmd() {
+        return subCmd;
+    }
+
+    public void setSubCmd(short subCmd) {
+        this.subCmd = subCmd;
+    }
     public int getDataLength() {
         return dataLength;
     }
@@ -64,33 +78,35 @@ public class MsgBean {
         this.context = context;
     }
     public ByteBuf toByteBuf() {
-        ByteBuf buf = Unpooled.buffer();
-        buf.writeInt(fd);
-        buf.writeInt(playerIndex);
+        ByteBuf buf = Unpooled.buffer(14 + dataLength);
+        buf.writeInt(id);
         buf.writeInt(cmd);
+        buf.writeShort(subCmd);
         buf.writeInt(dataLength);
-        if (data != null) {
-            buf.writeBytes(data);
-        }
+        buf.writeBytes(data);
         return buf;
-    }
-
-    public void serializeMsg(ByteBuf buf) {
-        cmd = buf.readInt();
-        dataLength = buf.readInt();
-        data = new byte[dataLength];
-        buf.readBytes(data);
-        buf.release();
     }
 
     public void serializeMsg(byte[] msgData) {
         ByteBuf buf = Unpooled.wrappedBuffer(msgData);
-        playerIndex = buf.readInt();
+        id = buf.readInt();
         cmd = buf.readInt();
+        subCmd = buf.readShort();
         dataLength = buf.readInt();
         data = new byte[dataLength];
         buf.readBytes(data);
         buf.release();
     }
 
+    /**
+     * 这个是专门给login定义的方法
+     * @param buf
+     */
+    public void serializeMsgLogin(ByteBuf buf) {
+        cmd = buf.readInt();
+        dataLength = buf.readInt();
+        data = new byte[dataLength];
+        buf.readBytes(data);
+        buf.release();
+    }
 }
