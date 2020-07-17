@@ -9,6 +9,7 @@ import io.netty.buffer.Unpooled;
 public class MsgBean {
     private int id;
     private int cmd;
+    private int subCmd;
     private int dataLength;
     private byte[] data;
 
@@ -37,28 +38,30 @@ public class MsgBean {
         this.cmd = cmd;
     }
 
+
+    public int getSubCmd() {
+        return subCmd;
+    }
+
+    public void setSubCmd(int subCmd) {
+        this.subCmd = subCmd;
+    }
+
     public ByteBuf toByteBuf() {
-        ByteBuf buf = Unpooled.buffer(12 + dataLength);
+        ByteBuf buf = Unpooled.buffer(14 + dataLength);
         buf.writeInt(id);
         buf.writeInt(cmd);
+        buf.writeShort(subCmd);
         buf.writeInt(dataLength);
         buf.writeBytes(data);
         return buf;
-    }
-
-    public void serializeMsg(ByteBuf buf) {
-        id = buf.readInt();
-        cmd = buf.readInt();
-        dataLength = buf.readInt();
-        data = new byte[dataLength];
-        buf.readBytes(data);
-        buf.release();
     }
 
     public void serializeMsg(byte[] msgData) {
         ByteBuf buf = Unpooled.wrappedBuffer(msgData);
         id = buf.readInt();
         cmd = buf.readInt();
+        subCmd = buf.readShort();
         dataLength = buf.readInt();
         data = new byte[dataLength];
         buf.readBytes(data);

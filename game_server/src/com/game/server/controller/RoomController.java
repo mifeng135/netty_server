@@ -77,6 +77,8 @@ public class RoomController {
         msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_CREATE_ROOM_S);
         msgBean.setData(ProtoUtil.serialize(protoCreateRoomS));
         SendToGate.getInstance().pushSendMsg(msgBean);
+
+        sendRoomList(true, 0);
     }
 
     /**
