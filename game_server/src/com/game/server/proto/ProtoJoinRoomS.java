@@ -6,6 +6,8 @@ package com.game.server.proto;
 public class ProtoJoinRoomS {
 
     private int ret;
+    private String mapRes;
+
     public int getRet() {
         return ret;
     }
@@ -14,4 +16,11 @@ public class ProtoJoinRoomS {
         this.ret = ret;
     }
 
+    public String getMapRes() {
+        return mapRes;
+    }
+
+    public void setMapRes(String mapRes) {
+        this.mapRes = mapRes;
+    }
 }

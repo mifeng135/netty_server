@@ -24,9 +24,9 @@ public class Room {
     private int gameState = GameConstant.GAME_STATE_WAIT;
     private List<Player> roomPlayer = new CopyOnWriteArrayList<>();
     private int roomId;
-
     private int maxPlayer = 2;
     private int winId = -1;
+    private String mapRes;
 
     public List<Player> getRoomPlayer() {
         return roomPlayer;
@@ -97,6 +97,14 @@ public class Room {
 
     public void setWinId(int winId) {
         this.winId = winId;
+    }
+
+    public String getMapRes() {
+        return mapRes;
+    }
+
+    public void setMapRes(String mapRes) {
+        this.mapRes = mapRes;
     }
 
     public void gameOver() {

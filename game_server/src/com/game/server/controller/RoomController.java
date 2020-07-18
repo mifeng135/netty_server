@@ -63,13 +63,22 @@ public class RoomController {
         player.setX(MapConfig.PLAYER1_X);
         player.setY(MapConfig.PLAYER1_Y);
 
+        Random rand = new Random();
+        int randMap = rand.nextInt(125);
+        String mapRes = MapConfig.MAP_RES.get(randMap);
+        protoCreateRoomS.setMapRes(mapRes);
+
+
         Room room = new Room();
         room.setRoomId(roomId);
         room.addPlayer(player);
+        room.setMapRes(mapRes);
         RoomManager.getInstance().putRoom(roomId, room);
 
         PlayerManager.getInstance().putPlayer(player);
         protoCreateRoomS.setRet(0);
+
+
 
 
         MsgBean msgBean = new MsgBean();
@@ -91,6 +100,7 @@ public class RoomController {
     public void joinRoom(int id, byte[] data) {
         RMap map = RedisManager.getInstance().getRedisSon().getMap(Constant.REDIS_PLAYER_KEY);
         PlayerBean bean = (PlayerBean) map.get(id);
+
         Player player = new Player();
         player.setId(id);
         player.setName(bean.getName());
@@ -104,6 +114,7 @@ public class RoomController {
             PlayerManager.getInstance().putPlayer(player);
             player.setRoomId(room.getRoomId());
             joinRoomS.setRet(0);
+            joinRoomS.setMapRes(room.getMapRes());
             room.addPlayer(player);
         } else {
             joinRoomS.setRet(-1);
