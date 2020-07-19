@@ -98,6 +98,11 @@ public class GameController {
     }
 
 
+    /**
+     * 炸弹爆炸的时候产生道具
+     * @param id
+     * @param data
+     */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_CREATE_PROP_R)
     public void createProp(int id, byte[] data) {
         ProtoPropCreatorR protoPropCreatorR = ProtoUtil.deserializer(data, ProtoPropCreatorR.class);
@@ -107,8 +112,8 @@ public class GameController {
         Room room = RoomManager.getInstance().getRoomByPlayerId(id);
         List<Player> playerList = room.getRoomPlayer();
 
-        int value = random.nextInt(2);
-        if (true) {
+        int value = random.nextInt(5);
+        if (value > 3) {
             List<ProtoPropCreatorR.Vec> removePath = protoPropCreatorR.getRemovePath();
             int propPosition = random.nextInt(removePath.size());
 
@@ -136,12 +141,25 @@ public class GameController {
         }
     }
 
+    @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_TILE_POSITION_SYN_R)
+    public void tileSyn(int id, byte[] data) {
+        ProtoTilePositionSynR protoTilePositionSynR = ProtoUtil.deserializer(data, ProtoTilePositionSynR.class);
+        Room room = RoomManager.getInstance().getRoomByPlayerId(id);
+        room.setMapHeight(protoTilePositionSynR.getMapHeight());
+        room.setMapWidth(protoTilePositionSynR.getMapWidth());
+        room.setTileList(protoTilePositionSynR.getTileList());
+    }
+
+    /**
+     * 玩家吃道具
+     * @param id
+     * @param data
+     */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_TRIGGER_PROP_R)
     public void triggerProp(int id, byte[] data) {
         ProtoTriggerPropR protoTriggerPropR = ProtoUtil.deserializer(data, ProtoTriggerPropR.class);
         Room room = RoomManager.getInstance().getRoomByPlayerId(id);
         List<Player> playerList = room.getRoomPlayer();
-
 
 
         ProtoTriggerPropS protoTriggerPropS = new ProtoTriggerPropS();
@@ -209,6 +227,7 @@ public class GameController {
                 SendToGate.getInstance().pushSendMsg(msgBean);
             }
             room.setWinId(winId);
+            room.clear();
             room.gameOver();
         }
     }

@@ -78,9 +78,6 @@ public class RoomController {
         PlayerManager.getInstance().putPlayer(player);
         protoCreateRoomS.setRet(0);
 
-
-
-
         MsgBean msgBean = new MsgBean();
         msgBean.setId(id);
         msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_CREATE_ROOM_S);
@@ -169,6 +166,7 @@ public class RoomController {
         if (room.getPlayerAllReady() && room.getFull()) {
             room.setGameState(GameConstant.GAME_STATE_PLAYING);
             sendGameStart(room);
+            room.sendAirPlane();
         }
     }
 
