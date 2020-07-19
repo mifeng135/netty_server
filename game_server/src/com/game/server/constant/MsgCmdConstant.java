@@ -45,5 +45,11 @@ public class MsgCmdConstant {
     public static final int MSG_CMD_GAME_OVER_R = 4017;
     public static final int MSG_CMD_GAME_OVER_S = 4018;
 
+    public static final int MSG_CMD_GAME_CREATE_PROP_R = 4019;
+    public static final int MSG_CMD_GAME_CREATE_PROP_S = 4020;
+
+    public static final int MSG_CMD_GAME_TRIGGER_PROP_R = 4021;
+    public static final int MSG_CMD_GAME_TRIGGER_PROP_S = 4022;
+
     public static final int MSG_CMD_GAME_END = 4999;
 }

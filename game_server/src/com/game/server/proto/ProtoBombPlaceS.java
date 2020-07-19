@@ -6,6 +6,7 @@ package com.game.server.proto;
 public class ProtoBombPlaceS {
     private int x;
     private int y;
+    private int power;
 
     public int getY() {
         return y;
@@ -21,5 +22,13 @@ public class ProtoBombPlaceS {
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
     }
 }

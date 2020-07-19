@@ -3,7 +3,6 @@ package com.game.server.controller;
 import com.game.server.constant.MsgCmdConstant;
 import com.game.server.core.annotation.Ctrl;
 import com.game.server.core.annotation.CtrlCmd;
-import com.game.server.core.coreUtil.TimerHolder;
 import com.game.server.core.msg.MsgBean;
 import com.game.server.core.proto.ProtoUtil;
 import com.game.server.map.MapUtil;
@@ -14,12 +13,10 @@ import com.game.server.room.PlayerManager;
 import com.game.server.room.Room;
 import com.game.server.room.RoomManager;
 import com.game.server.socket.SendToGate;
-import io.netty.util.Timeout;
-import io.netty.util.TimerTask;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 
 /**
@@ -45,6 +42,7 @@ public class GameController {
         ProtoBombPlaceS protoBombPlaceS = new ProtoBombPlaceS();
         protoBombPlaceS.setX(protoBombPlaceR.getX());
         protoBombPlaceS.setY(protoBombPlaceR.getY());
+        protoBombPlaceS.setPower(protoBombPlaceR.getPower());
 
         for (int i = 0; i < playerList.size(); i++) {
             Player pl = playerList.get(i);
@@ -55,6 +53,7 @@ public class GameController {
             SendToGate.getInstance().pushSendMsg(bean);
         }
     }
+
 
     /**
      * 玩家同步位置
@@ -94,6 +93,70 @@ public class GameController {
             bean.setCmd(MsgCmdConstant.MSG_CMD_PLAYER_SYN_POSITION_S);
             bean.setData(ProtoUtil.serialize(protoPlayerSynPositionS));
             SendToGate.getInstance().pushSendMsg(bean);
+        }
+    }
+
+
+    @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_CREATE_PROP_R)
+    public void createProp(int id, byte[] data) {
+        ProtoPropCreatorR protoPropCreatorR = ProtoUtil.deserializer(data, ProtoPropCreatorR.class);
+
+        Random random = new Random();
+
+        Room room = RoomManager.getInstance().getRoomByPlayerId(id);
+        List<Player> playerList = room.getRoomPlayer();
+
+        int value = random.nextInt(2);
+        if (true) {
+            List<ProtoPropCreatorR.Vec> removePath = protoPropCreatorR.getRemovePath();
+            int propPosition = random.nextInt(removePath.size());
+
+            ProtoPropCreatorR.Vec vec = removePath.get(propPosition);
+            List<ProtoPropCreatorS.PropVec> tempList = new ArrayList<>();
+
+            ProtoPropCreatorS.PropVec propVec = new ProtoPropCreatorS.PropVec();
+            propVec.setX(vec.getX());
+            propVec.setY(vec.getY());
+            int type = random.nextInt(3);
+            propVec.setType(type);
+            tempList.add(propVec);
+
+            ProtoPropCreatorS protoPropCreatorS = new ProtoPropCreatorS();
+            protoPropCreatorS.setPropList(tempList);
+
+            for (int i = 0; i < playerList.size(); i++) {
+                Player player = playerList.get(i);
+                MsgBean msgBean = new MsgBean();
+                msgBean.setId(player.getId());
+                msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_CREATE_PROP_S);
+                msgBean.setData(ProtoUtil.serialize(protoPropCreatorS));
+                SendToGate.getInstance().pushSendMsg(msgBean);
+            }
+        }
+    }
+
+    @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_TRIGGER_PROP_R)
+    public void triggerProp(int id, byte[] data) {
+        ProtoTriggerPropR protoTriggerPropR = ProtoUtil.deserializer(data, ProtoTriggerPropR.class);
+        Room room = RoomManager.getInstance().getRoomByPlayerId(id);
+        List<Player> playerList = room.getRoomPlayer();
+
+
+
+        ProtoTriggerPropS protoTriggerPropS = new ProtoTriggerPropS();
+        protoTriggerPropS.setX(protoTriggerPropR.getX());
+        protoTriggerPropS.setY(protoTriggerPropR.getY());
+
+        for (int i = 0; i < playerList.size(); i++) {
+            Player player = playerList.get(i);
+            if (player.getId() == id) {
+                continue;
+            }
+            MsgBean msgBean = new MsgBean();
+            msgBean.setId(player.getId());
+            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_TRIGGER_PROP_S);
+            msgBean.setData(ProtoUtil.serialize(protoTriggerPropS));
+            SendToGate.getInstance().pushSendMsg(msgBean);
         }
     }
 

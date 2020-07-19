@@ -64,7 +64,7 @@ public class RoomController {
         player.setY(MapConfig.PLAYER1_Y);
 
         Random rand = new Random();
-        int randMap = rand.nextInt(125);
+        int randMap = rand.nextInt(126);
         String mapRes = MapConfig.MAP_RES.get(randMap);
         protoCreateRoomS.setMapRes(mapRes);
 
