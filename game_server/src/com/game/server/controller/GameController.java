@@ -43,6 +43,7 @@ public class GameController {
         protoBombPlaceS.setX(protoBombPlaceR.getX());
         protoBombPlaceS.setY(protoBombPlaceR.getY());
         protoBombPlaceS.setPower(protoBombPlaceR.getPower());
+        protoBombPlaceS.setPlayerId(protoBombPlaceR.getPlayerId());
 
         for (int i = 0; i < playerList.size(); i++) {
             Player pl = playerList.get(i);

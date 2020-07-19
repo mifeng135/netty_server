@@ -8,6 +8,7 @@ public class ProtoBombPlaceR {
     private int x;
     private int y;
     private int power;
+    private int playerId;
 
     public int getY() {
         return y;
@@ -31,5 +32,12 @@ public class ProtoBombPlaceR {
 
     public void setPower(int power) {
         this.power = power;
+    }
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 }
