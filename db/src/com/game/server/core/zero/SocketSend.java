@@ -39,6 +39,7 @@ public abstract class SocketSend extends Thread {
                 ByteBuf buf = msgBean.toByteBuf();
                 mSocket.send(buf.array());
                 buf.release();
+                Thread.sleep(1);
             } catch (Exception e) {
 
             }

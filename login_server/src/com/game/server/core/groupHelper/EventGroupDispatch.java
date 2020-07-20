@@ -28,6 +28,7 @@ public abstract class EventGroupDispatch extends Thread {
                     continue;
                 }
                 dispatch(msgBean);
+                Thread.sleep(1);
             } catch (Exception e) {
 
             }

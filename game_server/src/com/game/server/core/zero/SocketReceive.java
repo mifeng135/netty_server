@@ -42,6 +42,7 @@ public abstract class SocketReceive extends Thread {
             try {
                 byte[] data = mSocket.recvBytes();
                 dispatch(data);
+                Thread.sleep(1);
             } catch (Exception e) {
 
             }

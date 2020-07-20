@@ -30,6 +30,7 @@ public class MessageThreadTask extends Thread {
                 if (mProcessEventHandler != null) {
                     mProcessEventHandler.onEvent(msgBean);
                 }
+                Thread.sleep(1);
             } catch (Exception e) {
                 e.printStackTrace();
             }
