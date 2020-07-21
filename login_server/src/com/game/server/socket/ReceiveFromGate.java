@@ -27,7 +27,6 @@ public class ReceiveFromGate extends Thread {
                 MsgBean bean = new MsgBean();
                 bean.serializeMsg(data);
                 dispatchMsg(bean);
-                Thread.sleep(1);
             } catch (Exception e) {
 
             }

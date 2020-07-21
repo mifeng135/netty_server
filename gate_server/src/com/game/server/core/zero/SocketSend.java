@@ -31,15 +31,16 @@ public abstract class SocketSend extends Thread {
     public void run() {
         while (true) {
             try {
-                MsgBean msgBean = mMsgQueue.poll();
-                if (msgBean == null) {
-                    Thread.sleep(100);
-                    continue;
+                for (int i = 0; i < 100; i++) {
+                    MsgBean msgBean = mMsgQueue.poll();
+                    if (msgBean == null) {
+                        break;
+                    }
+                    ByteBuf buf = msgBean.toByteBuf();
+                    mSocket.send(buf.array());
+                    buf.release();
                 }
-                ByteBuf buf = msgBean.toByteBuf();
-                mSocket.send(buf.array());
-                buf.release();
-                Thread.sleep(1);
+                Thread.sleep(10);
             } catch (Exception e) {
 
             }

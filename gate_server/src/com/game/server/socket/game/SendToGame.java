@@ -1,4 +1,4 @@
-package com.game.server.socket.login;
+package com.game.server.socket.game;
 
 import com.game.server.core.zero.SocketSend;
 import com.game.server.serverConfig.ServerConfig;

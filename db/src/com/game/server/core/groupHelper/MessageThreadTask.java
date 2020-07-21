@@ -22,15 +22,16 @@ public class MessageThreadTask extends Thread {
         while (true) {
             String name = getName();
             try {
-                MsgBean msgBean = mMessageGroup.popMessageWithTag(name);
-                if (msgBean == null) {
-                    Thread.sleep(100);
-                    continue;
+                for (int i = 0; i < 100; i++) {
+                    MsgBean msgBean = mMessageGroup.popMessageWithTag(name);
+                    if (msgBean == null) {
+                        break;
+                    }
+                    if (mProcessEventHandler != null) {
+                        mProcessEventHandler.onEvent(msgBean);
+                    }
                 }
-                if (mProcessEventHandler != null) {
-                    mProcessEventHandler.onEvent(msgBean);
-                }
-                Thread.sleep(1);
+                Thread.sleep(10);
             } catch (Exception e) {
                 e.printStackTrace();
             }

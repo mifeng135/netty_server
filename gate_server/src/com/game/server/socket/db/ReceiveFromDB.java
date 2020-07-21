@@ -1,4 +1,4 @@
-package com.game.server.socket.login;
+package com.game.server.socket.db;
 
 import com.game.server.constant.MsgRegionConstant;
 import com.game.server.core.zero.SocketReceive;
