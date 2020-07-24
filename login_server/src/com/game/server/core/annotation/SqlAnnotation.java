@@ -60,8 +60,12 @@ public class SqlAnnotation {
     }
 
     private void initMysql() {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-mybatis.xml");
-        mSqlSessionTemplate = context.getBean(SqlSessionTemplate.class);
+        try {
+            ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-mybatis.xml");
+            mSqlSessionTemplate = context.getBean(SqlSessionTemplate.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Object executeSelectSql(int cmd, Object parameter) {
@@ -77,7 +81,7 @@ public class SqlAnnotation {
             } else if (type == SqlConstant.SELECT_LIST) {
                 return mSqlSessionTemplate.selectList(declaringClass, parameter);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -90,12 +94,17 @@ public class SqlAnnotation {
         }
         int type = method.getAnnotation(SqlCmd.class).sqlType();
         String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
-        if (type == SqlConstant.DELETE) {
-            return mSqlSessionTemplate.delete(declaringClass, parameter);
-        }else if (type == SqlConstant.UPDATE) {
-            return mSqlSessionTemplate.update(declaringClass, parameter);
-        }else if (type == SqlConstant.INSERT) {
-            return mSqlSessionTemplate.insert(declaringClass, parameter);
+
+        try {
+            if (type == SqlConstant.DELETE) {
+                return mSqlSessionTemplate.delete(declaringClass, parameter);
+            } else if (type == SqlConstant.UPDATE) {
+                return mSqlSessionTemplate.update(declaringClass, parameter);
+            } else if (type == SqlConstant.INSERT) {
+                return mSqlSessionTemplate.insert(declaringClass, parameter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return -1;
     }
