@@ -55,5 +55,8 @@ public class MsgCmdConstant {
     public static final int MSG_CMD_GAME_TILE_POSITION_SYN_R = 4023;
     public static final int MSG_CMD_GAME_AIRPLANE_PROP_S = 4024;
 
+    public static final int MSG_CMD_GAME_EXIT_ROOM_R = 4025;
+    public static final int MSG_CMD_GAME_EXIT_ROOM_S = 4026;
+
     public static final int MSG_CMD_GAME_END = 4999;
 }

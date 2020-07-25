@@ -185,7 +185,7 @@ public class Room {
         }
     }
 
-    public void clear() {
+    public void clearTimeOut() {
         if (airPlaneTimeOut != null) {
             airPlaneTimeOut.cancel();
         }
@@ -202,13 +202,8 @@ public class Room {
 
 
     private void sendGameOverMsg() {
-
-
-
-        RoomManager.getInstance().removeRoom(getRoomId());
         ProtoGameOverS protoGameOverS = new ProtoGameOverS();
         protoGameOverS.setWinId(getWinId());
-
         for (int i = 0; i < roomPlayer.size(); i++) {
             Player player = roomPlayer.get(i);
             MsgBean msgBean = new MsgBean();
@@ -217,7 +212,10 @@ public class Room {
             msgBean.setData(ProtoUtil.serialize(protoGameOverS));
             SendToGate.getInstance().pushSendMsg(msgBean);
         }
-
+        clear();
+    }
+    public void clear() {
+        RoomManager.getInstance().removeRoom(getRoomId());
         for (int i = 0; i < roomPlayer.size(); i++) {
             PlayerManager.getInstance().removePlayer(roomPlayer.get(i).getId());
         }

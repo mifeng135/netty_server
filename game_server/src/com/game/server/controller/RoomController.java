@@ -170,6 +170,27 @@ public class RoomController {
         }
     }
 
+
+    @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_EXIT_ROOM_R)
+    public void exitRoom(int id, byte[] data) {
+        Player player = PlayerManager.getInstance().getPlayer(id);
+        int roomId = player.getRoomId();
+        Room room = RoomManager.getInstance().getRoom(roomId);
+        List<Player> roomPlayer = room.getRoomPlayer();
+
+        ProtoExitRoomS protoExitRoomS = new ProtoExitRoomS();
+        for (int i = 0; i < roomPlayer.size(); i++) {
+            Player pl = roomPlayer.get(i);
+            MsgBean msgBean = new MsgBean();
+            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_EXIT_ROOM_S);
+            msgBean.setId(pl.getId());
+            msgBean.setData(ProtoUtil.serialize(protoExitRoomS));
+            SendToGate.getInstance().pushSendMsg(msgBean);
+        }
+        room.clear();
+        sendRoomList(true, 0);
+    }
+
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_ROOM_LIST_R)
     public void roomList(int id, byte[] data) {
         sendRoomList(false, id);

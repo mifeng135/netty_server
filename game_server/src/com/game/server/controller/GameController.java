@@ -227,7 +227,7 @@ public class GameController {
                 SendToGate.getInstance().pushSendMsg(msgBean);
             }
             room.setWinId(winId);
-            room.clear();
+            room.clearTimeOut();
             room.gameOver();
         }
     }
