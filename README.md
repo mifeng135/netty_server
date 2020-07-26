@@ -1,8 +1,5 @@
 # 基于netty,nanomsg实现
 
-
-
-
 # 项目依赖
 * java 8
 * mysql
@@ -15,6 +12,9 @@
 
 # liunx项目部署
 * 将windows下编译好的jar中直接启动即可
+
+
+
 
 
 
