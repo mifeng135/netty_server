@@ -96,7 +96,8 @@ public class Room {
     }
 
     public void dismiss() {
-        roomPlayer.clear();
+        clear();
+        clearTimeOut();
     }
 
     public int getWinId() {
@@ -146,7 +147,7 @@ public class Room {
                 sendAirPlaneMsg();
                 airPlaneTimeOut = null;
             }
-        }, 15, TimeUnit.SECONDS);
+        }, 25, TimeUnit.SECONDS);
     }
 
     private void sendAirPlaneMsg() {
@@ -215,6 +216,7 @@ public class Room {
         }
         clear();
     }
+
     public void clear() {
         RoomManager.getInstance().removeRoom(getRoomId());
         for (int i = 0; i < roomPlayer.size(); i++) {

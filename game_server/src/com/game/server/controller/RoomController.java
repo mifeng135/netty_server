@@ -131,9 +131,9 @@ public class RoomController {
      */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_SERVER_LINK_STATE_R)
     public void linkBroke(int id, byte[] data) {
-        Player removePlayer = PlayerManager.getInstance().removePlayer(id);
+        Player removePlayer = PlayerManager.getInstance().getPlayer(id);
         int roomId = removePlayer.getRoomId();
-        Room room = RoomManager.getInstance().removeRoom(roomId);
+        Room room = RoomManager.getInstance().getRoom(roomId);
 
         if (room == null) {
             return;
@@ -146,6 +146,9 @@ public class RoomController {
 
         for (int i = 0; i < players.size(); i++) {
             Player pl = players.get(i);
+            if (pl.getId() == id) {
+                continue;
+            }
             msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_PLAYER_LEFT_ROOM_S);
             msgBean.setId(pl.getId());
             msgBean.setData(ProtoUtil.serialize(playerLeftS));

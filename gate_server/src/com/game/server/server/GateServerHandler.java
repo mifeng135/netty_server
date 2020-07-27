@@ -31,8 +31,8 @@ public class GateServerHandler extends ServerHandler {
 
                 Channel oldChannel = ConnectionManager.getChannelById(playerId);
                 if (oldChannel != null) {
+                    samePlayerLogin(oldChannel);
                     ConnectionManager.mfdChannelGroup.remove(playerId);
-                    channelCloseEvent(context);
                 }
                 ConnectionManager.mfdChannelGroup.putIfAbsent(playerId, context.channel().id());
             } catch (Exception e) {
@@ -59,7 +59,6 @@ public class GateServerHandler extends ServerHandler {
 
     private void channelCloseEvent(ChannelHandlerContext context) {
         int id = context.channel().attr(Configs.PLAYER_INDEX).get();
-
         ProtoLinkStateS protoLinkStateS = new ProtoLinkStateS();
         protoLinkStateS.setState(0);
         MsgBean msgBean = new MsgBean();
@@ -70,10 +69,11 @@ public class GateServerHandler extends ServerHandler {
     }
 
     private void samePlayerLogin(Channel channel) {
-
-        MsgBean bean = new MsgBean();
-//        bean.setCmd();
-//
-//        ConnectionManager.send2Client(channel,);
+        int id = channel.attr(Configs.PLAYER_INDEX).get();
+        MsgBean msgBean = new MsgBean();
+        msgBean.setId(id);
+        msgBean.setCmd(MsgCmdConstant.MSG_CMD_REPLACE_ACCOUNT_S);
+        msgBean.setData(new byte[0]);
+        ConnectionManager.send2Client(channel, msgBean.packClientMsg());
     }
 }
