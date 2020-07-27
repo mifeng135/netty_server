@@ -15,7 +15,7 @@ public class ReceiveFromGate extends Thread {
 
     public ReceiveFromGate() {
         mSocket = new PullSocket();
-        mSocket.connect(ServerConfig.GATE_SERVER_IP);
+        mSocket.connect(ServerConfig.RECEIVE_FROM_GATE);
         mSocket.setRecvTimeout(30000);
     }
 

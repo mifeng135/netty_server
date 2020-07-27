@@ -3,6 +3,9 @@ package com.game.server.core.msg;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2020/6/19.
  */
@@ -10,6 +13,8 @@ public class MsgBean {
     private int id;
     private int cmd;
     private short subCmd;
+    private short arrayLen;
+    private List<Integer> arrayData;
     private int dataLength;
     private byte[] data;
 
@@ -46,11 +51,22 @@ public class MsgBean {
         this.subCmd = subCmd;
     }
 
+    public List<Integer> getArrayData() {
+        return arrayData;
+    }
+
+    public void setArrayData(List<Integer> arrayData) {
+        arrayLen = (short) arrayData.size();
+        this.arrayData = arrayData;
+    }
+
     public ByteBuf toByteBuf() {
-        ByteBuf buf = Unpooled.buffer(14 + dataLength);
+        ByteBuf buf = Unpooled.buffer(16 + arrayLen * 4 + dataLength);
         buf.writeInt(id);
         buf.writeInt(cmd);
         buf.writeShort(subCmd);
+        buf.writeShort(arrayLen);
+        writeArray(buf);
         buf.writeInt(dataLength);
         buf.writeBytes(data);
         return buf;
@@ -61,9 +77,28 @@ public class MsgBean {
         id = buf.readInt();
         cmd = buf.readInt();
         subCmd = buf.readShort();
+        arrayLen = buf.readShort();
+        readArray(buf);
         dataLength = buf.readInt();
         data = new byte[dataLength];
         buf.readBytes(data);
         buf.release();
+    }
+
+    private void writeArray(ByteBuf buf) {
+        if (arrayLen > 0) {
+            for (int i = 0; i < arrayLen; i++) {
+                buf.writeInt(arrayData.get(i));
+            }
+        }
+    }
+
+    private void readArray(ByteBuf buf) {
+        if (arrayLen > 0) {
+            arrayData = new ArrayList<>();
+            for (int i = 0; i < arrayLen; i++) {
+                arrayData.add(buf.readInt());
+            }
+        }
     }
 }

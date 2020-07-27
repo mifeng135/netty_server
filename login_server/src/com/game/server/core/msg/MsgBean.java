@@ -4,6 +4,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2020/6/19.
  */
@@ -11,8 +14,11 @@ public class MsgBean {
     private int id;
     private int cmd;
     private short subCmd;
+    private short arrayLen;
+    private List<Integer> arrayData;
     private int dataLength;
     private byte[] data;
+
 
 
     /**
@@ -28,6 +34,7 @@ public class MsgBean {
     }
 
     public void setData(byte[] data) {
+        dataLength = data.length;
         this.data = data;
     }
 
@@ -62,12 +69,14 @@ public class MsgBean {
     public void setSubCmd(short subCmd) {
         this.subCmd = subCmd;
     }
-    public int getDataLength() {
-        return dataLength;
+
+    public List<Integer> getArrayData() {
+        return arrayData;
     }
 
-    public void setDataLength(int dataLength) {
-        this.dataLength = dataLength;
+    public void setArrayData(List<Integer> arrayData) {
+        arrayLen = (short) arrayData.size();
+        this.arrayData = arrayData;
     }
 
     public ChannelHandlerContext getContext() {
@@ -77,11 +86,14 @@ public class MsgBean {
     public void setContext(ChannelHandlerContext context) {
         this.context = context;
     }
+
     public ByteBuf toByteBuf() {
-        ByteBuf buf = Unpooled.buffer(14 + dataLength);
+        ByteBuf buf = Unpooled.buffer(16 + arrayLen * 4 + dataLength);
         buf.writeInt(id);
         buf.writeInt(cmd);
         buf.writeShort(subCmd);
+        buf.writeShort(arrayLen);
+        writeArray(buf);
         buf.writeInt(dataLength);
         buf.writeBytes(data);
         return buf;
@@ -92,12 +104,30 @@ public class MsgBean {
         id = buf.readInt();
         cmd = buf.readInt();
         subCmd = buf.readShort();
+        arrayLen = buf.readShort();
+        readArray(buf);
         dataLength = buf.readInt();
         data = new byte[dataLength];
         buf.readBytes(data);
         buf.release();
     }
 
+    private void writeArray(ByteBuf buf) {
+        if (arrayLen > 0) {
+            for (int i = 0; i < arrayLen; i++) {
+                buf.writeInt(arrayData.get(i));
+            }
+        }
+    }
+
+    private void readArray(ByteBuf buf) {
+        if (arrayLen > 0) {
+            arrayData = new ArrayList<>();
+            for (int i = 0; i < arrayLen; i++) {
+                arrayData.add(buf.readInt());
+            }
+        }
+    }
     /**
      * 这个是专门给login定义的方法
      * @param buf
