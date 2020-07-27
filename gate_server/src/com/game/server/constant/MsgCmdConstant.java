@@ -26,6 +26,11 @@ public class MsgCmdConstant {
 
 
     /**
+     * 分组广播
+     */
+    public static final short MSG_BROAD_CASE_GROUP = 5;
+
+    /**
      * 同步连接数 发送给登录服
      */
     public static final int MSG_CMD_LINK_SYN_S = 100;

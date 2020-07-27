@@ -219,14 +219,12 @@ public class RoomController {
 
         gameStartS.setPlayerList(tempList);
 
-        for (int i = 0; i < roomPlayer.size(); i++) {
-            MsgBean msgBean = new MsgBean();
-            Player pl = roomPlayer.get(i);
-            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_START_S);
-            msgBean.setId(pl.getId());
-            msgBean.setData(ProtoUtil.serialize(gameStartS));
-            SendToGate.getInstance().pushSendMsg(msgBean);
-        }
+        MsgBean msgBean = new MsgBean();
+        msgBean.setSubCmd(MsgCmdConstant.MSG_BROAD_CASE_GROUP);
+        msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_START_S);
+        msgBean.setArrayData(room.getSendPlayerList());
+        msgBean.setData(ProtoUtil.serialize(gameStartS));
+        SendToGate.getInstance().pushSendMsg(msgBean);
     }
 
     /**
@@ -284,7 +282,7 @@ public class RoomController {
         MsgBean msgBean = new MsgBean();
         msgBean.setId(id);
         if (broadcast) {
-            msgBean.setSubCmd(MsgCmdConstant.MSG_BROADCASE);
+            msgBean.setSubCmd(MsgCmdConstant.MSG_BROAD_CASE);
         }
         msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_ROOM_LIST_S);
         msgBean.setData(ProtoUtil.serialize(protoRoomListS));

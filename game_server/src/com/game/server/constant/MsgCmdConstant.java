@@ -5,10 +5,24 @@ package com.game.server.constant;
  */
 public class MsgCmdConstant {
 
-
+    /**
+     * 玩家掉线 或者 链接 状态发生变化
+     */
     public static final int MSG_CMD_SERVER_LINK_STATE_R = 2;
-    public static final short MSG_BROADCASE = 3;
 
+    /**
+     * 全部广播
+     */
+    public static final short MSG_BROAD_CASE = 3;
+
+    /**
+     * 分组广播
+     */
+    public static final short MSG_BROAD_CASE_GROUP = 5;
+
+    /**
+     * 游戏协议开始范围
+     */
     public static final int MSG_CMD_GAME_BEGIN = 4000;
 
     public static final int MSG_CMD_GAME_CREATE_ROOM_R = 4001;
@@ -21,9 +35,6 @@ public class MsgCmdConstant {
 
     public static final int MSG_CMD_GAME_ROOM_LIST_S = 4006;
     public static final int MSG_CMD_GAME_ROOM_LIST_R = 4007;
-
-//    public static final int MSG_CMD_GAME_ROOM_PLAYER_LIST_R = 4006;
-//    public static final int MSG_CMD_GAME_ROOM_PLAYER_LIST_S = 4007;
 
     public static final int MSG_CMD_GAME_READY_R = 4008;
     public static final int MSG_CMD_GAME_READY_S = 4009;

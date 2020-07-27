@@ -27,6 +27,7 @@ public class Room {
 
     private int gameState = GameConstant.GAME_STATE_WAIT;
     private List<Player> roomPlayer = new CopyOnWriteArrayList<>();
+    private List<Integer> sendPlayerList = new CopyOnWriteArrayList<>();
     private List<ProtoTilePositionSynR.TileVec> tileList = new ArrayList<>();
     private int roomId;
     private int maxPlayer = 2;
@@ -54,6 +55,7 @@ public class Room {
 
     public void addPlayer(Player player) {
         roomPlayer.add(player);
+        sendPlayerList.add(player.getId());
     }
 
     public void removePlyaer(int playerId) {
@@ -65,6 +67,9 @@ public class Room {
         }
     }
 
+    public List<Integer> getSendPlayerList() {
+        return sendPlayerList;
+    }
     public int getRoomId() {
         return roomId;
     }
