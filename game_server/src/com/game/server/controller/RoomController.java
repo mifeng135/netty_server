@@ -132,6 +132,9 @@ public class RoomController {
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_SERVER_LINK_STATE_R)
     public void linkBroke(int id, byte[] data) {
         Player removePlayer = PlayerManager.getInstance().getPlayer(id);
+        if (removePlayer == null) {
+            return;
+        }
         int roomId = removePlayer.getRoomId();
         Room room = RoomManager.getInstance().getRoom(roomId);
 
