@@ -146,7 +146,7 @@ public class Room {
                 sendAirPlaneMsg();
                 airPlaneTimeOut = null;
             }
-        }, 10, TimeUnit.SECONDS);
+        }, 15, TimeUnit.SECONDS);
     }
 
     private void sendAirPlaneMsg() {
@@ -183,6 +183,7 @@ public class Room {
             msgBean.setData(ProtoUtil.serialize(protoAirPlanePropS));
             SendToGate.getInstance().pushSendMsg(msgBean);
         }
+        sendAirPlane();
     }
 
     public void clearTimeOut() {
