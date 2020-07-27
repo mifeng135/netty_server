@@ -40,6 +40,10 @@ public class GateServerHandler extends ServerHandler {
             }
             return true;
         }
+
+        if (msgBean.getCmd() == MsgCmdConstant.MSG_HEART_BEAT_R) {
+            return true;
+        }
         return false;
     }
 

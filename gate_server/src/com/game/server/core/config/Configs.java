@@ -27,8 +27,7 @@ public class Configs {
     public static final int NETTY_BUFFER_LOW_WATERMARK_DEFAULT = 32 * 1024;
 
     /**设置超时时间  30秒为 前端为发生请求 则主动关闭连接*/
-    public static final int TCP_SERVER_IDLE_DEFAULT = 30;
-
+    public static final int TCP_SERVER_IDLE_DEFAULT = 60;
 
     public static final AttributeKey<Integer> PLAYER_INDEX =  AttributeKey.valueOf("PLAYER_INDEX");
 

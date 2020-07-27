@@ -13,7 +13,7 @@ public class GameEventHandler implements EventHandler {
 
     @Override
     public void onEvent(MsgBean msgBean) {
-        if (msgBean.getSubCmd() == MsgCmdConstant.MSG_BROADCASE) {
+        if (msgBean.getSubCmd() == MsgCmdConstant.MSG_BROAD_CASE) {
             ByteBuf sendBuf = msgBean.packClientMsg();
             ConnectionManager.send2AllClient(sendBuf);
         } else {

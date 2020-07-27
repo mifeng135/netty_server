@@ -8,6 +8,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.*;
+import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.CharsetUtil;
 import org.apache.log4j.Logger;
@@ -67,7 +68,7 @@ public abstract class ServerHandler extends ChannelInboundHandlerAdapter {
     // process client over time
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        if (evt instanceof IdleStateHandler) {
+        if (evt instanceof IdleStateEvent) {
             ctx.close();
             ConnectionManager.mfdChannelGroup.remove(ctx.channel().attr(Configs.PLAYER_INDEX).get());
             channelClose(ctx);
