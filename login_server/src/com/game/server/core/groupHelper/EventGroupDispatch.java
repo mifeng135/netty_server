@@ -22,12 +22,14 @@ public abstract class EventGroupDispatch extends Thread {
     public void run() {
         while (true) {
             try {
-                MsgBean msgBean = mMsgQueue.poll();
-                if (msgBean == null) {
-                    Thread.sleep(100);
-                    continue;
+                for (int i = 0; i < 100; i++) {
+                    MsgBean msgBean = mMsgQueue.poll();
+                    if (msgBean == null) {
+                        break;
+                    }
+                    dispatch(msgBean);
                 }
-                dispatch(msgBean);
+                Thread.sleep(10);
             } catch (Exception e) {
 
             }
