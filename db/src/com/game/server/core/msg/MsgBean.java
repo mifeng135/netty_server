@@ -12,8 +12,9 @@ import java.util.List;
 public class MsgBean {
     private int id;
     private int cmd;
-    private int subCmd;
+    private short subCmd;
     private short arrayLen;
+    private byte serverKey;
     private List<Integer> arrayData;
     private int dataLength;
     private byte[] data;
@@ -44,11 +45,11 @@ public class MsgBean {
     }
 
 
-    public int getSubCmd() {
+    public short getSubCmd() {
         return subCmd;
     }
 
-    public void setSubCmd(int subCmd) {
+    public void setSubCmd(short subCmd) {
         this.subCmd = subCmd;
     }
 
@@ -60,12 +61,20 @@ public class MsgBean {
         arrayLen = (short) arrayData.size();
         this.arrayData = arrayData;
     }
+    public byte getServerKey() {
+        return serverKey;
+    }
+
+    public void setServerKey(byte serverKey) {
+        this.serverKey = serverKey;
+    }
 
     public ByteBuf toByteBuf() {
-        ByteBuf buf = Unpooled.buffer(16 + arrayLen * 4 + dataLength);
+        ByteBuf buf = Unpooled.buffer(17 + arrayLen * 4 + dataLength);
         buf.writeInt(id);
         buf.writeInt(cmd);
         buf.writeShort(subCmd);
+        buf.writeByte(serverKey);
         buf.writeShort(arrayLen);
         writeArray(buf);
         buf.writeInt(dataLength);
@@ -78,6 +87,7 @@ public class MsgBean {
         id = buf.readInt();
         cmd = buf.readInt();
         subCmd = buf.readShort();
+        serverKey = buf.readByte();
         arrayLen = buf.readShort();
         readArray(buf);
         dataLength = buf.readInt();
