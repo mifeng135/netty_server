@@ -29,7 +29,7 @@ public class GameServer {
 
         for (int i = 0; i < ServerConfig.RECEIVE_SERVER_LIST.size(); i++) {
             ServerInfo serverInfo = ServerConfig.RECEIVE_SERVER_LIST.get(i);
-            Receive receiveSocket = new Receive(serverInfo.getIp(), serverInfo.getPort(), serverInfo.getServerKey(), new GameAdapter());
+            Receive receiveSocket = new Receive(serverInfo.getIp(), serverInfo.getPort(), serverInfo.getServerKey(), serverInfo.getAdapter());
             receiveSocket.start();
             ReceiveSocketManager.getInstance().putSocket(serverInfo.getServerKey(), receiveSocket);
         }

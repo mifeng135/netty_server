@@ -21,7 +21,6 @@ public class DBServer {
 
     public void start() {
 
-
         for (int i = 0; i < ServerConfig.SEND_SERVER_LIST.size(); i++) {
             ServerInfo serverInfo = ServerConfig.SEND_SERVER_LIST.get(i);
             Send sendSocket = new Send(serverInfo.getIp(), serverInfo.getPort());
@@ -31,7 +30,7 @@ public class DBServer {
 
         for (int i = 0; i < ServerConfig.RECEIVE_SERVER_LIST.size(); i++) {
             ServerInfo serverInfo = ServerConfig.RECEIVE_SERVER_LIST.get(i);
-            Receive receiveSocket = new Receive(serverInfo.getIp(), serverInfo.getPort(), serverInfo.getServerKey(), new DBAdapter());
+            Receive receiveSocket = new Receive(serverInfo.getIp(), serverInfo.getPort(), serverInfo.getServerKey(), serverInfo.getAdapter());
             receiveSocket.start();
             ReceiveSocketManager.getInstance().putSocket(serverInfo.getServerKey(), receiveSocket);
         }

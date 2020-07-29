@@ -1,5 +1,6 @@
 package com.game.server.serverConfig;
 
+import com.game.server.adapter.DBAdapter;
 import com.game.server.core.config.ServerInfo;
 
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class ServerConfig {
     );
 
     public static final List<ServerInfo> RECEIVE_SERVER_LIST = Arrays.asList(
-            new ServerInfo("tcp://127.0.0.1", 7002, GATE_DB_SERVER_KEY, "gate_db")
+            new ServerInfo("tcp://127.0.0.1", 7002, GATE_DB_SERVER_KEY, "gate_db", new DBAdapter())
     );
 
 }
