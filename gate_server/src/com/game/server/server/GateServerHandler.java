@@ -3,13 +3,13 @@ package com.game.server.server;
 import com.game.server.constant.MsgCmdConstant;
 import com.game.server.core.config.Configs;
 import com.game.server.core.connect.ConnectionManager;
+import com.game.server.core.manager.SendSocketManager;
 import com.game.server.core.msg.MsgBean;
 import com.game.server.core.netty.ServerHandler;
 import com.game.server.core.proto.ProtoUtil;
 import com.game.server.proto.ProtoLinkStateS;
 import com.game.server.proto.ProtoLoginR;
-import com.game.server.socket.db.SendToDB;
-import com.game.server.socket.game.SendToGame;
+import com.game.server.serverConfig.ServerConfig;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -50,9 +50,9 @@ public class GateServerHandler extends ServerHandler {
     @Override
     public void dispatchMsg(MsgBean msgBean) {
         if (msgBean.getCmd() > MsgCmdConstant.MSG_CMD_DB_BEGIN && msgBean.getCmd() < MsgCmdConstant.MSG_CMD_DB_END) {
-            SendToDB.getInstance().pushSendMsg(msgBean);
+            SendSocketManager.getInstance().getSocket(ServerConfig.GATE_DB_SERVER_KEY).pushSendMsg(msgBean);
         } else if (msgBean.getCmd() > MsgCmdConstant.MSG_CMD_GAME_BEGIN && msgBean.getCmd() < MsgCmdConstant.MSG_CMD_GAME_END) {
-            SendToGame.getInstance().pushSendMsg(msgBean);
+            SendSocketManager.getInstance().getSocket(ServerConfig.GATE_GAME_SERVER_KEY).pushSendMsg(msgBean);
         }
     }
 
@@ -69,7 +69,7 @@ public class GateServerHandler extends ServerHandler {
         msgBean.setId(id);
         msgBean.setData(ProtoUtil.serialize(protoLinkStateS));
         msgBean.setCmd(MsgCmdConstant.MSG_CMD_SERVER_LINK_STATE_S);
-        SendToGame.getInstance().pushSendMsg(msgBean);
+        SendSocketManager.getInstance().getSocket(ServerConfig.GATE_GAME_SERVER_KEY).pushSendMsg(msgBean);
     }
 
     private void samePlayerLogin(Channel channel) {

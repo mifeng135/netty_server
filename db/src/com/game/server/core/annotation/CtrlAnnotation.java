@@ -1,5 +1,6 @@
 package com.game.server.core.annotation;
 
+import com.game.server.core.msg.MsgBean;
 import com.game.server.serverConfig.ServerConfig;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
@@ -99,4 +100,19 @@ public class CtrlAnnotation {
             e.printStackTrace();
         }
     }
+
+    public void invokeMethod(int cmd, MsgBean msgBean) {
+        Method method = methodMap.get(cmd);
+        if (method == null) {
+            return;
+        }
+        String declaringClassName = method.getDeclaringClass().getName();
+        Object oc = classMap.get(declaringClassName);
+        try {
+            method.invoke(oc, msgBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

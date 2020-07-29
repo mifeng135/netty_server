@@ -12,7 +12,7 @@ import com.game.server.room.Player;
 import com.game.server.room.PlayerManager;
 import com.game.server.room.Room;
 import com.game.server.room.RoomManager;
-import com.game.server.socket.SendToGate;
+import com.game.server.util.SocketUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +28,12 @@ public class GameController {
 
     /**
      * 玩家放置炸弹
-     *
-     * @param id
-     * @param data
      */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_PLAYER_BOMB_PLACE_R)
-    public void playerBombPlace(int id, byte[] data) {
+    public void playerBombPlace(MsgBean msgBean) {
 
-        ProtoBombPlaceR protoBombPlaceR = ProtoUtil.deserializer(data, ProtoBombPlaceR.class);
-        Room room = RoomManager.getInstance().getRoomByPlayerId(id);
-        List<Player> playerList = room.getRoomPlayer();
+        ProtoBombPlaceR protoBombPlaceR = ProtoUtil.deserializer(msgBean.getData(), ProtoBombPlaceR.class);
+        Room room = RoomManager.getInstance().getRoomByPlayerId(msgBean.getId());
 
         ProtoBombPlaceS protoBombPlaceS = new ProtoBombPlaceS();
         protoBombPlaceS.setX(protoBombPlaceR.getX());
@@ -45,72 +41,43 @@ public class GameController {
         protoBombPlaceS.setPower(protoBombPlaceR.getPower());
         protoBombPlaceS.setPlayerId(protoBombPlaceR.getPlayerId());
 
-        for (int i = 0; i < playerList.size(); i++) {
-            Player pl = playerList.get(i);
-            MsgBean bean = new MsgBean();
-            bean.setId(pl.getId());
-            bean.setCmd(MsgCmdConstant.MSG_CMD_PLAYER_BOMB_PLACE_S);
-            bean.setData(ProtoUtil.serialize(protoBombPlaceS));
-            SendToGate.getInstance().pushSendMsg(bean);
-        }
+        SocketUtil.sendToRoom(MsgCmdConstant.MSG_CMD_PLAYER_BOMB_PLACE_S,protoBombPlaceS,room);
     }
-
 
     /**
      * 玩家同步位置
-     *
-     * @param id
-     * @param data
      */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_PLAYER_SYN_POSITION_R)
-    public void playerSynPosition(int id, byte[] data) {
+    public void playerSynPosition(MsgBean msgBean) {
 
-        ProtoPlayerSynPositionR protoPlayerPositionR = ProtoUtil.deserializer(data, ProtoPlayerSynPositionR.class);
-        Room room = RoomManager.getInstance().getRoomByPlayerId(id);
-
-
+        ProtoPlayerSynPositionR protoPlayerPositionR = ProtoUtil.deserializer(msgBean.getData(), ProtoPlayerSynPositionR.class);
+        Room room = RoomManager.getInstance().getRoomByPlayerId(msgBean.getId());
         if (room == null) {
             return;
         }
-        List<Player> playerList = room.getRoomPlayer();
-
-        Player player = PlayerManager.getInstance().getPlayer(id);
+        Player player = PlayerManager.getInstance().getPlayer(msgBean.getId());
         player.setX(protoPlayerPositionR.getX());
         player.setY(protoPlayerPositionR.getY());
 
         ProtoPlayerSynPositionS protoPlayerSynPositionS = new ProtoPlayerSynPositionS();
-        protoPlayerSynPositionS.setId(id);
+        protoPlayerSynPositionS.setId(msgBean.getId());
         protoPlayerSynPositionS.setX(protoPlayerPositionR.getX());
         protoPlayerSynPositionS.setY(protoPlayerPositionR.getY());
         protoPlayerSynPositionS.setDirection(protoPlayerPositionR.getDirection());
 
-        for (int i = 0; i < playerList.size(); i++) {
-            Player pl = playerList.get(i);
-            if (pl.getId() == id) {
-                continue;
-            }
-            MsgBean bean = new MsgBean();
-            bean.setId(pl.getId());
-            bean.setCmd(MsgCmdConstant.MSG_CMD_PLAYER_SYN_POSITION_S);
-            bean.setData(ProtoUtil.serialize(protoPlayerSynPositionS));
-            SendToGate.getInstance().pushSendMsg(bean);
-        }
+        SocketUtil.sendToRoomExcept(MsgCmdConstant.MSG_CMD_PLAYER_SYN_POSITION_S,protoPlayerSynPositionS,room,msgBean.getId());
     }
 
 
     /**
      * 炸弹爆炸的时候产生道具
-     * @param id
-     * @param data
      */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_CREATE_PROP_R)
-    public void createProp(int id, byte[] data) {
-        ProtoPropCreatorR protoPropCreatorR = ProtoUtil.deserializer(data, ProtoPropCreatorR.class);
+    public void createProp(MsgBean msgBean) {
+        ProtoPropCreatorR protoPropCreatorR = ProtoUtil.deserializer(msgBean.getData(), ProtoPropCreatorR.class);
 
         Random random = new Random();
-
-        Room room = RoomManager.getInstance().getRoomByPlayerId(id);
-        List<Player> playerList = room.getRoomPlayer();
+        Room room = RoomManager.getInstance().getRoomByPlayerId(msgBean.getId());
 
         int value = random.nextInt(5);
         if (value > 3) {
@@ -129,22 +96,18 @@ public class GameController {
 
             ProtoPropCreatorS protoPropCreatorS = new ProtoPropCreatorS();
             protoPropCreatorS.setPropList(tempList);
-
-            for (int i = 0; i < playerList.size(); i++) {
-                Player player = playerList.get(i);
-                MsgBean msgBean = new MsgBean();
-                msgBean.setId(player.getId());
-                msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_CREATE_PROP_S);
-                msgBean.setData(ProtoUtil.serialize(protoPropCreatorS));
-                SendToGate.getInstance().pushSendMsg(msgBean);
-            }
+            SocketUtil.sendToRoom(MsgCmdConstant.MSG_CMD_GAME_CREATE_PROP_S,protoPropCreatorS,room);
         }
     }
 
+    /**
+     * 同步地图信息
+     * @param msgBean
+     */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_TILE_POSITION_SYN_R)
-    public void tileSyn(int id, byte[] data) {
-        ProtoTilePositionSynR protoTilePositionSynR = ProtoUtil.deserializer(data, ProtoTilePositionSynR.class);
-        Room room = RoomManager.getInstance().getRoomByPlayerId(id);
+    public void tileSyn(MsgBean msgBean) {
+        ProtoTilePositionSynR protoTilePositionSynR = ProtoUtil.deserializer(msgBean.getData(), ProtoTilePositionSynR.class);
+        Room room = RoomManager.getInstance().getRoomByPlayerId(msgBean.getId());
         room.setMapHeight(protoTilePositionSynR.getMapHeight());
         room.setMapWidth(protoTilePositionSynR.getMapWidth());
         room.setTileList(protoTilePositionSynR.getTileList());
@@ -152,44 +115,25 @@ public class GameController {
 
     /**
      * 玩家吃道具
-     * @param id
-     * @param data
      */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_GAME_TRIGGER_PROP_R)
-    public void triggerProp(int id, byte[] data) {
-        ProtoTriggerPropR protoTriggerPropR = ProtoUtil.deserializer(data, ProtoTriggerPropR.class);
-        Room room = RoomManager.getInstance().getRoomByPlayerId(id);
-        List<Player> playerList = room.getRoomPlayer();
-
-
+    public void triggerProp(MsgBean msgBean) {
+        ProtoTriggerPropR protoTriggerPropR = ProtoUtil.deserializer(msgBean.getData(), ProtoTriggerPropR.class);
+        Room room = RoomManager.getInstance().getRoomByPlayerId(msgBean.getId());
         ProtoTriggerPropS protoTriggerPropS = new ProtoTriggerPropS();
         protoTriggerPropS.setX(protoTriggerPropR.getX());
         protoTriggerPropS.setY(protoTriggerPropR.getY());
-
-        for (int i = 0; i < playerList.size(); i++) {
-            Player player = playerList.get(i);
-            if (player.getId() == id) {
-                continue;
-            }
-            MsgBean msgBean = new MsgBean();
-            msgBean.setId(player.getId());
-            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_TRIGGER_PROP_S);
-            msgBean.setData(ProtoUtil.serialize(protoTriggerPropS));
-            SendToGate.getInstance().pushSendMsg(msgBean);
-        }
+        SocketUtil.sendToRoomExcept(MsgCmdConstant.MSG_CMD_GAME_TRIGGER_PROP_S,protoTriggerPropS,room,msgBean.getId());
     }
 
     /**
      * 炸弹爆炸
-     *
-     * @param id
-     * @param data
      */
     @CtrlCmd(cmd = MsgCmdConstant.MSG_CMD_BOMB_EXPLODE_R)
-    public void bombExplode(int id, byte[] data) {
-        ProtoBombExplodeR protoBombExplodeR = ProtoUtil.deserializer(data, ProtoBombExplodeR.class);
+    public void bombExplode(MsgBean msgBean) {
+        ProtoBombExplodeR protoBombExplodeR = ProtoUtil.deserializer(msgBean.getData(), ProtoBombExplodeR.class);
         List<ProtoBombExplodeR.Vec> explodePath = protoBombExplodeR.getExplodePath();
-        Room room = RoomManager.getInstance().getRoomByPlayerId(id);
+        Room room = RoomManager.getInstance().getRoomByPlayerId(msgBean.getId());
         List<Player> playerList = room.getRoomPlayer();
 
         List<Integer> deadList = new ArrayList<>();
@@ -210,22 +154,15 @@ public class GameController {
         if (deadList.size() > 0) {
             ProtoBombExplodeS protoBombExplodeS = new ProtoBombExplodeS();
             protoBombExplodeS.setDeadList(deadList);
-
-
             int winId = -1;
-
             for (int i = 0; i < playerList.size(); i++) {
-
                 Player player = playerList.get(i);
                 if (!deadList.contains(player.getId())) {
                     winId = player.getId();
                 }
-                MsgBean msgBean = new MsgBean();
-                msgBean.setId(player.getId());
-                msgBean.setCmd(MsgCmdConstant.MSG_CMD_BOMB_EXPLODE_S);
-                msgBean.setData(ProtoUtil.serialize(protoBombExplodeS));
-                SendToGate.getInstance().pushSendMsg(msgBean);
             }
+
+            SocketUtil.sendToRoom(MsgCmdConstant.MSG_CMD_BOMB_EXPLODE_S,protoBombExplodeS,room);
             room.setWinId(winId);
             room.clearTimeOut();
             room.gameOver();

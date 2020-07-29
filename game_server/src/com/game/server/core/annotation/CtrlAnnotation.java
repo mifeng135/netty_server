@@ -1,6 +1,7 @@
 package com.game.server.core.annotation;
 
 import com.game.server.core.config.Configs;
+import com.game.server.core.msg.MsgBean;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -80,12 +81,7 @@ public class CtrlAnnotation {
         }
     }
 
-    /**
-     * call method
-     * @param cmd
-     * @param byteBuf receive data
-     */
-    public void invokeMethod(int cmd, int playerIndex, byte[] byteBuf) {
+    public void invokeMethod(int cmd, MsgBean msgBean) {
         Method method = methodMap.get(cmd);
         if (method == null) {
             return;
@@ -96,7 +92,7 @@ public class CtrlAnnotation {
             return;
         }
         try {
-            method.invoke(oc, playerIndex, byteBuf);
+            method.invoke(oc, msgBean);
         } catch (Exception e) {
             e.printStackTrace();
         }

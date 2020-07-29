@@ -10,6 +10,6 @@ import com.game.server.core.msg.MsgBean;
 public class DBEventHandler implements EventHandler {
     @Override
     public void onEvent(MsgBean msgBean) {
-        CtrlAnnotation.getInstance().invokeMethod(msgBean.getCmd(), msgBean.getId(), msgBean.getData());
+        CtrlAnnotation.getInstance().invokeMethod(msgBean.getCmd(), msgBean);
     }
 }

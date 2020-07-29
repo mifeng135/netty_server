@@ -4,12 +4,10 @@ package com.game.server.room;
 import com.game.server.constant.GameConstant;
 import com.game.server.constant.MsgCmdConstant;
 import com.game.server.core.coreUtil.TimerHolder;
-import com.game.server.core.msg.MsgBean;
-import com.game.server.core.proto.ProtoUtil;
 import com.game.server.proto.ProtoAirPlanePropS;
 import com.game.server.proto.ProtoGameOverS;
 import com.game.server.proto.ProtoTilePositionSynR;
-import com.game.server.socket.SendToGate;
+import com.game.server.util.SocketUtil;
 import io.netty.util.Timeout;
 import io.netty.util.TimerTask;
 
@@ -27,7 +25,6 @@ public class Room {
 
     private int gameState = GameConstant.GAME_STATE_WAIT;
     private List<Player> roomPlayer = new CopyOnWriteArrayList<>();
-    private List<Integer> sendPlayerList = new CopyOnWriteArrayList<>();
     private List<ProtoTilePositionSynR.TileVec> tileList = new ArrayList<>();
     private int roomId;
     private int maxPlayer = 2;
@@ -37,6 +34,9 @@ public class Room {
     private int mapHeight;
     private Timeout airPlaneTimeOut;
 
+    public Room() {
+
+    }
     public List<Player> getRoomPlayer() {
         return roomPlayer;
     }
@@ -55,7 +55,6 @@ public class Room {
 
     public void addPlayer(Player player) {
         roomPlayer.add(player);
-        sendPlayerList.add(player.getId());
     }
 
     public void removePlyaer(int playerId) {
@@ -67,9 +66,6 @@ public class Room {
         }
     }
 
-    public List<Integer> getSendPlayerList() {
-        return sendPlayerList;
-    }
     public int getRoomId() {
         return roomId;
     }
@@ -121,24 +117,12 @@ public class Room {
         this.mapRes = mapRes;
     }
 
-    public List<ProtoTilePositionSynR.TileVec> getTileList() {
-        return tileList;
-    }
-
     public void setTileList(List<ProtoTilePositionSynR.TileVec> tileList) {
         this.tileList = tileList;
     }
 
-    public int getMapHeight() {
-        return mapHeight;
-    }
-
     public void setMapHeight(int mapHeight) {
         this.mapHeight = mapHeight;
-    }
-
-    public int getMapWidth() {
-        return mapWidth;
     }
 
     public void setMapWidth(int mapWidth) {
@@ -180,15 +164,7 @@ public class Room {
 
         ProtoAirPlanePropS protoAirPlanePropS = new ProtoAirPlanePropS();
         protoAirPlanePropS.setPropList(tempList);
-
-        for (int i = 0; i < roomPlayer.size(); i++) {
-            Player player = roomPlayer.get(i);
-            MsgBean msgBean = new MsgBean();
-            msgBean.setId(player.getId());
-            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_AIRPLANE_PROP_S);
-            msgBean.setData(ProtoUtil.serialize(protoAirPlanePropS));
-            SendToGate.getInstance().pushSendMsg(msgBean);
-        }
+        SocketUtil.sendToRoom(MsgCmdConstant.MSG_CMD_GAME_AIRPLANE_PROP_S, protoAirPlanePropS, this);
         sendAirPlane();
     }
 
@@ -211,14 +187,7 @@ public class Room {
     private void sendGameOverMsg() {
         ProtoGameOverS protoGameOverS = new ProtoGameOverS();
         protoGameOverS.setWinId(getWinId());
-        for (int i = 0; i < roomPlayer.size(); i++) {
-            Player player = roomPlayer.get(i);
-            MsgBean msgBean = new MsgBean();
-            msgBean.setId(player.getId());
-            msgBean.setCmd(MsgCmdConstant.MSG_CMD_GAME_OVER_S);
-            msgBean.setData(ProtoUtil.serialize(protoGameOverS));
-            SendToGate.getInstance().pushSendMsg(msgBean);
-        }
+        SocketUtil.sendToRoom(MsgCmdConstant.MSG_CMD_GAME_OVER_S, protoGameOverS, this);
         clear();
     }
 

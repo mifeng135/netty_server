@@ -2,7 +2,7 @@ package com.game.server.core.netty;
 
 import com.game.server.core.config.Configs;
 import com.game.server.core.msg.MsgBean;
-import com.game.server.eventGroup.EventDispatch;
+import com.game.server.eventGroup.login.EventDispatch;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;

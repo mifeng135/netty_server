@@ -3,11 +3,11 @@ package com.game.server.schedule;
 
 import com.game.server.constant.MsgCmdConstant;
 import com.game.server.core.connect.ConnectionManager;
+import com.game.server.core.manager.SendSocketManager;
 import com.game.server.core.msg.MsgBean;
 import com.game.server.core.proto.ProtoUtil;
 import com.game.server.proto.ProtoLinkSynS;
 import com.game.server.serverConfig.ServerConfig;
-import com.game.server.socket.login.SendToLogin;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -33,7 +33,8 @@ public class SocketConnectCount {
                 MsgBean msgBean = new MsgBean();
                 msgBean.setCmd(MsgCmdConstant.MSG_CMD_LINK_SYN_S);
                 msgBean.setData(ProtoUtil.serialize(protoLinkSynS));
-                SendToLogin.getInstance().pushSendMsg(msgBean);
+
+                SendSocketManager.getInstance().getSocket(ServerConfig.GATE_LOGIN_SERVER_KEY).pushSendMsg(msgBean);
             }
         }, 0, 30, TimeUnit.SECONDS);
     }
