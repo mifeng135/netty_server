@@ -1,4 +1,4 @@
-package com.game.server.eventGroup.room;
+package com.game.server.eventGroup;
 
 import com.game.server.core.annotation.CtrlAnnotation;
 import com.game.server.core.groupHelper.EventHandler;

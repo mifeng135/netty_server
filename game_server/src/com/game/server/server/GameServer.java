@@ -1,16 +1,15 @@
 package com.game.server.server;
 
-import com.game.server.adapter.GameAdapter;
+import com.game.server.constant.MsgRegionConstant;
 import com.game.server.core.config.ServerInfo;
+import com.game.server.core.groupHelper.EventThreadGroup;
 import com.game.server.core.manager.ReceiveSocketManager;
 import com.game.server.core.manager.SendSocketManager;
 import com.game.server.core.redis.RedisManager;
 import com.game.server.core.zero.Receive;
 import com.game.server.core.zero.Send;
-import com.game.server.eventGroup.game.GameEventGroup;
-import com.game.server.eventGroup.game.GameEventHandler;
-import com.game.server.eventGroup.room.RoomEventGroup;
-import com.game.server.eventGroup.room.RoomEventHandler;
+import com.game.server.eventGroup.GameEventHandler;
+import com.game.server.eventGroup.RoomEventHandler;
 import com.game.server.serverConfig.ServerConfig;
 
 /**
@@ -37,9 +36,9 @@ public class GameServer {
         //启动redis
         RedisManager.getInstance();
 
-        // 开辟1个线程去处理game
-        new GameEventGroup(GameEventHandler.class, 1);
-        // 开辟1个线程去处理room
-        new RoomEventGroup(RoomEventHandler.class, 1);
+        // 开启1个线程去处理game
+        new EventThreadGroup(MsgRegionConstant.MSG_REGION_GAME, GameEventHandler.class, 1);
+        // 开启1个线程去处理room
+        new EventThreadGroup(MsgRegionConstant.MSG_REGION_ROOM, RoomEventHandler.class, 1);
     }
 }

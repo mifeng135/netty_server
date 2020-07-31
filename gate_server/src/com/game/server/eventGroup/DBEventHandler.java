@@ -1,4 +1,4 @@
-package com.game.server.eventGroup.db;
+package com.game.server.eventGroup;
 
 import com.game.server.core.connect.ConnectionManager;
 import com.game.server.core.groupHelper.EventHandler;

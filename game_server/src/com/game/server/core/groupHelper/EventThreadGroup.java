@@ -6,7 +6,7 @@ package com.game.server.core.groupHelper;
  */
 
 
-public abstract class EventThreadGroup {
+public class EventThreadGroup {
 
     private String mPrefix = "";
     /**
@@ -14,15 +14,14 @@ public abstract class EventThreadGroup {
      */
     private final int mThreadCount;
     private MessageGroup mMessageGroup;
+    private String regionName;
 
-    public EventThreadGroup(Class<? extends EventHandler> handler, int count) {
+    public EventThreadGroup(String name, Class<? extends EventHandler> handler, int count) {
         mThreadCount = count;
+        regionName = name;
         initMessageGroup();
         initTaskThread(handler);
     }
-
-    /**当前线程组要处理区间消息的名称*/
-    protected abstract String getRegionName();
 
     private void initMessageGroup() {
         mMessageGroup = new MessageGroup(mThreadCount, mPrefix);
@@ -30,7 +29,7 @@ public abstract class EventThreadGroup {
             String name = mPrefix + i;
             mMessageGroup.createQueueByTag(name);
         }
-        MessageDispatchRegion.getInstance().addRegion(getRegionName(), mMessageGroup);
+        MessageDispatchRegion.getInstance().addRegion(regionName, mMessageGroup);
     }
 
     private void initTaskThread(Class<? extends EventHandler> handler) {

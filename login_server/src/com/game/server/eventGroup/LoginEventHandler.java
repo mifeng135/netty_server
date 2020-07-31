@@ -1,4 +1,4 @@
-package com.game.server.eventGroup.login;
+package com.game.server.eventGroup;
 
 
 import com.game.server.core.annotation.CtrlAnnotation;

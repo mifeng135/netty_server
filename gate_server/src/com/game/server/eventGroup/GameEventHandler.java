@@ -1,4 +1,4 @@
-package com.game.server.eventGroup.game;
+package com.game.server.eventGroup;
 
 import com.game.server.constant.MsgCmdConstant;
 import com.game.server.core.connect.ConnectionManager;

@@ -1,16 +1,14 @@
 package com.game.server;
 
-import com.game.server.adapter.DBAdapter;
-import com.game.server.adapter.GameAdapter;
+import com.game.server.constant.MsgRegionConstant;
 import com.game.server.core.config.ServerInfo;
+import com.game.server.core.groupHelper.EventThreadGroup;
 import com.game.server.core.manager.ReceiveSocketManager;
 import com.game.server.core.manager.SendSocketManager;
 import com.game.server.core.zero.Receive;
 import com.game.server.core.zero.Send;
-import com.game.server.eventGroup.db.DBEventGroup;
-import com.game.server.eventGroup.db.DBEventHandler;
-import com.game.server.eventGroup.game.GameEventGroup;
-import com.game.server.eventGroup.game.GameEventHandler;
+import com.game.server.eventGroup.DBEventHandler;
+import com.game.server.eventGroup.GameEventHandler;
 import com.game.server.schedule.SocketConnectCount;
 import com.game.server.server.GateServer;
 import com.game.server.serverConfig.ServerConfig;
@@ -35,8 +33,11 @@ public class Main {
             receiveSocket.start();
             ReceiveSocketManager.getInstance().putSocket(serverInfo.getServerKey(), receiveSocket);
         }
-        new DBEventGroup(DBEventHandler.class, 1);
-        new GameEventGroup(GameEventHandler.class, 1);
+
+        //开启一条线程处理收到的db消息
+        new EventThreadGroup(MsgRegionConstant.MSG_REGION_DB, DBEventHandler.class, 1);
+        //开启一条线程处理收到的game消息
+        new EventThreadGroup(MsgRegionConstant.MSG_REGION_GAME, GameEventHandler.class, 1);
 
         GateServer gateServer = new GateServer(ServerConfig.SERVER_IP, ServerConfig.SERVER_PORT);
         gateServer.doInitNetty();

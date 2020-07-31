@@ -3,6 +3,7 @@ package com.game.server.server;
 import com.game.server.core.annotation.CtrlAnnotation;
 import com.game.server.core.annotation.SqlAnnotation;
 import com.game.server.core.config.ServerInfo;
+import com.game.server.core.groupHelper.EventThreadGroup;
 import com.game.server.core.manager.ReceiveSocketManager;
 import com.game.server.core.manager.SendSocketManager;
 import com.game.server.core.netty.NettyServer;
@@ -10,10 +11,8 @@ import com.game.server.core.redis.RedisManager;
 import com.game.server.core.sql.MysqlBatchHandle;
 import com.game.server.core.zero.Receive;
 import com.game.server.core.zero.Send;
-import com.game.server.eventGroup.login.LoginEventGroup;
-import com.game.server.eventGroup.login.LoginEventHandler;
-import com.game.server.eventGroup.syn.SynEventGroup;
-import com.game.server.eventGroup.syn.SynEventHandler;
+import com.game.server.eventGroup.LoginEventHandler;
+import com.game.server.eventGroup.SynEventHandler;
 import com.game.server.serverConfig.ServerConfig;
 
 /**
@@ -38,10 +37,10 @@ public class LoginServer {
         }
 
         /**开启2条线程去处理登录*/
-        new LoginEventGroup(LoginEventHandler.class, 2);
+        new EventThreadGroup(ServerConfig.REGION_LOGIN, LoginEventHandler.class, 2);
 
         /**开启1条线程处理gate同步消息*/
-        new SynEventGroup(SynEventHandler.class, 1);
+        new EventThreadGroup(ServerConfig.REGION_SYN, SynEventHandler.class, 1);
 
         /**启动redis mysql 批处理*/
         RedisManager.getInstance();

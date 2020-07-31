@@ -3,7 +3,7 @@ package com.game.server.core.groupHelper;
 /**
  * Created by Administrator on 2020/6/18.
  */
-public abstract class EventThreadGroup {
+public class EventThreadGroup {
 
     private String mPrefix = "";
     /**
@@ -13,13 +13,14 @@ public abstract class EventThreadGroup {
 
     private MessageGroup mMessageGroup;
 
-    public EventThreadGroup(Class<? extends EventHandler> handler, int count) {
+    private String regionName;
+
+    public EventThreadGroup(String name,Class<? extends EventHandler> handler, int count) {
         mThreadCount = count;
+        regionName = name;
         initMessageGroup();
         initTaskThread(handler);
     }
-
-    protected abstract String getRegionName();
 
     private void initMessageGroup() {
         mMessageGroup = new MessageGroup(mThreadCount, mPrefix);
@@ -27,7 +28,7 @@ public abstract class EventThreadGroup {
             String name = mPrefix + i;
             mMessageGroup.createQueueByTag(name);
         }
-        MessageDispatchRegion.getInstance().addRegion(getRegionName(), mMessageGroup);
+        MessageDispatchRegion.getInstance().addRegion(regionName, mMessageGroup);
     }
 
     private void initTaskThread(Class<? extends EventHandler> handler) {

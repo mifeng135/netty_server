@@ -1,16 +1,17 @@
 package com.game.server.server;
 
 import com.game.server.adapter.DBAdapter;
+import com.game.server.constant.MsgRegionConstant;
 import com.game.server.core.annotation.CtrlAnnotation;
 import com.game.server.core.annotation.SqlAnnotation;
 import com.game.server.core.config.ServerInfo;
+import com.game.server.core.groupHelper.EventThreadGroup;
 import com.game.server.core.manager.ReceiveSocketManager;
 import com.game.server.core.manager.SendSocketManager;
 import com.game.server.core.redis.RedisManager;
 import com.game.server.core.sql.MysqlBatchHandle;
 import com.game.server.core.zero.Receive;
 import com.game.server.core.zero.Send;
-import com.game.server.eventGroup.DBEventGroup;
 import com.game.server.eventGroup.DBEventHandler;
 import com.game.server.serverConfig.ServerConfig;
 
@@ -40,7 +41,7 @@ public class DBServer {
         SqlAnnotation.getInstance();
         MysqlBatchHandle.getInstance();
 
-        new DBEventGroup(DBEventHandler.class, 2);
+        new EventThreadGroup(MsgRegionConstant.MSG_REGION_DB, DBEventHandler.class, 2);
 
         System.out.println("db start success");
     }
