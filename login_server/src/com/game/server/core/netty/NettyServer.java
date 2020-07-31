@@ -48,6 +48,8 @@ public class NettyServer {
                 .childOption(ChannelOption.SO_KEEPALIVE, Configs.TCP_SO_KEEP_ALIVE_DEFAULT)
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 
+
+        final HttpHandler httpHandler = new HttpHandler();
         mServerBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
             @Override
             protected void initChannel(SocketChannel channel) throws Exception {
@@ -55,7 +57,7 @@ public class NettyServer {
                 pipeline.addLast(new HttpContentCompressor());
                 pipeline.addLast(new HttpServerCodec());
                 pipeline.addLast(new HttpObjectAggregator(65536));
-                pipeline.addLast("httpHandler", new HttpHandler());
+                pipeline.addLast("httpHandler", httpHandler);
             }
         });
 

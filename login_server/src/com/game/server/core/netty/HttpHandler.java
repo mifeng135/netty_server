@@ -42,8 +42,6 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            request.release();
         }
     }
 

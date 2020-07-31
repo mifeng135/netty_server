@@ -8,8 +8,11 @@ import com.game.server.core.netty.ServerHandler;
  */
 public class GateServer extends NettyServer {
 
+    private final ServerHandler serverHandler;
+
     public GateServer(String ip, int port) {
         super(ip, port);
+        serverHandler = new GateServerHandler();
     }
 
     @Override
@@ -19,6 +22,6 @@ public class GateServer extends NettyServer {
 
     @Override
     public ServerHandler getServerHandler() {
-        return new GateServerHandler();
+        return serverHandler;
     }
 }
