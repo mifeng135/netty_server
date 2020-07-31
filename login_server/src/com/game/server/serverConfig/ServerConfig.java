@@ -26,7 +26,7 @@ public class ServerConfig {
     public static final String REGION_SYN = "syn";
 
 
-    public static final byte GATE_LOGIN_SERVER_KEY = 2;
+    public static final int GATE_LOGIN_SERVER_KEY = 2;
 
     public static final List<ServerInfo> SEND_SERVER_LIST = Arrays.asList(
 

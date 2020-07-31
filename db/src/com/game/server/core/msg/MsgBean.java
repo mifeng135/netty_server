@@ -17,7 +17,7 @@ public class MsgBean {
     private List<Integer> arrayData;
     private int dataLength;
     private byte[] data;
-    private byte serverKey;
+    private int serverKey;
 
 
     public int getId() {
@@ -63,11 +63,11 @@ public class MsgBean {
         this.data = data;
     }
 
-    public byte getServerKey() {
+    public int getServerKey() {
         return serverKey;
     }
 
-    public void setServerKey(byte serverKey) {
+    public void setServerKey(int serverKey) {
         this.serverKey = serverKey;
     }
 

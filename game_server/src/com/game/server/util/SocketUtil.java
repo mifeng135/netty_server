@@ -23,10 +23,10 @@ public class SocketUtil {
         byte[] data = ProtoUtil.serialize(msg);
         List<Player> playerList = room.getRoomPlayer();
 
-        List<Byte> serverKeyList = SendSocketManager.getInstance().getSendServerKeyList();
+        List<Integer> serverKeyList = SendSocketManager.getInstance().getSendServerKeyList();
         List<Integer> sendList = new ArrayList<>();
         for (int index = 0; index < serverKeyList.size(); index++) {
-            byte key = serverKeyList.get(index);
+            int key = serverKeyList.get(index);
             sendList.clear();
             for (int i = 0; i < playerList.size(); i++) {
                 Player player = playerList.get(i);
@@ -58,7 +58,7 @@ public class SocketUtil {
         SendSocketManager.getInstance().getSocket(player.getServerKey()).pushSendMsg(msgBean);
     }
 
-    public static void sendToPlayer(int cmd, Object msg, int id, byte serverKey) {
+    public static void sendToPlayer(int cmd, Object msg, int id, int serverKey) {
         byte[] data = ProtoUtil.serialize(msg);
         MsgBean msgBean = new MsgBean();
         msgBean.setId(id);
@@ -71,10 +71,10 @@ public class SocketUtil {
         byte[] data = ProtoUtil.serialize(msg);
         List<Player> playerList = room.getRoomPlayer();
 
-        List<Byte> serverKeyList = SendSocketManager.getInstance().getSendServerKeyList();
+        List<Integer> serverKeyList = SendSocketManager.getInstance().getSendServerKeyList();
         List<Integer> sendList = new ArrayList<>();
         for (int index = 0; index < serverKeyList.size(); index++) {
-            byte key = serverKeyList.get(index);
+            int key = serverKeyList.get(index);
             sendList.clear();
             for (int i = 0; i < playerList.size(); i++) {
                 Player player = playerList.get(i);
@@ -103,8 +103,8 @@ public class SocketUtil {
         msgBean.setCmd(cmd);
         msgBean.setData(data);
 
-        Map<Byte, Send> sendMap = SendSocketManager.getInstance().getSendMap();
-        for (Map.Entry<Byte, Send> entry : sendMap.entrySet()) {
+        Map<Integer, Send> sendMap = SendSocketManager.getInstance().getSendMap();
+        for (Map.Entry<Integer, Send> entry : sendMap.entrySet()) {
             Send value = entry.getValue();
             value.pushSendMsg(msgBean);
         }

@@ -15,9 +15,9 @@ public class ServerConfig {
     public static final int SERVER_PORT = 7005;
     public static final String SERVER_IP = "192.168.1.217";
 
-    public static final byte GATE_GAME_SERVER_KEY = 1;
-    public static final byte GATE_LOGIN_SERVER_KEY = 2;
-    public static final byte GATE_DB_SERVER_KEY = 3;
+    public static final int GATE_GAME_SERVER_KEY = 1;
+    public static final int GATE_LOGIN_SERVER_KEY = 2;
+    public static final int GATE_DB_SERVER_KEY = 3;
 
     public static final List<ServerInfo> SEND_SERVER_LIST = Arrays.asList(
             new ServerInfo("tcp://127.0.0.1", 7000, GATE_LOGIN_SERVER_KEY, "gate_login"),

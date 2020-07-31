@@ -12,7 +12,7 @@ public class Player {
     private int ready;
     private int x;
     private int y;
-    private byte serverKey;
+    private int serverKey;
 
     public String getName() {
         return name;
@@ -69,11 +69,11 @@ public class Player {
         this.x = x;
     }
 
-    public byte getServerKey() {
+    public int getServerKey() {
         return serverKey;
     }
 
-    public void setServerKey(byte serverKey) {
+    public void setServerKey(int serverKey) {
         this.serverKey = serverKey;
     }
 }

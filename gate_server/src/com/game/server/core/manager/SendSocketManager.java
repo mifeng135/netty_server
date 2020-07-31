@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class SendSocketManager {
 
-    private Map<Byte, Send> sendMap = new HashMap<>();
+    private Map<Integer, Send> sendMap = new HashMap<>();
 
     private static class DefaultInstance {
         static final SendSocketManager INSTANCE = new SendSocketManager();
@@ -20,11 +20,11 @@ public class SendSocketManager {
         return DefaultInstance.INSTANCE;
     }
 
-    public Send getSocket(byte serverKey) {
+    public Send getSocket(int serverKey) {
         return sendMap.get(serverKey);
     }
 
-    public void putSocket(byte serverKey, Send send) {
+    public void putSocket(int serverKey, Send send) {
         sendMap.put(serverKey, send);
     }
 }

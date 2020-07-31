@@ -8,18 +8,18 @@ import com.game.server.core.zero.ReceiveAdapter;
 public class ServerInfo {
     private String ip;
     private int port;
-    private byte serverKey;
+    private int serverKey;
     private String name;
     private ReceiveAdapter adapter;
 
-    public ServerInfo(String ip, int port, byte serverKey, String name) {
+    public ServerInfo(String ip, int port, int serverKey, String name) {
         this.ip = ip;
         this.port = port;
         this.serverKey = serverKey;
         this.name = name;
     }
 
-    public ServerInfo(String ip, int port, byte serverKey, String name,ReceiveAdapter adapter) {
+    public ServerInfo(String ip, int port, int serverKey, String name,ReceiveAdapter adapter) {
         this.ip = ip;
         this.port = port;
         this.serverKey = serverKey;
@@ -27,9 +27,10 @@ public class ServerInfo {
         this.adapter = adapter;
     }
 
-    public byte getServerKey() {
+    public int getServerKey() {
         return serverKey;
     }
+
     public String getIp() {
         return ip;
     }

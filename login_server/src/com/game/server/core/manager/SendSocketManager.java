@@ -12,8 +12,8 @@ import java.util.Map;
  */
 public class SendSocketManager {
 
-    private Map<Byte, Send> sendMap = new HashMap<>();
-    private List<Byte> sendServerKeyList = new ArrayList<>();
+    private Map<Integer, Send> sendMap = new HashMap<>();
+    private List<Integer> sendServerKeyList = new ArrayList<>();
 
     private static class DefaultInstance {
         static final SendSocketManager INSTANCE = new SendSocketManager();
@@ -30,16 +30,16 @@ public class SendSocketManager {
         return sendMap.get(serverKey);
     }
 
-    public void putSocket(byte serverKey, Send send) {
+    public void putSocket(int serverKey, Send send) {
         sendMap.put(serverKey, send);
         sendServerKeyList.add(serverKey);
     }
 
-    public Map<Byte,Send> getSendMap() {
+    public Map<Integer,Send> getSendMap() {
         return sendMap;
     }
 
-    public List<Byte> getSendServerKeyList() {
+    public List<Integer> getSendServerKeyList() {
         return sendServerKeyList;
     }
 }

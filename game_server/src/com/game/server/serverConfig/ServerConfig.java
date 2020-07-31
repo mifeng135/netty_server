@@ -15,7 +15,7 @@ public class ServerConfig {
     public static final String REDIS_IP = "redis://127.0.0.1:6379";
     public static final String REDIS_PASSWORD = "nqwl0520";
 
-    public static final byte GATE_GAME_SERVER_KEY = 1;
+    public static final int GATE_GAME_SERVER_KEY = 1;
 
     public static final List<ServerInfo> SEND_SERVER_LIST = Arrays.asList(
             new ServerInfo("tcp://127.0.0.1", 6000, GATE_GAME_SERVER_KEY, "gate_game")

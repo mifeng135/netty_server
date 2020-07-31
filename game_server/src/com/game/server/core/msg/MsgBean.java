@@ -17,7 +17,7 @@ public class MsgBean {
     private List<Integer> arrayData;
     private int dataLength;
     private byte[] data;
-    private byte serverKey;
+    private int serverKey;
 
     public byte[] getData() {
         return data;
@@ -61,13 +61,14 @@ public class MsgBean {
         this.arrayData = arrayData;
     }
 
-    public byte getServerKey() {
+    public int getServerKey() {
         return serverKey;
     }
 
-    public void setServerKey(byte serverKey) {
+    public void setServerKey(int serverKey) {
         this.serverKey = serverKey;
     }
+
     public ByteBuf toByteBuf() {
         ByteBuf buf = Unpooled.buffer(16 + arrayLen * 4 + dataLength);
         buf.writeInt(id);

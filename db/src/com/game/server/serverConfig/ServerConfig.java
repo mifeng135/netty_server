@@ -21,7 +21,7 @@ public class ServerConfig {
 
     public static final String RECEIVE_FROM_GATE_1 = "tcp://127.0.0.1:6000";
 
-    public static final byte GATE_DB_SERVER_KEY = 3;
+    public static final int GATE_DB_SERVER_KEY = 3;
 
     public static final List<ServerInfo> SEND_SERVER_LIST = Arrays.asList(
             new ServerInfo("tcp://127.0.0.1", 6001, GATE_DB_SERVER_KEY, "gate_db")

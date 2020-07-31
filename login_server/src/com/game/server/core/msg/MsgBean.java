@@ -18,7 +18,7 @@ public class MsgBean {
     private List<Integer> arrayData;
     private int dataLength;
     private byte[] data;
-    private byte serverKey;
+    private int serverKey;
 
     /**
      * 下面两个是专门给登录定制的
@@ -86,11 +86,11 @@ public class MsgBean {
         this.context = context;
     }
 
-    public byte getServerKey() {
+    public int getServerKey() {
         return serverKey;
     }
 
-    public void setServerKey(byte serverKey) {
+    public void setServerKey(int serverKey) {
         this.serverKey = serverKey;
     }
 

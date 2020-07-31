@@ -14,10 +14,10 @@ public class Receive extends Thread {
     private static Logger logger = Logger.getLogger(Receive.class);
 
     private final PullSocket mSocket;
-    private final byte serverKey;
+    private final int serverKey;
     private final ReceiveAdapter receiveAdapter;
 
-    public Receive(String ip,int port,byte serverKey,ReceiveAdapter adapter) {
+    public Receive(String ip,int port,int serverKey,ReceiveAdapter adapter) {
         mSocket = new PullSocket();
         mSocket.connect(ip + ":" + port);
         mSocket.setRecvTimeout(30000);
