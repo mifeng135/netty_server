@@ -1,7 +1,7 @@
 # 基于netty,nanomsg实现
 
 
-![server](https://github.com/mifeng135/netty_server/server.png)
+![server](https://github.com/mifeng135/netty_server/blob/master/server.png)
 
 
 # 项目依赖
