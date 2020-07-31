@@ -15,7 +15,7 @@ public class EventThreadGroup {
 
     private String regionName;
 
-    public EventThreadGroup(String name,Class<? extends EventHandler> handler, int count) {
+    public EventThreadGroup(String name, Class<? extends EventHandler> handler, int count) {
         mThreadCount = count;
         regionName = name;
         initMessageGroup();
@@ -35,8 +35,7 @@ public class EventThreadGroup {
         for (int i = 0; i < mThreadCount; i++) {
             String name = mPrefix + i;
             try {
-                MessageThreadTask messageThreadTask = new MessageThreadTask(mMessageGroup, handler.newInstance());
-                messageThreadTask.setName(name);
+                MessageThreadTask messageThreadTask = new MessageThreadTask(mMessageGroup, handler.newInstance(), name);
                 messageThreadTask.setDaemon(true);
                 messageThreadTask.start();
             } catch (Exception e) {

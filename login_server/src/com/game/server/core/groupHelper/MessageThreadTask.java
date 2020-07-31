@@ -12,7 +12,10 @@ public class MessageThreadTask extends Thread {
 
     private final MessageGroup mMessageGroup;
     private final EventHandler mProcessEventHandler;
-    public MessageThreadTask(MessageGroup messageGroup,EventHandler processEventHandler) {
+    private final String name;
+
+    public MessageThreadTask(MessageGroup messageGroup, EventHandler processEventHandler, String taskName) {
+        name = taskName;
         mMessageGroup = messageGroup;
         mProcessEventHandler = processEventHandler;
     }
@@ -20,7 +23,6 @@ public class MessageThreadTask extends Thread {
     @Override
     public void run() {
         while (true) {
-            String name = getName();
             try {
                 for (int i = 0; i < 100; i++) {
                     MsgBean msgBean = mMessageGroup.popMessageWithTag(name);
