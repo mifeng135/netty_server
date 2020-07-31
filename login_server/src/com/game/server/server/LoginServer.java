@@ -1,6 +1,5 @@
 package com.game.server.server;
 
-import com.game.server.adapter.SynAdapter;
 import com.game.server.core.annotation.CtrlAnnotation;
 import com.game.server.core.annotation.SqlAnnotation;
 import com.game.server.core.config.ServerInfo;
@@ -12,7 +11,6 @@ import com.game.server.core.sql.MysqlBatchHandle;
 import com.game.server.core.zero.Receive;
 import com.game.server.core.zero.Send;
 import com.game.server.eventGroup.login.LoginEventGroup;
-import com.game.server.eventGroup.login.EventDispatch;
 import com.game.server.eventGroup.login.LoginEventHandler;
 import com.game.server.eventGroup.syn.SynEventGroup;
 import com.game.server.eventGroup.syn.SynEventHandler;
@@ -41,7 +39,6 @@ public class LoginServer {
 
         /**开启2条线程去处理登录*/
         new LoginEventGroup(LoginEventHandler.class, 2);
-        EventDispatch.getInstance().start();
 
         /**开启1条线程处理gate同步消息*/
         new SynEventGroup(SynEventHandler.class, 1);

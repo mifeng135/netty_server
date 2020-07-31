@@ -1,10 +1,11 @@
 package com.game.server.core.netty;
 
 import com.game.server.core.config.Configs;
+import com.game.server.core.groupHelper.MessageDispatchRegion;
+import com.game.server.core.groupHelper.MessageGroup;
 import com.game.server.core.msg.MsgBean;
-import com.game.server.eventGroup.login.EventDispatch;
+import com.game.server.serverConfig.ServerConfig;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -38,10 +39,21 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
                 msgBean.serializeMsgLogin(buf);
                 msgBean.setFd(socketFd);
                 msgBean.setContext(ctx);
-                EventDispatch.getInstance().pushMsg(msgBean);
+                dispatch(msgBean);
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void dispatch(MsgBean msgBean) {
+        String regionString = ServerConfig.REGION_LOGIN;
+        if (regionString != null) {
+            MessageGroup messageGroup = MessageDispatchRegion.getInstance().getMessageGroupByTag(regionString);
+            String prefix = messageGroup.getPrefix();
+            int count = messageGroup.getCount();
+            String section = prefix + msgBean.getFd() % count;
+            messageGroup.pushMessageWithTag(section, msgBean);
         }
     }
 
@@ -51,11 +63,5 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
         InetSocketAddress address = (InetSocketAddress) ctx.channel().remoteAddress();
         String ip = address.getAddress().getHostAddress();
         ctx.channel().attr(Configs.REMOTE_ADDRESS).setIfAbsent(ip);
-    }
-
-    private void send(ChannelHandlerContext ctx, ByteBuf buf) {
-        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
-        response.headers().set(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-        ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 }
