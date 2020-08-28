@@ -1,5 +1,7 @@
 package com.game.server.core.annotation;
 
+import com.esotericsoftware.reflectasm.ConstructorAccess;
+import com.esotericsoftware.reflectasm.MethodAccess;
 import com.game.server.core.msg.MsgBean;
 import com.game.server.serverConfig.ServerConfig;
 import org.reflections.Reflections;
@@ -22,6 +24,8 @@ public class CtrlAnnotation {
 
     private final Map<Integer, Method> methodMap = new HashMap<Integer, Method>();
     private final Map<String, Object> classMap = new HashMap<String, Object>();
+    private final Map<String, MethodAccess> methodAccessMap = new HashMap<>();
+
 
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
@@ -71,33 +75,16 @@ public class CtrlAnnotation {
     private void scanClassMap() {
         Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Ctrl.class);
         for (Class cl : classSet) {
+            MethodAccess access = MethodAccess.get(cl);
+            ConstructorAccess<?> classAccess = ConstructorAccess.get(cl);
             String name = cl.getName();
             try {
-                Object oc = Class.forName(name).newInstance();
+                Object oc = classAccess.newInstance();
                 classMap.put(name, oc);
+                methodAccessMap.put(name, access);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    /**
-     * call method
-     *
-     * @param cmd
-     * @param data receive data
-     */
-    public void invokeMethod(int cmd, int id, byte[] data) {
-        Method method = methodMap.get(cmd);
-        if (method == null) {
-            return;
-        }
-        String declaringClassName = method.getDeclaringClass().getName();
-        Object oc = classMap.get(declaringClassName);
-        try {
-            method.invoke(oc, id, data);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -108,8 +95,12 @@ public class CtrlAnnotation {
         }
         String declaringClassName = method.getDeclaringClass().getName();
         Object oc = classMap.get(declaringClassName);
+
+        MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
+        String methodName = method.getName();
+
         try {
-            method.invoke(oc, msgBean);
+            methodAccess.invoke(oc, methodName, msgBean);
         } catch (Exception e) {
             e.printStackTrace();
         }

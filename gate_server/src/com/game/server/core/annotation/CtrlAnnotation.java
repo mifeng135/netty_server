@@ -1,6 +1,9 @@
 package com.game.server.core.annotation;
 
+import com.esotericsoftware.reflectasm.ConstructorAccess;
+import com.esotericsoftware.reflectasm.MethodAccess;
 import com.game.server.core.config.Configs;
+import com.game.server.core.msg.MsgBean;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -23,6 +26,8 @@ public class CtrlAnnotation {
      */
     private final Map<Integer, Method> methodMap = new HashMap<>();
     private final Map<String, Object> classMap = new HashMap<String, Object>();
+    private final Map<String, MethodAccess> methodAccessMap = new HashMap<>();
+
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
 
@@ -70,10 +75,14 @@ public class CtrlAnnotation {
     private void scanClassMap() {
         Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Ctrl.class);
         for (Class cl : classSet) {
+
+            MethodAccess access = MethodAccess.get(cl);
+            ConstructorAccess<?> classAccess = ConstructorAccess.get(cl);
             String name = cl.getName();
             try {
-                Object url = Class.forName(name).newInstance();
-                classMap.put(name, url);
+                Object oc = classAccess.newInstance();
+                classMap.put(name, oc);
+                methodAccessMap.put(name, access);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -83,20 +92,20 @@ public class CtrlAnnotation {
     /**
      * call method
      * @param cmd
-     * @param byteBuf receive data
+     * @param msgBean receive data
      */
-    public void invokeMethod(int cmd, int playerIndex, byte[] byteBuf) {
+    public void invokeMethod(int cmd, MsgBean msgBean) {
         Method method = methodMap.get(cmd);
         if (method == null) {
             return;
         }
         String declaringClassName = method.getDeclaringClass().getName();
         Object oc = classMap.get(declaringClassName);
-        if (oc == null) {
-            return;
-        }
+        MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
+        String methodName = method.getName();
+
         try {
-            method.invoke(oc, playerIndex, byteBuf);
+            methodAccess.invoke(oc, methodName, msgBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
