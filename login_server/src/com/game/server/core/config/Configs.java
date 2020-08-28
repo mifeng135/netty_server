@@ -13,7 +13,7 @@ public class Configs {
     /**是否开启 REUSEADDR */
     public static final boolean TCP_SO_REUSEADDR_DEFAULT = true;
 
-    public static final boolean TCP_SO_KEEP_ALIVE_DEFAULT = true;
+    public static final boolean TCP_SO_KEEP_ALIVE_DEFAULT = false;
 
     /**是否开启 超时*/
     public static final boolean NETTY_OPEN_IDLE = true;
