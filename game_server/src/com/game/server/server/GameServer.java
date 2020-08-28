@@ -1,6 +1,7 @@
 package com.game.server.server;
 
 import com.game.server.constant.MsgRegionConstant;
+import com.game.server.core.annotation.CtrlAnnotation;
 import com.game.server.core.config.ServerInfo;
 import com.game.server.core.groupHelper.EventThreadGroup;
 import com.game.server.core.manager.ReceiveSocketManager;
@@ -35,7 +36,7 @@ public class GameServer {
 
         //启动redis
         RedisManager.getInstance();
-
+        CtrlAnnotation.getInstance();
         // 开启1个线程去处理game
         new EventThreadGroup(MsgRegionConstant.MSG_REGION_GAME, GameEventHandler.class, 1);
         // 开启1个线程去处理room

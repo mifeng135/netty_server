@@ -2,16 +2,13 @@ package com.game.server.core.sql;
 
 import com.game.server.core.annotation.SqlAnnotation;
 
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Created by Administrator on 2020/6/15.
  */
 public class MysqlBatchHandle {
-    private ConcurrentLinkedDeque<MysqlBean> mMsgQueue = new ConcurrentLinkedDeque();
+    private ConcurrentLinkedQueue<MysqlBean> mMsgQueue = new ConcurrentLinkedQueue();
 
     private static class DefaultInstance {
         static final MysqlBatchHandle INSTANCE = new MysqlBatchHandle();
@@ -21,7 +18,7 @@ public class MysqlBatchHandle {
         return DefaultInstance.INSTANCE;
     }
 
-    private MysqlBatchHandle() {
+    public MysqlBatchHandle() {
         init();
     }
 
@@ -30,21 +27,23 @@ public class MysqlBatchHandle {
     }
 
     public void init() {
-
         ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(1);
         scheduledThreadPool.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
-                int queueSize = mMsgQueue.size();
-                for (int i = 0; i < queueSize; i++) {
-                    MysqlBean mysqlBean = mMsgQueue.poll();
-                    if (mysqlBean != null) {
+                boolean empty = mMsgQueue.isEmpty();
+                if (!empty) {
+                    for (int i = 0; i < 200; i++) {
+                        MysqlBean mysqlBean = mMsgQueue.poll();
+                        if (mysqlBean == null) {
+                            break;
+                        }
                         int cmd = mysqlBean.getCmd();
                         Object oc = mysqlBean.getData();
                         SqlAnnotation.getInstance().executeCommitSql(cmd, oc);
                     }
                 }
             }
-        }, 0, 30, TimeUnit.SECONDS);
+        }, 0, 10, TimeUnit.SECONDS);
     }
 }
