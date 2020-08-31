@@ -1,7 +1,10 @@
 package com.game.server.core.annotation;
 
+import com.game.server.core.sql.MysqlBean;
 import com.game.server.serverConfig.ServerConfig;
 import com.game.server.core.sql.SqlConstant;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
@@ -14,8 +17,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public class SqlAnnotation {
@@ -68,6 +73,13 @@ public class SqlAnnotation {
         }
     }
 
+
+    /**
+     * select sql
+     * @param cmd
+     * @param parameter
+     * @return sql result
+     */
     public Object executeSelectSql(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
         if (method == null) {
@@ -87,6 +99,13 @@ public class SqlAnnotation {
         return null;
     }
 
+
+    /**
+     * commit sql once
+     * @param cmd
+     * @param parameter
+     * @return
+     */
     public int executeCommitSql(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
         if (method == null) {
@@ -109,4 +128,41 @@ public class SqlAnnotation {
         return -1;
     }
 
+    /**
+     * if data to many
+     * you can use this function
+     * batch commit will be faster
+     * @param batchData
+     * @param batchCount
+     */
+    public void executeCommitSqlBatch(ConcurrentLinkedQueue<MysqlBean> batchData, int batchCount) {
+        SqlSession sqlSession = mSqlSessionTemplate.getSqlSessionFactory().openSession(ExecutorType.BATCH, false);
+        try {
+            for (int i = 0; i < batchCount; i++) {
+                MysqlBean bean = batchData.poll();
+                if (bean == null) {
+                    break;
+                }
+                Object parameter = bean.getData();
+                Method method = sqlMethodMap.get(bean.getCmd());
+                if (method == null) {
+                    continue;
+                }
+                int type = method.getAnnotation(SqlCmd.class).sqlType();
+                String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
+                if (type == SqlConstant.DELETE) {
+                    sqlSession.delete(declaringClass, parameter);
+                } else if (type == SqlConstant.UPDATE) {
+                    sqlSession.update(declaringClass, parameter);
+                } else if (type == SqlConstant.INSERT) {
+                    sqlSession.insert(declaringClass, parameter);
+                }
+            }
+            sqlSession.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sqlSession.close();
+        }
+    }
 }

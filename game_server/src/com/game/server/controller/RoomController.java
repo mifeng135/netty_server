@@ -219,10 +219,12 @@ public class RoomController {
         ConcurrentHashMap<Integer, Room> gameRoom = RoomManager.getInstance().getGameRoom();
         for (ConcurrentHashMap.Entry<Integer, Room> entry : gameRoom.entrySet()) {
             Room value = entry.getValue();
-            ProtoRoomListS.RoomInfo roomInfo = new ProtoRoomListS.RoomInfo();
-            roomInfo.setRoomId(value.getRoomId());
-            roomInfo.setRoomState(value.getGameState());
-            roomList.add(roomInfo);
+            if (value.getGameState() == GameConstant.GAME_STATE_WAIT) {
+                ProtoRoomListS.RoomInfo roomInfo = new ProtoRoomListS.RoomInfo();
+                roomInfo.setRoomId(value.getRoomId());
+                roomInfo.setRoomState(value.getGameState());
+                roomList.add(roomInfo);
+            }
         }
         ProtoRoomListS protoRoomListS = new ProtoRoomListS();
         protoRoomListS.setRoomList(roomList);

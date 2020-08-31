@@ -34,7 +34,10 @@ public class MysqlBatchHandle {
             public void run() {
                 boolean empty = mMsgQueue.isEmpty();
                 if (!empty) {
-                    for (int i = 0; i < 200; i++) {
+                    //long startTime = System.currentTimeMillis();
+                    //System.out.println("执行代码块/方法");
+                    int size = mMsgQueue.size();
+                    for (int i = 0; i < size; i++) {
                         MysqlBean mysqlBean = mMsgQueue.poll();
                         if (mysqlBean == null) {
                             break;
@@ -43,6 +46,9 @@ public class MysqlBatchHandle {
                         Object oc = mysqlBean.getData();
                         SqlAnnotation.getInstance().executeCommitSql(cmd, oc);
                     }
+                    //SqlAnnotation.getInstance().executeCommitSqlBatch(mMsgQueue, 1000);
+//                    long endTime = System.currentTimeMillis();
+//                    System.out.println("程序运行时间： " + (endTime - startTime) + "ms");
                 }
             }
         }, 0, 10, TimeUnit.SECONDS);
