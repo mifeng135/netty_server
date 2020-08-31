@@ -161,6 +161,7 @@ public class SqlAnnotation {
             sqlSession.commit();
         } catch (Exception e) {
             e.printStackTrace();
+            sqlSession.rollback();
         } finally {
             sqlSession.close();
         }
