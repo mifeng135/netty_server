@@ -2,8 +2,9 @@ package core.annotation;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
-import core.Configs;
-import core.proto.TransferMsg;
+import core.Constants;
+import core.msg.TransferMsg;
+import io.netty.channel.ChannelHandlerContext;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -11,6 +12,8 @@ import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -21,8 +24,12 @@ import java.util.Set;
  * Created by Administrator on 2020/5/28.
  */
 public class CtrlAnnotation {
-    private final Map<Integer, Method> methodMap = new HashMap<Integer, Method>();
-    private final Map<String, Object> classMap = new HashMap<String, Object>();
+
+
+    private static Logger logger = LoggerFactory.getLogger(CtrlAnnotation.class);
+
+    private final Map<Integer, Method> methodMap = new HashMap<>();
+    private final Map<String, Object> classMap = new HashMap<>();
     private final Map<String, MethodAccess> methodAccessMap = new HashMap<>();
 
     private ConfigurationBuilder configurationBuilder;
@@ -48,9 +55,8 @@ public class CtrlAnnotation {
      */
     private void initReflection() {
         configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.filterInputsBy(new FilterBuilder().includePackage(Configs.SERVER_PACKAGE_NAME));
-        configurationBuilder.addUrls(ClasspathHelper.forPackage(Configs.SERVER_PACKAGE_NAME));
-        configurationBuilder.setScanners(new TypeAnnotationsScanner(), new SubTypesScanner(), new MethodAnnotationsScanner());
+        configurationBuilder.forPackages(Constants.SERVER_PACKAGE_NAME);
+        configurationBuilder.setScanners(new SubTypesScanner(false), new TypeAnnotationsScanner(), new MethodAnnotationsScanner());
         reflections = new Reflections(configurationBuilder);
     }
 
@@ -86,9 +92,11 @@ public class CtrlAnnotation {
         }
     }
 
-    public void invokeMethod(int msgId, TransferMsg transferMsg) {
+    public void invokeMethod(TransferMsg transferMsg) {
+        int msgId = transferMsg.getMsgId();
         Method method = methodMap.get(msgId);
         if (method == null) {
+            logger.info("can not find msgId = {}", msgId);
             return;
         }
         String declaringClassName = method.getDeclaringClass().getName();
@@ -97,6 +105,24 @@ public class CtrlAnnotation {
         String methodName = method.getName();
         try {
             methodAccess.invoke(oc, methodName, transferMsg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void invokeMethod(TransferMsg transferMsg, ChannelHandlerContext context) {
+        int msgId = transferMsg.getMsgId();
+        Method method = methodMap.get(msgId);
+        if (method == null) {
+            logger.info("can not find msgId = {}", msgId);
+            return;
+        }
+        String declaringClassName = method.getDeclaringClass().getName();
+        Object oc = classMap.get(declaringClassName);
+        MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
+        String methodName = method.getName();
+        try {
+            methodAccess.invoke(oc, methodName, transferMsg, context);
         } catch (Exception e) {
             e.printStackTrace();
         }

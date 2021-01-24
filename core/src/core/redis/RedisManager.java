@@ -1,6 +1,6 @@
 package core.redis;
 
-import core.Configs;
+import core.util.ConfigUtil;
 import org.redisson.Redisson;
 import org.redisson.config.Config;
 
@@ -10,8 +10,9 @@ import org.redisson.config.Config;
  */
 public class RedisManager {
 
-    private Config config = new Config();
-    private Redisson mRedisSon;
+    private static Config config = new Config();
+    private static Redisson mRedisSon;
+
     private static class DefaultInstance {
         static final RedisManager INSTANCE = new RedisManager();
     }
@@ -20,10 +21,21 @@ public class RedisManager {
         return DefaultInstance.INSTANCE;
     }
 
-
     private RedisManager() {
-        config.useSingleServer().setAddress(Configs.REDIS_IP);
-        config.useSingleServer().setPassword(Configs.REDIS_PASSWORD);
+
+    }
+
+    public void init(String ip, String pwd) {
+        config.useSingleServer().setAddress(ip);
+        config.useSingleServer().setPassword(pwd);
+        mRedisSon = (Redisson) Redisson.create(config);
+    }
+
+    public void init(String ip, String pwd, int thread, int nettyThread) {
+        config.useSingleServer().setAddress(ip);
+        config.useSingleServer().setPassword(pwd);
+        config.setThreads(thread);
+        config.setNettyThreads(nettyThread);
         mRedisSon = (Redisson) Redisson.create(config);
     }
 

@@ -30,23 +30,20 @@ public class MysqlBatchHandle {
     public void init() {
 
         ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(1);
-        scheduledThreadPool.scheduleWithFixedDelay(new Runnable() {
-            @Override
-            public void run() {
-                boolean empty = mMsgQueue.isEmpty();
-                if (!empty) {
-                    int size = mMsgQueue.size();
-                    for (int i = 0; i < size; i++) {
-                        MysqlBean mysqlBean = mMsgQueue.poll();
-                        if (mysqlBean == null) {
-                            break;
-                        }
-                        int cmd = mysqlBean.getCmd();
-                        Object oc = mysqlBean.getData();
-                        SqlAnnotation.getInstance().executeCommitSql(cmd, oc);
+        scheduledThreadPool.scheduleWithFixedDelay(() -> {
+            boolean empty = mMsgQueue.isEmpty();
+            if (!empty) {
+                int size = mMsgQueue.size();
+                for (int i = 0; i < size; i++) {
+                    MysqlBean mysqlBean = mMsgQueue.poll();
+                    if (mysqlBean == null) {
+                        break;
                     }
-                    //SqlAnnotation.getInstance().executeCommitSqlBatch(mMsgQueue, 1000);
+                    int cmd = mysqlBean.getCmd();
+                    Object oc = mysqlBean.getData();
+                    SqlAnnotation.getInstance().executeCommitSql(cmd, oc);
                 }
+                //SqlAnnotation.getInstance().executeCommitSqlBatch(mMsgQueue, 1000);
             }
         }, 0, 10, TimeUnit.SECONDS);
     }

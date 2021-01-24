@@ -1,6 +1,6 @@
 package core.annotation;
 
-import core.Configs;
+import core.Constants;
 import core.sql.MysqlBean;
 import core.sql.SqlConstant;
 import org.apache.ibatis.session.ExecutorType;
@@ -17,6 +17,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -49,8 +50,8 @@ public class SqlAnnotation {
      */
     private void initReflection() {
         configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.filterInputsBy(new FilterBuilder().includePackage(Configs.SERVER_PACKAGE_NAME));
-        configurationBuilder.addUrls(ClasspathHelper.forPackage(Configs.SERVER_PACKAGE_NAME));
+        configurationBuilder.filterInputsBy(new FilterBuilder().includePackage(Constants.SERVER_PACKAGE_NAME));
+        configurationBuilder.addUrls(ClasspathHelper.forPackage(Constants.SERVER_PACKAGE_NAME));
         configurationBuilder.setScanners(new TypeAnnotationsScanner(), new SubTypesScanner(), new MethodAnnotationsScanner());
         reflections = new Reflections(configurationBuilder);
     }
@@ -75,11 +76,12 @@ public class SqlAnnotation {
 
     /**
      * select sql
+     *
      * @param cmd
      * @param parameter
      * @return sql result
      */
-    public Object executeSelectSql(int cmd, Object parameter) {
+    public <T> T sqlSelectOne(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
         if (method == null) {
             return null;
@@ -89,7 +91,22 @@ public class SqlAnnotation {
             String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
             if (type == SqlConstant.SELECT_ONE) {
                 return mSqlSessionTemplate.selectOne(declaringClass, parameter);
-            } else if (type == SqlConstant.SELECT_LIST) {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public <T> List<T> sqlSelectList(int cmd, Object parameter) {
+        Method method = sqlMethodMap.get(cmd);
+        if (method == null) {
+            return null;
+        }
+        try {
+            int type = method.getAnnotation(SqlCmd.class).sqlType();
+            String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
+            if (type == SqlConstant.SELECT_LIST) {
                 return mSqlSessionTemplate.selectList(declaringClass, parameter);
             }
         } catch (Exception e) {
@@ -98,9 +115,9 @@ public class SqlAnnotation {
         return null;
     }
 
-
     /**
      * commit sql once
+     *
      * @param cmd
      * @param parameter
      * @return
@@ -131,6 +148,7 @@ public class SqlAnnotation {
      * if data to many
      * you can use this function
      * batch commit will be faster
+     *
      * @param batchData
      * @param batchCount
      */

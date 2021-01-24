@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DB/DB.iml" filepath="$PROJECT_DIR$/DB/DB.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Game/Game.iml" filepath="$PROJECT_DIR$/Game/Game.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Gate/Gate.iml" filepath="$PROJECT_DIR$/Gate/Gate.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Login/Login.iml" filepath="$PROJECT_DIR$/Login/Login.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game_center/game_center.iml" filepath="$PROJECT_DIR$/game_center/game_center.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game_db/game_db.iml" filepath="$PROJECT_DIR$/game_db/game_db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game_gate/game_gate.iml" filepath="$PROJECT_DIR$/game_gate/game_gate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game_login/game_login.iml" filepath="$PROJECT_DIR$/game_login/game_login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game_protocal/game_protocol.iml" filepath="$PROJECT_DIR$/game_protocal/game_protocol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game_scene/game_scene.iml" filepath="$PROJECT_DIR$/game_scene/game_scene.iml" />
     </modules>
   </component>
 </project>
