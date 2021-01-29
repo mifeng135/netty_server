@@ -22,6 +22,6 @@ public class SysPositionController {
         sycPositionRsp.setPosition(sycPositionReq.getPosition());
         sycPositionRsp.setPlayerIndex(sycPositionReq.getPlayerIndex());
         sycPositionRsp.setMove(true);
-        SocketUtil.sendLoaclTcpMsgToServer(Config.CONNECT_SCENE_CENTER_SERVER_KEY, MSG_SYC_POSITION_RSP, sycPositionRsp);
+        SocketUtil.sendLoaclTcpMsgToServer(Config.CONNECT_SCENE_CENTER_SOCKET_INDEX, MSG_SYC_POSITION_RSP, sycPositionRsp);
     }
 }

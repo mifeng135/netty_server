@@ -1,6 +1,7 @@
 package core.group;
 
 
+import com.conversantmedia.util.concurrent.MultithreadConcurrentQueue;
 import core.msg.TransferMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class MessageGroup {
     private static Logger logger = LoggerFactory.getLogger(MessageGroup.class);
 
-    private ConcurrentHashMap<Integer, ConcurrentLinkedQueue<TransferMsg>> mMessageMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Integer, MultithreadConcurrentQueue<TransferMsg>> mMessageMap = new ConcurrentHashMap();
     private int threadCount;
 
     private static class DefaultInstance {
@@ -34,7 +35,7 @@ public class MessageGroup {
     }
 
     public void createQueueByTag(Integer tag) {
-        mMessageMap.putIfAbsent(tag, new ConcurrentLinkedQueue());
+        mMessageMap.putIfAbsent(tag, new MultithreadConcurrentQueue(2000));
     }
 
     public void pushMessage(TransferMsg buf) {

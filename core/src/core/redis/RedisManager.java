@@ -2,6 +2,7 @@ package core.redis;
 
 import core.util.ConfigUtil;
 import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 
 /**
@@ -11,7 +12,7 @@ import org.redisson.config.Config;
 public class RedisManager {
 
     private static Config config = new Config();
-    private static Redisson mRedisSon;
+    private static RedissonClient redissonClient;
 
     private static class DefaultInstance {
         static final RedisManager INSTANCE = new RedisManager();
@@ -28,7 +29,7 @@ public class RedisManager {
     public void init(String ip, String pwd) {
         config.useSingleServer().setAddress(ip);
         config.useSingleServer().setPassword(pwd);
-        mRedisSon = (Redisson) Redisson.create(config);
+        redissonClient = Redisson.create(config);
     }
 
     public void init(String ip, String pwd, int thread, int nettyThread) {
@@ -36,11 +37,11 @@ public class RedisManager {
         config.useSingleServer().setPassword(pwd);
         config.setThreads(thread);
         config.setNettyThreads(nettyThread);
-        mRedisSon = (Redisson) Redisson.create(config);
+        redissonClient = Redisson.create(config);
     }
 
-    public Redisson getRedisSon() {
-        return mRedisSon;
+    public RedissonClient getRedisSon() {
+        return redissonClient;
     }
 
 }

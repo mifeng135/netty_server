@@ -27,6 +27,6 @@ public class SycPositioniController {
     public void syncPosition(TransferMsg msg, ChannelHandlerContext context) {
         SycPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SycPositionReq.class);
         sycPositionReq.setPlayerIndex(msg.getSocketIndex());
-        SocketUtil.sendLoaclTcpMsgToServer(Config.CONNECT_GATE_CENTER_SERVER_KEY, MSG_SYC_POSITION_REQ, sycPositionReq);
+        SocketUtil.sendLoaclTcpMsgToServer(Config.CONNECT_GATE_CENTER_SOCKET_INDEX, MSG_SYC_POSITION_REQ, sycPositionReq);
     }
 }

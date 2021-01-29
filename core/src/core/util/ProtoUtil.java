@@ -11,7 +11,7 @@ import io.protostuff.runtime.RuntimeSchema;
 public class ProtoUtil {
 
     public static <T> byte[] serialize(T obj) {
-        LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.MIN_BUFFER_SIZE);
+        LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
         Schema schema = RuntimeSchema.getSchema(obj.getClass());
         byte[] data;
         try {

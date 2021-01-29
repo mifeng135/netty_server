@@ -13,6 +13,6 @@ public class GateApplication {
     public static void main(String[] arg) {
         new EventThreadGroup(Config.LOGIC_THREAD_COUNT);
         new TcpServer(Config.SERVER_IP, Config.SERVER_PORT); //开启gate服务器
-        new TcpConnection(Config.CONNECT_GATE_CENTER_SERVER_KEY).connect(Config.CONNECT_GATE_CENTER_SERVER_IP, Config.CONNECT_GATE_CENTER_SERVER_PORT);
+        new TcpConnection(Config.CONNECT_GATE_CENTER_SOCKET_INDEX).connect(Config.CONNECT_GATE_CENTER_SERVER_IP, Config.CONNECT_GATE_CENTER_SERVER_PORT);
     }
 }

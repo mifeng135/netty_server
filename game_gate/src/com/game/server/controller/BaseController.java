@@ -32,7 +32,7 @@ public class BaseController {
 
         CenterSessionReq centerSessionReq = new CenterSessionReq();
         centerSessionReq.setSocketIndex(socketIndex);
-        SocketUtil.sendLoaclTcpMsgToServer(Config.CONNECT_GATE_CENTER_SERVER_KEY, MSG_CENTER_SESSION_REQ, centerSessionReq);
+        SocketUtil.sendLoaclTcpMsgToServer(Config.CONNECT_GATE_CENTER_SOCKET_INDEX, MSG_CENTER_SESSION_REQ, centerSessionReq);
     }
 
     @CtrlCmd(cmd = MSG_HEART_BEAT_REQ)
