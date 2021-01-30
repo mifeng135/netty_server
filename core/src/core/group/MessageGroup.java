@@ -35,12 +35,12 @@ public class MessageGroup {
     }
 
     public void createQueueByTag(Integer tag) {
-        mMessageMap.putIfAbsent(tag, new MultithreadConcurrentQueue(2000));
+        mMessageMap.putIfAbsent(tag, new MultithreadConcurrentQueue(2048));
     }
 
     public void pushMessage(TransferMsg buf) {
         try {
-            int index = buf.getSocketIndex();
+            int index = buf.getPlayerIndex();
             int tag = index % threadCount;
             mMessageMap.get(tag).offer(buf);
         } catch (Exception e) {

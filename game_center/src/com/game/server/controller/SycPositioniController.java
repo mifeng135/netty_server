@@ -1,18 +1,16 @@
 package com.game.server.controller;
 
 
+import com.game.server.util.TcpUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
-import core.util.SocketUtil;
 import io.netty.channel.ChannelHandlerContext;
 import protocol.scene.SycPositionBC;
 import protocol.scene.SycPositionReq;
 import protocol.scene.SycPositionRsp;
 
-import static com.game.server.Config.CONNECT_GATE_CENTER_SERVER_KEY;
-import static com.game.server.Config.CONNECT_SCENE_CENTER_SERVER_KEY;
 import static protocol.MsgConstant.*;
 
 @Ctrl
@@ -24,13 +22,12 @@ public class SycPositioniController {
         SycPositionBC sycPositionBC = new SycPositionBC();
         sycPositionBC.setPosition(sycPositionRsp.getPosition());
         sycPositionBC.setPlayerIndex(sycPositionRsp.getPlayerIndex());
-        SocketUtil.sendLocalTcpMsgToConnection(CONNECT_GATE_CENTER_SERVER_KEY, MSG_SYC_POSITION_BC, 0, sycPositionBC);
+        TcpUtil.sendToGate(sycPositionRsp.getPlayerIndex(), MSG_SYC_POSITION_BC, sycPositionBC);
     }
-
 
     @CtrlCmd(cmd = MSG_SYC_POSITION_REQ)
     public void syncPosition(TransferMsg msg, ChannelHandlerContext context) {
         SycPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SycPositionReq.class);
-        SocketUtil.sendLocalTcpMsgToConnection(CONNECT_SCENE_CENTER_SERVER_KEY, MSG_SYC_POSITION_REQ, 0, sycPositionReq);
+        TcpUtil.sendToScene(msg.getPlayerIndex(), MSG_SYC_POSITION_REQ, sycPositionReq);
     }
 }

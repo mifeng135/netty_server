@@ -11,7 +11,6 @@ public class CEncode extends MessageToByteEncoder<TransferMsg> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, TransferMsg in, ByteBuf out) {
         out.writeShort(LOCAL_MSG_ENCODER_HEADER_LEN + in.getData().length);
-        out.writeInt(in.getSocketIndex());
         out.writeInt(in.getPlayerIndex());
         out.writeInt(in.getMsgId());
         out.writeBytes(in.getData());

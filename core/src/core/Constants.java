@@ -34,7 +34,7 @@ public class Constants {
      */
     public static final int TCP_SERVER_IDLE_DEFAULT = 30;
 
-    public static final AttributeKey<Integer> SOCKET_INDEX = AttributeKey.valueOf("SOCKET_INDEX");
+    public static final AttributeKey<Integer> PLAYER_INDEX = AttributeKey.valueOf("PLAYER_INDEX");
     public static final AttributeKey<String> REMOTE_ADDRESS = AttributeKey.valueOf("REMOTE_ADDRESS");
     public static final AttributeKey<TcpConnection> TCP = AttributeKey.valueOf("TcpConnection");
     public static final AttributeKey<String> CONNECT_IP = AttributeKey.valueOf("CONNECT_IP");
@@ -55,8 +55,8 @@ public class Constants {
     public static final int REMOTE = 2;
 
     public static final int REMOTE_MSG_ENCODER_HEADER_LEN = 8; //short(len) int(msgId)  short(result)
-    public static final int LOCAL_MSG_ENCODER_HEADER_LEN = 14; //short(len)  int(socketIndex) int(playerIndex) int(msgId)
-
     public static final int REMOTE_MSG_DECODER_HEADER_LEN = 10;//short(len) int(socketIndex) int(msgId)
-    public static final int LOCAL_MSG_DECODER_HEADER_LEN = 14; //short(len) int(socketIndex) int(playerIndex) int(msgId)
+
+    public static final int LOCAL_MSG_ENCODER_HEADER_LEN = 10; //short(len) int(playerIndex) int(msgId)
+    public static final int LOCAL_MSG_DECODER_HEADER_LEN = 10; //short(len) int(playerIndex) int(msgId)
 }

@@ -43,7 +43,6 @@ public class GDecoder extends ByteToMessageDecoder {
         TransferMsg msg = new TransferMsg();
         msg.setData(data);
         msg.setMsgId(msgId);
-        msg.setSocketIndex(playerIndex);
         msg.setPlayerIndex(playerIndex);
         list.add(msg);
     }

@@ -2,8 +2,8 @@ package core.netty.tcp;
 
 import core.Constants;
 import core.manager.LocalSocketManager;
-import core.manager.SocketManager;
-import core.util.SocketUtil;
+import core.msg.TransferMsg;
+import core.util.ProtoUtil;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.EventLoop;
@@ -33,14 +33,20 @@ public class ConnectionListener implements ChannelFutureListener {
                 }
             }, 10L, TimeUnit.SECONDS);
         } else {
-            int socketIndex = channelFuture.channel().attr(Constants.SOCKET_INDEX).get();
+            int playerIndex = channelFuture.channel().attr(Constants.PLAYER_INDEX).get();
             String ip = channelFuture.channel().attr(Constants.CONNECT_IP).get();
             int port = channelFuture.channel().attr(Constants.PORT).get();
-            logger.info("connect success ip = {} port = {}", ip,port);
-            LocalSocketManager.getInstance().putChannel(socketIndex, channelFuture.channel());
+            logger.info("connect success ip = {} port = {}", ip, port);
+            LocalSocketManager.getInstance().putChannel(playerIndex, channelFuture.channel());
             TcpReq tcpReq = new TcpReq();
-            tcpReq.setSocketIndex(socketIndex);
-            SocketUtil.sendLoaclTcpMsgToServer(socketIndex, MSG_TCP_REQ, tcpReq);
+            tcpReq.setPlayerIndex(playerIndex);
+
+            byte[] data = ProtoUtil.serialize(tcpReq);
+            TransferMsg transferMsg = new TransferMsg();
+            transferMsg.setPlayerIndex(playerIndex);
+            transferMsg.setMsgId(MSG_TCP_REQ);
+            transferMsg.setData(data);
+            channelFuture.channel().writeAndFlush(transferMsg);
         }
     }
 }

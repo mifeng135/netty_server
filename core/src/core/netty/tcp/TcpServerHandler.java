@@ -56,10 +56,10 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     protected void channelClose(ChannelHandlerContext context) {
-        int socketIndex = context.channel().attr(Constants.SOCKET_INDEX).get();
-        if (socketIndex < LOCAL_SOCKET_RANGE) {
+        int playerIndex = context.channel().attr(Constants.PLAYER_INDEX).get();
+        if (playerIndex < LOCAL_SOCKET_RANGE) {
             LocalSocketManager.getInstance().removeChannel(context.channel());
-        }else {
+        } else {
             SocketManager.getInstance().removeChannel(context.channel());
         }
     }

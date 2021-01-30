@@ -1,21 +1,19 @@
 package com.game.server.controller;
 
 
-import com.game.server.Config;
+import com.game.server.util.TcpUtil;
 import core.Constants;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.manager.SocketManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
-import core.util.SocketUtil;
 import core.util.TimeUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import protocol.MsgConstant;
 import protocol.system.*;
 
-import static core.Constants.MSG_RESULT_SUCCESS;
 import static protocol.MsgConstant.*;
 
 @Ctrl
@@ -24,20 +22,19 @@ public class BaseController {
     @CtrlCmd(cmd = MSG_SOCKET_INDEX_REQ)
     public void socketLogin(TransferMsg msg, ChannelHandlerContext context) {
         LoginGateReq loginGateReq = ProtoUtil.deserializer(msg.getData(), LoginGateReq.class);
-        int socketIndex = loginGateReq.getPlayerId();
-        process(context, socketIndex);
-        SocketUtil.sendRemoteTcpMsgToConnection(socketIndex, MsgConstant.MSG_SOCKET_INDEX_RSP, MSG_RESULT_SUCCESS, new LoginGateRsp());
+        int playerIndex = loginGateReq.getPlayerId();
+        process(context, playerIndex);
+        TcpUtil.sendToClient(playerIndex, MsgConstant.MSG_SOCKET_INDEX_RSP, new LoginGateRsp());
 
         CenterSessionReq centerSessionReq = new CenterSessionReq();
-        centerSessionReq.setSocketIndex(socketIndex);
-        SocketUtil.sendLoaclTcpMsgToServer(Config.CONNECT_GATE_CENTER_SOCKET_INDEX, MSG_CENTER_SESSION_REQ, centerSessionReq);
+        TcpUtil.sendToCenter(playerIndex, MSG_CENTER_SESSION_REQ, centerSessionReq);
     }
 
     @CtrlCmd(cmd = MSG_HEART_BEAT_REQ)
     public void heartBeat(TransferMsg msg, ChannelHandlerContext context) {
         HeartBeartRsq heatbeartRsq = new HeartBeartRsq();
         heatbeartRsq.setTime(TimeUtil.getCurrentTimeSecond());
-        SocketUtil.sendRemoteTcpMsgToConnection(msg.getSocketIndex(), MsgConstant.MSG_HEART_BEAT_RSP, MSG_RESULT_SUCCESS, heatbeartRsq);
+        TcpUtil.sendToClient(msg.getPlayerIndex(), MsgConstant.MSG_HEART_BEAT_RSP, heatbeartRsq);
     }
 
     @CtrlCmd(cmd = MSG_RECONNECT_REQ)
@@ -45,15 +42,15 @@ public class BaseController {
         ReconnectReq reconnectReq = ProtoUtil.deserializer(msg.getData(), ReconnectReq.class);
         int socketIndex = reconnectReq.getSocketIndex();
         process(context, socketIndex);
-        SocketUtil.sendRemoteTcpMsgToConnection(socketIndex, MSG_RECONNECT_RSP, MSG_RESULT_SUCCESS, new ReconnectRsp());
+        TcpUtil.sendToClient(socketIndex, MSG_RECONNECT_RSP, new ReconnectRsp());
     }
 
-    private void process(ChannelHandlerContext context, int socketIndex) {
-        context.channel().attr(Constants.SOCKET_INDEX).setIfAbsent(socketIndex);
-        Channel oldChannel = SocketManager.getInstance().getChanel(socketIndex);
+    private void process(ChannelHandlerContext context, int playerIndex) {
+        context.channel().attr(Constants.PLAYER_INDEX).setIfAbsent(playerIndex);
+        Channel oldChannel = SocketManager.getInstance().getChanel(playerIndex);
         if (oldChannel != null) {
-            SocketManager.getInstance().removeChannel(socketIndex);
+            SocketManager.getInstance().removeChannel(playerIndex);
         }
-        SocketManager.getInstance().putChannel(socketIndex, context.channel());
+        SocketManager.getInstance().putChannel(playerIndex, context.channel());
     }
 }

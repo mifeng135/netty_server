@@ -45,7 +45,7 @@ public class LocalSocketManager {
     }
 
     public void removeChannel(Channel channel) {
-        int socketIndex = channel.attr(Constants.SOCKET_INDEX).get();
+        int socketIndex = channel.attr(Constants.PLAYER_INDEX).get();
         removeChannel(socketIndex);
         logger.info("disconnect socketIindex = {}", socketIndex);
     }

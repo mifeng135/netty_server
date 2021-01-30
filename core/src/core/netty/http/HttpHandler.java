@@ -41,7 +41,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
                 buf.readBytes(data);
                 TransferMsg transferMsg = new TransferMsg();
                 transferMsg.setMsgId(msgId);
-                transferMsg.setSocketIndex(playerIndex);
+                transferMsg.setPlayerIndex(playerIndex);
                 transferMsg.setData(data);
                 transferMsg.setContext(ctx);
                 HttpConnectManager.putConnect(playerIndex, ctx.channel());

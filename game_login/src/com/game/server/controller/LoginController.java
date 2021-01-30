@@ -3,6 +3,7 @@ package com.game.server.controller;
 import com.game.server.constant.RedisConstant;
 import com.game.server.constant.SqlCmdConstant;
 import com.game.server.bean.PlayerBean;
+import com.game.server.util.HttpUtil;
 import io.netty.channel.ChannelHandlerContext;
 import protocol.login.LoginReq;
 import protocol.login.LoginRsp;
@@ -18,7 +19,6 @@ import core.msg.TransferMsg;
 import core.redis.RedisManager;
 import core.sql.MysqlBatchHandle;
 import core.sql.MysqlBean;
-import core.util.SocketUtil;
 import core.util.StringUtil;
 import core.util.TimeUtil;
 import io.netty.channel.Channel;
@@ -27,9 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protocol.MsgConstant;
 import protocol.system.ErroRsp;
-
-import static core.Constants.MSG_RESULT_FAIL;
-import static core.Constants.MSG_RESULT_SUCCESS;
 
 /**
  * Created by Administrator on 2020/6/23.
@@ -66,7 +63,7 @@ public class LoginController {
         }
 
         if (loginSuc) {
-            Channel channel = HttpConnectManager.getConnect(msgBean.getSocketIndex());
+            Channel channel = HttpConnectManager.getConnect(msgBean.getPlayerIndex());
             String loginIp = channel.attr(Constants.REMOTE_ADDRESS).get();
             int loginTime = TimeUtil.getCurrentTimeSecond();
 
@@ -80,18 +77,18 @@ public class LoginController {
         sqlBean.setData(playerBean);
         MysqlBatchHandle.getInstance().pushMsg(sqlBean);
 
-        if (loginSuc) {
-            LoginRsp loginRsp = new LoginRsp();
-            loginRsp.setIp("127.0.0.1:7005");
-            loginRsp.setPlayerIndex(playerBean.getId());
-            loginRsp.setName(playerBean.getName());
-            SocketUtil.sendHttpMsg(msgBean.getSocketIndex(), MsgConstant.MSG_LOGIN_RSP, MSG_RESULT_SUCCESS, loginRsp);
-        } else {
+        if (!loginSuc) {
             ErroRsp erroRsp = new ErroRsp();
             erroRsp.setErrorStr("");
             erroRsp.setMsgId(MsgConstant.MSG_LOGIN_RSP);
-            SocketUtil.sendHttpMsg(msgBean.getSocketIndex(), MsgConstant.MSG_LOGIN_RSP, MSG_RESULT_FAIL, erroRsp);
+            HttpUtil.sendErrorMsg(msgBean.getPlayerIndex(), MsgConstant.MSG_LOGIN_RSP, erroRsp);
+            return;
         }
+        LoginRsp loginRsp = new LoginRsp();
+        loginRsp.setIp("127.0.0.1:7005");
+        loginRsp.setPlayerIndex(playerBean.getId());
+        loginRsp.setName(playerBean.getName());
+        HttpUtil.sendMsg(msgBean.getPlayerIndex(), MsgConstant.MSG_LOGIN_RSP, loginRsp);
     }
 
     @CtrlCmd(cmd = MsgConstant.MSG_REGISTER_REQ)
@@ -107,7 +104,7 @@ public class LoginController {
             ErroRsp erroRsp = new ErroRsp();
             erroRsp.setErrorStr("帐号或密码为空");
             erroRsp.setMsgId(MsgConstant.MSG_REGISTER_RSP);
-            SocketUtil.sendHttpMsg(msgBean.getSocketIndex(), MsgConstant.MSG_REGISTER_RSP, MSG_RESULT_FAIL, erroRsp);
+            HttpUtil.sendErrorMsg(msgBean.getPlayerIndex(), MsgConstant.MSG_REGISTER_RSP, erroRsp);
             return;
         }
 
@@ -115,7 +112,7 @@ public class LoginController {
             ErroRsp erroRsp = new ErroRsp();
             erroRsp.setErrorStr("密码不一致");
             erroRsp.setMsgId(MsgConstant.MSG_REGISTER_RSP);
-            SocketUtil.sendHttpMsg(msgBean.getSocketIndex(), MsgConstant.MSG_REGISTER_RSP, MSG_RESULT_FAIL, erroRsp);
+            HttpUtil.sendErrorMsg(msgBean.getPlayerIndex(), MsgConstant.MSG_REGISTER_RSP, erroRsp);
             return;
         }
 
@@ -124,11 +121,11 @@ public class LoginController {
             ErroRsp erroRsp = new ErroRsp();
             erroRsp.setErrorStr("帐号已经存在");
             erroRsp.setMsgId(MsgConstant.MSG_REGISTER_RSP);
-            SocketUtil.sendHttpMsg(msgBean.getSocketIndex(), MsgConstant.MSG_REGISTER_RSP, MSG_RESULT_FAIL, erroRsp);
+            HttpUtil.sendErrorMsg(msgBean.getPlayerIndex(), MsgConstant.MSG_REGISTER_RSP, erroRsp);
             return;
         }
 
-        Channel channel = HttpConnectManager.getConnect(msgBean.getSocketIndex());
+        Channel channel = HttpConnectManager.getConnect(msgBean.getPlayerIndex());
         String loginIp = channel.attr(Constants.REMOTE_ADDRESS).get();
         int registerTime = TimeUtil.getCurrentTimeSecond();
 
@@ -145,7 +142,7 @@ public class LoginController {
         if (result != -1) {
             userMap.fastPut(account, playerBean);
             RegisterRsp registerRsp = new RegisterRsp();
-            SocketUtil.sendHttpMsg(msgBean.getSocketIndex(), MsgConstant.MSG_REGISTER_RSP, MSG_RESULT_SUCCESS, registerRsp);
+            HttpUtil.sendMsg(msgBean.getPlayerIndex(), MsgConstant.MSG_REGISTER_RSP, registerRsp);
         }
     }
 }

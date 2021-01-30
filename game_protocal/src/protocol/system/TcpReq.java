@@ -6,5 +6,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class TcpReq {
-    private int socketIndex;
+    private int playerIndex;
 }

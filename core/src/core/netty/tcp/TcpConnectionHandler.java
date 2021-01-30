@@ -11,17 +11,12 @@ import io.netty.channel.EventLoop;
 
 import java.util.concurrent.TimeUnit;
 
-import static core.Constants.SOCKET_INDEX;
-import static protocol.MsgConstant.MSG_TCP_RSP;
-
 @ChannelHandler.Sharable
 public class TcpConnectionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        int socketIndex = ctx.channel().attr(SOCKET_INDEX).get();
         TransferMsg transferMsg = (TransferMsg) msg;
-        transferMsg.setSocketIndex(socketIndex);
         transferMsg.setContext(ctx);
         MessageGroup.getInstance().pushMessage(transferMsg);
     }
@@ -44,16 +39,5 @@ public class TcpConnectionHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         ctx.close();
-    }
-
-    public void dispatchMsg(TransferMsg msgBean) {
-        MessageGroup.getInstance().pushMessage(msgBean);
-    }
-
-    public boolean swallowDispatchMsg(TransferMsg msg) {
-        if (msg.getMsgId() == MSG_TCP_RSP) {
-            return true;
-        }
-        return false;
     }
 }

@@ -53,7 +53,7 @@ public class TcpConnection {
     public void connect(String ip, int port) {
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(ip, port));
         future.awaitUninterruptibly();
-        future.channel().attr(Constants.SOCKET_INDEX).setIfAbsent(key);
+        future.channel().attr(Constants.PLAYER_INDEX).setIfAbsent(key);
         future.channel().attr(Constants.CONNECT_IP).setIfAbsent(ip);
         future.channel().attr(Constants.PORT).setIfAbsent(port);
         future.channel().attr(Constants.TCP).setIfAbsent(this);

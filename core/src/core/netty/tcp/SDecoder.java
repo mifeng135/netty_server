@@ -31,7 +31,6 @@ public class SDecoder extends ByteToMessageDecoder {
             byteBuf.resetReaderIndex();
             return;
         }
-        int socketIndex = byteBuf.readInt();
         int playerIndex = byteBuf.readInt();
         int msgId = byteBuf.readInt();
         byte[] data = new byte[msgLength - LOCAL_MSG_DECODER_HEADER_LEN];
@@ -41,7 +40,6 @@ public class SDecoder extends ByteToMessageDecoder {
         msg.setData(data);
         msg.setMsgId(msgId);
         msg.setPlayerIndex(playerIndex);
-        msg.setSocketIndex(socketIndex);
         list.add(msg);
     }
 }
