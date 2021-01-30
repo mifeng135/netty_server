@@ -1,7 +1,6 @@
 package core.netty.tcp;
 
 import core.Constants;
-import core.netty.websocket.WebSocketServer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
@@ -15,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 
 import static core.Constants.IDLE_STATE_HANDLER;
+import static core.Constants.LOCAL;
+import static core.Constants.REMOTE;
 
 /**
  * Created by Administrator on 2020/12/19.
@@ -24,23 +25,26 @@ public class TcpServer {
     private static Logger logger = LoggerFactory.getLogger(TcpServer.class);
     private final String mIp;
     private final int mPort;
+    private final int socketType;
 
     private ServerBootstrap mServerBootstrap;
     private EventLoopGroup mEventLoopGroup;
     private ChannelFuture mChannelFuture;
     private TcpServerHandler tcpServerHandler;
 
-    public TcpServer(String ip, int port, TcpServerHandler tcpServerHandler) {
+    public TcpServer(String ip, int port, int socketType, TcpServerHandler tcpServerHandler) {
         mIp = ip;
         mPort = port;
+        this.socketType = socketType;
         this.tcpServerHandler = tcpServerHandler;
         doInitNetty();
     }
 
-    public TcpServer(String ip, int port) {
+    public TcpServer(String ip, int port, int socketType) {
         mIp = ip;
         mPort = port;
         this.tcpServerHandler = new TcpServerHandler();
+        this.socketType = socketType;
         doInitNetty();
     }
 
@@ -65,8 +69,13 @@ public class TcpServer {
                 if (Constants.NETTY_OPEN_IDLE) {
                     pipeline.addLast(IDLE_STATE_HANDLER, new IdleStateHandler(Constants.TCP_SERVER_IDLE_DEFAULT, 0, 0));
                 }
-                pipeline.addLast(new MDecoder());
-                pipeline.addLast(new MEncoder());
+                if (socketType == LOCAL) {
+                    pipeline.addLast(new SDecoder());
+                    pipeline.addLast(new SEncode());
+                } else if (socketType == REMOTE) {
+                    pipeline.addLast(new GDecoder());
+                    pipeline.addLast(new GEncoder());
+                }
                 pipeline.addLast("serverHandler", tcpServerHandler);
             }
         });

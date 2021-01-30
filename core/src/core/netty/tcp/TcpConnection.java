@@ -15,17 +15,17 @@ public class TcpConnection {
     private Bootstrap bootstrap;
     private EventLoopGroup workerGroup;
     private TcpConnectionHandler handler;
-    private final int socketIndex;
+    private final Integer key;
 
-    public TcpConnection(int socketIndex, TcpConnectionHandler handler) {
+    public TcpConnection(Integer key, TcpConnectionHandler handler) {
         this.handler = handler;
-        this.socketIndex = socketIndex;
+        this.key = key;
         createConnection();
     }
 
-    public TcpConnection(int socketIndex) {
+    public TcpConnection(Integer key) {
         this.handler = new TcpConnectionHandler();
-        this.socketIndex = socketIndex;
+        this.key = key;
         createConnection();
     }
 
@@ -53,7 +53,7 @@ public class TcpConnection {
     public void connect(String ip, int port) {
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(ip, port));
         future.awaitUninterruptibly();
-        future.channel().attr(Constants.SOCKET_INDEX).setIfAbsent(socketIndex);
+        future.channel().attr(Constants.SOCKET_INDEX).setIfAbsent(key);
         future.channel().attr(Constants.CONNECT_IP).setIfAbsent(ip);
         future.channel().attr(Constants.PORT).setIfAbsent(port);
         future.channel().attr(Constants.TCP).setIfAbsent(this);

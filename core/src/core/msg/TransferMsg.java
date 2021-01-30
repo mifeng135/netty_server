@@ -13,6 +13,7 @@ import lombok.Setter;
 public class TransferMsg {
     private int msgId;
     private int socketIndex;
+    private int playerIndex;
     private byte[] data;
     private int result;
     private ChannelHandlerContext context;

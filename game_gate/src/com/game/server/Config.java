@@ -9,4 +9,5 @@ public class Config {
     public static final int CONNECT_GATE_CENTER_SERVER_PORT = 7001;
 
     public static final int LOGIC_THREAD_COUNT = 4;
+    public static final String LOGIC_THREAD_NAME = "gate";
 }

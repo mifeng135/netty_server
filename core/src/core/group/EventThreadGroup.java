@@ -6,6 +6,7 @@ package core.group;
 public class EventThreadGroup {
 
     private final int mThreadCount;
+    private String threadName = "";
     private MessageGroup mMessageGroup = MessageGroup.getInstance();
 
     public EventThreadGroup(int count, Class<? extends EventHandler> handler) {
@@ -18,6 +19,14 @@ public class EventThreadGroup {
     public EventThreadGroup(int count) {
         mThreadCount = count;
         mMessageGroup.setThreadCount(count);
+        initMessageGroup();
+        initTaskThread(null);
+    }
+
+    public EventThreadGroup(int count,String name) {
+        mThreadCount = count;
+        mMessageGroup.setThreadCount(count);
+        threadName = name;
         initMessageGroup();
         initTaskThread(null);
     }
@@ -37,7 +46,7 @@ public class EventThreadGroup {
                 } else {
                     messageThreadTask = new MessageThreadTask(mMessageGroup, handler.newInstance(), i);
                 }
-                messageThreadTask.setName("logic" + i);
+                messageThreadTask.setName(threadName + i);
                 messageThreadTask.start();
             } catch (Exception e) {
                 e.printStackTrace();

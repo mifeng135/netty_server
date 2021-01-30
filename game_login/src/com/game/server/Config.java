@@ -5,6 +5,7 @@ public class Config {
     public static final int HTTP_PORT = 8000;
 
     public static final int LOGIC_THREAD_COUNT = 4;
+    public static final String LOGIC_THREAD_NAME = "login";
 
     public static final String REDIS_IP = "redis://127.0.0.1:6379";
     public static final String REDIS_PWD = "nqwl0520";

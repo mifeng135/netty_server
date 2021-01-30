@@ -12,11 +12,9 @@ import core.util.SocketUtil;
 import core.util.TimeUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import nanomsg.Socket;
 import protocol.MsgConstant;
 import protocol.system.*;
 
-import static core.Constants.IDLE_STATE_HANDLER;
 import static core.Constants.MSG_RESULT_SUCCESS;
 import static protocol.MsgConstant.*;
 

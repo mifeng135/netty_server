@@ -7,13 +7,10 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.util.List;
 
+import static core.Constants.LOCAL_MSG_DECODER_HEADER_LEN;
 import static core.Constants.TCP_HEADER_LEN;
 
-/**
- * Created by Administrator on 2020/12/19.
- */
-public class MDecoder extends ByteToMessageDecoder {
-
+public class SDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) {
@@ -34,16 +31,17 @@ public class MDecoder extends ByteToMessageDecoder {
             byteBuf.resetReaderIndex();
             return;
         }
-
+        int socketIndex = byteBuf.readInt();
         int playerIndex = byteBuf.readInt();
         int msgId = byteBuf.readInt();
-        byte[] data = new byte[byteBuf.readableBytes()];
+        byte[] data = new byte[msgLength - LOCAL_MSG_DECODER_HEADER_LEN];
         byteBuf.readBytes(data);
 
         TransferMsg msg = new TransferMsg();
         msg.setData(data);
         msg.setMsgId(msgId);
-        msg.setSocketIndex(playerIndex);
+        msg.setPlayerIndex(playerIndex);
+        msg.setSocketIndex(socketIndex);
         list.add(msg);
     }
 }
