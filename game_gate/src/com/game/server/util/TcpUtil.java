@@ -8,9 +8,9 @@ import io.netty.channel.Channel;
 
 import java.util.List;
 
-import static com.game.server.Config.CONNECT_GATE_CENTER_SOCKET_INDEX;
 import static core.Constants.MSG_RESULT_FAIL;
 import static core.Constants.MSG_RESULT_SUCCESS;
+import static config.Config.*;
 
 public class TcpUtil {
     /**
@@ -27,7 +27,7 @@ public class TcpUtil {
         transferMsg.setMsgId(msgId);
         transferMsg.setData(data);
 
-        Channel channel = LocalSocketManager.getInstance().getChanel(CONNECT_GATE_CENTER_SOCKET_INDEX);
+        Channel channel = LocalSocketManager.getInstance().getChanel(GATE_CENTER_SOCKET_INDEX);
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(transferMsg);
         }

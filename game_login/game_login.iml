@@ -19,5 +19,6 @@
     <orderEntry type="module" module-name="core" />
     <orderEntry type="module" module-name="game_protocol" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="module" module-name="game_config" />
   </component>
 </module>

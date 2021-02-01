@@ -8,6 +8,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.util.concurrent.GenericFutureListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,6 @@ import static core.Constants.REMOTE;
  */
 public class TcpServer {
 
-    private static Logger logger = LoggerFactory.getLogger(TcpServer.class);
     private final String mIp;
     private final int mPort;
     private final int socketType;
@@ -31,13 +31,14 @@ public class TcpServer {
     private EventLoopGroup mEventLoopGroup;
     private ChannelFuture mChannelFuture;
     private TcpServerHandler tcpServerHandler;
+    private GenericFutureListener channelFutureListener;
 
     public TcpServer(String ip, int port, int socketType, TcpServerHandler tcpServerHandler) {
         mIp = ip;
         mPort = port;
         this.socketType = socketType;
         this.tcpServerHandler = tcpServerHandler;
-        doInitNetty();
+        init();
     }
 
     public TcpServer(String ip, int port, int socketType) {
@@ -45,10 +46,10 @@ public class TcpServer {
         mPort = port;
         this.tcpServerHandler = new TcpServerHandler();
         this.socketType = socketType;
-        doInitNetty();
+        init();
     }
 
-    public void doInitNetty() {
+    public void init() {
         mEventLoopGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
         workerGroup.setIoRatio(Constants.NETTY_IO_RATIO_DEFAULT);
@@ -79,19 +80,20 @@ public class TcpServer {
                 pipeline.addLast("serverHandler", tcpServerHandler);
             }
         });
-
-        doStart();
     }
 
+    public void setStartListener(ChannelFutureListener listener) {
+        channelFutureListener = listener;
+    }
 
     /**
      * start game server
      */
-    private void doStart() {
+    public void startServer() {
         try {
             ChannelFuture channelFuture = mChannelFuture = mServerBootstrap.bind(new InetSocketAddress(mIp, mPort)).sync();
-            if (channelFuture.isSuccess()) {
-                logger.error("server start success");
+            if (channelFutureListener != null) {
+                channelFuture.addListener(channelFutureListener);
             }
         } catch (InterruptedException e) {
             doStop();

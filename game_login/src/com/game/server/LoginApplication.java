@@ -3,15 +3,9 @@ package com.game.server;
 
 import core.group.EventThreadGroup;
 import core.netty.http.HttpServer;
-import core.redis.DelayedQueue;
 import core.redis.RedisManager;
-import core.redis.TaskDelayEvent;
-import core.util.TimeUtil;
 
-import java.util.concurrent.TimeUnit;
-
-import static com.game.server.Config.LOGIC_THREAD_NAME;
-
+import static config.Config.*;
 
 /**
  * Created by Administrator on 2020/6/1.
@@ -19,8 +13,8 @@ import static com.game.server.Config.LOGIC_THREAD_NAME;
 public class LoginApplication {
 
     public static void main(String[] args) {
-        RedisManager.getInstance().init(Config.REDIS_IP, Config.REDIS_PWD, Config.REDIS_THREAD_COUNT, Config.REDIS_NETTY_THREAD_COUNT);
-        new EventThreadGroup(Config.LOGIC_THREAD_COUNT, LOGIC_THREAD_NAME);
-        new HttpServer(Config.HTTP_IP, Config.HTTP_PORT);
+        RedisManager.getInstance().init(REDIS_IP, REDIS_PWD, REDIS_THREAD_COUNT, REDIS_NETTY_THREAD_COUNT);
+        new EventThreadGroup(LOGIN_LOGIC_THREAD_COUNT, LOGIN_LOGIC_THREAD_NAME);
+        new HttpServer(HTTP_IP, HTTP_PORT);
     }
 }

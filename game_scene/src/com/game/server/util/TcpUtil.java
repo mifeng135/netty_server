@@ -5,7 +5,7 @@ import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
 
-import static com.game.server.Config.CONNECT_SCENE_CENTER_SOCKET_INDEX;
+import static config.Config.*;
 
 
 public class TcpUtil {
@@ -17,7 +17,7 @@ public class TcpUtil {
         transferMsg.setMsgId(msgId);
         transferMsg.setData(data);
 
-        Channel channel = LocalSocketManager.getInstance().getChanel(CONNECT_SCENE_CENTER_SOCKET_INDEX);
+        Channel channel = LocalSocketManager.getInstance().getChanel(SCENE_CENTER_SOCKET_INDEX);
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(transferMsg);
         }
