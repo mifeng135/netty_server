@@ -11,6 +11,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import protocol.MsgConstant;
 
 import static core.Constants.LOCAL_SOCKET_RANGE;
 
@@ -33,7 +34,6 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (evt instanceof IdleStateEvent) {
             ctx.close();
-            channelClose(ctx);
         } else {
             super.userEventTriggered(ctx, evt);
         }
@@ -52,7 +52,6 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        ctx.close();
     }
 
     protected void channelClose(ChannelHandlerContext context) {
@@ -62,5 +61,9 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
         } else {
             SocketManager.getInstance().removeChannel(context.channel());
         }
+        TransferMsg transferMsg = new TransferMsg();
+        transferMsg.setMsgId(MsgConstant.MSG_CLOSE_SOCKET_REQ);
+        transferMsg.setContext(context);
+        MessageGroup.getInstance().pushMessage(transferMsg);
     }
 }

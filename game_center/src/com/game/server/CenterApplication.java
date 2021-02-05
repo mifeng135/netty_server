@@ -13,13 +13,7 @@ public class CenterApplication {
     private static Logger logger = LoggerFactory.getLogger(TcpServer.class);
 
     public static void main(String[] args) {
-        new EventThreadGroup(CENTER_LOGIC_THREAD_COUNT, CENTER__LOGIC_THREAD_NAME);
-        TcpServer server = new TcpServer(CENTER_SERVER_IP, CENTER_SERVER_PORT, LOCAL);
-        server.setStartListener(channelFuture -> {
-            if (channelFuture.isSuccess()) {
-                logger.info("start center server success");
-            }
-        });
-        server.startServer();
+        new EventThreadGroup(Runtime.getRuntime().availableProcessors(), CenterApplication.class.getName());
+        new TcpServer(CENTER_SERVER_IP, CENTER_SERVER_PORT, LOCAL).startServer();
     }
 }

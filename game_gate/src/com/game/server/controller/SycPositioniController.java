@@ -23,7 +23,6 @@ public class SycPositioniController {
     @CtrlCmd(cmd = MSG_SYC_POSITION_REQ)
     public void syncPosition(TransferMsg msg, ChannelHandlerContext context) {
         SycPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SycPositionReq.class);
-        sycPositionReq.setPlayerIndex(msg.getPlayerIndex());
-        TcpUtil.sendToCenter(msg.getPlayerIndex(), MSG_SYC_POSITION_REQ, sycPositionReq);
+        TcpUtil.sendToScene(msg.getPlayerIndex(), MSG_SYC_POSITION_REQ, sycPositionReq);
     }
 }

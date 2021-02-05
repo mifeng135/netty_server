@@ -30,7 +30,7 @@ public class MessageThreadTask extends Thread {
                     if (mProcessEventHandler != null) {
                         mProcessEventHandler.onEvent(transferMsg);
                     } else {
-                        CtrlAnnotation.getInstance().invokeMethod(transferMsg,transferMsg.getContext());
+                        CtrlAnnotation.getInstance().invokeMethod(transferMsg, transferMsg.getContext());
                     }
                 }
                 Thread.sleep(10);

@@ -14,6 +14,7 @@ import io.netty.channel.ChannelHandlerContext;
 import protocol.MsgConstant;
 import protocol.system.*;
 
+import static core.Constants.*;
 import static protocol.MsgConstant.*;
 
 @Ctrl
@@ -27,6 +28,7 @@ public class BaseController {
         TcpUtil.sendToClient(playerIndex, MsgConstant.MSG_SOCKET_INDEX_RSP, new LoginGateRsp());
 
         CenterSessionReq centerSessionReq = new CenterSessionReq();
+        centerSessionReq.setState(SOCKET_OPEN);
         TcpUtil.sendToCenter(playerIndex, MSG_CENTER_SESSION_REQ, centerSessionReq);
     }
 
@@ -45,12 +47,30 @@ public class BaseController {
         TcpUtil.sendToClient(socketIndex, MSG_RECONNECT_RSP, new ReconnectRsp());
     }
 
+    @CtrlCmd(cmd = MSG_CLOSE_SOCKET_REQ)
+    public void socketClose(TransferMsg msg, ChannelHandlerContext context) {
+        CenterSessionReq centerSessionReq = new CenterSessionReq();
+        centerSessionReq.setState(SOCKET_CLOSE);
+        TcpUtil.sendToCenter(msg.getPlayerIndex(), MSG_CENTER_SESSION_REQ, centerSessionReq);
+    }
+
     private void process(ChannelHandlerContext context, int playerIndex) {
         context.channel().attr(Constants.PLAYER_INDEX).setIfAbsent(playerIndex);
         Channel oldChannel = SocketManager.getInstance().getChanel(playerIndex);
         if (oldChannel != null) {
             SocketManager.getInstance().removeChannel(playerIndex);
+            sendReplaceAccount(oldChannel, playerIndex);
         }
         SocketManager.getInstance().putChannel(playerIndex, context.channel());
+    }
+
+    private void sendReplaceAccount(Channel channel, int playerIndex) {
+        ReplaceRsq replaceRsq = new ReplaceRsq();
+        byte[] data = ProtoUtil.serialize(replaceRsq);
+        TransferMsg transferMsg = new TransferMsg();
+        transferMsg.setPlayerIndex(playerIndex);
+        transferMsg.setMsgId(MSG_REPLACE_ACCOUNT_REQ);
+        transferMsg.setData(data);
+        channel.writeAndFlush(transferMsg);
     }
 }

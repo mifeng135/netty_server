@@ -8,6 +8,7 @@ import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
 import protocol.system.CenterSessionReq;
 
+import static core.Constants.SOCKET_OPEN;
 import static protocol.MsgConstant.*;
 
 @Ctrl
@@ -16,6 +17,11 @@ public class SessionController {
     @CtrlCmd(cmd = MSG_CENTER_SESSION_REQ)
     public void openSession(TransferMsg msg, ChannelHandlerContext context) {
         CenterSessionReq centerSessionReq = ProtoUtil.deserializer(msg.getData(), CenterSessionReq.class);
-        SessionManager.addSession(centerSessionReq.getSocketIndex());
+        int state = centerSessionReq.getState();
+        if (state == SOCKET_OPEN) {
+            SessionManager.addSession(centerSessionReq.getPlayerIndex());
+        } else {
+            SessionManager.removeSession(centerSessionReq.getPlayerIndex());
+        }
     }
 }

@@ -19,8 +19,7 @@ public class SysPositionController {
         SycPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SycPositionReq.class);
         SycPositionRsp sycPositionRsp = new SycPositionRsp();
         sycPositionRsp.setPosition(sycPositionReq.getPosition());
-        sycPositionRsp.setPlayerIndex(sycPositionReq.getPlayerIndex());
         sycPositionRsp.setMove(true);
-        TcpUtil.sendToCenter(sycPositionReq.getPlayerIndex(), MSG_SYC_POSITION_RSP, sycPositionRsp);
+        TcpUtil.sendToCenter(msg.getPlayerIndex(), MSG_SYC_POSITION_RSP, sycPositionRsp);
     }
 }

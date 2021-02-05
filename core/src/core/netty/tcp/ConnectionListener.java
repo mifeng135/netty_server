@@ -36,11 +36,11 @@ public class ConnectionListener implements ChannelFutureListener {
             int playerIndex = channelFuture.channel().attr(Constants.PLAYER_INDEX).get();
             String ip = channelFuture.channel().attr(Constants.CONNECT_IP).get();
             int port = channelFuture.channel().attr(Constants.PORT).get();
-            logger.info("connect success ip = {} port = {}", ip, port);
+            logger.info("connect success ip = {} port = {} playerIndex = {}", ip, port, playerIndex);
             LocalSocketManager.getInstance().putChannel(playerIndex, channelFuture.channel());
+
             TcpReq tcpReq = new TcpReq();
             tcpReq.setPlayerIndex(playerIndex);
-
             byte[] data = ProtoUtil.serialize(tcpReq);
             TransferMsg transferMsg = new TransferMsg();
             transferMsg.setPlayerIndex(playerIndex);

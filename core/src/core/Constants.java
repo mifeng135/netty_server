@@ -59,4 +59,8 @@ public class Constants {
 
     public static final int LOCAL_MSG_ENCODER_HEADER_LEN = 10; //short(len) int(playerIndex) int(msgId)
     public static final int LOCAL_MSG_DECODER_HEADER_LEN = 10; //short(len) int(playerIndex) int(msgId)
+
+
+    public static final int SOCKET_OPEN = 1;
+    public static final int SOCKET_CLOSE = 0;
 }
