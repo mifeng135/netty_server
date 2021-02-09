@@ -12,7 +12,7 @@ import protocol.scene.SycPositionRsp;
 import static protocol.MsgConstant.*;
 
 @Ctrl
-public class SysPositionController {
+public class SyncPositionController {
 
     @CtrlCmd(cmd = MSG_SYC_POSITION_REQ)
     public void openSession(TransferMsg msg, ChannelHandlerContext context) {

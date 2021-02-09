@@ -69,7 +69,7 @@ public class BaseController {
         byte[] data = ProtoUtil.serialize(replaceRsq);
         TransferMsg transferMsg = new TransferMsg();
         transferMsg.setPlayerIndex(playerIndex);
-        transferMsg.setMsgId(MSG_REPLACE_ACCOUNT_REQ);
+        transferMsg.setMsgId(MSG_REPLACE_ACCOUNT_RSP);
         transferMsg.setData(data);
         channel.writeAndFlush(transferMsg);
     }

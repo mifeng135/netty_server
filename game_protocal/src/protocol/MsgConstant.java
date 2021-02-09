@@ -25,12 +25,12 @@ public class MsgConstant {
     public static final int MSG_REGISTER_RSP = 1007;
     public static final int MSG_SYC_POSITION_REQ = 1008;                        //位置同步
     public static final int MSG_SYC_POSITION_RSP = 1009;
-    public static final int MSG_ENTER_SCENE_REQ = 1010;
+    public static final int MSG_ENTER_SCENE_REQ = 1010;                         //玩家进入某个地图场景
     public static final int MSG_ENTER_SCENE_RSP = 1011;
     public static final int MSG_REPLACE_ACCOUNT_REQ = 1012;                     //顶号
-    public static final int MSG_REPLACE_ACCOUNT_RSP = 1012;
+    public static final int MSG_REPLACE_ACCOUNT_RSP = 1013;
 
     /***********************************broadcast**********************************************************/
 
-    public static final int MSG_SYC_POSITION_BC = 10000;
+    public static final int MSG_SYC_POSITION_BC = 10000;                        //位置广播
 }
