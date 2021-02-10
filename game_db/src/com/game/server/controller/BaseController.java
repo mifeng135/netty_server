@@ -12,7 +12,6 @@ import protocol.system.TcpReq;
 
 import static core.Constants.IDLE_STATE_HANDLER;
 import static protocol.MsgConstant.*;
-import static protocol.MsgConstant.MSG_TCP_REQ;
 
 @Ctrl
 public class BaseController {

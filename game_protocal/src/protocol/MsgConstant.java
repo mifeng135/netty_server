@@ -1,5 +1,7 @@
 package protocol;
 
+import org.springframework.scheduling.config.ScheduledTask;
+
 public class MsgConstant {
 
 
@@ -12,6 +14,12 @@ public class MsgConstant {
     public static final int MSG_CENTER_SESSION_RSP = 6;
     public static final int MSG_CLOSE_SOCKET_REQ = 7;                           //客户端断开链接 向中心服发送
     public static final int MSG_CLOSE_SOCKET_RSP = 8;
+
+
+    /***********************************local server**************************************************/
+
+    public static final int MSG_PLAYER_BASE_INFO_REQ                            = 100; //向db服务器请求玩家基础信息
+    public static final int MSG_PLAYER_BASE_INFO_RSP                            = 101;
 
 
     /************************************client server******************************************************/
