@@ -79,7 +79,7 @@ public class SqlAnnotation {
      *
      * @param cmd
      * @param parameter
-     * @return sql result
+     * @return sql result one item
      */
     public <T> T sqlSelectOne(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
@@ -98,6 +98,14 @@ public class SqlAnnotation {
         return null;
     }
 
+
+    /***
+     * select sql
+     * @param cmd
+     * @param parameter
+     * @param <T>
+     * @return result list
+     */
     public <T> List<T> sqlSelectList(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
         if (method == null) {
