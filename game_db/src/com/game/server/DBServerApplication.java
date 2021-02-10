@@ -2,6 +2,11 @@ package com.game.server;
 
 
 import core.group.EventThreadGroup;
+import core.netty.tcp.TcpServer;
+
+
+import static config.Config.*;
+import static core.Constants.LOCAL;
 
 /**
  * Created by Administrator on 2020/6/1.
@@ -9,6 +14,7 @@ import core.group.EventThreadGroup;
 public class DBServerApplication {
 
     public static void main(String[] args) {
-        new EventThreadGroup(2);
+        new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, DBServerApplication.class.getName());
+        new TcpServer(DB_SERVER_IP, DB_SERVER_PORT, LOCAL).startServer();
     }
 }
