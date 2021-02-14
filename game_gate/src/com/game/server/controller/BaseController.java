@@ -14,7 +14,8 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import protocol.MsgConstant;
-import protocol.system.*;
+import protocol.local.center.CenterSessionReq;
+import protocol.remote.system.*;
 
 import static core.Constants.*;
 import static protocol.MsgConstant.*;
@@ -31,7 +32,8 @@ public class BaseController {
 
         CenterSessionReq centerSessionReq = new CenterSessionReq();
         centerSessionReq.setState(SOCKET_OPEN);
-        TcpUtil.sendToCenter(playerIndex, MSG_CENTER_SESSION_REQ, centerSessionReq);
+        centerSessionReq.setPlayerIndex(playerIndex);
+        TcpUtil.sendToCenter(MSG_CENTER_SESSION_REQ, centerSessionReq);
     }
 
     @CtrlCmd(cmd = MSG_HEART_BEAT_REQ)
@@ -53,7 +55,8 @@ public class BaseController {
     public void socketClose(TransferMsg msg, ChannelHandlerContext context) {
         CenterSessionReq centerSessionReq = new CenterSessionReq();
         centerSessionReq.setState(SOCKET_CLOSE);
-        TcpUtil.sendToCenter(msg.getPlayerIndex(), MSG_CENTER_SESSION_REQ, centerSessionReq);
+        centerSessionReq.setPlayerIndex(msg.getPlayerIndex());
+        TcpUtil.sendToCenter(MSG_CENTER_SESSION_REQ, centerSessionReq);
     }
 
     private void process(ChannelHandlerContext context, int playerIndex) {

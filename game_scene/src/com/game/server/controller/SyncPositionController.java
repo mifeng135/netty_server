@@ -6,8 +6,8 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.scene.SycPositionReq;
-import protocol.scene.SycPositionRsp;
+import protocol.local.scene.SycPositionReq;
+import protocol.local.scene.SycPositionRsp;
 
 import static protocol.MsgConstant.*;
 
@@ -20,6 +20,6 @@ public class SyncPositionController {
         SycPositionRsp sycPositionRsp = new SycPositionRsp();
         sycPositionRsp.setPosition(sycPositionReq.getPosition());
         sycPositionRsp.setMove(true);
-        TcpUtil.sendToCenter(msg.getPlayerIndex(), MSG_SYC_POSITION_RSP, sycPositionRsp);
+        TcpUtil.sendToCenter(MSG_SYC_POSITION_RSP, sycPositionRsp);
     }
 }

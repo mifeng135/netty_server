@@ -6,12 +6,12 @@ import com.game.server.bean.PlayerBean;
 import com.game.server.util.HttpUtil;
 import com.game.server.util.TcpUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.db.PlayerInfoLoginReq;
-import protocol.db.PlayerInfoLoginRsp;
-import protocol.login.LoginReq;
-import protocol.login.LoginRsp;
-import protocol.login.RegisterReq;
-import protocol.login.RegisterRsp;
+import protocol.local.db.PlayerInfoLoginReq;
+import protocol.local.db.PlayerInfoLoginRsp;
+import protocol.remote.login.LoginReq;
+import protocol.remote.login.LoginRsp;
+import protocol.remote.login.RegisterReq;
+import protocol.remote.login.RegisterRsp;
 import core.Constants;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
@@ -27,7 +27,7 @@ import org.redisson.api.RMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protocol.MsgConstant;
-import protocol.system.ErroRsp;
+import protocol.remote.system.ErroRsp;
 
 import static core.Constants.MSG_RESULT_FAIL;
 
@@ -48,14 +48,14 @@ public class LoginController {
         playerBaseInfoReq.setPwd(loginReq.getPassword());
         playerBaseInfoReq.setQueryMsgId(MsgConstant.MSG_LOGIN_REQ);
         playerBaseInfoReq.setQueryPlayerIndex(msgBean.getPlayerIndex());
-        playerBaseInfoReq.setReqPlayerIndex(msgBean.getPlayerIndex());
-        TcpUtil.sendToDB(msgBean.getPlayerIndex(), MsgConstant.MSG_DB_PLAYER_INFO_LOGIN_REQ, playerBaseInfoReq);
+        playerBaseInfoReq.setPlayerIndex(msgBean.getPlayerIndex());
+        TcpUtil.sendToDB(MsgConstant.MSG_DB_PLAYER_INFO_LOGIN_REQ, playerBaseInfoReq);
     }
 
     @CtrlCmd(cmd = MsgConstant.MSG_DB_PLAYER_INFO_LOGIN_RSP)
     public void onDBLoginAccountPwd(TransferMsg msgBean, ChannelHandlerContext context) {
         PlayerInfoLoginRsp playerInfoLoginRsp = ProtoUtil.deserializer(msgBean.getData(), PlayerInfoLoginRsp.class);
-        int reqPlayerIndex = playerInfoLoginRsp.getReqPlayerIndex();
+        int reqPlayerIndex = playerInfoLoginRsp.getPlayerIndex();
         int result = playerInfoLoginRsp.getResult();
         if (result == MSG_RESULT_FAIL) {
             ErroRsp erroRsp = new ErroRsp();
@@ -66,7 +66,7 @@ public class LoginController {
         }
         LoginRsp loginRsp = new LoginRsp();
         loginRsp.setIp("127.0.0.1:7005");
-        loginRsp.setPlayerIndex(playerInfoLoginRsp.getPlayerIndex());
+        loginRsp.setPlayerIndex(playerInfoLoginRsp.getId());
         loginRsp.setName(playerInfoLoginRsp.getName());
         HttpUtil.sendMsg(reqPlayerIndex, MsgConstant.MSG_LOGIN_RSP, loginRsp);
     }

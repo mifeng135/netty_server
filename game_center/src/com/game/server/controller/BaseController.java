@@ -8,7 +8,7 @@ import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.system.TcpReq;
+import protocol.local.system.TcpReq;
 
 import static core.Constants.IDLE_STATE_HANDLER;
 import static protocol.MsgConstant.*;

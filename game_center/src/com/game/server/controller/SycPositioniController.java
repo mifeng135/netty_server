@@ -7,9 +7,8 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.scene.SycPositionBC;
-import protocol.scene.SycPositionReq;
-import protocol.scene.SycPositionRsp;
+import protocol.remote.bc.SycPositionBC;
+import protocol.local.scene.SycPositionRsp;
 
 import static protocol.MsgConstant.*;
 
@@ -22,6 +21,6 @@ public class SycPositioniController {
         SycPositionBC sycPositionBC = new SycPositionBC();
         sycPositionBC.setPosition(sycPositionRsp.getPosition());
         sycPositionBC.setPlayerIndex(msg.getPlayerIndex());
-        TcpUtil.sendToGate(msg.getPlayerIndex(), MSG_SYC_POSITION_BC, sycPositionBC);
+        TcpUtil.sendToGate(MSG_SYC_POSITION_BC, sycPositionBC);
     }
 }

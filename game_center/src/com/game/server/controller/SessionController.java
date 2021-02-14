@@ -6,7 +6,7 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.system.CenterSessionReq;
+import protocol.local.center.CenterSessionReq;
 
 import static core.Constants.SOCKET_OPEN;
 import static protocol.MsgConstant.*;

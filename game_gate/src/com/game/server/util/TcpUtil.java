@@ -7,6 +7,7 @@ import core.util.ProtoUtil;
 import io.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import protocol.local.base.BaseLocalProto;
 
 import java.util.List;
 
@@ -21,15 +22,13 @@ public class TcpUtil {
     /**
      * send to center
      *
-     * @param playerIndex
      * @param msgId
      * @param msg
      */
-    public static void sendToCenter(int playerIndex, int msgId, Object msg) {
+    public static void sendToCenter(int msgId, BaseLocalProto msg) {
         byte[] data = ProtoUtil.serialize(msg);
 
         TransferMsg transferMsg = new TransferMsg();
-        transferMsg.setPlayerIndex(playerIndex);
         transferMsg.setMsgId(msgId);
         transferMsg.setData(data);
 
@@ -38,14 +37,13 @@ public class TcpUtil {
             channel.writeAndFlush(transferMsg);
         }
 
-        logger.info("send msg to center playerIndex = {} msgId = {}", playerIndex, msgId);
+        logger.info("send msg to center playerIndex = {} msgId = {}", msg.getPlayerIndex(), msgId);
     }
 
-    public static void sendToScene(int playerIndex, int msgId, Object msg) {
+    public static void sendToScene(int msgId, BaseLocalProto msg) {
         byte[] data = ProtoUtil.serialize(msg);
 
         TransferMsg transferMsg = new TransferMsg();
-        transferMsg.setPlayerIndex(playerIndex);
         transferMsg.setMsgId(msgId);
         transferMsg.setData(data);
 
@@ -54,7 +52,7 @@ public class TcpUtil {
             channel.writeAndFlush(transferMsg);
         }
 
-        logger.info("send msg to scene playerIndex = {} msgId = {}", playerIndex, msgId);
+        logger.info("send msg to scene playerIndex = {} msgId = {}", msg.getPlayerIndex(), msgId);
     }
 
     /**

@@ -6,8 +6,8 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.scene.SycPositionBC;
-import protocol.scene.SycPositionReq;
+import protocol.remote.bc.SycPositionBC;
+import protocol.local.scene.SycPositionReq;
 
 import static protocol.MsgConstant.*;
 
@@ -23,6 +23,6 @@ public class SycPositioniController {
     @CtrlCmd(cmd = MSG_SYC_POSITION_REQ)
     public void syncPosition(TransferMsg msg, ChannelHandlerContext context) {
         SycPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SycPositionReq.class);
-        TcpUtil.sendToScene(msg.getPlayerIndex(), MSG_SYC_POSITION_REQ, sycPositionReq);
+        TcpUtil.sendToScene(MSG_SYC_POSITION_REQ, sycPositionReq);
     }
 }

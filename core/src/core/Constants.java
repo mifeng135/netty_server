@@ -57,8 +57,8 @@ public class Constants {
     public static final int REMOTE_MSG_ENCODER_HEADER_LEN = 8; //short(len) int(msgId)  short(result)
     public static final int REMOTE_MSG_DECODER_HEADER_LEN = 10;//short(len) int(socketIndex) int(msgId)
 
-    public static final int LOCAL_MSG_ENCODER_HEADER_LEN = 10; //short(len) int(playerIndex) int(msgId)
-    public static final int LOCAL_MSG_DECODER_HEADER_LEN = 10; //short(len) int(playerIndex) int(msgId)
+    public static final int LOCAL_MSG_ENCODER_HEADER_LEN = 6; //short(len) int(msgId)
+    public static final int LOCAL_MSG_DECODER_HEADER_LEN = 6; //short(len) int(msgId)
 
 
     public static final int SOCKET_OPEN = 1;

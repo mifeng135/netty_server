@@ -4,16 +4,16 @@ import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
+import protocol.local.base.BaseLocalProto;
 
 import static config.Config.*;
 
 
 public class TcpUtil {
 
-    public static void sendToCenter(int playerIndex, int msgId, Object msg) {
+    public static void sendToCenter(int msgId, BaseLocalProto msg) {
         byte[] data = ProtoUtil.serialize(msg);
         TransferMsg transferMsg = new TransferMsg();
-        transferMsg.setPlayerIndex(playerIndex);
         transferMsg.setMsgId(msgId);
         transferMsg.setData(data);
 

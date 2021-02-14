@@ -11,10 +11,9 @@ import static config.Config.SCENE_CENTER_SOCKET_INDEX;
 
 public class TcpUtil {
 
-    public static void sendToScene(int playerIndex, int msgId, Object msg) {
+    public static void sendToScene(int msgId, Object msg) {
         byte[] data = ProtoUtil.serialize(msg);
         TransferMsg transferMsg = new TransferMsg();
-        transferMsg.setPlayerIndex(playerIndex);
         transferMsg.setMsgId(msgId);
         transferMsg.setData(data);
 
@@ -24,10 +23,9 @@ public class TcpUtil {
         }
     }
 
-    public static void sendToGate(int playerIndex, int msgId, Object msg) {
+    public static void sendToGate(int msgId, Object msg) {
         byte[] data = ProtoUtil.serialize(msg);
         TransferMsg transferMsg = new TransferMsg();
-        transferMsg.setPlayerIndex(playerIndex);
         transferMsg.setMsgId(msgId);
         transferMsg.setData(data);
 
