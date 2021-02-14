@@ -4,7 +4,10 @@ import com.game.server.constant.RedisConstant;
 import com.game.server.constant.SqlCmdConstant;
 import com.game.server.bean.PlayerBean;
 import com.game.server.util.HttpUtil;
+import com.game.server.util.TcpUtil;
 import io.netty.channel.ChannelHandlerContext;
+import protocol.db.PlayerInfoLoginReq;
+import protocol.db.PlayerInfoLoginRsp;
 import protocol.login.LoginReq;
 import protocol.login.LoginRsp;
 import protocol.login.RegisterReq;
@@ -17,8 +20,6 @@ import core.manager.HttpConnectManager;
 import core.util.ProtoUtil;
 import core.msg.TransferMsg;
 import core.redis.RedisManager;
-import core.sql.MysqlBatchHandle;
-import core.sql.MysqlBean;
 import core.util.StringUtil;
 import core.util.TimeUtil;
 import io.netty.channel.Channel;
@@ -27,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protocol.MsgConstant;
 import protocol.system.ErroRsp;
+
+import static core.Constants.MSG_RESULT_FAIL;
 
 /**
  * Created by Administrator on 2020/6/23.
@@ -39,56 +42,33 @@ public class LoginController {
 
     @CtrlCmd(cmd = MsgConstant.MSG_LOGIN_REQ)
     public void login(TransferMsg msgBean, ChannelHandlerContext context) {
-
         LoginReq loginReq = ProtoUtil.deserializer(msgBean.getData(), LoginReq.class);
-        String account = loginReq.getAccount();
-        String password = loginReq.getPassword();
+        PlayerInfoLoginReq playerBaseInfoReq = new PlayerInfoLoginReq();
+        playerBaseInfoReq.setAccount(loginReq.getAccount());
+        playerBaseInfoReq.setPwd(loginReq.getPassword());
+        playerBaseInfoReq.setQueryMsgId(MsgConstant.MSG_LOGIN_REQ);
+        playerBaseInfoReq.setQueryPlayerIndex(msgBean.getPlayerIndex());
+        playerBaseInfoReq.setReqPlayerIndex(msgBean.getPlayerIndex());
+        TcpUtil.sendToDB(msgBean.getPlayerIndex(), MsgConstant.MSG_DB_PLAYER_INFO_LOGIN_REQ, playerBaseInfoReq);
+    }
 
-
-        RMap<String, PlayerBean> loginMap = RedisManager.getInstance().getRedisSon().getMap(RedisConstant.REDIS_LOGIN_KEY);
-        PlayerBean playerBean = loginMap.get(account);
-
-        boolean loginSuc = false;
-        if (playerBean == null) {
-            playerBean = new PlayerBean();
-            playerBean.setAccount(account);
-            playerBean.setPassword(password);
-            PlayerBean result = SqlAnnotation.getInstance().sqlSelectOne(SqlCmdConstant.PLAYER_SELECT_ACCOUNT_PASSWORD, playerBean);
-            if (result != null) {
-                playerBean = result;
-                loginSuc = true;
-            }
-        } else if (playerBean.getPassword().equals(password)) {
-            loginSuc = true;
-        }
-
-        if (loginSuc) {
-            Channel channel = HttpConnectManager.getConnect(msgBean.getPlayerIndex());
-            String loginIp = channel.attr(Constants.REMOTE_ADDRESS).get();
-            int loginTime = TimeUtil.getCurrentTimeSecond();
-
-            playerBean.setLastLoginTime(loginTime);
-            playerBean.setLoginIp(loginIp);
-            loginMap.fastPut(playerBean.getAccount(), playerBean);
-        }
-
-        MysqlBean sqlBean = new MysqlBean();
-        sqlBean.setCmd(SqlCmdConstant.PLAYER_UPDATE_LOGIN_INFO);
-        sqlBean.setData(playerBean);
-        MysqlBatchHandle.getInstance().pushMsg(sqlBean);
-
-        if (!loginSuc) {
+    @CtrlCmd(cmd = MsgConstant.MSG_DB_PLAYER_INFO_LOGIN_RSP)
+    public void onDBLoginAccountPwd(TransferMsg msgBean, ChannelHandlerContext context) {
+        PlayerInfoLoginRsp playerInfoLoginRsp = ProtoUtil.deserializer(msgBean.getData(), PlayerInfoLoginRsp.class);
+        int reqPlayerIndex = playerInfoLoginRsp.getReqPlayerIndex();
+        int result = playerInfoLoginRsp.getResult();
+        if (result == MSG_RESULT_FAIL) {
             ErroRsp erroRsp = new ErroRsp();
             erroRsp.setErrorStr("");
             erroRsp.setMsgId(MsgConstant.MSG_LOGIN_RSP);
-            HttpUtil.sendErrorMsg(msgBean.getPlayerIndex(), MsgConstant.MSG_LOGIN_RSP, erroRsp);
+            HttpUtil.sendErrorMsg(playerInfoLoginRsp.getQueryPlayerIndex(), MsgConstant.MSG_LOGIN_RSP, erroRsp);
             return;
         }
         LoginRsp loginRsp = new LoginRsp();
         loginRsp.setIp("127.0.0.1:7005");
-        loginRsp.setPlayerIndex(playerBean.getId());
-        loginRsp.setName(playerBean.getName());
-        HttpUtil.sendMsg(msgBean.getPlayerIndex(), MsgConstant.MSG_LOGIN_RSP, loginRsp);
+        loginRsp.setPlayerIndex(playerInfoLoginRsp.getPlayerIndex());
+        loginRsp.setName(playerInfoLoginRsp.getName());
+        HttpUtil.sendMsg(reqPlayerIndex, MsgConstant.MSG_LOGIN_RSP, loginRsp);
     }
 
     @CtrlCmd(cmd = MsgConstant.MSG_REGISTER_REQ)

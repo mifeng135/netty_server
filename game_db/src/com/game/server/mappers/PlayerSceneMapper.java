@@ -12,7 +12,6 @@ public interface PlayerSceneMapper {
     @Select("select * from game_player_scene where player_index = #{playerIndex}")
     public PlayerScene getSceneInfoByPlayerIndex(@Param("playerIndex") int playerIndex);
 
-
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_SCENE_UPDATE_SCENE_INFO, sqlType = SqlConstant.UPDATE)
     @Update("update game_player_scene set " +
             "player_position_x = #{playerPositionX}," +
@@ -31,6 +30,5 @@ public interface PlayerSceneMapper {
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_SCENE_DELETE_SCENE_INFO, sqlType = SqlConstant.DELETE)
     @Insert("delete from game_player_scene where player_index = #{playerIndex}")
     public void deletePlayerSceneInfo(@Param("playerIndex") int playerIndex);
-
 
 }

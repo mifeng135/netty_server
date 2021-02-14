@@ -10,6 +10,8 @@ import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import core.util.TimeUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import protocol.MsgConstant;
 import protocol.system.*;
@@ -71,6 +73,11 @@ public class BaseController {
         transferMsg.setPlayerIndex(playerIndex);
         transferMsg.setMsgId(MSG_REPLACE_ACCOUNT_RSP);
         transferMsg.setData(data);
-        channel.writeAndFlush(transferMsg);
+        channel.writeAndFlush(transferMsg).addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture channelFuture) throws Exception {
+                channelFuture.channel().close();
+            }
+        });
     }
 }

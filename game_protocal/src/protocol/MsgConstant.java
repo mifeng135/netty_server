@@ -16,10 +16,10 @@ public class MsgConstant {
     public static final int MSG_CLOSE_SOCKET_RSP = 8;
 
 
-    /***********************************local server**************************************************/
+    /***********************************db server**************************************************/
 
-    public static final int MSG_PLAYER_BASE_INFO_REQ                            = 100; //向db服务器请求玩家基础信息
-    public static final int MSG_PLAYER_BASE_INFO_RSP                            = 101;
+    public static final int MSG_DB_PLAYER_INFO_LOGIN_REQ = 100;                 //通过帐号密码得到人物基本信息
+    public static final int MSG_DB_PLAYER_INFO_LOGIN_RSP = 101;
 
 
     /************************************client server******************************************************/

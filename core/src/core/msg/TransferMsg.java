@@ -11,9 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TransferMsg {
-    private int msgId;
-    private int playerIndex;
-    private byte[] data;
-    private int result;
+    private int msgId; //消息id
+    private int playerIndex; //玩家索引
+    private byte[] data; // 数据
+    private int result; //结果
     private ChannelHandlerContext context;
 }

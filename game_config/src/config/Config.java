@@ -21,7 +21,6 @@ public class Config {
     public static final String SCENE_SERVER_IP = "127.0.0.1";
     public static final int SCENE_SERVER_PORT = 7002;
 
-
     public static final String DB_SERVER_IP = "127.0.0.1";
     public static final int DB_SERVER_PORT = 7003;
 
@@ -29,4 +28,5 @@ public class Config {
     public static final int GATE_CENTER_SOCKET_INDEX = 1; //gate 到 center 连接
     public static final int SCENE_CENTER_SOCKET_INDEX = 2; //scene 到 center 连接
     public static final int GATE_SCENE_SOCKET_INDEX = 3; //gate 到 scene 连接
+    public static final int LOGIN_DB_SOCKET_INDEX = 4; //login 到 db连接
 }
