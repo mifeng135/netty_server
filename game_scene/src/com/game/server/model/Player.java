@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Player {
-    public int playerIndex;
+    private int playerIndex;
 
     public Player() {
 

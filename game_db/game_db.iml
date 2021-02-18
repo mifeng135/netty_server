@@ -4,7 +4,7 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/../DB/src/spring-mybatis.xml</file>
+          <file>file://$MODULE_DIR$/src/spring-mybatis.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -17,8 +17,8 @@
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" />
-    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="module" module-name="game_config" />
     <orderEntry type="module" module-name="game_protocol" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

@@ -20,7 +20,7 @@ public class SycPositioniController {
         SycPositionRsp sycPositionRsp = ProtoUtil.deserializer(msg.getData(), SycPositionRsp.class);
         SycPositionBC sycPositionBC = new SycPositionBC();
         sycPositionBC.setPosition(sycPositionRsp.getPosition());
-        sycPositionBC.setPlayerIndex(msg.getPlayerIndex());
+        sycPositionBC.setPlayerIndex(sycPositionRsp.getPlayerIndex());
         TcpUtil.sendToGate(MSG_SYC_POSITION_BC, sycPositionBC);
     }
 }

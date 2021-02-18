@@ -5,13 +5,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Scene {
-    public Map<Integer, Player> playerMap = new ConcurrentHashMap<>();
 
-    public void addPlayer(Player player) {
+    public static Map<Integer, Player> playerMap = new ConcurrentHashMap<>();
+
+    public static void addPlayer(Player player) {
         playerMap.put(player.getPlayerIndex(), player);
     }
 
-    public void removePlayer(int playerIndex) {
+    public static void removePlayer(int playerIndex) {
         playerMap.remove(playerIndex);
     }
 }

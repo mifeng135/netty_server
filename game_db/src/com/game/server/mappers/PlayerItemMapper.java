@@ -14,12 +14,12 @@ import java.util.List;
 
 public interface PlayerItemMapper {
 
-    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_ITEM_GET_ALL_ITEM, sqlType = SqlConstant.SELECT_LIST)
+    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_ITEM_SELECT_ALL_ITEM, sqlType = SqlConstant.SELECT_LIST)
     @Select("select item_id,item_count from game_player_item where player_index = #{playerIndex}")
     public List<PlayerItem> getPlayerAllItem(PlayerItem playerItem);
 
 
-    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_ITEM_GET_ONE_ITEM, sqlType = SqlConstant.SELECT_ONE)
+    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_ITEM_SELECT_ONE_ITEM, sqlType = SqlConstant.SELECT_ONE)
     @Select("select item_id,item_count from game_player_item where player_index = #{playerIndex} and item_id = #{itemId}")
     public PlayerItem getPlayerOneItem(PlayerItem playerItem);
 

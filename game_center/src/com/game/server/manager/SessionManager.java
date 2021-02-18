@@ -7,11 +7,11 @@ public class SessionManager {
 
     private static Map<Integer, Integer> sessionMap = new ConcurrentHashMap<>();
 
-    public static void addSession(int socketIndex) {
-        sessionMap.put(socketIndex, 1);
+    public static void addSession(int playerIndex) {
+        sessionMap.put(playerIndex, 1);
     }
 
-    public static void removeSession(int socketIndex) {
-        sessionMap.remove(socketIndex);
+    public static void removeSession(int playerIndex) {
+        sessionMap.remove(playerIndex);
     }
 }
