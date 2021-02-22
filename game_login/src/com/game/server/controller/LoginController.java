@@ -41,55 +41,26 @@ public class LoginController {
     @CtrlCmd(cmd = MsgConstant.MSG_LOGIN_REQ)
     public void login(TransferMsg msgBean, ChannelHandlerContext context) {
         LoginReq loginReq = ProtoUtil.deserializer(msgBean.getData(), LoginReq.class);
-
-        RMap<String, PlayerBean> loginMap = RedisManager.getInstance().getRedisSon().getMap(RedisConstant.REDIS_LOGIN_KEY);
-        PlayerBean playerBean = loginMap.get(loginReq.getAccount());
-        if (playerBean == null || playerBean.getPassword().equals(loginReq.getPassword())) {
-            DBLoginReq dbLoginReq = new DBLoginReq();
-            dbLoginReq.setAccount(loginReq.getAccount());
-            dbLoginReq.setPwd(loginReq.getPassword());
-            dbLoginReq.setQueryMsgId(MsgConstant.MSG_LOGIN_REQ);
-            dbLoginReq.setQueryPlayerIndex(msgBean.getPlayerIndex());
-            dbLoginReq.setPlayerIndex(msgBean.getPlayerIndex());
-
-
-            long start = System.currentTimeMillis();
-            byte[] data = AsyncHttp.getInstance().postSync(DB_HTTP_URL, MSG_DB_QUERY_LOGIN, dbLoginReq);
-            long end = System.currentTimeMillis();
-            logger.info("time dis = {}", end - start);
-            DBLoginRsp dbLoginRsp = ProtoUtil.deserializer(data, DBLoginRsp.class);
-            if (dbLoginRsp.getResult() == MSG_RESULT_FAIL) {
-                ErroRsp erroRsp = new ErroRsp();
-                erroRsp.setErrorStr("");
-                HttpUtil.sendErrorMsg(dbLoginRsp.getPlayerIndex(), MSG_LOGIN_RSP, erroRsp);
-            } else {
-                LoginRsp loginRsp = new LoginRsp();
-                loginRsp.setIp("127.0.0.1:7005");
-                loginRsp.setPlayerIndex(dbLoginRsp.getId());
-                loginRsp.setName(dbLoginRsp.getName());
-                HttpUtil.sendMsg(loginRsp.getPlayerIndex(), MSG_LOGIN_RSP, loginRsp);
-            }
-//            AsyncHttp.postAsync(DB_HTTP_URL, MSG_DB_QUERY_LOGIN, dbLoginReq, new AsyncCompletionHandler<Integer>() {
-//                @Override
-//                public Integer onCompleted(Response response) throws Exception {
-//                    DBLoginRsp dbLoginRsp = ProtoUtil.deserializer(response.getResponseBodyAsBytes(), DBLoginRsp.class);
-//                    if (dbLoginRsp.getResult() == MSG_RESULT_FAIL) {
-//                        ErroRsp erroRsp = new ErroRsp();
-//                        erroRsp.setErrorStr("");
-//                        HttpUtil.sendErrorMsg(dbLoginRsp.getPlayerIndex(), MSG_LOGIN_RSP, erroRsp);
-//                    } else {
-//                        LoginRsp loginRsp = new LoginRsp();
-//                        loginRsp.setIp("127.0.0.1:7005");
-//                        loginRsp.setPlayerIndex(dbLoginRsp.getId());
-//                        loginRsp.setName(dbLoginRsp.getName());
-//                        HttpUtil.sendMsg(loginRsp.getPlayerIndex(), MSG_LOGIN_RSP, loginRsp);
-//                    }
-//                    return response.getStatusCode();
-//                }
-//            });
+        DBLoginReq dbLoginReq = new DBLoginReq();
+        dbLoginReq.setAccount(loginReq.getAccount());
+        dbLoginReq.setPwd(loginReq.getPassword());
+        dbLoginReq.setQueryMsgId(MsgConstant.MSG_LOGIN_REQ);
+        dbLoginReq.setQueryPlayerIndex(msgBean.getPlayerIndex());
+        dbLoginReq.setPlayerIndex(msgBean.getPlayerIndex());
+        byte[] data = AsyncHttp.getInstance().postSync(DB_HTTP_URL, MSG_DB_QUERY_LOGIN, dbLoginReq);
+        DBLoginRsp dbLoginRsp = ProtoUtil.deserializer(data, DBLoginRsp.class);
+        if (dbLoginRsp.getResult() == MSG_RESULT_FAIL) {
+            ErroRsp erroRsp = new ErroRsp();
+            erroRsp.setErrorStr("");
+            HttpUtil.sendErrorMsg(dbLoginRsp.getPlayerIndex(), MSG_LOGIN_RSP, erroRsp);
+            return;
         }
+        LoginRsp loginRsp = new LoginRsp();
+        loginRsp.setIp("127.0.0.1:7005");
+        loginRsp.setPlayerIndex(dbLoginRsp.getId());
+        loginRsp.setName(dbLoginRsp.getName());
+        HttpUtil.sendMsg(msgBean.getPlayerIndex(), MSG_LOGIN_RSP, loginRsp);
     }
-
 
     @CtrlCmd(cmd = MsgConstant.MSG_REGISTER_REQ)
     public void register(TransferMsg msgBean, ChannelHandlerContext context) {

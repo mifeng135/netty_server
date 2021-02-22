@@ -1,12 +1,12 @@
-package protocol.local.db.scene;
+package protocol.local.gate;
 
 import lombok.Getter;
 import lombok.Setter;
-import protocol.local.base.BaseDBLocalProto;
+import protocol.local.base.BaseLocalProto;
 import protocol.local.common.PlayerSceneProto;
 
-@Setter
 @Getter
-public class DBSceneRsp extends BaseDBLocalProto {
+@Setter
+public class PlayerEnterSceneRsp extends BaseLocalProto {
     private PlayerSceneProto playerSceneProto;
 }

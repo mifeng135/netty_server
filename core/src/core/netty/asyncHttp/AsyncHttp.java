@@ -26,6 +26,7 @@ public class AsyncHttp {
     private AsyncHttp() {
         asyncHttpClient = asyncHttpClient();
     }
+
     /**
      * 异步请求
      *
@@ -54,13 +55,14 @@ public class AsyncHttp {
         ByteBuf byteBuf = Unpooled.buffer(4 + data.length);
         byteBuf.writeInt(msgId);
         byteBuf.writeBytes(data);
+        byte[] responseData = null;
         try {
-            return asyncHttpClient.preparePost(url).setBody(byteBuf.array()).execute().get().getResponseBodyAsBytes();
+            responseData = asyncHttpClient.preparePost(url).setBody(byteBuf.array()).execute().get().getResponseBodyAsBytes();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        return null;
+        return responseData;
     }
 }

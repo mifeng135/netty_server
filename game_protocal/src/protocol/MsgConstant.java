@@ -1,6 +1,5 @@
 package protocol;
 
-import org.springframework.scheduling.config.ScheduledTask;
 
 public class MsgConstant {
 
@@ -18,8 +17,9 @@ public class MsgConstant {
 
     /***********************************db server**************************************************/
 
-    public static final int MSG_DB_QUERY_LOGIN = 100;                             //通过帐号密码得到人物基本信息
+    public static final int MSG_DB_QUERY_LOGIN = 100;                            //通过帐号密码得到人物基本信息
     public static final int MSG_DB_QUERY_SCENE = 101;
+    public static final int MSG_DB_QUERY_ENTER_SCENE = 102;
 
 
     /************************************client server******************************************************/
@@ -41,4 +41,10 @@ public class MsgConstant {
     /***********************************broadcast**********************************************************/
 
     public static final int MSG_SYC_POSITION_BC = 10000;                        //位置广播
+
+
+    /*********************************local**********************************************************/
+
+    public static final int MSG_PLAYER_ENTER_SCENE_REQ = 100000;                //gate scene 进入场景
+    public static final int MSG_PLAYER_ENTER_SCENE_RSP = 100001;                //
 }

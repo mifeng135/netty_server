@@ -2,8 +2,11 @@ package com.game.server.controller;
 
 
 import com.game.server.bean.PlayerBean;
+import com.game.server.bean.PlayerScene;
 import com.game.server.constant.RedisConstant;
 import com.game.server.constant.SqlCmdConstant;
+import com.game.server.query.QueryPlayerInfo;
+import com.game.server.redis.RedisCache;
 import com.game.server.util.HttpUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
@@ -12,7 +15,10 @@ import core.msg.TransferMsg;
 import core.redis.RedisManager;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
+import org.redisson.api.RLocalCachedMap;
 import org.redisson.api.RMap;
+import org.redisson.api.RMapCache;
+import protocol.local.common.PlayerSceneProto;
 import protocol.local.db.login.DBLoginReq;
 import protocol.local.db.login.DBLoginRsp;
 
@@ -29,27 +35,26 @@ public class PlayerController {
         String account = playerInfoLoginReq.getAccount();
         String password = playerInfoLoginReq.getPwd();
 
-        PlayerBean playerBean = new PlayerBean();
-        playerBean.setAccount(account);
-        playerBean.setPassword(password);
-        PlayerBean result = SqlAnnotation.getInstance().sqlSelectOne(SqlCmdConstant.PLAYER_SELECT_ACCOUNT_PASSWORD, playerBean);
-
-        if (result != null) {
-            RMap<String, PlayerBean> loginMap = RedisManager.getInstance().getRedisSon().getMap(RedisConstant.REDIS_LOGIN_KEY);
-            loginMap.fastPut(result.getAccount(), result);
+        PlayerBean playerBean = QueryPlayerInfo.queryPlayerInfo(account, password);
+        if (playerBean == null) {
             DBLoginRsp dbLoginRsp = new DBLoginRsp();
-            dbLoginRsp.setQueryMsgId(playerInfoLoginReq.getQueryMsgId());
-            dbLoginRsp.setQueryPlayerIndex(playerInfoLoginReq.getQueryPlayerIndex());
+            dbLoginRsp.setResult(MSG_RESULT_FAIL);
+            dbLoginRsp.setQueryMsgId(MSG_DB_QUERY_LOGIN);
+            dbLoginRsp.setQueryPlayerIndex(playerInfoLoginReq.getPlayerIndex());
             dbLoginRsp.setPlayerIndex(playerInfoLoginReq.getPlayerIndex());
-            dbLoginRsp.setName(playerBean.getName());
-            dbLoginRsp.setId(playerBean.getId());
-            dbLoginRsp.setResult(MSG_RESULT_SUCCESS);
             HttpUtil.sendMsg(context, dbLoginRsp);
             return;
         }
+
+        RedisCache.getInstance().getAccountLoginCache().fastPut(playerBean.getAccount(), playerBean);
+
         DBLoginRsp dbLoginRsp = new DBLoginRsp();
-        dbLoginRsp.setResult(MSG_RESULT_FAIL);
+        dbLoginRsp.setQueryMsgId(playerInfoLoginReq.getQueryMsgId());
+        dbLoginRsp.setQueryPlayerIndex(playerInfoLoginReq.getQueryPlayerIndex());
         dbLoginRsp.setPlayerIndex(playerInfoLoginReq.getPlayerIndex());
+        dbLoginRsp.setName(playerBean.getName());
+        dbLoginRsp.setId(playerBean.getId());
+        dbLoginRsp.setResult(MSG_RESULT_SUCCESS);
         HttpUtil.sendMsg(context, dbLoginRsp);
     }
 }

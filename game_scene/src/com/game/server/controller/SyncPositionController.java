@@ -6,8 +6,8 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.local.scene.SycPositionReq;
-import protocol.local.scene.SycPositionRsp;
+import protocol.local.scene.SyncPositionReq;
+import protocol.local.scene.SyncPositionRsp;
 
 import static protocol.MsgConstant.*;
 
@@ -16,10 +16,11 @@ public class SyncPositionController {
 
     @CtrlCmd(cmd = MSG_SYC_POSITION_REQ)
     public void openSession(TransferMsg msg, ChannelHandlerContext context) {
-        SycPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SycPositionReq.class);
-        SycPositionRsp sycPositionRsp = new SycPositionRsp();
-        sycPositionRsp.setPosition(sycPositionReq.getPosition());
-        sycPositionRsp.setMove(true);
-        TcpUtil.sendToCenter(MSG_SYC_POSITION_RSP, sycPositionRsp);
+        SyncPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SyncPositionReq.class);
+        SyncPositionRsp syncPositionRsp = new SyncPositionRsp();
+        syncPositionRsp.setPosition(sycPositionReq.getPosition());
+        syncPositionRsp.setPlayerIndex(sycPositionReq.getPlayerIndex());
+        syncPositionRsp.setMove(true);
+        TcpUtil.sendToGate(MSG_SYC_POSITION_RSP, syncPositionRsp);
     }
 }

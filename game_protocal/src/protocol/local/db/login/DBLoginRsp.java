@@ -9,5 +9,4 @@ import protocol.local.base.BaseDBLocalProto;
 public class DBLoginRsp extends BaseDBLocalProto {
     private int id;
     private String name;
-    private int result;
 }

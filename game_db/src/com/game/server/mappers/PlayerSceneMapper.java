@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.*;
 public interface PlayerSceneMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_SCENE_SELECT_SCENE_INFO, sqlType = SqlConstant.SELECT_ONE)
-    @Select("select * from game_player_scene where player_index = #{playerIndex}")
+    @Select("select * from game_player_scene where player_index = #{playerIndex} limit 1")
     public PlayerScene getSceneInfoByPlayerIndex(@Param("playerIndex") int playerIndex);
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_SCENE_UPDATE_SCENE_INFO, sqlType = SqlConstant.UPDATE)

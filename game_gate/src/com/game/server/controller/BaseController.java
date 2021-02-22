@@ -15,6 +15,7 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import protocol.MsgConstant;
 import protocol.local.center.CenterSessionReq;
+import protocol.local.gate.PlayerEnterSceneReq;
 import protocol.remote.system.*;
 
 import static core.Constants.*;
@@ -34,6 +35,10 @@ public class BaseController {
         centerSessionReq.setState(SOCKET_OPEN);
         centerSessionReq.setPlayerIndex(playerIndex);
         TcpUtil.sendToCenter(MSG_CENTER_SESSION_REQ, centerSessionReq);
+
+        PlayerEnterSceneReq playerEnterSceneReq = new PlayerEnterSceneReq();
+        playerEnterSceneReq.setPlayerIndex(playerIndex);
+        TcpUtil.sendToScene(MSG_PLAYER_ENTER_SCENE_REQ,playerEnterSceneReq);
     }
 
     @CtrlCmd(cmd = MSG_HEART_BEAT_REQ)

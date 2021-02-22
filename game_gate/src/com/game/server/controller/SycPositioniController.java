@@ -6,23 +6,27 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.remote.bc.SycPositionBC;
-import protocol.local.scene.SycPositionReq;
+import protocol.local.scene.SyncPositionRsp;
+import protocol.remote.bc.SyncPositionBC;
+import protocol.local.scene.SyncPositionReq;
 
 import static protocol.MsgConstant.*;
 
 @Ctrl
 public class SycPositioniController {
 
-    @CtrlCmd(cmd = MSG_SYC_POSITION_BC)
+    @CtrlCmd(cmd = MSG_SYC_POSITION_RSP)
     public void syncPositionBc(TransferMsg msg, ChannelHandlerContext context) {
-        SycPositionBC sycPositionBC = ProtoUtil.deserializer(msg.getData(), SycPositionBC.class);
+        SyncPositionRsp syncPositionRsp = ProtoUtil.deserializer(msg.getData(), SyncPositionRsp.class);
+        SyncPositionBC sycPositionBC = new SyncPositionBC();
+        sycPositionBC.setPlayerIndex(syncPositionRsp.getPlayerIndex());
+        sycPositionBC.setPosition(syncPositionRsp.getPosition());
         TcpUtil.sendAllClient(MSG_SYC_POSITION_BC, sycPositionBC);
     }
 
     @CtrlCmd(cmd = MSG_SYC_POSITION_REQ)
     public void syncPosition(TransferMsg msg, ChannelHandlerContext context) {
-        SycPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SycPositionReq.class);
+        SyncPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SyncPositionReq.class);
         sycPositionReq.setPlayerIndex(msg.getPlayerIndex());
         TcpUtil.sendToScene(MSG_SYC_POSITION_REQ, sycPositionReq);
     }

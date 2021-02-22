@@ -24,7 +24,9 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-
+        if (!ctx.channel().isActive()) {
+            return;
+        }
         atomicInteger.incrementAndGet();
         if (atomicInteger.get() >= Integer.MAX_VALUE) {
             atomicInteger.compareAndSet(Integer.MAX_VALUE, 0);
@@ -58,5 +60,12 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
         InetSocketAddress address = (InetSocketAddress) ctx.channel().remoteAddress();
         String ip = address.getAddress().getHostAddress();
         ctx.channel().attr(Constants.REMOTE_ADDRESS).setIfAbsent(ip);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        if(ctx.channel().isActive()) {
+            ctx.close();
+        }
     }
 }

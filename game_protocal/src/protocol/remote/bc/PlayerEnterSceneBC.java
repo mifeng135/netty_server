@@ -1,13 +1,12 @@
-package protocol.local.scene;
-
+package protocol.remote.bc;
 
 import lombok.Getter;
 import lombok.Setter;
-import protocol.local.base.BaseLocalProto;
 import protocol.remote.common.Position;
 
 @Getter
 @Setter
-public class SycPositionReq extends BaseLocalProto {
+public class PlayerEnterSceneBC {
+    private int playerIndex;
     private Position position;
 }
