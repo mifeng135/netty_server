@@ -3,17 +3,18 @@ package core.netty.tcp;
 import core.Constants;
 import core.group.MessageGroup;
 import core.manager.LocalSocketManager;
-import core.manager.SocketManager;
+import core.manager.RemoteSocketManager;
 import core.msg.TransferMsg;
+import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protocol.MsgConstant;
 
 import static core.Constants.LOCAL_SOCKET_RANGE;
+import static protocol.MsgConstant.MSG_CLOSE_SOCKET_REQ;
 
 
 /**
@@ -22,6 +23,7 @@ import static core.Constants.LOCAL_SOCKET_RANGE;
 @ChannelHandler.Sharable
 public class TcpServerHandler extends ChannelInboundHandlerAdapter {
     private static Logger logger = LoggerFactory.getLogger(TcpServerHandler.class);
+
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
@@ -59,11 +61,11 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
         if (playerIndex < LOCAL_SOCKET_RANGE) {
             LocalSocketManager.getInstance().removeChannel(context.channel());
         } else {
-            SocketManager.getInstance().removeChannel(context.channel());
+            RemoteSocketManager.getInstance().removeChannel(context.channel());
         }
         TransferMsg transferMsg = new TransferMsg();
-        transferMsg.setMsgId(MsgConstant.MSG_CLOSE_SOCKET_REQ);
         transferMsg.setContext(context);
+        transferMsg.setHeaderProto(ProtoUtil.initHeaderProto(MSG_CLOSE_SOCKET_REQ, playerIndex));
         MessageGroup.getInstance().pushMessage(transferMsg);
     }
 }

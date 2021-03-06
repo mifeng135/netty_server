@@ -42,7 +42,7 @@ public class Constants {
 
     public static final String SERVER_PACKAGE_NAME = "com.game.server";
 
-    public static final int TCP_HEADER_LEN = 2; //short
+    public static final int TCP_MSG_LEN = 6;
 
     public static final int MSG_RESULT_SUCCESS = 0;
     public static final int MSG_RESULT_FAIL = 1;
@@ -55,12 +55,10 @@ public class Constants {
     public static final int REMOTE = 2;
 
     public static final int REMOTE_MSG_ENCODER_HEADER_LEN = 8; //short(len) int(msgId)  short(result)
-    public static final int REMOTE_MSG_DECODER_HEADER_LEN = 10;//short(len) int(socketIndex) int(msgId)
-
-    public static final int LOCAL_MSG_ENCODER_HEADER_LEN = 6; //short(len) int(msgId)
-    public static final int LOCAL_MSG_DECODER_HEADER_LEN = 6; //short(len) int(msgId)
-
 
     public static final int SOCKET_OPEN = 1;
     public static final int SOCKET_CLOSE = 0;
+
+    public static final int MSG_TYPE_LOCAL = 0;
+    public static final int MSG_TYPE_REMOTE = 1;
 }

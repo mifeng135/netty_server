@@ -9,9 +9,10 @@ public class EventThreadGroup {
     private String threadName = "";
     private MessageGroup mMessageGroup = MessageGroup.getInstance();
 
-    public EventThreadGroup(int count, Class<? extends EventHandler> handler) {
+    public EventThreadGroup(int count, Class<? extends EventHandler> handler, String name) {
         mThreadCount = count;
         mMessageGroup.setThreadCount(count);
+        threadName = name;
         initMessageGroup();
         initTaskThread(handler);
     }
@@ -23,7 +24,7 @@ public class EventThreadGroup {
         initTaskThread(null);
     }
 
-    public EventThreadGroup(int count,String name) {
+    public EventThreadGroup(int count, String name) {
         mThreadCount = count;
         mMessageGroup.setThreadCount(count);
         threadName = name;

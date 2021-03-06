@@ -9,11 +9,11 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.EventLoop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protocol.local.system.TcpReq;
+import protocol.local.base.HeaderProto;
 
 import java.util.concurrent.TimeUnit;
 
-import static protocol.MsgConstant.MSG_TCP_REQ;
+import static protocol.MsgConstant.MSG_LOCAL_SOCKET_REQ;
 
 public class ConnectionListener implements ChannelFutureListener {
 
@@ -39,13 +39,9 @@ public class ConnectionListener implements ChannelFutureListener {
             logger.info("connect success ip = {} port = {} playerIndex = {}", ip, port, playerIndex);
             LocalSocketManager.getInstance().putChannel(playerIndex, channelFuture.channel());
 
-            TcpReq tcpReq = new TcpReq();
-            tcpReq.setPlayerIndex(playerIndex);
-            byte[] data = ProtoUtil.serialize(tcpReq);
+            HeaderProto headerProto = ProtoUtil.initHeaderProto(MSG_LOCAL_SOCKET_REQ, playerIndex);
             TransferMsg transferMsg = new TransferMsg();
-            transferMsg.setPlayerIndex(playerIndex);
-            transferMsg.setMsgId(MSG_TCP_REQ);
-            transferMsg.setData(data);
+            transferMsg.setHeaderProto(headerProto);
             channelFuture.channel().writeAndFlush(transferMsg);
         }
     }

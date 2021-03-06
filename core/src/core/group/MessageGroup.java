@@ -39,7 +39,7 @@ public class MessageGroup {
 
     public void pushMessage(TransferMsg buf) {
         try {
-            int index = buf.getPlayerIndex();
+            int index = buf.getHeaderProto().getPlayerIndex();
             int tag = index % threadCount;
             mMessageMap.get(tag).offer(buf);
         } catch (Exception e) {

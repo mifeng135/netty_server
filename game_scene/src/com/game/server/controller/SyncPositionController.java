@@ -14,13 +14,13 @@ import static protocol.MsgConstant.*;
 @Ctrl
 public class SyncPositionController {
 
-    @CtrlCmd(cmd = MSG_SYC_POSITION_REQ)
+    @CtrlCmd(cmd = MSG_SYNC_POSITION_REQ)
     public void openSession(TransferMsg msg, ChannelHandlerContext context) {
         SyncPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SyncPositionReq.class);
         SyncPositionRsp syncPositionRsp = new SyncPositionRsp();
         syncPositionRsp.setPosition(sycPositionReq.getPosition());
-        syncPositionRsp.setPlayerIndex(sycPositionReq.getPlayerIndex());
+        msg.getHeaderProto().setMsgId(MSG_SYNC_POSITION_RSP);
         syncPositionRsp.setMove(true);
-        TcpUtil.sendToGate(MSG_SYC_POSITION_RSP, syncPositionRsp);
+        TcpUtil.sendToGate(msg.getHeaderProto(), syncPositionRsp);
     }
 }

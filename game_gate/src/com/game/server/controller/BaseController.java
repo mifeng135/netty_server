@@ -5,7 +5,9 @@ import com.game.server.util.TcpUtil;
 import core.Constants;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
-import core.manager.SocketManager;
+import core.manager.LocalRouterSocketManager;
+import core.manager.RemoteSocketManager;
+import core.msg.TransferClientMsg;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import core.util.TimeUtil;
@@ -14,38 +16,31 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import protocol.MsgConstant;
-import protocol.local.center.CenterSessionReq;
-import protocol.local.gate.PlayerEnterSceneReq;
+import protocol.local.system.TcpRsp;
 import protocol.remote.system.*;
 
-import static core.Constants.*;
+import java.util.HashSet;
+import java.util.Set;
+
 import static protocol.MsgConstant.*;
 
 @Ctrl
 public class BaseController {
 
-    @CtrlCmd(cmd = MSG_SOCKET_INDEX_REQ)
+    @CtrlCmd(cmd = MSG_SOCKET_LOGIN_REQ)
     public void socketLogin(TransferMsg msg, ChannelHandlerContext context) {
         LoginGateReq loginGateReq = ProtoUtil.deserializer(msg.getData(), LoginGateReq.class);
         int playerIndex = loginGateReq.getPlayerId();
         process(context, playerIndex);
-        TcpUtil.sendToClient(playerIndex, MsgConstant.MSG_SOCKET_INDEX_RSP, new LoginGateRsp());
-
-        CenterSessionReq centerSessionReq = new CenterSessionReq();
-        centerSessionReq.setState(SOCKET_OPEN);
-        centerSessionReq.setPlayerIndex(playerIndex);
-        TcpUtil.sendToCenter(MSG_CENTER_SESSION_REQ, centerSessionReq);
-
-        PlayerEnterSceneReq playerEnterSceneReq = new PlayerEnterSceneReq();
-        playerEnterSceneReq.setPlayerIndex(playerIndex);
-        TcpUtil.sendToScene(MSG_PLAYER_ENTER_SCENE_REQ,playerEnterSceneReq);
+        TcpUtil.sendToClient(playerIndex, MsgConstant.MSG_SOCKET_LOGIN_RSP, new LoginGateRsp());
+        LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
     }
 
     @CtrlCmd(cmd = MSG_HEART_BEAT_REQ)
     public void heartBeat(TransferMsg msg, ChannelHandlerContext context) {
         HeartBeartRsq heatbeartRsq = new HeartBeartRsq();
         heatbeartRsq.setTime(TimeUtil.getCurrentTimeSecond());
-        TcpUtil.sendToClient(msg.getPlayerIndex(), MsgConstant.MSG_HEART_BEAT_RSP, heatbeartRsq);
+        TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), MsgConstant.MSG_HEART_BEAT_RSP, heatbeartRsq);
     }
 
     @CtrlCmd(cmd = MSG_RECONNECT_REQ)
@@ -58,28 +53,32 @@ public class BaseController {
 
     @CtrlCmd(cmd = MSG_CLOSE_SOCKET_REQ)
     public void socketClose(TransferMsg msg, ChannelHandlerContext context) {
-        CenterSessionReq centerSessionReq = new CenterSessionReq();
-        centerSessionReq.setState(SOCKET_CLOSE);
-        centerSessionReq.setPlayerIndex(msg.getPlayerIndex());
-        TcpUtil.sendToCenter(MSG_CENTER_SESSION_REQ, centerSessionReq);
+        LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
+    }
+
+    @CtrlCmd(cmd = MSG_LOCAL_SOCKET_RSP)
+    public void localSocket(TransferMsg msg, ChannelHandlerContext context) {
+        TcpRsp tcpRsp = ProtoUtil.deserializer(msg.getData(), TcpRsp.class);
+        Set<Integer> set = new HashSet<>();
+        set.addAll(tcpRsp.getMsgList());
+        LocalRouterSocketManager.getInstance().addRouter(msg.getHeaderProto().getPlayerIndex(), set);
     }
 
     private void process(ChannelHandlerContext context, int playerIndex) {
         context.channel().attr(Constants.PLAYER_INDEX).setIfAbsent(playerIndex);
-        Channel oldChannel = SocketManager.getInstance().getChanel(playerIndex);
+        Channel oldChannel = RemoteSocketManager.getInstance().getChanel(playerIndex);
         if (oldChannel != null) {
-            SocketManager.getInstance().removeChannel(playerIndex);
+            RemoteSocketManager.getInstance().removeChannel(playerIndex);
             sendReplaceAccount(oldChannel, playerIndex);
         }
-        SocketManager.getInstance().putChannel(playerIndex, context.channel());
+        RemoteSocketManager.getInstance().putChannel(playerIndex, context.channel());
     }
 
     private void sendReplaceAccount(Channel channel, int playerIndex) {
         ReplaceRsq replaceRsq = new ReplaceRsq();
         byte[] data = ProtoUtil.serialize(replaceRsq);
-        TransferMsg transferMsg = new TransferMsg();
-        transferMsg.setPlayerIndex(playerIndex);
-        transferMsg.setMsgId(MSG_REPLACE_ACCOUNT_RSP);
+        TransferClientMsg transferMsg = new TransferClientMsg();
+        transferMsg.setMsgId(MSG_REPLACE_ACCOUNT_PUSH);
         transferMsg.setData(data);
         channel.writeAndFlush(transferMsg).addListener(new ChannelFutureListener() {
             @Override

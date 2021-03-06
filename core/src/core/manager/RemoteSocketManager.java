@@ -1,7 +1,7 @@
 package core.manager;
 
 import core.Constants;
-import core.msg.TransferMsg;
+import core.msg.TransferClientMsg;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 import io.netty.channel.group.ChannelGroup;
@@ -13,19 +13,19 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class SocketManager {
+public class RemoteSocketManager {
 
-    private static Logger logger = LoggerFactory.getLogger(SocketManager.class);
+    private static Logger logger = LoggerFactory.getLogger(RemoteSocketManager.class);
 
     private ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private Map<Integer, ChannelId> channelIdMap = new ConcurrentHashMap<>();
     private Map<Integer, Channel> channelMap = new ConcurrentHashMap<>();
 
     private static class DefaultInstance {
-        static final SocketManager INSTANCE = new SocketManager();
+        static final RemoteSocketManager INSTANCE = new RemoteSocketManager();
     }
 
-    public static SocketManager getInstance() {
+    public static RemoteSocketManager getInstance() {
         return DefaultInstance.INSTANCE;
     }
 
@@ -50,7 +50,7 @@ public class SocketManager {
         logger.info("disconnect socketIindex = {}", socketIndex);
     }
 
-    public void broadcast(TransferMsg msg) {
+    public void broadcast(TransferClientMsg msg) {
         channelGroup.writeAndFlush(msg);
     }
 }

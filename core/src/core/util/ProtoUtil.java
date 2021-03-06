@@ -4,6 +4,9 @@ import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtobufIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
+import protocol.local.base.HeaderProto;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2020/7/4.
@@ -27,5 +30,27 @@ public class ProtoUtil {
         T message = schema.newMessage();
         ProtobufIOUtil.mergeFrom(bytes, message, schema);
         return message;
+    }
+
+    public static HeaderProto initHeaderProto(int msgId, int playerIndex, List<Integer> noticePlayer) {
+        HeaderProto headerProto = new HeaderProto();
+        headerProto.setMsgId(msgId);
+        headerProto.setPlayerIndex(playerIndex);
+        headerProto.setNoticeList(noticePlayer);
+        return headerProto;
+    }
+
+    public static HeaderProto initDBHeaderProto(int msgId, int playerIndex, int queryPlayerIndex) {
+        HeaderProto headerProto = new HeaderProto();
+        headerProto.setMsgId(msgId);
+        headerProto.setPlayerIndex(playerIndex);
+        return headerProto;
+    }
+
+    public static HeaderProto initHeaderProto(int msgId, int playerIndex) {
+        HeaderProto headerProto = new HeaderProto();
+        headerProto.setMsgId(msgId);
+        headerProto.setPlayerIndex(playerIndex);
+        return headerProto;
     }
 }

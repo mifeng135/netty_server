@@ -23,6 +23,8 @@ import static core.Constants.REMOTE;
  */
 public class TcpServer {
 
+    private static Logger logger = LoggerFactory.getLogger(TcpServer.class);
+
     private final String mIp;
     private final int mPort;
     private final int socketType;
@@ -71,8 +73,8 @@ public class TcpServer {
                     pipeline.addLast(IDLE_STATE_HANDLER, new IdleStateHandler(Constants.TCP_SERVER_IDLE_DEFAULT, 0, 0));
                 }
                 if (socketType == LOCAL) {
-                    pipeline.addLast(new SDecoder());
-                    pipeline.addLast(new SEncode());
+                    pipeline.addLast(new CDecoder());
+                    pipeline.addLast(new CEncode());
                 } else if (socketType == REMOTE) {
                     pipeline.addLast(new GDecoder());
                     pipeline.addLast(new GEncoder());
@@ -94,6 +96,8 @@ public class TcpServer {
             ChannelFuture channelFuture = mChannelFuture = mServerBootstrap.bind(new InetSocketAddress(mIp, mPort)).sync();
             if (channelFutureListener != null) {
                 channelFuture.addListener(channelFutureListener);
+            } else {
+                logger.error("start tcp server success");
             }
         } catch (InterruptedException e) {
             doStop();

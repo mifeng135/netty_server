@@ -1,14 +1,15 @@
 package core.netty.tcp;
 
 import core.msg.TransferMsg;
+import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import protocol.local.base.HeaderProto;
 
 import java.util.List;
 
-import static core.Constants.LOCAL_MSG_DECODER_HEADER_LEN;
-import static core.Constants.TCP_HEADER_LEN;
+import static core.Constants.TCP_MSG_LEN;
 
 public class CDecoder extends ByteToMessageDecoder {
 
@@ -19,7 +20,7 @@ public class CDecoder extends ByteToMessageDecoder {
         }
         byteBuf.markReaderIndex();
         int length = byteBuf.readableBytes();
-        if (length < TCP_HEADER_LEN) {
+        if (length < TCP_MSG_LEN) {
             byteBuf.resetReaderIndex();
             return;
         }
@@ -27,17 +28,25 @@ public class CDecoder extends ByteToMessageDecoder {
         byteBuf.markReaderIndex();
         int msgLength = byteBuf.readShort();
         int readLength = byteBuf.readableBytes();
-        if (readLength < msgLength - TCP_HEADER_LEN) {
+        if (readLength < msgLength - TCP_MSG_LEN) {
             byteBuf.resetReaderIndex();
             return;
         }
-        int msgId = byteBuf.readInt();
-        byte[] data = new byte[msgLength - LOCAL_MSG_DECODER_HEADER_LEN];
-        byteBuf.readBytes(data);
+
+        short headerLen = byteBuf.readShort();
+        short bodyLen = byteBuf.readShort();
+
+
+        byte[] headerData = new byte[headerLen];
+        byteBuf.readBytes(headerData);
+        HeaderProto headerProto = ProtoUtil.deserializer(headerData, HeaderProto.class);
+
+        byte[] bodyData = new byte[bodyLen];
+        byteBuf.readBytes(bodyData);
 
         TransferMsg msg = new TransferMsg();
-        msg.setData(data);
-        msg.setMsgId(msgId);
+        msg.setData(bodyData);
+        msg.setHeaderProto(headerProto);
         list.add(msg);
     }
 }

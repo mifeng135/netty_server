@@ -1,14 +1,15 @@
 package com.game.server.controller;
 
+import com.game.server.util.TcpUtil;
 import core.Constants;
 import core.annotation.Ctrl;
+import core.annotation.CtrlAnnotation;
 import core.annotation.CtrlCmd;
 import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
-import core.util.ProtoUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.local.system.TcpReq;
+import protocol.local.system.TcpRsp;
 
 import static core.Constants.IDLE_STATE_HANDLER;
 import static protocol.MsgConstant.*;
@@ -16,12 +17,12 @@ import static protocol.MsgConstant.*;
 @Ctrl
 public class BaseController {
 
-    @CtrlCmd(cmd = MSG_TCP_REQ)
+    @CtrlCmd(cmd = MSG_LOCAL_SOCKET_REQ)
     public void tcpReq(TransferMsg msg, ChannelHandlerContext context) {
-        TcpReq tcpReq = ProtoUtil.deserializer(msg.getData(), TcpReq.class);
-        int socketIndex = tcpReq.getPlayerIndex();
+        int socketIndex = msg.getHeaderProto().getPlayerIndex();
         process(context, socketIndex);
         context.channel().pipeline().remove(IDLE_STATE_HANDLER);
+
     }
 
     private void process(ChannelHandlerContext context, int socketIndex) {

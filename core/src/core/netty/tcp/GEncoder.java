@@ -1,5 +1,6 @@
 package core.netty.tcp;
 
+import core.msg.TransferClientMsg;
 import core.msg.TransferMsg;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,10 +11,10 @@ import static core.Constants.REMOTE_MSG_ENCODER_HEADER_LEN;
 /**
  * Created by Administrator on 2020/12/19.
  */
-public class GEncoder extends MessageToByteEncoder<TransferMsg> {
+public class GEncoder extends MessageToByteEncoder<TransferClientMsg> {
 
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, TransferMsg in, ByteBuf out) {
+    protected void encode(ChannelHandlerContext channelHandlerContext, TransferClientMsg in, ByteBuf out) {
         out.writeShort(REMOTE_MSG_ENCODER_HEADER_LEN + in.getData().length);
         out.writeInt(in.getMsgId());
         out.writeShort(in.getResult());

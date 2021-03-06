@@ -16,9 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Administrator on 2020/5/28.
@@ -28,9 +26,13 @@ public class CtrlAnnotation {
 
     private static Logger logger = LoggerFactory.getLogger(CtrlAnnotation.class);
 
+
     private final Map<Integer, Method> methodMap = new HashMap<>();
     private final Map<String, Object> classMap = new HashMap<>();
     private final Map<String, MethodAccess> methodAccessMap = new HashMap<>();
+
+
+    private final List<Integer> msgList = new ArrayList<>();
 
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
@@ -69,6 +71,7 @@ public class CtrlAnnotation {
         for (Method method : methodSet) {
             int cmd = method.getAnnotation(CtrlCmd.class).cmd();
             methodMap.put(cmd, method);
+            msgList.add(cmd);
         }
     }
 
@@ -92,26 +95,24 @@ public class CtrlAnnotation {
         }
     }
 
-    public void invokeMethod(TransferMsg transferMsg) {
-        int msgId = transferMsg.getMsgId();
-        Method method = methodMap.get(msgId);
-        if (method == null) {
-            logger.info("can not find msgId = {}", msgId);
-            return;
-        }
-        String declaringClassName = method.getDeclaringClass().getName();
-        Object oc = classMap.get(declaringClassName);
-        MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
-        String methodName = method.getName();
-        try {
-            methodAccess.invoke(oc, methodName, transferMsg);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Map<Integer, Method> getMethodMap() {
+        return methodMap;
+    }
+
+    public Map<String, Object> getClassMap() {
+        return classMap;
+    }
+
+    public Map<String, MethodAccess> getMethodAccessMap() {
+        return methodAccessMap;
+    }
+
+    public List<Integer> getMsgList() {
+        return msgList;
     }
 
     public void invokeMethod(TransferMsg transferMsg, ChannelHandlerContext context) {
-        int msgId = transferMsg.getMsgId();
+        int msgId = transferMsg.getHeaderProto().getMsgId();
         Method method = methodMap.get(msgId);
         if (method == null) {
             logger.info("can not find msgId = {}", msgId);

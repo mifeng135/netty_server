@@ -1,8 +1,7 @@
 package protocol.local.db.register;
 
-import protocol.local.base.BaseLocalProto;
 
-public class DBRegisterReq extends BaseLocalProto {
+public class DBRegisterReq {
     private String account;
     private String pwd;
     private String nickName;

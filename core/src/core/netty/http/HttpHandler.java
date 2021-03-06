@@ -5,11 +5,13 @@ import core.Constants;
 import core.group.MessageGroup;
 import core.manager.HttpConnectManager;
 import core.msg.TransferMsg;
+import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
+import protocol.local.base.HeaderProto;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,24 +29,31 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
         if (!ctx.channel().isActive()) {
             return;
         }
-        atomicInteger.incrementAndGet();
-        if (atomicInteger.get() >= Integer.MAX_VALUE) {
+        int httpIndex = atomicInteger.incrementAndGet();
+        if (httpIndex >= Integer.MAX_VALUE) {
             atomicInteger.compareAndSet(Integer.MAX_VALUE, 0);
         }
-
-        int playerIndex = atomicInteger.get();
         FullHttpRequest request = (FullHttpRequest) msg;
         try {
             HttpMethod method = request.method();
             if (HttpMethod.POST.equals(method)) {
                 ByteBuf buf = request.content();
-                int msgId = buf.readInt();
-                byte[] data = new byte[buf.readableBytes()];
-                buf.readBytes(data);
+
+                int headerLen = buf.readShort();
+                int bodyLen = buf.readShort();
+
+                byte[] headerData = new byte[headerLen];
+                buf.readBytes(headerData);
+
+                byte[] bodyData = new byte[bodyLen];
+                buf.readBytes(bodyData);
+
+                HeaderProto headerProto = ProtoUtil.deserializer(headerData, HeaderProto.class);
+                int playerIndex = headerProto.getPlayerIndex() == 0 ? httpIndex : headerProto.getPlayerIndex();
+                headerProto.setPlayerIndex(playerIndex);
                 TransferMsg transferMsg = new TransferMsg();
-                transferMsg.setMsgId(msgId);
-                transferMsg.setPlayerIndex(playerIndex);
-                transferMsg.setData(data);
+                transferMsg.setHeaderProto(headerProto);
+                transferMsg.setData(bodyData);
                 transferMsg.setContext(ctx);
                 HttpConnectManager.putConnect(playerIndex, ctx.channel());
                 MessageGroup.getInstance().pushMessage(transferMsg);
@@ -64,7 +73,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        if(ctx.channel().isActive()) {
+        if (ctx.channel().isActive()) {
             ctx.close();
         }
     }

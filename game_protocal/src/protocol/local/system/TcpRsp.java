@@ -1,6 +1,13 @@
 package protocol.local.system;
 
-import protocol.local.base.BaseLocalProto;
 
-public class TcpRsp extends BaseLocalProto {
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Setter
+@Getter
+public class TcpRsp {
+    List<Integer> msgList;
 }
