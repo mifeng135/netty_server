@@ -11,6 +11,10 @@ import java.util.List;
 
 import static protocol.MsgConstant.MSG_GATE_SEND_REMOTE;
 
+
+/**********
+ * gate 转发消息到客户端
+ */
 @Ctrl
 public class TransmitRemoteController {
 

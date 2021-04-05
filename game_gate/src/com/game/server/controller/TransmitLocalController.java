@@ -10,6 +10,10 @@ import io.netty.channel.ChannelHandlerContext;
 
 import static protocol.MsgConstant.MSG_GATE_SEND_LOCAL;
 
+
+/**********
+ * gate 转发消息到本地服务器
+ */
 @Ctrl
 public class TransmitLocalController {
 

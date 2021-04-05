@@ -6,16 +6,16 @@ public class MsgConstant {
 
     /**********************************system********************************************************/
     public static final int MSG_LOCAL_SOCKET_REQ = 1;                           //本地socket发送连接请求
-    public static final int MSG_LOCAL_SOCKET_RSP = 2;
+    public static final int MSG_LOCAL_SOCKET_RSP = 2;                           //注册转发消息
 
     public static final int MSG_CENTER_SESSION_REQ = 5;                         //gate向中心副注册客户端新的链接
     public static final int MSG_CENTER_SESSION_RSP = 6;
 
-    public static final int MSG_CLOSE_SOCKET_REQ = 7;                           //客户端断开链接 向中心服发送
+    public static final int MSG_CLOSE_SOCKET_REQ = 7;                           //客户端断开链接
     public static final int MSG_CLOSE_SOCKET_RSP = 8;
 
-    public static final int MSG_GATE_SEND_REMOTE = 9;                           //
-    public static final int MSG_GATE_SEND_LOCAL = 10;                           //
+    public static final int MSG_GATE_SEND_REMOTE = 9;                           //发送消息到客户端
+    public static final int MSG_GATE_SEND_LOCAL = 10;                           //发送消息到本地服务器
 
     /***********************************db server**************************************************/
 

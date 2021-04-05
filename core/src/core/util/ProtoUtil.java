@@ -40,13 +40,6 @@ public class ProtoUtil {
         return headerProto;
     }
 
-    public static HeaderProto initDBHeaderProto(int msgId, int playerIndex, int queryPlayerIndex) {
-        HeaderProto headerProto = new HeaderProto();
-        headerProto.setMsgId(msgId);
-        headerProto.setPlayerIndex(playerIndex);
-        return headerProto;
-    }
-
     public static HeaderProto initHeaderProto(int msgId, int playerIndex) {
         HeaderProto headerProto = new HeaderProto();
         headerProto.setMsgId(msgId);
