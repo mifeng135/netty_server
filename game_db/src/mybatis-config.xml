@@ -4,7 +4,6 @@
 
 
 <configuration>
-
     <settings>
         <setting name="cacheEnabled" value="true"/>
         <setting name="lazyLoadingEnabled" value="true"/>
@@ -15,10 +14,8 @@
         <plugin interceptor="core.sql.DynamicDataSourceInterceptor" />
     </plugins>
     <mappers>
-        <mapper class="com.game.server.mappers.PlayerMapper"></mapper>
-        <mapper class="com.game.server.mappers.PlayerSceneMapper"></mapper>
-        <mapper class="com.game.server.mappers.PlayerItemMapper"></mapper>
+        <mapper class="com.game.PlayerMapper"></mapper>
+        <mapper class="com.game.PlayerSceneMapper"></mapper>
+        <mapper class="com.game.PlayerItemMapper"></mapper>
     </mappers>
-
-
 </configuration>
