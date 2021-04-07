@@ -19,25 +19,21 @@ public class HttpUtil {
         if (channel == null || !channel.isActive()) {
             return;
         }
-        ByteBuf buf = Unpooled.buffer(data.length + 6);
-        buf.writeInt(msgId);
-        buf.writeShort(MSG_RESULT_SUCCESS);
-        buf.writeBytes(data);
-
-        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
-        response.headers().set(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-        channel.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+        excuteSendMsg(channel, msgId, data, MSG_RESULT_SUCCESS);
     }
-
     public static void sendErrorMsg(int playerIndex, int msgId, Object msg) {
         byte[] data = ProtoUtil.serialize(msg);
         Channel channel = HttpConnectManager.removeConnect(playerIndex);
         if (channel == null || !channel.isActive()) {
             return;
         }
+        excuteSendMsg(channel, msgId, data, MSG_RESULT_FAIL);
+    }
+
+    private static void excuteSendMsg(Channel channel, int msgId, byte[] data, int result) {
         ByteBuf buf = Unpooled.buffer(data.length + 6);
         buf.writeInt(msgId);
-        buf.writeShort(MSG_RESULT_FAIL);
+        buf.writeShort(result);
         buf.writeBytes(data);
 
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);

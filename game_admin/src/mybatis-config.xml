@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD config.Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <plugins>
+        <plugin interceptor="core.sql.DynamicDataSourceInterceptor" />
+    </plugins>
+    <mappers>
+        <mapper class="com.game.com.game.server.mappers.PlayerMapper"></mapper>
+        <mapper class="com.game.com.game.server.mappers.PlayerSceneMapper"></mapper>
+        <mapper class="com.game.com.game.server.mappers.PlayerItemMapper"></mapper>
+    </mappers>
+</configuration>
