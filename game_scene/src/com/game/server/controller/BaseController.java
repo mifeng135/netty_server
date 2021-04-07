@@ -9,12 +9,12 @@ import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.local.system.TcpRsp;
+import protocal.local.system.TcpRsp;
 
 import static core.Constants.IDLE_STATE_HANDLER;
-import static protocol.MsgConstant.MSG_CLOSE_SOCKET_REQ;
-import static protocol.MsgConstant.MSG_LOCAL_SOCKET_REQ;
-import static protocol.MsgConstant.MSG_LOCAL_SOCKET_RSP;
+import static protocal.MsgConstant.MSG_CLOSE_SOCKET_REQ;
+import static protocal.MsgConstant.MSG_LOCAL_SOCKET_REQ;
+import static protocal.MsgConstant.MSG_LOCAL_SOCKET_RSP;
 
 @Ctrl
 public class BaseController {

@@ -6,10 +6,10 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.local.scene.SyncPositionReq;
-import protocol.local.scene.SyncPositionRsp;
+import protocal.local.scene.SyncPositionReq;
+import protocal.local.scene.SyncPositionRsp;
 
-import static protocol.MsgConstant.*;
+import static protocal.MsgConstant.*;
 
 @Ctrl
 public class SyncPositionController {

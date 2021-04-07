@@ -5,7 +5,7 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import io.netty.channel.ChannelHandlerContext;
 
-import static protocol.MsgConstant.*;
+import static protocal.MsgConstant.*;
 
 @Ctrl
 public class PlayerEnterSceneController {

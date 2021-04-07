@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Update;
 public interface PlayerMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_SELECT_ACCOUNT_PASSWORD, sqlType = SqlConstant.SELECT_ONE)
-    @Select("select * from game_player where account = #{account} and password = #{password}")
+    @Select("select * from game_player where account = #{account} and password = #{password} limit 1")
     public PlayerBean findPlayerWithAccountAndPassword(PlayerBean playerBean);
 
 

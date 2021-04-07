@@ -15,14 +15,14 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.MsgConstant;
-import protocol.local.system.TcpRsp;
-import protocol.remote.system.*;
+import protocal.MsgConstant;
+import protocal.local.system.TcpRsp;
+import protocal.remote.system.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static protocol.MsgConstant.*;
+import static protocal.MsgConstant.*;
 
 @Ctrl
 public class BaseController {
@@ -69,12 +69,12 @@ public class BaseController {
         Channel oldChannel = RemoteSocketManager.getInstance().getChanel(playerIndex);
         if (oldChannel != null) {
             RemoteSocketManager.getInstance().removeChannel(playerIndex);
-            sendReplaceAccount(oldChannel, playerIndex);
+            sendReplaceAccount(oldChannel);
         }
         RemoteSocketManager.getInstance().putChannel(playerIndex, context.channel());
     }
 
-    private void sendReplaceAccount(Channel channel, int playerIndex) {
+    private void sendReplaceAccount(Channel channel) {
         ReplaceRsq replaceRsq = new ReplaceRsq();
         byte[] data = ProtoUtil.serialize(replaceRsq);
         TransferClientMsg transferMsg = new TransferClientMsg();

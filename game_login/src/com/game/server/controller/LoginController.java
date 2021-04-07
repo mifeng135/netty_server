@@ -1,7 +1,5 @@
 package com.game.server.controller;
 
-import com.game.server.bean.PlayerBean;
-import com.game.server.constant.RedisConstant;
 import com.game.server.util.HttpUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
@@ -11,18 +9,14 @@ import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protocol.MsgConstant;
-import protocol.local.base.HeaderProto;
-import protocol.local.db.login.DBLoginReq;
-import protocol.local.db.login.DBLoginRsp;
-import protocol.remote.login.LoginReq;
-import protocol.remote.login.LoginRsp;
-import protocol.remote.system.ErroRsp;
+import protocal.MsgConstant;
+import protocal.local.db.login.DBLoginRsp;
+import protocal.remote.login.LoginRsp;
+import protocal.remote.system.ErroRsp;
 
 import static config.Config.DB_HTTP_URL;
-import static core.Constants.MSG_RESULT_FAIL;
-import static protocol.MsgConstant.MSG_DB_QUERY_LOGIN;
-import static protocol.MsgConstant.MSG_LOGIN_RSP;
+import static protocal.MsgConstant.MSG_DB_QUERY_LOGIN;
+import static protocal.MsgConstant.MSG_LOGIN_RSP;
 
 /**
  * Created by Administrator on 2020/6/23.

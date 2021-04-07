@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.AsyncHttpClient;
-import protocol.local.base.HeaderProto;
+import protocal.local.base.HeaderProto;
 
 import java.util.concurrent.ExecutionException;
 

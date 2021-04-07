@@ -4,7 +4,7 @@ import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtobufIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
-import protocol.local.base.HeaderProto;
+import protocal.local.base.HeaderProto;
 
 import java.util.List;
 

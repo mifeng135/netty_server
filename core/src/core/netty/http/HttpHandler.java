@@ -11,7 +11,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
-import protocol.local.base.HeaderProto;
+import protocal.local.base.HeaderProto;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.atomic.AtomicInteger;

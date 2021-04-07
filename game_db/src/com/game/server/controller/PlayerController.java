@@ -2,9 +2,6 @@ package com.game.server.controller;
 
 
 import com.game.server.bean.PlayerBean;
-import com.game.server.bean.PlayerScene;
-import com.game.server.constant.RedisConstant;
-import com.game.server.constant.SqlCmdConstant;
 import com.game.server.query.QueryPlayerInfo;
 import com.game.server.redis.RedisCache;
 import com.game.server.util.HttpUtil;
@@ -13,10 +10,10 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.local.db.login.DBLoginReq;
-import protocol.local.db.login.DBLoginRsp;
+import protocal.local.db.login.DBLoginReq;
+import protocal.local.db.login.DBLoginRsp;
 
-import static protocol.MsgConstant.*;
+import static protocal.MsgConstant.*;
 
 @Ctrl
 public class PlayerController {

@@ -8,7 +8,7 @@
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" />
-    <orderEntry type="module" module-name="game_protocol" />
+    <orderEntry type="module" module-name="game_protocal" />
     <orderEntry type="module" module-name="game_config" />
     <orderEntry type="module" module-name="game_db" />
     <orderEntry type="library" name="lib" level="project" />

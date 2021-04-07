@@ -8,7 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/game_db/game_db.iml" filepath="$PROJECT_DIR$/game_db/game_db.iml" />
       <module fileurl="file://$PROJECT_DIR$/game_gate/game_gate.iml" filepath="$PROJECT_DIR$/game_gate/game_gate.iml" />
       <module fileurl="file://$PROJECT_DIR$/game_login/game_login.iml" filepath="$PROJECT_DIR$/game_login/game_login.iml" />
-      <module fileurl="file://$PROJECT_DIR$/game_protocal/game_protocol.iml" filepath="$PROJECT_DIR$/game_protocal/game_protocol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game_protocal/game_protocal.iml" filepath="$PROJECT_DIR$/game_protocal/game_protocal.iml" />
       <module fileurl="file://$PROJECT_DIR$/game_scene/game_scene.iml" filepath="$PROJECT_DIR$/game_scene/game_scene.iml" />
     </modules>
   </component>

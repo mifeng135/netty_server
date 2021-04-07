@@ -1,14 +1,13 @@
 package com.game.server.controller;
 
-import com.game.server.manager.SessionManager;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.local.center.CenterSessionReq;
+import protocal.local.center.CenterSessionReq;
 
-import static protocol.MsgConstant.*;
+import static protocal.MsgConstant.*;
 
 @Ctrl
 public class SessionController {

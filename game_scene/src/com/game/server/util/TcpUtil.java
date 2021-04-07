@@ -4,7 +4,7 @@ import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
-import protocol.local.base.HeaderProto;
+import protocal.local.base.HeaderProto;
 
 import static config.Config.*;
 

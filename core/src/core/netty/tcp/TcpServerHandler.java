@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static core.Constants.LOCAL_SOCKET_RANGE;
-import static protocol.MsgConstant.MSG_CLOSE_SOCKET_REQ;
+import static protocal.MsgConstant.MSG_CLOSE_SOCKET_REQ;
 
 
 /**

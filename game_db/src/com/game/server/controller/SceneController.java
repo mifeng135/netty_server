@@ -9,11 +9,11 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
-import protocol.local.common.PlayerSceneProto;
-import protocol.local.db.scene.DBSceneReq;
-import protocol.local.db.scene.DBSceneRsp;
+import protocal.local.common.PlayerSceneProto;
+import protocal.local.db.scene.DBSceneReq;
+import protocal.local.db.scene.DBSceneRsp;
 
-import static protocol.MsgConstant.MSG_DB_QUERY_SCENE;
+import static protocal.MsgConstant.MSG_DB_QUERY_SCENE;
 
 @Ctrl
 public class SceneController {

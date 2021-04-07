@@ -9,11 +9,11 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.EventLoop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protocol.local.base.HeaderProto;
+import protocal.local.base.HeaderProto;
 
 import java.util.concurrent.TimeUnit;
 
-import static protocol.MsgConstant.MSG_LOCAL_SOCKET_REQ;
+import static protocal.MsgConstant.MSG_LOCAL_SOCKET_REQ;
 
 public class ConnectionListener implements ChannelFutureListener {
 

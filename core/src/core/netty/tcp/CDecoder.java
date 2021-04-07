@@ -5,7 +5,7 @@ import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import protocol.local.base.HeaderProto;
+import protocal.local.base.HeaderProto;
 
 import java.util.List;
 
