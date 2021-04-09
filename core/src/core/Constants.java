@@ -49,15 +49,12 @@ public class Constants {
 
     public static final String IDLE_STATE_HANDLER = "idleStateHandler";
 
-    public static final int LOCAL_SOCKET_RANGE = 1000;
+    public static final int LOCAL_SOCKET_RANGE = 1000; // 本地预留socket id
 
     public static final int LOCAL = 1;
     public static final int REMOTE = 2;
 
     public static final int REMOTE_MSG_ENCODER_HEADER_LEN = 8; //short(len) int(msgId)  short(result)
-
-    public static final int SOCKET_OPEN = 1;
-    public static final int SOCKET_CLOSE = 0;
 
     public static final int MSG_TYPE_LOCAL = 0;
     public static final int MSG_TYPE_REMOTE = 1;

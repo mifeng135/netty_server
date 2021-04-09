@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Administrator on 2020/6/18.
  */
 public class MessageGroup {
+
+    private static final int queueCapacity = 2048;
     private static Logger logger = LoggerFactory.getLogger(MessageGroup.class);
 
     private ConcurrentHashMap<Integer, MultithreadConcurrentQueue<TransferMsg>> mMessageMap = new ConcurrentHashMap();
@@ -34,7 +36,7 @@ public class MessageGroup {
     }
 
     public void createQueueByTag(Integer tag) {
-        mMessageMap.putIfAbsent(tag, new MultithreadConcurrentQueue(2048));
+        mMessageMap.putIfAbsent(tag, new MultithreadConcurrentQueue(queueCapacity));
     }
 
     public void pushMessage(TransferMsg buf) {

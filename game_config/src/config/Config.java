@@ -9,6 +9,10 @@ public class Config {
     public static final int DB_HTTP_SERVER_PORT = 8001;
 
 
+    public static final String ADMIN_HTTP_SERVER_IP = "127.0.0.1";
+    public static final int ADMIN_HTTP_PORT = 8002;
+
+
     public static final String DB_HTTP_URL = "http://" + DB_HTTP_SERVER_IP + ":" + DB_HTTP_SERVER_PORT;
 
 
