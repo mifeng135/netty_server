@@ -58,4 +58,11 @@ public class Constants {
 
     public static final int MSG_TYPE_LOCAL = 0;
     public static final int MSG_TYPE_REMOTE = 1;
+
+
+    public static final int SQL_RESULT_SUCCESS = 1;
+    public static final int SQL_RESULT_FAIL = 2;
+
+    public static final short SQL_MASTER = 1;
+    public static final short SQL_SLAVE = 2;
 }

@@ -15,7 +15,6 @@ import protocal.remote.login.LoginRsp;
 import protocal.remote.system.ErroRsp;
 
 import static config.Config.DB_HTTP_URL;
-import static protocal.MsgConstant.MSG_DB_QUERY_LOGIN;
 import static protocal.MsgConstant.MSG_LOGIN_RSP;
 
 /**
@@ -29,7 +28,6 @@ public class LoginController {
 
     @CtrlCmd(cmd = MsgConstant.MSG_LOGIN_REQ)
     public void login(TransferMsg msgBean, ChannelHandlerContext context) {
-        msgBean.getHeaderProto().setMsgId(MSG_DB_QUERY_LOGIN);
         TransferMsg transferMsg = AsyncHttp.getInstance().postSync(DB_HTTP_URL, msgBean.getHeaderProto(), msgBean.getData());
         DBLoginRsp dbLoginRsp = ProtoUtil.deserializer(transferMsg.getData(), DBLoginRsp.class);
         if (dbLoginRsp.getName() == null) {

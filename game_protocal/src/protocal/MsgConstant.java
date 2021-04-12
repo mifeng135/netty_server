@@ -23,20 +23,24 @@ public class MsgConstant {
 
 
     /************************************client server******************************************************/
-    public static final int MSG_LOGIN_REQ = 1000;                               //login
-    public static final int MSG_LOGIN_RSP = 1001;
 
-    public static final int MSG_HEART_BEAT_REQ = 1002;                          //心跳
-    public static final int MSG_HEART_BEAT_RSP = 1003;
+    public static final int MSG_GET_SERVER_LIST_REQ = 10000;                    //获取服务器列表
+    public static final int MSG_GET_SERVER_LIST_RSP = 10001;
 
-    public static final int MSG_SOCKET_LOGIN_REQ = 1004;                        //socket 设置 playerindex
-    public static final int MSG_SOCKET_LOGIN_RSP = 1005;
+    public static final int MSG_LOGIN_REQ = 10001;                               //login
+    public static final int MSG_LOGIN_RSP = 10002;
 
-    public static final int MSG_RECONNECT_REQ = 1006;                           //客户端重连
-    public static final int MSG_RECONNECT_RSP = 1007;
+    public static final int MSG_HEART_BEAT_REQ = 10002;                          //心跳
+    public static final int MSG_HEART_BEAT_RSP = 10003;
 
-    public static final int MSG_SYNC_POSITION_REQ = 1008;                        //位置同步
-    public static final int MSG_SYNC_POSITION_RSP = 1009;
+    public static final int MSG_SOCKET_LOGIN_REQ = 10004;                        //socket 设置 playerindex
+    public static final int MSG_SOCKET_LOGIN_RSP = 10050;
+
+    public static final int MSG_RECONNECT_REQ = 10006;                           //客户端重连
+    public static final int MSG_RECONNECT_RSP = 10007;
+
+    public static final int MSG_SYNC_POSITION_REQ = 10008;                       //位置同步
+    public static final int MSG_SYNC_POSITION_RSP = 10009;
 
 
     /*********************************PUSH**********************************************************/

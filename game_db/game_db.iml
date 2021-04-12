@@ -4,7 +4,8 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/spring-mybatis.xml</file>
+          <file>file://$MODULE_DIR$/src/spring-mybatis-master.xml</file>
+          <file>file://$MODULE_DIR$/src/spring-mybatis-slave.xml</file>
         </fileset>
       </configuration>
     </facet>

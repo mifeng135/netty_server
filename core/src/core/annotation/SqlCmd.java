@@ -12,4 +12,5 @@ import java.lang.annotation.*;
 public @interface SqlCmd {
     short sqlCmd() default -1;
     short sqlType() default -1;
+    short sqlKey() default 1; //默认为master
 }

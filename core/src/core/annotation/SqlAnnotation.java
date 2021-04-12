@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import static core.Constants.SQL_MASTER;
+
 
 public class SqlAnnotation {
 
@@ -29,7 +31,7 @@ public class SqlAnnotation {
 
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
-    private SqlSessionTemplate mSqlSessionTemplate;
+    private Map<Integer, SqlSessionTemplate> sqlSessionTemplateMap = new HashMap<>();
 
     private static class DefaultInstance {
         static final SqlAnnotation INSTANCE = new SqlAnnotation();
@@ -40,7 +42,6 @@ public class SqlAnnotation {
     }
 
     public SqlAnnotation() {
-        initMysql();
         initReflection();
         scanSqlMethodMap();
     }
@@ -64,22 +65,37 @@ public class SqlAnnotation {
         }
     }
 
+    @Deprecated
     private void initMysql() {
         try {
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-mybatis.xml");
-            mSqlSessionTemplate = context.getBean(SqlSessionTemplate.class);
+            //mSqlSessionTemplate = context.getBean(SqlSessionTemplate.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void intiSqlWithKey(int key, String config) {
+        try {
+            String path = "classpath:" + config;
+            ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(path);
+            SqlSessionTemplate sqlSessionTemplate = context.getBean(SqlSessionTemplate.class);
+            sqlSessionTemplateMap.put(key, sqlSessionTemplate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private SqlSessionTemplate getSqlSessionTemplate(int key) {
+        return sqlSessionTemplateMap.get(key);
+    }
 
     /**
      * select sql
      *
      * @param cmd
      * @param parameter
-     * @return sql result one item
+     * @return sql result one item or null
      */
     public <T> T sqlSelectOne(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
@@ -89,8 +105,9 @@ public class SqlAnnotation {
         try {
             int type = method.getAnnotation(SqlCmd.class).sqlType();
             String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
+            int key = method.getAnnotation(SqlCmd.class).sqlKey();
             if (type == SqlConstant.SELECT_ONE) {
-                return mSqlSessionTemplate.selectOne(declaringClass, parameter);
+                return getSqlSessionTemplate(key).selectOne(declaringClass, parameter);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,13 +115,36 @@ public class SqlAnnotation {
         return null;
     }
 
+    /***
+     * select sql
+     * @param cmd
+     * @param <T>
+     * @return result list or null
+     */
+    public <T> List<T> sqlSelectList(int cmd) {
+        Method method = sqlMethodMap.get(cmd);
+        if (method == null) {
+            return null;
+        }
+        try {
+            int type = method.getAnnotation(SqlCmd.class).sqlType();
+            String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
+            int key = method.getAnnotation(SqlCmd.class).sqlKey();
+            if (type == SqlConstant.SELECT_LIST) {
+                return getSqlSessionTemplate(key).selectList(declaringClass);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /***
      * select sql
      * @param cmd
      * @param parameter
      * @param <T>
-     * @return result list
+     * @return result list or null
      */
     public <T> List<T> sqlSelectList(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
@@ -114,8 +154,9 @@ public class SqlAnnotation {
         try {
             int type = method.getAnnotation(SqlCmd.class).sqlType();
             String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
+            int key = method.getAnnotation(SqlCmd.class).sqlKey();
             if (type == SqlConstant.SELECT_LIST) {
-                return mSqlSessionTemplate.selectList(declaringClass, parameter);
+                return getSqlSessionTemplate(key).selectList(declaringClass, parameter);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,7 +169,7 @@ public class SqlAnnotation {
      *
      * @param cmd
      * @param parameter
-     * @return
+     * @return resut 1 success
      */
     public int executeCommitSql(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
@@ -137,14 +178,14 @@ public class SqlAnnotation {
         }
         int type = method.getAnnotation(SqlCmd.class).sqlType();
         String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
-
+        int key = method.getAnnotation(SqlCmd.class).sqlKey();
         try {
             if (type == SqlConstant.DELETE) {
-                return mSqlSessionTemplate.delete(declaringClass, parameter);
+                return getSqlSessionTemplate(key).delete(declaringClass, parameter);
             } else if (type == SqlConstant.UPDATE) {
-                return mSqlSessionTemplate.update(declaringClass, parameter);
+                return getSqlSessionTemplate(key).update(declaringClass, parameter);
             } else if (type == SqlConstant.INSERT) {
-                return mSqlSessionTemplate.insert(declaringClass, parameter);
+                return getSqlSessionTemplate(key).insert(declaringClass, parameter);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -161,7 +202,7 @@ public class SqlAnnotation {
      * @param batchCount
      */
     public void executeCommitSqlBatch(ConcurrentLinkedQueue<MysqlBean> batchData, int batchCount) {
-        SqlSession sqlSession = mSqlSessionTemplate.getSqlSessionFactory().openSession(ExecutorType.BATCH, false);
+        SqlSession sqlSession = getSqlSessionTemplate(SQL_MASTER).getSqlSessionFactory().openSession(ExecutorType.BATCH, false);
         try {
             for (int i = 0; i < batchCount; i++) {
                 MysqlBean bean = batchData.poll();

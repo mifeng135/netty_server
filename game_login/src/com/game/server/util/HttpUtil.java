@@ -21,6 +21,7 @@ public class HttpUtil {
         }
         excuteSendMsg(channel, msgId, data, MSG_RESULT_SUCCESS);
     }
+
     public static void sendErrorMsg(int playerIndex, int msgId, Object msg) {
         byte[] data = ProtoUtil.serialize(msg);
         Channel channel = HttpConnectManager.removeConnect(playerIndex);

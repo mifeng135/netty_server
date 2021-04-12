@@ -17,25 +17,8 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <bean id="slaveDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init">
-        <property name="driverClassName" value="${jdbc.slave.driver}"/>
-        <property name="url" value="${jdbc.slave.url}"/>
-        <property name="username" value="${jdbc.slave.username}"/>
-        <property name="password" value="${jdbc.slave.password}"/>
-    </bean>
-
-
-    <bean id="dynamicDataSource" class="core.sql.DynamicDataSource">
-        <property name="targetDataSources">
-            <map>
-                <entry value-ref="masterDataSource" key="master"></entry>
-                <entry value-ref="slaveDataSource" key="slave"></entry>
-            </map>
-        </property>
-    </bean>
-
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dynamicDataSource"/>
+        <property name="dataSource" ref="masterDataSource"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
 

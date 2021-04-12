@@ -10,6 +10,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginReq {
-    private String account;
-    private String password;
+    private int playerIndex;
 }
