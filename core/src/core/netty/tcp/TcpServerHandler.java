@@ -13,7 +13,6 @@ import io.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static core.Constants.LOCAL_SOCKET_RANGE;
 import static protocal.MsgConstant.MSG_CLOSE_SOCKET_REQ;
 
 
@@ -58,11 +57,6 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 
     protected void channelClose(ChannelHandlerContext context) {
         int playerIndex = context.channel().attr(Constants.PLAYER_INDEX).get();
-        if (playerIndex < LOCAL_SOCKET_RANGE) {
-            LocalSocketManager.getInstance().removeChannel(context.channel());
-        } else {
-            RemoteSocketManager.getInstance().removeChannel(context.channel());
-        }
         TransferMsg transferMsg = new TransferMsg();
         transferMsg.setContext(context);
         transferMsg.setHeaderProto(ProtoUtil.initHeaderProto(MSG_CLOSE_SOCKET_REQ, playerIndex));

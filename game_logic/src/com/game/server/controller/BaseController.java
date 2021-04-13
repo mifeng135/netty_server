@@ -6,11 +6,13 @@ import core.annotation.Ctrl;
 import core.annotation.CtrlAnnotation;
 import core.annotation.CtrlCmd;
 import core.manager.LocalSocketManager;
+import core.manager.RemoteSocketManager;
 import core.msg.TransferMsg;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.local.system.RegisterMsgCmdReq;
 
+import static core.Constants.LOCAL_SOCKET_RANGE;
 import static protocal.MsgConstant.*;
 
 @Ctrl
@@ -28,7 +30,12 @@ public class BaseController {
 
     @CtrlCmd(cmd = MSG_CLOSE_SOCKET_REQ)
     public void socketClose(TransferMsg msg, ChannelHandlerContext context) {
-
+        int playerIndex = msg.getHeaderProto().getPlayerIndex();
+        if (playerIndex < LOCAL_SOCKET_RANGE) {
+            LocalSocketManager.getInstance().removeChannel(context.channel());
+        } else {
+            RemoteSocketManager.getInstance().removeChannel(context.channel());
+        }
     }
 
     private void process(ChannelHandlerContext context, int socketIndex) {

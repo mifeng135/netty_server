@@ -6,6 +6,7 @@ import core.Constants;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.manager.LocalRouterSocketManager;
+import core.manager.LocalSocketManager;
 import core.manager.RemoteSocketManager;
 import core.msg.TransferClientMsg;
 import core.msg.TransferMsg;
@@ -54,8 +55,14 @@ public class BaseController {
 
     @CtrlCmd(cmd = MSG_CLOSE_SOCKET_REQ)
     public void socketClose(TransferMsg msg, ChannelHandlerContext context) {
-        if (msg.getHeaderProto().getPlayerIndex() > LOCAL_SOCKET_RANGE) {
+        int playerIndex = msg.getHeaderProto().getPlayerIndex();
+        if (playerIndex > LOCAL_SOCKET_RANGE) {
             LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
+        }
+        if (playerIndex < LOCAL_SOCKET_RANGE) {
+            LocalSocketManager.getInstance().removeChannel(context.channel());
+        } else {
+            RemoteSocketManager.getInstance().removeChannel(context.channel());
         }
     }
 
