@@ -5,6 +5,7 @@ import com.game.server.bean.PlayerBean;
 import com.game.server.bean.PlayerScene;
 import core.annotation.SqlAnnotation;
 import core.redis.RedisManager;
+import core.util.ConfigUtil;
 import org.redisson.api.RMap;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
@@ -38,15 +39,17 @@ public class RedisCache {
     }
 
     private void loadLoginMap() {
+        int maxCount = ConfigUtil.getInt("redis_max_online_player_count", 1);
         RedissonClient redissonClient = RedisManager.getInstance().getRedisSon();
         accountLoginCache = redissonClient.getMapCache(REDIS_ACCOUNT_LOGIN_KEY);
-        accountLoginCache.setMaxSize(REDIS_MAX_ONLINE_COUNT);
+        accountLoginCache.setMaxSize(maxCount);
     }
 
     private void loadSceneMap() {
+        int maxCount = ConfigUtil.getInt("redis_max_online_player_count", 1);
         RedissonClient redissonClient = RedisManager.getInstance().getRedisSon();
         sceneCache = redissonClient.getMapCache(REDIS_SCENE_KEY);
-        sceneCache.setMaxSize(REDIS_MAX_ONLINE_COUNT);
+        sceneCache.setMaxSize(maxCount);
     }
 
     public RMapCache<String, PlayerBean> getAccountLoginCache() {

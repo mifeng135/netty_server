@@ -31,7 +31,8 @@ public class SqlAnnotation {
 
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
-    private Map<Integer, SqlSessionTemplate> sqlSessionTemplateMap = new HashMap<>();
+    private Map<Integer, SqlSessionTemplate> sessionWithKey = new HashMap<>(); // key is master or slave
+    private Map<Integer, SqlSessionTemplate> sessionWithServerId = new HashMap<>(); // key is serverId
 
     private static class DefaultInstance {
         static final SqlAnnotation INSTANCE = new SqlAnnotation();
@@ -65,19 +66,24 @@ public class SqlAnnotation {
         }
     }
 
-    public void intiSqlWithKey(int key, String config) {
+    public void initSql(int key, int serverId, String config) {
         try {
             String path = "classpath:" + config;
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(path);
             SqlSessionTemplate sqlSessionTemplate = context.getBean(SqlSessionTemplate.class);
-            sqlSessionTemplateMap.put(key, sqlSessionTemplate);
+            sessionWithKey.put(key, sqlSessionTemplate);
+            sessionWithServerId.put(serverId, sqlSessionTemplate);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private SqlSessionTemplate getSqlSessionTemplate(int key) {
-        return sqlSessionTemplateMap.get(key);
+        return sessionWithKey.get(key);
+    }
+
+    private SqlSessionTemplate getSqlSessionTemplateByServerKey(int serverKey) {
+        return sessionWithServerId.get(serverKey);
     }
 
     /**
@@ -105,27 +111,46 @@ public class SqlAnnotation {
         return null;
     }
 
+    /**
+     * excute sql with serverid
+     *
+     * @param cmd
+     * @param serverId
+     * @param parameter
+     * @param <T>
+     * @return
+     */
+    public <T> T sqlSelectOneWithServerId(int cmd, int serverId, Object parameter) {
+        Method method = sqlMethodMap.get(cmd);
+        if (method == null) {
+            return null;
+        }
+        try {
+            int type = method.getAnnotation(SqlCmd.class).sqlType();
+            String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
+            if (type == SqlConstant.SELECT_ONE) {
+                return getSqlSessionTemplateByServerKey(serverId).selectOne(declaringClass, parameter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /***
      * select sql
      * @param cmd
-     * @param <T>
      * @return result list or null
      */
     public <T> List<T> sqlSelectList(int cmd) {
-        return sqlSelectOne(cmd, null);
-    }
-    /***
-     * select sql
-     * @param cmd
-     * @param parameter
-     * @param <T>
-     * @return result list or null
-     */
-    public <T> List<T> sqlSelectList(int cmd, Object parameter) {
-        return sqlSelectOne(cmd, parameter);
+        return excuteSelectList(cmd, null);
     }
 
-    private <T> List<T> sqlSelect(int cmd, Object parameter) {
+    public <T> List<T> sqlSelectList(int cmd, Object parameter) {
+        return excuteSelectList(cmd, parameter);
+    }
+
+    private <T> List<T> excuteSelectList(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
         if (method == null) {
             return null;
@@ -139,6 +164,42 @@ public class SqlAnnotation {
                     return getSqlSessionTemplate(key).selectList(declaringClass);
                 } else {
                     return getSqlSessionTemplate(key).selectList(declaringClass, parameter);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * excute query sql with serverId
+     *
+     * @param cmd
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> sqlSelectListWithServerId(int cmd, int serverId) {
+        return excuteSelectListWithServerId(cmd, serverId, null);
+    }
+
+    public <T> List<T> sqlSelectListWithServerId(int cmd, int serverId, Object parameter) {
+        return excuteSelectListWithServerId(cmd, serverId, parameter);
+    }
+
+    private <T> List<T> excuteSelectListWithServerId(int cmd, int serverId, Object parameter) {
+        Method method = sqlMethodMap.get(cmd);
+        if (method == null) {
+            return null;
+        }
+        try {
+            int type = method.getAnnotation(SqlCmd.class).sqlType();
+            String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
+            if (type == SqlConstant.SELECT_LIST) {
+                if (parameter == null) {
+                    return getSqlSessionTemplateByServerKey(serverId).selectList(declaringClass);
+                } else {
+                    return getSqlSessionTemplateByServerKey(serverId).selectList(declaringClass, parameter);
                 }
             }
         } catch (Exception e) {
@@ -162,13 +223,43 @@ public class SqlAnnotation {
         int type = method.getAnnotation(SqlCmd.class).sqlType();
         String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
         int key = method.getAnnotation(SqlCmd.class).sqlKey();
+        SqlSessionTemplate sqlSessionTemplate = getSqlSessionTemplate(key);
         try {
             if (type == SqlConstant.DELETE) {
-                return getSqlSessionTemplate(key).delete(declaringClass, parameter);
+                return sqlSessionTemplate.delete(declaringClass, parameter);
             } else if (type == SqlConstant.UPDATE) {
-                return getSqlSessionTemplate(key).update(declaringClass, parameter);
+                return sqlSessionTemplate.update(declaringClass, parameter);
             } else if (type == SqlConstant.INSERT) {
-                return getSqlSessionTemplate(key).insert(declaringClass, parameter);
+                return sqlSessionTemplate.insert(declaringClass, parameter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * excute sql with serverId
+     * @param cmd
+     * @param serverId
+     * @param parameter
+     * @return
+     */
+    public int executeCommitSqlWithServerId(int cmd, int serverId, Object parameter) {
+        Method method = sqlMethodMap.get(cmd);
+        if (method == null) {
+            return -1;
+        }
+        int type = method.getAnnotation(SqlCmd.class).sqlType();
+        String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
+        SqlSessionTemplate sqlSessionTemplate = getSqlSessionTemplateByServerKey(serverId);
+        try {
+            if (type == SqlConstant.DELETE) {
+                return sqlSessionTemplate.delete(declaringClass, parameter);
+            } else if (type == SqlConstant.UPDATE) {
+                return sqlSessionTemplate.update(declaringClass, parameter);
+            } else if (type == SqlConstant.INSERT) {
+                return sqlSessionTemplate.insert(declaringClass, parameter);
             }
         } catch (Exception e) {
             e.printStackTrace();

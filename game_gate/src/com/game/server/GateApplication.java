@@ -15,8 +15,6 @@ import static core.Constants.REMOTE;
  */
 public class GateApplication {
 
-    private static Logger logger = LoggerFactory.getLogger(TcpServer.class);
-
     public static void main(String[] arg) {
         new EventThreadGroup(Runtime.getRuntime().availableProcessors(), CustomEventHandler.class, GateApplication.class.getName());
         new TcpServer(GATE_SERVER_IP, GATE_SERVER_PORT, REMOTE).startServer();
