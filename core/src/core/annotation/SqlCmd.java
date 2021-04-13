@@ -2,6 +2,8 @@ package core.annotation;
 
 import java.lang.annotation.*;
 
+import static core.Constants.SQL_MASTER;
+
 /**
  * Created by Administrator on 2020/6/13.
  */
@@ -12,5 +14,5 @@ import java.lang.annotation.*;
 public @interface SqlCmd {
     short sqlCmd() default -1;
     short sqlType() default -1;
-    short sqlKey() default 1; //默认为master
+    short sqlKey() default SQL_MASTER; //默认为master
 }

@@ -65,16 +65,6 @@ public class SqlAnnotation {
         }
     }
 
-    @Deprecated
-    private void initMysql() {
-        try {
-            ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-mybatis.xml");
-            //mSqlSessionTemplate = context.getBean(SqlSessionTemplate.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void intiSqlWithKey(int key, String config) {
         try {
             String path = "classpath:" + config;
@@ -122,23 +112,8 @@ public class SqlAnnotation {
      * @return result list or null
      */
     public <T> List<T> sqlSelectList(int cmd) {
-        Method method = sqlMethodMap.get(cmd);
-        if (method == null) {
-            return null;
-        }
-        try {
-            int type = method.getAnnotation(SqlCmd.class).sqlType();
-            String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
-            int key = method.getAnnotation(SqlCmd.class).sqlKey();
-            if (type == SqlConstant.SELECT_LIST) {
-                return getSqlSessionTemplate(key).selectList(declaringClass);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return sqlSelectOne(cmd, null);
     }
-
     /***
      * select sql
      * @param cmd
@@ -147,6 +122,10 @@ public class SqlAnnotation {
      * @return result list or null
      */
     public <T> List<T> sqlSelectList(int cmd, Object parameter) {
+        return sqlSelectOne(cmd, parameter);
+    }
+
+    private <T> List<T> sqlSelect(int cmd, Object parameter) {
         Method method = sqlMethodMap.get(cmd);
         if (method == null) {
             return null;
@@ -156,7 +135,11 @@ public class SqlAnnotation {
             String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
             int key = method.getAnnotation(SqlCmd.class).sqlKey();
             if (type == SqlConstant.SELECT_LIST) {
-                return getSqlSessionTemplate(key).selectList(declaringClass, parameter);
+                if (parameter == null) {
+                    return getSqlSessionTemplate(key).selectList(declaringClass);
+                } else {
+                    return getSqlSessionTemplate(key).selectList(declaringClass, parameter);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -10,9 +10,6 @@
         <setting name="aggressiveLazyLoading" value="false"/>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
-    <plugins>
-        <plugin interceptor="core.sql.DynamicDataSourceInterceptor" />
-    </plugins>
     <mappers>
         <mapper class="com.game.server.mappers.PlayerMapper"></mapper>
         <mapper class="com.game.server.mappers.PlayerSceneMapper"></mapper>

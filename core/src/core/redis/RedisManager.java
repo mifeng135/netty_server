@@ -1,6 +1,5 @@
 package core.redis;
 
-import core.util.ConfigUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
