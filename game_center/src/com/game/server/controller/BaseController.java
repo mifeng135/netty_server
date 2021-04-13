@@ -8,7 +8,6 @@ import core.msg.TransferMsg;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
-import static core.Constants.IDLE_STATE_HANDLER;
 import static protocal.MsgConstant.*;
 
 @Ctrl

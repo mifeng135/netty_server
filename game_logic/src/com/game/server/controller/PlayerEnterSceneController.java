@@ -10,7 +10,7 @@ import static protocal.MsgConstant.*;
 @Ctrl
 public class PlayerEnterSceneController {
 
-    @CtrlCmd(cmd = MSG_SOCKET_LOGIN_REQ)
+    @CtrlCmd(cmd = MSG_CLIENT_SOCKET_LOGIN_REQ)
     public void playerEnterScene(TransferMsg msg, ChannelHandlerContext context) {
 
     }

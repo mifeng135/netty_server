@@ -1,12 +1,9 @@
 package protocal.local.system;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
-@Setter
 @Getter
-public class TcpRsp {
+@Setter
+public class RegisterMsgCmdRsq {
 }

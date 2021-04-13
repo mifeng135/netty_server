@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HeartBeartRsq {
+public class HeartBeartRsp {
     private int time;
 }

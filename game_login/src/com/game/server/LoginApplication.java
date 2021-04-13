@@ -2,6 +2,7 @@ package com.game.server;
 
 
 import com.game.server.redis.RedisCache;
+import core.annotation.CtrlAnnotation;
 import core.annotation.SqlAnnotation;
 import core.group.EventThreadGroup;
 import core.netty.http.HttpServer;
@@ -15,11 +16,12 @@ import static core.Constants.SQL_MASTER;
  */
 public class LoginApplication {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ConfigUtil.loadFile("config.properties");
         initSql();
         initRedis();
         initHttpServer();
+        CtrlAnnotation.getInstance();
         new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginApplication.class.getName());
     }
 

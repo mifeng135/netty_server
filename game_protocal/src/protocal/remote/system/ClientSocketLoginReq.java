@@ -1,5 +1,4 @@
-package protocal.remote.login;
-
+package protocal.remote.system;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,12 +6,8 @@ import lombok.Setter;
 /**
  * Created by Administrator on 2020/7/4.
  */
-
 @Getter
 @Setter
-public class LoginRsp {
-    private String ip;
+public class ClientSocketLoginReq {
     private int playerIndex;
-    private String name;
 }
-

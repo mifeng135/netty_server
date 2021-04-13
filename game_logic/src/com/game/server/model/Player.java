@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class Player {
     private int playerIndex;
-
     public Player() {
 
     }

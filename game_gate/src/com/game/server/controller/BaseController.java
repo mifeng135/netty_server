@@ -12,33 +12,34 @@ import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import core.util.TimeUtil;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.MsgConstant;
+import protocal.local.system.RegisterMsgCmdReq;
 import protocal.local.system.TcpRsp;
 import protocal.remote.system.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import static core.Constants.LOCAL_SOCKET_RANGE;
 import static protocal.MsgConstant.*;
 
 @Ctrl
 public class BaseController {
 
-    @CtrlCmd(cmd = MSG_SOCKET_LOGIN_REQ)
+    @CtrlCmd(cmd = MSG_CLIENT_SOCKET_LOGIN_REQ)
     public void socketLogin(TransferMsg msg, ChannelHandlerContext context) {
-        LoginGateReq loginGateReq = ProtoUtil.deserializer(msg.getData(), LoginGateReq.class);
-        int playerIndex = loginGateReq.getPlayerId();
+        ClientSocketLoginReq clientSocketLoginReq = ProtoUtil.deserializer(msg.getData(), ClientSocketLoginReq.class);
+        int playerIndex = clientSocketLoginReq.getPlayerIndex();
         process(context, playerIndex);
-        TcpUtil.sendToClient(playerIndex, MsgConstant.MSG_SOCKET_LOGIN_RSP, new LoginGateRsp());
+        TcpUtil.sendToClient(playerIndex, MsgConstant.MSG_CLIENT_SOCKET_LOGIN_RSP, new ClientSocketLoginRsp());
         LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
     }
 
     @CtrlCmd(cmd = MSG_HEART_BEAT_REQ)
     public void heartBeat(TransferMsg msg, ChannelHandlerContext context) {
-        HeartBeartRsq heatbeartRsq = new HeartBeartRsq();
+        HeartBeartRsp heatbeartRsq = new HeartBeartRsp();
         heatbeartRsq.setTime(TimeUtil.getCurrentTimeSecond());
         TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), MsgConstant.MSG_HEART_BEAT_RSP, heatbeartRsq);
     }
@@ -53,14 +54,16 @@ public class BaseController {
 
     @CtrlCmd(cmd = MSG_CLOSE_SOCKET_REQ)
     public void socketClose(TransferMsg msg, ChannelHandlerContext context) {
-        LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
+        if (msg.getHeaderProto().getPlayerIndex() > LOCAL_SOCKET_RANGE) {
+            LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
+        }
     }
 
-    @CtrlCmd(cmd = MSG_LOCAL_SOCKET_RSP)
+    @CtrlCmd(cmd = MSG_REGISTER_MSG_CMD_REQ)
     public void localSocket(TransferMsg msg, ChannelHandlerContext context) {
-        TcpRsp tcpRsp = ProtoUtil.deserializer(msg.getData(), TcpRsp.class);
+        RegisterMsgCmdReq registerMsgCmdReq = ProtoUtil.deserializer(msg.getData(), RegisterMsgCmdReq.class);
         Set<Integer> set = new HashSet<>();
-        set.addAll(tcpRsp.getMsgList());
+        set.addAll(registerMsgCmdReq.getMsgList());
         LocalRouterSocketManager.getInstance().addRouter(msg.getHeaderProto().getPlayerIndex(), set);
     }
 
@@ -75,7 +78,7 @@ public class BaseController {
     }
 
     private void sendReplaceAccount(Channel channel) {
-        ReplaceRsq replaceRsq = new ReplaceRsq();
+        ReplaceAccountRsp replaceRsq = new ReplaceAccountRsp();
         byte[] data = ProtoUtil.serialize(replaceRsq);
         TransferClientMsg transferMsg = new TransferClientMsg();
         transferMsg.setMsgId(MSG_REPLACE_ACCOUNT_PUSH);

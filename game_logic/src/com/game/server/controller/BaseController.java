@@ -9,12 +9,9 @@ import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import protocal.local.system.TcpRsp;
+import protocal.local.system.RegisterMsgCmdReq;
 
-import static core.Constants.IDLE_STATE_HANDLER;
-import static protocal.MsgConstant.MSG_CLOSE_SOCKET_REQ;
-import static protocal.MsgConstant.MSG_LOCAL_SOCKET_REQ;
-import static protocal.MsgConstant.MSG_LOCAL_SOCKET_RSP;
+import static protocal.MsgConstant.*;
 
 @Ctrl
 public class BaseController {
@@ -23,10 +20,10 @@ public class BaseController {
     public void tcpReq(TransferMsg msg, ChannelHandlerContext context) {
         int socketIndex = msg.getHeaderProto().getPlayerIndex();
         process(context, socketIndex);
-        TcpRsp tcpRsp = new TcpRsp();
-        tcpRsp.setMsgList(CtrlAnnotation.getInstance().getMsgList());
-        msg.getHeaderProto().setMsgId(MSG_LOCAL_SOCKET_RSP);
-        TcpUtil.sendToGate(msg.getHeaderProto(), tcpRsp);
+        RegisterMsgCmdReq registerMsgCmdReq = new RegisterMsgCmdReq();
+        msg.getHeaderProto().setMsgId(MSG_REGISTER_MSG_CMD_REQ);
+        registerMsgCmdReq.setMsgList(CtrlAnnotation.getInstance().getMsgList());
+        TcpUtil.sendToGate(msg.getHeaderProto(), registerMsgCmdReq);
     }
 
     @CtrlCmd(cmd = MSG_CLOSE_SOCKET_REQ)
