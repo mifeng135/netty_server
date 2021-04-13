@@ -4,6 +4,7 @@ import com.game.server.bean.PlayerBean;
 import com.game.server.constant.SqlCmdConstant;
 import core.annotation.SqlCmd;
 import core.sql.SqlConstant;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -14,19 +15,28 @@ import org.apache.ibatis.annotations.Update;
  */
 public interface PlayerMapper {
 
-    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_SELECT_ACCOUNT_PASSWORD, sqlType = SqlConstant.SELECT_ONE)
-    @Select("select * from game_player where account = #{account} and password = #{password} limit 1")
-    public PlayerBean findPlayerWithAccountAndPassword(PlayerBean playerBean);
+    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_SELECT_ONE, sqlType = SqlConstant.SELECT_ONE)
+    @Select("select player_index, name from game_player where player_index = #{playerIndex} limit 1")
+    PlayerBean getPlayerInfoByIndex(PlayerBean playerBean);
 
 
-    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_UPDATE_LOGIN_INFO, sqlType = SqlConstant.UPDATE)
-    @Update("update game_player set loginIp = #{loginIp},lastLoginTime = #{lastLoginTime} where id = #{id}")
-    public void updatePlayerInfo(PlayerBean playerBean);
+    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_UPDATE_LOGIN, sqlType = SqlConstant.UPDATE)
+    @Update("update game_player set login_ip = #{loginIp},last_login_time = #{lastLoginTime} where player_index = #{playerIndex}")
+    void updatePlayerInfo(PlayerBean playerBean);
+
+    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_UPDATE_HEADER, sqlType = SqlConstant.UPDATE)
+    @Update("update game_player set header = #{header} where player_index = #{playerIndex}")
+    void updatePlayerHeader(PlayerBean playerBean);
 
 
-    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INSERT_REGISTER, sqlType = SqlConstant.INSERT)
-    @Insert("INSERT INTO game_player (account, password, registerTime, loginIp, lastLoginTime) " +
+    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_DELETE, sqlType = SqlConstant.DELETE)
+    @Delete("delete from game_player where player_index = #{playerIndex}")
+    void deletePlayer(PlayerBean playerBean);
+
+
+    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_INSERT, sqlType = SqlConstant.INSERT)
+    @Insert("INSERT INTO game_player (account, password, register_time, login_ip, last_login_time) " +
             "VALUES (#{account}, #{password}, #{registerTime}, #{loginIp}, #{lastLoginTime})")
-    public void register(PlayerBean playerBean);
-    
+    void insertPlayerInfo(PlayerBean playerBean);
+
 }

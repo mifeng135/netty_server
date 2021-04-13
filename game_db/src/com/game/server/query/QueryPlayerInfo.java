@@ -11,18 +11,6 @@ import static com.game.server.constant.SqlCmdConstant.PLAYER_SCENE_SELECT_SCENE_
 
 public class QueryPlayerInfo {
 
-    public static PlayerBean queryPlayerInfo(String account, String password) {
-        RMapCache<String, PlayerBean> redisCache = RedisCache.getInstance().getAccountLoginCache();
-        PlayerBean playerBean = redisCache.get(account);
-        if (playerBean != null && !playerBean.getPassword().equals(password)) {
-            return null;
-        }
-        playerBean = new PlayerBean();
-        playerBean.setAccount(account);
-        playerBean.setPassword(password);
-        return SqlAnnotation.getInstance().sqlSelectOne(SqlCmdConstant.PLAYER_SELECT_ACCOUNT_PASSWORD, playerBean);
-    }
-
     public static PlayerScene queryScene(int playerIndex) {
         RMapCache<Integer, PlayerScene> redisCache = RedisCache.getInstance().getSceneCache();
         PlayerScene playerScene = redisCache.get(playerIndex);

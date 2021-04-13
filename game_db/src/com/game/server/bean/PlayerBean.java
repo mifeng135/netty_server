@@ -13,10 +13,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class PlayerBean implements Serializable {
-    private int id;
+    private int playerIndex;
     private String name;
-    private String account;
-    private String password;
     private int registerTime;
     private String loginIp;
     private int lastLoginTime;

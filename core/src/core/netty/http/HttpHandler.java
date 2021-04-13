@@ -3,7 +3,6 @@ package core.netty.http;
 
 import core.Constants;
 import core.group.MessageGroup;
-import core.manager.HttpConnectManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
@@ -55,7 +54,6 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
                 transferMsg.setHeaderProto(headerProto);
                 transferMsg.setData(bodyData);
                 transferMsg.setContext(ctx);
-                HttpConnectManager.putConnect(playerIndex, ctx.channel());
                 MessageGroup.getInstance().pushMessage(transferMsg);
             }
         } catch (Exception e) {

@@ -19,7 +19,7 @@ import java.util.List;
 @Ctrl
 public class ServerListController {
 
-    private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static Logger logger = LoggerFactory.getLogger(ServerListController.class);
 
     @CtrlCmd(cmd = MsgConstant.MSG_GET_SERVER_LIST_REQ)
     public void getServerList(TransferMsg msg, ChannelHandlerContext context) {
@@ -37,6 +37,6 @@ public class ServerListController {
             serverListArray.add(serverInfo);
         }
         serverListRsp.setServerList(serverListArray);
-        HttpUtil.sendMsg(msg.getHeaderProto().getPlayerIndex(), MsgConstant.MSG_GET_SERVER_LIST_RSP, serverListRsp);
+        HttpUtil.sendMsg(context, MsgConstant.MSG_GET_SERVER_LIST_RSP, serverListRsp);
     }
 }

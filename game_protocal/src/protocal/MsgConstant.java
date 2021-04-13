@@ -17,7 +17,6 @@ public class MsgConstant {
 
     /***********************************db server**************************************************/
 
-    public static final int MSG_DB_QUERY_LOGIN = 100;                            //通过帐号密码得到人物基本信息
     public static final int MSG_DB_QUERY_SCENE = 101;
     public static final int MSG_DB_QUERY_ENTER_SCENE = 102;
 

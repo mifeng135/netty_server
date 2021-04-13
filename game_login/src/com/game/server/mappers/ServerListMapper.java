@@ -15,30 +15,30 @@ public interface ServerListMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_SELECT_ALL, sqlType = SqlConstant.SELECT_LIST)
     @Select("select server_name, server_id, state, open_time, server_ip from game_server_list")
-    public List<ServerListBean> getAllServerList();
+    List<ServerListBean> getAllServerList();
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_SELECT_ONE, sqlType = SqlConstant.SELECT_ONE)
     @Select("select server_name, server_id, state, open_time, server_ip from game_server_list where server_id = #{serverId} limit 1")
-    public ServerListBean getServerById(ServerListBean serverListBean);
+    ServerListBean getServerById(ServerListBean serverListBean);
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_UPDATE_SERVER_NAME, sqlType = SqlConstant.UPDATE)
     @Update("update game_server_list set server_name = #{serverName} where server_id = #{serverId}")
-    public ServerListBean updateServerName(ServerListBean serverListBean);
+    ServerListBean updateServerName(ServerListBean serverListBean);
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_UPDATE_SERVER_STATE, sqlType = SqlConstant.UPDATE)
     @Update("update game_server_list set state = #{state} where server_id = #{serverId}")
-    public ServerListBean updateServerState(ServerListBean serverListBean);
+    ServerListBean updateServerState(ServerListBean serverListBean);
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_DELETE_SERVER, sqlType = SqlConstant.DELETE)
     @Delete("delete from game_server_list where server_id = #{serverId}")
-    public void deleteServer(ServerListBean serverListBean);
+    void deleteServer(ServerListBean serverListBean);
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_INSERT_SERVER, sqlType = SqlConstant.INSERT)
     @Insert("INSERT INTO game_server_list (server_name, server_id, state, open_time)" +
             "VALUES (#{serverName}, #{serverId}, #{state}, #{openTime})")
-    public void insertServer(ServerListBean serverListBean);
+    void insertServer(ServerListBean serverListBean);
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_UPDATE_SERVER_IP, sqlType = SqlConstant.UPDATE)
     @Update("update game_server_list set server_ip = #{serverIp} where server_id = #{serverId}")
-    public ServerListBean updateServerIp(ServerListBean serverListBean);
+    ServerListBean updateServerIp(ServerListBean serverListBean);
 }
