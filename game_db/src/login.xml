@@ -10,14 +10,14 @@
 
     <context:component-scan base-package="com.game.server.mappers" />
 
-    <bean id="slaveDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init">
-        <property name="url" value="${jdbc.slave.url}"/>
-        <property name="username" value="${jdbc.slave.username}"/>
-        <property name="password" value="${jdbc.slave.password}"/>
+    <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init">
+        <property name="url" value="${jdbc.login.url}"/>
+        <property name="username" value="${jdbc.login.username}"/>
+        <property name="password" value="${jdbc.login.password}"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="slaveDataSource"/>
+        <property name="dataSource" ref="masterDataSource"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
 

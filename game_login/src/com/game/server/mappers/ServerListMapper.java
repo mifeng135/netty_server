@@ -23,7 +23,7 @@ public interface ServerListMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_UPDATE_SERVER_NAME, sqlType = SqlConstant.UPDATE)
     @Update("update game_server_list set server_name = #{serverName} where server_id = #{serverId}")
-    ServerListBean updateServerName(ServerListBean serverListBean);
+    void updateServerName(ServerListBean serverListBean);
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_UPDATE_SERVER_STATE, sqlType = SqlConstant.UPDATE)
     @Update("update game_server_list set state = #{state} where server_id = #{serverId}")
@@ -40,5 +40,5 @@ public interface ServerListMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.SERVER_LIST_UPDATE_SERVER_IP, sqlType = SqlConstant.UPDATE)
     @Update("update game_server_list set server_ip = #{serverIp} where server_id = #{serverId}")
-    ServerListBean updateServerIp(ServerListBean serverListBean);
+    void updateServerIp(ServerListBean serverListBean);
 }

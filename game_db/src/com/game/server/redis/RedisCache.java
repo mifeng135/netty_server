@@ -21,7 +21,7 @@ public class RedisCache {
         return RedisCache.DefaultInstance.INSTANCE;
     }
 
-    private RMapCache<String, PlayerBean> accountLoginCache; // key account
+    private RMapCache<Integer, PlayerBean> playerCache; // key account
     private RMapCache<Integer, PlayerScene> sceneCache;
 
     private RedisCache() {
@@ -36,8 +36,8 @@ public class RedisCache {
     private void loadLoginMap() {
         int maxCount = ConfigUtil.getInt("redis_max_online_player_count", 1);
         RedissonClient redissonClient = RedisManager.getInstance().getRedisSon();
-        accountLoginCache = redissonClient.getMapCache(REDIS_ACCOUNT_LOGIN_KEY);
-        accountLoginCache.setMaxSize(maxCount);
+        playerCache = redissonClient.getMapCache(REDIS_ACCOUNT_LOGIN_KEY);
+        playerCache.setMaxSize(maxCount);
     }
 
     private void loadSceneMap() {
@@ -47,8 +47,8 @@ public class RedisCache {
         sceneCache.setMaxSize(maxCount);
     }
 
-    public RMapCache<String, PlayerBean> getAccountLoginCache() {
-        return accountLoginCache;
+    public RMapCache<Integer, PlayerBean> getPlayerCache() {
+        return playerCache;
     }
 
     public RMapCache<Integer, PlayerScene> getSceneCache() {

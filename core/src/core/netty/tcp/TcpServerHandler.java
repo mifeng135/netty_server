@@ -2,8 +2,6 @@ package core.netty.tcp;
 
 import core.Constants;
 import core.group.MessageGroup;
-import core.manager.LocalSocketManager;
-import core.manager.RemoteSocketManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandler;

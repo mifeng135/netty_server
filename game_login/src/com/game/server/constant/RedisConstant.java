@@ -5,4 +5,5 @@ package com.game.server.constant;
  */
 public class RedisConstant {
     public static final String REDIS_SERVER_LIST_KEY = "SERVER_LIST";
+    public static final String REDIS_SERVER_NOTICE_KEY = "SERVER_NOTICE";
 }

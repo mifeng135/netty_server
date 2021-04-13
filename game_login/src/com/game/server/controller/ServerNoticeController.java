@@ -1,6 +1,5 @@
 package com.game.server.controller;
 
-
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
@@ -10,12 +9,12 @@ import org.slf4j.LoggerFactory;
 import protocal.MsgConstant;
 
 @Ctrl
-public class PlayerInfoController {
+public class ServerNoticeController {
 
-    private static Logger logger = LoggerFactory.getLogger(PlayerInfoController.class);
+    private static Logger logger = LoggerFactory.getLogger(ServerNoticeController.class);
 
-    @CtrlCmd(cmd = MsgConstant.MSG_GET_SERVER_LIST_REQ)
-    public void getPlayerInfo(TransferMsg msg, ChannelHandlerContext context) {
+    @CtrlCmd(cmd = MsgConstant.MSG_NOTICE_LIST_REQ)
+    public void getServerNotice(TransferMsg msg, ChannelHandlerContext context) {
         
     }
 }

@@ -4,10 +4,7 @@ import com.game.server.bean.PlayerBean;
 import com.game.server.constant.SqlCmdConstant;
 import core.annotation.SqlCmd;
 import core.sql.SqlConstant;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 
 /**
@@ -16,8 +13,8 @@ import org.apache.ibatis.annotations.Update;
 public interface PlayerMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_SELECT_ONE, sqlType = SqlConstant.SELECT_ONE)
-    @Select("select player_index, name from game_player where player_index = #{playerIndex} limit 1")
-    PlayerBean getPlayerInfoByIndex(PlayerBean playerBean);
+    @Select("select player_index, name, server_id from game_player where player_index = #{playerIndex} limit 1")
+    PlayerBean getPlayerInfoByIndex(@Param("playerIndex") int playerIndex);
 
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_UPDATE_LOGIN, sqlType = SqlConstant.UPDATE)

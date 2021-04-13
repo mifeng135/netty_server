@@ -26,8 +26,10 @@ public class DBServerApplication {
 
     private static void initSql() {
         int serverId = ConfigUtil.getInt("server_id", 1);
+        int loginServerId = ConfigUtil.getInt("login_server_id", 8888);
         SqlAnnotation.getInstance().initSql(SQL_MASTER, serverId, "db-master.xml");
         SqlAnnotation.getInstance().initSql(SQL_SLAVE, serverId, "db-slave.xml");
+        SqlAnnotation.getInstance().initSql(SQL_MASTER, loginServerId, "login.xml");
     }
 
     private static void initRedis() {

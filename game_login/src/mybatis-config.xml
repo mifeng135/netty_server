@@ -12,5 +12,6 @@
     </settings>
     <mappers>
         <mapper class="com.game.server.mappers.ServerListMapper"></mapper>
+        <mapper class="com.game.server.mappers.ServerNoticeMapper"></mapper>
     </mappers>
 </configuration>

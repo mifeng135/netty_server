@@ -9,10 +9,6 @@ public class SqlCmdConstant {
 
     /********************************PLAYER INFO***********************************/
     public static final int PLAYER_INFO_SELECT_ONE                                      = 110;
-    public static final int PLAYER_INFO_UPDATE_LOGIN                                    = 111;
-    public static final int PLAYER_INFO_UPDATE_HEADER                                   = 112;
-    public static final int PLAYER_INFO_DELETE                                          = 113;
-    public static final int PLAYER_INFO_INSERT                                          = 114;
 
     /*********************************SERVER LIST********************************************/
     public static final int SERVER_LIST_SELECT_ALL                                      = 130; //获取所有的服务器列表
@@ -22,4 +18,11 @@ public class SqlCmdConstant {
     public static final int SERVER_LIST_DELETE_SERVER                                   = 134; //删除某个服务器
     public static final int SERVER_LIST_INSERT_SERVER                                   = 135; //插入服务器
     public static final int SERVER_LIST_UPDATE_SERVER_IP                                = 136; //更新服务器ip
+
+    /********************************* NOTICE ********************************************/
+
+    public static final int NOTICE_LIST_SELECT_ALL                                      = 140;
+    public static final int NOTICE_UPDATE_CONTENT                                       = 141;
+    public static final int NOTICE_DELETE                                               = 142;
+
 }

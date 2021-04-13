@@ -11,10 +11,9 @@
     <context:component-scan base-package="com.game.server.mappers" />
 
     <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init">
-        <property name="driverClassName" value="${jdbc.driver}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
+        <property name="url" value="${jdbc.master.url}"/>
+        <property name="username" value="${jdbc.master.username}"/>
+        <property name="password" value="${jdbc.master.password}"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
