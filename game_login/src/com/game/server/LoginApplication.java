@@ -2,14 +2,12 @@ package com.game.server;
 
 
 import com.game.server.redis.RedisCache;
-import config.Config;
 import core.annotation.SqlAnnotation;
 import core.group.EventThreadGroup;
 import core.netty.http.HttpServer;
 import core.redis.RedisManager;
 import core.util.ConfigUtil;
 
-import static config.Config.*;
 import static core.Constants.SQL_MASTER;
 
 /**

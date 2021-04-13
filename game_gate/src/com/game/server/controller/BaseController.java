@@ -80,11 +80,6 @@ public class BaseController {
         TransferClientMsg transferMsg = new TransferClientMsg();
         transferMsg.setMsgId(MSG_REPLACE_ACCOUNT_PUSH);
         transferMsg.setData(data);
-        channel.writeAndFlush(transferMsg).addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                channelFuture.channel().close();
-            }
-        });
+        channel.writeAndFlush(transferMsg).addListener((ChannelFutureListener) channelFuture -> channelFuture.channel().close());
     }
 }

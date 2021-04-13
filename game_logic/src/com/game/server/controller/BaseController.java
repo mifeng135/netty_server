@@ -33,6 +33,7 @@ public class BaseController {
     public void socketClose(TransferMsg msg, ChannelHandlerContext context) {
 
     }
+
     private void process(ChannelHandlerContext context, int socketIndex) {
         context.channel().attr(Constants.PLAYER_INDEX).setIfAbsent(socketIndex);
         Channel oldChannel = LocalSocketManager.getInstance().getChanel(socketIndex);
