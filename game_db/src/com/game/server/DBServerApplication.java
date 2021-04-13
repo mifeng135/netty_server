@@ -8,7 +8,6 @@ import core.netty.http.HttpServer;
 import core.redis.RedisManager;
 import core.util.ConfigUtil;
 
-import static config.Config.*;
 import static core.Constants.SQL_MASTER;
 import static core.Constants.SQL_SLAVE;
 
@@ -18,7 +17,7 @@ import static core.Constants.SQL_SLAVE;
 public class DBServerApplication {
 
     public static void main(String[] args) {
-        ConfigUtil.loadFile("dbConfig.properties");
+        ConfigUtil.loadFile("db-config.properties");
         initSql();
         initRedis();
         initHttpServer();
@@ -42,7 +41,7 @@ public class DBServerApplication {
 
     private static void initHttpServer() {
         String httpIp = ConfigUtil.getString("db_http_ip");
-        int port = ConfigUtil.getInt("db_http_port", 8000);
+        int port = ConfigUtil.getInt("db_http_port", 8001);
         new HttpServer(httpIp, port);
     }
 }

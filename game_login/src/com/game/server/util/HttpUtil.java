@@ -13,7 +13,6 @@ import static core.Constants.MSG_RESULT_SUCCESS;
 
 public class HttpUtil {
 
-
     public static void sendErrorMsg(ChannelHandlerContext context, int msgId, Object msg) {
         Channel channel = context.channel();
         if (channel == null || !channel.isActive()) {

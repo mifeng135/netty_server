@@ -18,8 +18,6 @@ public class BaseController {
     public void tcpReq(TransferMsg msg, ChannelHandlerContext context) {
         int socketIndex = msg.getHeaderProto().getPlayerIndex();
         process(context, socketIndex);
-        context.channel().pipeline().remove(IDLE_STATE_HANDLER);
-
     }
 
     private void process(ChannelHandlerContext context, int socketIndex) {

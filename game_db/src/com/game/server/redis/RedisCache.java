@@ -3,18 +3,13 @@ package com.game.server.redis;
 
 import com.game.server.bean.PlayerBean;
 import com.game.server.bean.PlayerScene;
-import core.annotation.SqlAnnotation;
 import core.redis.RedisManager;
 import core.util.ConfigUtil;
-import org.redisson.api.RMap;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 
-import java.util.List;
 
-import static com.game.server.DBConfig.*;
 import static com.game.server.constant.RedisConstant.*;
-import static com.game.server.constant.SqlCmdConstant.SERVER_LIST_SELECT_ALL;
 
 public class RedisCache {
 

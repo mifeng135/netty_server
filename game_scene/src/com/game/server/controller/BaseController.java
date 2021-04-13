@@ -23,8 +23,6 @@ public class BaseController {
     public void tcpReq(TransferMsg msg, ChannelHandlerContext context) {
         int socketIndex = msg.getHeaderProto().getPlayerIndex();
         process(context, socketIndex);
-        context.channel().pipeline().remove(IDLE_STATE_HANDLER);
-
         TcpRsp tcpRsp = new TcpRsp();
         tcpRsp.setMsgList(CtrlAnnotation.getInstance().getMsgList());
         msg.getHeaderProto().setMsgId(MSG_LOCAL_SOCKET_RSP);

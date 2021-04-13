@@ -1,8 +1,6 @@
 package com.game.server.query;
 
-import com.game.server.bean.PlayerBean;
 import com.game.server.bean.PlayerScene;
-import com.game.server.constant.SqlCmdConstant;
 import com.game.server.redis.RedisCache;
 import core.annotation.SqlAnnotation;
 import org.redisson.api.RMapCache;

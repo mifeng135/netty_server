@@ -69,15 +69,16 @@ public class TcpServer {
             @Override
             protected void initChannel(SocketChannel channel) throws Exception {
                 ChannelPipeline pipeline = channel.pipeline();
-                if (Constants.NETTY_OPEN_IDLE) {
-                    pipeline.addLast(IDLE_STATE_HANDLER, new IdleStateHandler(Constants.TCP_SERVER_IDLE_DEFAULT, 0, 0));
-                }
+
                 if (socketType == LOCAL) {
                     pipeline.addLast(new CDecoder());
                     pipeline.addLast(new CEncode());
                 } else if (socketType == REMOTE) {
                     pipeline.addLast(new GDecoder());
                     pipeline.addLast(new GEncoder());
+                    if (Constants.NETTY_OPEN_IDLE) {
+                        pipeline.addLast(IDLE_STATE_HANDLER, new IdleStateHandler(Constants.TCP_SERVER_IDLE_DEFAULT, 0, 0));
+                    }
                 }
                 pipeline.addLast("serverHandler", tcpServerHandler);
             }
