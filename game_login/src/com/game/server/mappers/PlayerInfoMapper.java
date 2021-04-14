@@ -5,6 +5,7 @@ import com.game.server.constant.SqlCmdConstant;
 import core.annotation.SqlCmd;
 import core.sql.SqlConstant;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 public interface PlayerInfoMapper {
@@ -15,9 +16,6 @@ public interface PlayerInfoMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_INSERT, sqlType = SqlConstant.INSERT)
     @Insert("insert into player_info (player_index, server_info)" + "values (#{playerIndex}, #{serverInfo})")
+    @Options(useGeneratedKeys = true, keyProperty = "playerIndex")
     void insertPlayer(LoginPlayerBean loginPlayerBean);
-
-    @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_MAX_PLAYER_ID, sqlType = SqlConstant.SELECT_ONE)
-    @Select("select last_insert_id() from player_info")
-    int selectMaxPlayerId(LoginPlayerBean loginPlayerBean);
 }
