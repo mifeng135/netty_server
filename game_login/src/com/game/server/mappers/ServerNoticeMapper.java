@@ -4,9 +4,7 @@ import bean.login.NoticeBean;
 import com.game.server.constant.SqlCmdConstant;
 import core.annotation.SqlCmd;
 import core.sql.SqlConstant;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -22,10 +20,11 @@ public interface ServerNoticeMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.NOTICE_DELETE, sqlType = SqlConstant.DELETE)
     @Update("delete from game_notice_list where notice_id = #{noticeId}")
-    void delete(NoticeBean noticeBean);
+    void delete(@Param("noticeId") int noticeId);
 
-    @SqlCmd(sqlCmd = SqlCmdConstant.NOTICE_DELETE, sqlType = SqlConstant.INSERT)
+    @SqlCmd(sqlCmd = SqlCmdConstant.NOTICE_INSERT, sqlType = SqlConstant.INSERT)
     @Insert("insert into game_notice_list (notice_id, content)" + "values (#{noticeId}, #{content})")
+    @Options(useGeneratedKeys = true, keyProperty = "noticeId")
     void insertServer(NoticeBean serverListBean);
 
 }

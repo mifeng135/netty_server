@@ -24,4 +24,5 @@ public class SqlCmdConstant {
     public static final int NOTICE_LIST_SELECT_ALL                                      = 140;
     public static final int NOTICE_UPDATE_CONTENT                                       = 141;
     public static final int NOTICE_DELETE                                               = 142;
+    public static final int NOTICE_INSERT                                               = 143;
 }

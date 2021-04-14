@@ -1,5 +1,8 @@
 package com.game.server.controller;
 
+import bean.login.NoticeBean;
+import com.game.server.query.NoticeListQuery;
+import com.game.server.util.HttpUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
@@ -7,6 +10,10 @@ import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protocal.MsgConstant;
+import protocal.remote.login.ServerNoticeRsp;
+
+import java.util.List;
+
 
 @Ctrl
 public class ServerNoticeController {
@@ -15,6 +22,9 @@ public class ServerNoticeController {
 
     @CtrlCmd(cmd = MsgConstant.MSG_NOTICE_LIST_REQ)
     public void getServerNotice(TransferMsg msg, ChannelHandlerContext context) {
-        
+        List<NoticeBean> noticeList = NoticeListQuery.getAllNotice();
+        ServerNoticeRsp serverNoticeRsp = new ServerNoticeRsp();
+        serverNoticeRsp.setNoticeList(noticeList);
+        HttpUtil.sendMsg(context, MsgConstant.MSG_NOTICE_LIST_RSP, serverNoticeRsp);
     }
 }
