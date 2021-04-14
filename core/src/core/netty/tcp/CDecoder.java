@@ -11,6 +11,10 @@ import java.util.List;
 
 import static core.Constants.TCP_MSG_LEN;
 
+
+/***
+ * local decoder
+ */
 public class CDecoder extends ByteToMessageDecoder {
 
     @Override

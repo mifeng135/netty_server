@@ -1,7 +1,6 @@
 package core.netty.tcp;
 
 import core.Constants;
-import core.group.EventThreadGroup;
 import core.group.MessageGroup;
 import core.msg.TransferMsg;
 import io.netty.channel.ChannelHandler;

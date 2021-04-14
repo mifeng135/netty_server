@@ -13,6 +13,6 @@ public class HeaderProto {
     private int msgId;
     private int msdType; // local 0 remote 1
     private boolean broadcast;
-    private boolean result = true;
+    private boolean success = true;
     private List<Integer> noticeList;
 }

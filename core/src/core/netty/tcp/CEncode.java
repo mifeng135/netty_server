@@ -9,6 +9,9 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import static core.Constants.MSG_TYPE_LOCAL;
 import static core.Constants.TCP_MSG_LEN;
 
+/***
+ * local encoder
+ */
 public class CEncode extends MessageToByteEncoder<TransferMsg> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, TransferMsg in, ByteBuf out) {

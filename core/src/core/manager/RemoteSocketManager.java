@@ -45,9 +45,9 @@ public class RemoteSocketManager {
     }
 
     public void removeChannel(Channel channel) {
-        int socketIndex = channel.attr(Constants.PLAYER_INDEX).get();
-        removeChannel(socketIndex);
-        logger.info("disconnect socketIindex = {}", socketIndex);
+        int playerIndex = channel.attr(Constants.PLAYER_INDEX).get();
+        removeChannel(playerIndex);
+        logger.info("disconnect playerIndex = {}", playerIndex);
     }
 
     public void broadcast(TransferClientMsg msg) {

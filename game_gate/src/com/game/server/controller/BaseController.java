@@ -17,24 +17,22 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.MsgConstant;
 import protocal.local.system.RegisterMsgCmdReq;
-import protocal.local.system.TcpRsp;
 import protocal.remote.system.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static core.Constants.LOCAL_SOCKET_RANGE;
 import static protocal.MsgConstant.*;
 
 @Ctrl
 public class BaseController {
 
-    @CtrlCmd(cmd = MSG_CLIENT_SOCKET_LOGIN_REQ)
-    public void socketLogin(TransferMsg msg, ChannelHandlerContext context) {
+    @CtrlCmd(cmd = MSG_REMOTE_OPEN_SOCKET_REQ)
+    public void remoteSocketOpen(TransferMsg msg, ChannelHandlerContext context) {
         ClientSocketLoginReq clientSocketLoginReq = ProtoUtil.deserializer(msg.getData(), ClientSocketLoginReq.class);
         int playerIndex = clientSocketLoginReq.getPlayerIndex();
         process(context, playerIndex);
-        TcpUtil.sendToClient(playerIndex, MsgConstant.MSG_CLIENT_SOCKET_LOGIN_RSP, new ClientSocketLoginRsp());
+        TcpUtil.sendToClient(playerIndex, MsgConstant.MSG_REMOTE_OPEN_SOCKET_RSP, new ClientSocketLoginRsp());
         LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
     }
 
@@ -53,20 +51,18 @@ public class BaseController {
         TcpUtil.sendToClient(socketIndex, MSG_RECONNECT_RSP, new ReconnectRsp());
     }
 
-    @CtrlCmd(cmd = MSG_CLOSE_SOCKET_REQ)
-    public void socketClose(TransferMsg msg, ChannelHandlerContext context) {
-        int playerIndex = msg.getHeaderProto().getPlayerIndex();
-        if (playerIndex > LOCAL_SOCKET_RANGE) {
-            LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
-        }
-        if (playerIndex < LOCAL_SOCKET_RANGE) {
-            LocalSocketManager.getInstance().removeChannel(context.channel());
-        } else {
-            RemoteSocketManager.getInstance().removeChannel(context.channel());
-        }
+    @CtrlCmd(cmd = MSG_REMOTE_SOCKET_CLOSE_PUSH)
+    public void remoteSocketClose(TransferMsg msg, ChannelHandlerContext context) {
+        LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
+        RemoteSocketManager.getInstance().removeChannel(context.channel());
     }
 
-    @CtrlCmd(cmd = MSG_REGISTER_MSG_CMD_REQ)
+    @CtrlCmd(cmd = MSG_LOCAL_SOCKET_CLOSE_PUSH)
+    public void localSocketClose(TransferMsg msg, ChannelHandlerContext context) {
+        LocalSocketManager.getInstance().removeChannel(context.channel());
+    }
+
+    @CtrlCmd(cmd = MSG_REGISTER_MSG_CMD_PUSH)
     public void localSocket(TransferMsg msg, ChannelHandlerContext context) {
         RegisterMsgCmdReq registerMsgCmdReq = ProtoUtil.deserializer(msg.getData(), RegisterMsgCmdReq.class);
         Set<Integer> set = new HashSet<>();

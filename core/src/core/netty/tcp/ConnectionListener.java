@@ -13,7 +13,7 @@ import protocal.local.base.HeaderProto;
 
 import java.util.concurrent.TimeUnit;
 
-import static protocal.MsgConstant.MSG_LOCAL_SOCKET_REQ;
+import static protocal.MsgConstant.MSG_LOCAL_OPEN_SOCKET_PUSH;
 
 public class ConnectionListener implements ChannelFutureListener {
 
@@ -39,7 +39,7 @@ public class ConnectionListener implements ChannelFutureListener {
             logger.info("connect success ip = {} port = {} playerIndex = {}", ip, port, playerIndex);
             LocalSocketManager.getInstance().putChannel(playerIndex, channelFuture.channel());
 
-            HeaderProto headerProto = ProtoUtil.initHeaderProto(MSG_LOCAL_SOCKET_REQ, playerIndex);
+            HeaderProto headerProto = ProtoUtil.initHeaderProto(MSG_LOCAL_OPEN_SOCKET_PUSH, playerIndex);
             TransferMsg transferMsg = new TransferMsg();
             transferMsg.setHeaderProto(headerProto);
             channelFuture.channel().writeAndFlush(transferMsg);
