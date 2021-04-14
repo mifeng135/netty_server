@@ -6,6 +6,7 @@ import com.game.server.constant.SqlCmdConstant;
 import core.annotation.SqlCmd;
 import core.sql.SqlConstant;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -15,11 +16,11 @@ public interface PlayerItemMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_ITEM_SELECT_ALL_ITEM, sqlType = SqlConstant.SELECT_LIST)
     @Select("select item_id,item_count from game_player_item where player_index = #{playerIndex}")
-    List<PlayerItem> getPlayerAllItem(PlayerItem playerItem);
+    List<PlayerItem> getPlayerAllItem(@Param("playerIndex") int playerIndex);
 
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_ITEM_SELECT_ONE_ITEM, sqlType = SqlConstant.SELECT_ONE)
-    @Select("select item_id,item_count from game_player_item where player_index = #{playerIndex} and item_id = #{itemId}")
+    @Select("select item_id, item_count from game_player_item where player_index = #{playerIndex} and item_id = #{itemId}")
     PlayerItem getPlayerOneItem(PlayerItem playerItem);
 
 
