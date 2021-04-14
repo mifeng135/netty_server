@@ -12,6 +12,5 @@ public class EnterGameController {
     @CtrlCmd(cmd = MsgConstant.MSG_ENTER_GAME_REQ)
     public void playerEnterGame(TransferMsg msg, ChannelHandlerContext context) {
         int playerIndex = msg.getHeaderProto().getPlayerIndex();
-
     }
 }

@@ -17,7 +17,7 @@ import static core.Constants.SQL_MASTER;
 public class LoginApplication {
 
     public static void main(String[] args) {
-        ConfigUtil.loadFile("config.properties");
+        ConfigUtil.loadFile("login-config.properties");
         initSql();
         initRedis();
         initHttpServer();

@@ -28,7 +28,8 @@ public class BaseController {
 
     @CtrlCmd(cmd = MSG_REMOTE_SOCKET_CLOSE_PUSH)
     public void remoteSocketClose(TransferMsg msg, ChannelHandlerContext context) {
-
+        // TODO: 2021/4/14
+        //need process socket close
     }
 
     @CtrlCmd(cmd = MSG_LOCAL_SOCKET_CLOSE_PUSH)
