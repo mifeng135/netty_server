@@ -1,12 +1,11 @@
 package com.game.server.mappers;
 
 
-import com.game.server.bean.PlayerItem;
+import bean.player.PlayerItem;
 import com.game.server.constant.SqlCmdConstant;
 import core.annotation.SqlCmd;
 import core.sql.SqlConstant;
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 

@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="game_protocal" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="module" module-name="game_proto_bean" />
   </component>
 </module>

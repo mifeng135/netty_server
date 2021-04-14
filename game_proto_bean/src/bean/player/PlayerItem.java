@@ -1,11 +1,13 @@
-package com.game.server.bean;
+package bean.player;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class PlayerItem {
+public class PlayerItem implements Serializable {
     private int id;
     private int playerIndex;
     private int itemId;

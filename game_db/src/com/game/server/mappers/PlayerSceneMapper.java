@@ -1,6 +1,6 @@
 package com.game.server.mappers;
 
-import com.game.server.bean.PlayerScene;
+import bean.player.PlayerScene;
 import com.game.server.constant.SqlCmdConstant;
 import core.annotation.SqlCmd;
 import core.sql.SqlConstant;

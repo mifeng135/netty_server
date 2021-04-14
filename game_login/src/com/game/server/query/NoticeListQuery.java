@@ -1,6 +1,6 @@
 package com.game.server.query;
 
-import com.game.server.bean.NoticeBean;
+import bean.login.NoticeBean;
 import com.game.server.redis.RedisCache;
 import org.redisson.api.RMap;
 

@@ -1,8 +1,8 @@
 package com.game.server.redis;
 
 
-import com.game.server.bean.NoticeBean;
-import com.game.server.bean.ServerListBean;
+import bean.login.NoticeBean;
+import bean.login.ServerInfoBean;
 import core.annotation.SqlAnnotation;
 import core.redis.RedisManager;
 import org.redisson.api.RMap;
@@ -24,7 +24,7 @@ public class RedisCache {
         return DefaultInstance.INSTANCE;
     }
 
-    private RMap<Integer, ServerListBean> serverListCache;
+    private RMap<Integer, ServerInfoBean> serverListCache;
     private RMap<Integer, NoticeBean> noticeListCache;
 
     private RedisCache() {
@@ -39,10 +39,10 @@ public class RedisCache {
     private void loadServerListMap() {
         RedissonClient redissonClient = RedisManager.getInstance().getRedisSon();
         serverListCache = redissonClient.getMapCache(REDIS_SERVER_LIST_KEY);
-        List<ServerListBean> allServerList = SqlAnnotation.getInstance().sqlSelectList(SERVER_LIST_SELECT_ALL);
+        List<ServerInfoBean> allServerList = SqlAnnotation.getInstance().sqlSelectList(SERVER_LIST_SELECT_ALL);
         for (int i = 0; i < allServerList.size(); i++) {
-            ServerListBean serverListBean = allServerList.get(i);
-            serverListCache.put(serverListBean.getServerId(), serverListBean);
+            ServerInfoBean serverInfoBean = allServerList.get(i);
+            serverListCache.put(serverInfoBean.getServerId(), serverInfoBean);
         }
     }
 
@@ -56,7 +56,7 @@ public class RedisCache {
         }
     }
 
-    public RMap<Integer, ServerListBean> getServerListCache() {
+    public RMap<Integer, ServerInfoBean> getServerListCache() {
         return serverListCache;
     }
 

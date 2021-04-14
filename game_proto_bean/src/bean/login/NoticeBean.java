@@ -1,12 +1,12 @@
-package com.game.server.bean;
+package bean.login;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 
-@Setter
 @Getter
+@Setter
 public class NoticeBean implements Serializable {
     private int noticeId;
     private String content;

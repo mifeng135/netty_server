@@ -1,8 +1,8 @@
 package com.game.server.redis;
 
 
-import com.game.server.bean.PlayerBean;
-import com.game.server.bean.PlayerScene;
+import bean.player.PlayerBean;
+import bean.player.PlayerScene;
 import core.redis.RedisManager;
 import core.util.ConfigUtil;
 import org.redisson.api.RMapCache;

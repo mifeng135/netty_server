@@ -1,5 +1,4 @@
-package com.game.server.bean;
-
+package bean.login;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +7,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class ServerListBean implements Serializable {
+public class ServerInfoBean implements Serializable {
     private int id;
     private String serverName;
     private int serverId;

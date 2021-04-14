@@ -1,6 +1,6 @@
 package com.game.server.mappers;
 
-import com.game.server.bean.NoticeBean;
+import bean.login.NoticeBean;
 import com.game.server.constant.SqlCmdConstant;
 import core.annotation.SqlCmd;
 import core.sql.SqlConstant;
@@ -15,7 +15,6 @@ public interface ServerNoticeMapper {
     @SqlCmd(sqlCmd = SqlCmdConstant.NOTICE_LIST_SELECT_ALL, sqlType = SqlConstant.SELECT_LIST)
     @Select("select notice_id, content from game_notice_list")
     List<NoticeBean> getAllNotice();
-
 
     @SqlCmd(sqlCmd = SqlCmdConstant.NOTICE_UPDATE_CONTENT, sqlType = SqlConstant.UPDATE)
     @Update("update game_notice_list set content = #{content} where notice_id = #{noticeId}")

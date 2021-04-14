@@ -1,7 +1,7 @@
 package com.game.server.controller;
 
 
-import com.game.server.bean.PlayerScene;
+import bean.player.PlayerScene;
 import com.game.server.query.SceneQuery;
 import com.game.server.util.HttpUtil;
 import core.annotation.Ctrl;

@@ -1,4 +1,4 @@
-package com.game.server.bean;
+package bean.player;
 
 
 import lombok.Getter;
