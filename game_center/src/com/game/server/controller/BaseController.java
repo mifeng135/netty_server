@@ -9,7 +9,7 @@ import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import protocal.local.system.RegisterMsgCmdReq;
+import protocal.local.system.RegisterMsgCmdPush;
 
 import static protocal.MsgConstant.*;
 
@@ -20,7 +20,7 @@ public class BaseController {
     public void localSocketOpen(TransferMsg msg, ChannelHandlerContext context) {
         int socketIndex = msg.getHeaderProto().getPlayerIndex();
         process(context, socketIndex);
-        RegisterMsgCmdReq registerMsgCmdReq = new RegisterMsgCmdReq();
+        RegisterMsgCmdPush registerMsgCmdReq = new RegisterMsgCmdPush();
         msg.getHeaderProto().setMsgId(MSG_REGISTER_MSG_CMD_PUSH);
         registerMsgCmdReq.setMsgList(CtrlAnnotation.getInstance().getMsgList());
         TcpUtil.sendToGate(msg.getHeaderProto(), registerMsgCmdReq);

@@ -1,4 +1,4 @@
 package protocal.remote.system;
 
-public class ReplaceAccountRsp {
+public class ReplaceAccountPush {
 }

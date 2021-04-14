@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class RegisterMsgCmdReq {
+public class RegisterMsgCmdPush {
     List<Integer> msgList;
 }

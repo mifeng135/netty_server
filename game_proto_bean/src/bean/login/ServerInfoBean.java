@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class ServerInfoBean implements Serializable {
-    private int id;
     private String serverName;
     private int serverId;
     private int state;

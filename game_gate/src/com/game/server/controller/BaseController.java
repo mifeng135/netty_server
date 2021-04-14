@@ -16,7 +16,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.MsgConstant;
-import protocal.local.system.RegisterMsgCmdReq;
+import protocal.local.system.RegisterMsgCmdPush;
 import protocal.remote.system.*;
 
 import java.util.HashSet;
@@ -64,7 +64,7 @@ public class BaseController {
 
     @CtrlCmd(cmd = MSG_REGISTER_MSG_CMD_PUSH)
     public void localSocket(TransferMsg msg, ChannelHandlerContext context) {
-        RegisterMsgCmdReq registerMsgCmdReq = ProtoUtil.deserializer(msg.getData(), RegisterMsgCmdReq.class);
+        RegisterMsgCmdPush registerMsgCmdReq = ProtoUtil.deserializer(msg.getData(), RegisterMsgCmdPush.class);
         Set<Integer> set = new HashSet<>();
         set.addAll(registerMsgCmdReq.getMsgList());
         LocalRouterSocketManager.getInstance().addRouter(msg.getHeaderProto().getPlayerIndex(), set);
@@ -81,7 +81,7 @@ public class BaseController {
     }
 
     private void sendReplaceAccount(Channel channel) {
-        ReplaceAccountRsp replaceRsq = new ReplaceAccountRsp();
+        ReplaceAccountPush replaceRsq = new ReplaceAccountPush();
         byte[] data = ProtoUtil.serialize(replaceRsq);
         TransferClientMsg transferMsg = new TransferClientMsg();
         transferMsg.setMsgId(MSG_REPLACE_ACCOUNT_PUSH);
