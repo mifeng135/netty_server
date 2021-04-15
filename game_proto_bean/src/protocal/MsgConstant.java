@@ -17,7 +17,6 @@ public class MsgConstant {
     public static final int MSG_NOTICE_LIST_REQ = 10002;                         //获取公告
     public static final int MSG_NOTICE_LIST_RSP = 10003;                         //
 
-
     public static final int MSG_REMOTE_OPEN_SOCKET_REQ = 10004;                 //客户端连接socket
     public static final int MSG_REMOTE_OPEN_SOCKET_RSP = 10005;
 
@@ -27,16 +26,15 @@ public class MsgConstant {
     public static final int MSG_CREATE_PLAYER_REQ = 10008;                      //创建角色
     public static final int MSG_CREATE_PLAYER_RSP = 10009;
 
-    public static final int MSG_HEART_BEAT_REQ = 10002;                          //心跳
-    public static final int MSG_HEART_BEAT_RSP = 10003;
+    public static final int MSG_HEART_BEAT_REQ = 10010;                          //心跳
+    public static final int MSG_HEART_BEAT_RSP = 10011;
 
+    public static final int MSG_RECONNECT_REQ = 10012;                           //客户端重连
+    public static final int MSG_RECONNECT_RSP = 10013;
 
-    public static final int MSG_RECONNECT_REQ = 10006;                           //客户端重连
-    public static final int MSG_RECONNECT_RSP = 10007;
+    public static final int MSG_SYNC_POSITION_REQ = 10014;                       //位置同步
 
-    public static final int MSG_SYNC_POSITION_REQ = 10008;                       //位置同步
-    public static final int MSG_SYNC_POSITION_RSP = 10009;
-
+    public static final int MSG_SYNC_POSITION_RSP = 10015;
 
     /*********************************PUSH**********************************************************/
     /**

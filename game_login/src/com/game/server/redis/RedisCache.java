@@ -1,6 +1,7 @@
 package com.game.server.redis;
 
 
+import bean.login.LoginPlayerBean;
 import bean.login.NoticeBean;
 import bean.login.ServerInfoBean;
 import core.annotation.SqlAnnotation;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static com.game.server.constant.RedisConstant.*;
 import static com.game.server.constant.SqlCmdConstant.NOTICE_LIST_SELECT_ALL;
+import static com.game.server.constant.SqlCmdConstant.PLAYER_INFO_SELECT_LAST_LOGIN;
 import static com.game.server.constant.SqlCmdConstant.SERVER_LIST_SELECT_ALL;
 
 public class RedisCache {
@@ -26,6 +28,7 @@ public class RedisCache {
 
     private RMap<Integer, ServerInfoBean> serverListCache;
     private RMap<Integer, NoticeBean> noticeListCache;
+    private RMap<String, LoginPlayerBean> playerInfoCache; //key openId
 
     private RedisCache() {
         loadData();
@@ -34,6 +37,7 @@ public class RedisCache {
     private void loadData() {
         loadServerListMap();
         loadServerNoticeMap();
+        loadPlayInfoMap();
     }
 
     private void loadServerListMap() {
@@ -56,11 +60,26 @@ public class RedisCache {
         }
     }
 
+    private void loadPlayInfoMap() {
+        RedissonClient redissonClient = RedisManager.getInstance().getRedisSon();
+        playerInfoCache = redissonClient.getMapCache(REDIS_PLAYER_INFO_LIST);
+
+        List<LoginPlayerBean> lastLoginPlayerList = SqlAnnotation.getInstance().sqlSelectList(PLAYER_INFO_SELECT_LAST_LOGIN);
+        for (int i = 0; i < lastLoginPlayerList.size(); i++) {
+            LoginPlayerBean loginPlayerBean = lastLoginPlayerList.get(i);
+            playerInfoCache.put(loginPlayerBean.getOpenId(), loginPlayerBean);
+        }
+    }
+
     public RMap<Integer, ServerInfoBean> getServerListCache() {
         return serverListCache;
     }
 
     public RMap<Integer, NoticeBean> getNoticeListCache() {
         return noticeListCache;
+    }
+
+    public RMap<String, LoginPlayerBean> getPlayerInfoCache() {
+        return playerInfoCache;
     }
 }

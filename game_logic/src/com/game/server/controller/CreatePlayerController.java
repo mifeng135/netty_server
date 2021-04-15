@@ -11,6 +11,6 @@ public class CreatePlayerController {
 
     @CtrlCmd(cmd = MsgConstant.MSG_CREATE_PLAYER_REQ)
     public void createPlayer(TransferMsg msg, ChannelHandlerContext context) {
-        
+
     }
 }
