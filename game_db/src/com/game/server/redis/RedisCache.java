@@ -33,6 +33,7 @@ public class RedisCache {
     private void loadData() {
         loadLoginMap();
         loadSceneMap();
+        loadRoleMap();
     }
 
     private void loadLoginMap() {

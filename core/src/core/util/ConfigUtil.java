@@ -32,6 +32,14 @@ public class ConfigUtil {
         return Integer.valueOf(value);
     }
 
+    public static int getInt(String key) {
+        String value = properties.getProperty(key);
+        if (value == null || value.isEmpty()) {
+            return 0;
+        }
+        return Integer.valueOf(value);
+    }
+
     public static Boolean getBoolean(String key) {
         String value = properties.getProperty(key);
         if (value == null || value.isEmpty()) {

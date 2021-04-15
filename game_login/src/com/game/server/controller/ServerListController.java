@@ -35,19 +35,20 @@ public class ServerListController {
         LoginPlayerBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
         if (playerBean == null) {
             int result = PlayerInfoQuery.createPlayer(openId);
-            if (result == SQL_RESULT_FAIL) {
+            if (result != SQL_RESULT_SUCCESS) {
                 success = false;
             }
         }
         if (!success) {
             ErroRsp erroRsp = new ErroRsp();
             erroRsp.setErrorCode(1);
-            HttpUtil.sendMsg(context, MsgConstant.MSG_SERVER_LIST_RSP, erroRsp);
+            HttpUtil.sendErrorMsg(context, MsgConstant.MSG_SERVER_LIST_RSP, erroRsp);
             return;
         }
         List<ServerInfoBean> serverList = ServerListQuery.queryAllServerList();
         GetServerListRsp serverListRsp = new GetServerListRsp();
         serverListRsp.setServerList(serverList);
+        serverListRsp.setPlayerIndex(playerBean.getPlayerIndex());
         HttpUtil.sendMsg(context, MsgConstant.MSG_SERVER_LIST_RSP, serverListRsp);
     }
 }
