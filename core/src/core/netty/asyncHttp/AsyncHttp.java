@@ -66,6 +66,22 @@ public class AsyncHttp {
     }
 
     /**
+     * 异步请求
+     *
+     * @param data
+     * @param handler
+     */
+    public void postAsync(HeaderProto headerDBProto, byte[] data, AsyncCompletionHandler handler) {
+        byte[] headerData = ProtoUtil.serialize(headerDBProto);
+        ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
+        byteBuf.writeShort(headerData.length);
+        byteBuf.writeShort(data.length);
+        byteBuf.writeBytes(headerData);
+        byteBuf.writeBytes(data);
+        asyncHttpClient.preparePost(baseUrl).setBody(byteBuf.array()).execute(handler);
+    }
+
+    /**
      * 同步请求
      *
      * @param headerDBProto

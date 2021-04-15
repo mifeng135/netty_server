@@ -1,13 +1,16 @@
 package protocal;
 
 
+
 public class MsgConstant {
 
 
     /***********************************db server**************************************************/
 
-    public static final int MSG_DB_QUERY_SCENE = 101;
+    public static final int DB_CMD_QUERY_SCENE = 1000;
 
+    public static final int DB_CMD_CREATE_PLAYER_REQ = 1002;
+    public static final int DB_CMD_CREATE_PLAYER_RSP = 1003;
 
     /************************************client server******************************************************/
 

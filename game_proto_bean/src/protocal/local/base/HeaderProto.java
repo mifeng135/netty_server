@@ -14,5 +14,6 @@ public class HeaderProto {
     private int msdType; // local 0 remote 1
     private boolean broadcast;
     private boolean success = true;
+    private String remoteIp;
     private List<Integer> noticeList;
 }

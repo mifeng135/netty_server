@@ -10,12 +10,12 @@ import core.msg.TransferMsg;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.local.db.scene.DBSceneRsp;
 
-import static protocal.MsgConstant.MSG_DB_QUERY_SCENE;
+import static protocal.MsgConstant.DB_CMD_QUERY_SCENE;
 
 @Ctrl
-public class SceneController {
+public class DBSceneController {
 
-    @CtrlCmd(cmd = MSG_DB_QUERY_SCENE)
+    @CtrlCmd(cmd = DB_CMD_QUERY_SCENE)
     public void querySceneInfo(TransferMsg msg, ChannelHandlerContext context) {
         int playerIndex = msg.getHeaderProto().getPlayerIndex();
         PlayerSceneBean playerScene = PlayerSceneQuery.queryScene(playerIndex);
