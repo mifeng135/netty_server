@@ -2,8 +2,8 @@ package com.game.server.redis;
 
 
 import bean.player.PlayerBean;
-import bean.player.PlayerRole;
-import bean.player.PlayerScene;
+import bean.player.PlayerRoleBean;
+import bean.player.PlayerSceneBean;
 import core.redis.RedisManager;
 import core.util.ConfigUtil;
 import org.redisson.api.RMapCache;
@@ -23,8 +23,8 @@ public class RedisCache {
     }
 
     private RMapCache<Integer, PlayerBean> playerCache; // key account
-    private RMapCache<Integer, PlayerScene> sceneCache;
-    private RMapCache<Integer, PlayerRole> roleCache;
+    private RMapCache<Integer, PlayerSceneBean> sceneCache;
+    private RMapCache<Integer, PlayerRoleBean> roleCache;
 
     private RedisCache() {
         loadData();
@@ -56,7 +56,7 @@ public class RedisCache {
         roleCache.setMaxSize(maxCount);
     }
 
-    public RMapCache<Integer, PlayerRole> getRoleCache() {
+    public RMapCache<Integer, PlayerRoleBean> getRoleCache() {
         return roleCache;
     }
 
@@ -64,7 +64,7 @@ public class RedisCache {
         return playerCache;
     }
 
-    public RMapCache<Integer, PlayerScene> getSceneCache() {
+    public RMapCache<Integer, PlayerSceneBean> getSceneCache() {
         return sceneCache;
     }
 }

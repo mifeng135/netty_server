@@ -1,6 +1,6 @@
 package com.game.server.query;
 
-import bean.player.PlayerRole;
+import bean.player.PlayerRoleBean;
 import com.game.server.redis.RedisCache;
 import core.annotation.SqlAnnotation;
 import org.redisson.api.RMapCache;
@@ -11,9 +11,9 @@ import static core.Constants.SQL_RESULT_SUCCESS;
 
 public class PlayerRoleQuery {
 
-    public static PlayerRole queryPlayerRole(int playerIndex) {
-        RMapCache<Integer, PlayerRole> redisCache = RedisCache.getInstance().getRoleCache();
-        PlayerRole playerRole = redisCache.get(playerIndex);
+    public static PlayerRoleBean queryPlayerRole(int playerIndex) {
+        RMapCache<Integer, PlayerRoleBean> redisCache = RedisCache.getInstance().getRoleCache();
+        PlayerRoleBean playerRole = redisCache.get(playerIndex);
         if (playerRole == null) {
             playerRole = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_ROLE_SELECT_ONE, playerIndex);
             if (playerRole != null) {
@@ -24,13 +24,13 @@ public class PlayerRoleQuery {
     }
 
     public static int createPlayerRole(int playerIndex, int job, int sex) {
-        PlayerRole playerRole = new PlayerRole();
+        PlayerRoleBean playerRole = new PlayerRoleBean();
         playerRole.setPlayerIndex(playerIndex);
         playerRole.setJob(job);
         playerRole.setSex(sex);
         int result = SqlAnnotation.getInstance().executeCommitSql(PLAYER_ROLE_INSERT, playerRole);
         if (result == SQL_RESULT_SUCCESS) {
-            RMapCache<Integer, PlayerRole> redisCache = RedisCache.getInstance().getRoleCache();
+            RMapCache<Integer, PlayerRoleBean> redisCache = RedisCache.getInstance().getRoleCache();
             redisCache.put(playerIndex, playerRole);
         }
         return result;

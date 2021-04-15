@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class PlayerItem implements Serializable {
+public class PlayerItemBean implements Serializable {
     private int playerIndex;
     private int itemId;
     private int itemCount;

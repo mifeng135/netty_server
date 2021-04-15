@@ -1,6 +1,6 @@
 package com.game.server.query;
 
-import bean.player.PlayerScene;
+import bean.player.PlayerSceneBean;
 import com.game.server.redis.RedisCache;
 import core.annotation.SqlAnnotation;
 import org.redisson.api.RMapCache;
@@ -13,41 +13,41 @@ import static core.Constants.SQL_RESULT_SUCCESS;
 
 public class PlayerSceneQuery {
 
-    public static PlayerScene queryScene(int playerIndex) {
-        RMapCache<Integer, PlayerScene> redisCache = RedisCache.getInstance().getSceneCache();
-        PlayerScene playerScene = redisCache.get(playerIndex);
-        if (playerScene == null) {
-            playerScene = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_SCENE_SELECT_SCENE_INFO, playerIndex);
-            if (playerScene != null) {
-                redisCache.put(playerScene.getPlayerIndex(), playerScene);
+    public static PlayerSceneBean queryScene(int playerIndex) {
+        RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
+        PlayerSceneBean playerSceneBean = redisCache.get(playerIndex);
+        if (playerSceneBean == null) {
+            playerSceneBean = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_SCENE_SELECT_SCENE_INFO, playerIndex);
+            if (playerSceneBean != null) {
+                redisCache.put(playerSceneBean.getPlayerIndex(), playerSceneBean);
             }
         }
-        return playerScene;
+        return playerSceneBean;
     }
 
     public static int createScene(int playerIndex) {
-        PlayerScene playerScene = new PlayerScene();
+        PlayerSceneBean playerScene = new PlayerSceneBean();
         playerScene.setId(MAP_INIT_ID);
         playerScene.setPlayerPositionX(400.00f);
         playerScene.setPlayerPositionY(400.00f);
         playerScene.setPlayerIndex(playerIndex);
         int result = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_SCENE_INSERT_SCENE_INFO, playerScene);
         if (result == SQL_RESULT_SUCCESS) {
-            RMapCache<Integer, PlayerScene> redisCache = RedisCache.getInstance().getSceneCache();
+            RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
             redisCache.put(playerIndex, playerScene);
         }
         return result;
     }
 
     public static int updateScene(int playerIndex, int sceneId, float positionX, float positionY) {
-        PlayerScene playerScene = new PlayerScene();
+        PlayerSceneBean playerScene = new PlayerSceneBean();
         playerScene.setPlayerIndex(playerIndex);
         playerScene.setPlayerPositionX(positionX);
         playerScene.setPlayerPositionY(positionY);
         playerScene.setSceneId(sceneId);
         int result = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_SCENE_UPDATE_SCENE_INFO, playerScene);
         if (result == SQL_RESULT_SUCCESS) {
-            RMapCache<Integer, PlayerScene> redisCache = RedisCache.getInstance().getSceneCache();
+            RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
             redisCache.put(playerIndex, playerScene);
         }
         return result;

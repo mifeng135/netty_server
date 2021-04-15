@@ -1,12 +1,12 @@
 package com.game.server.query;
 
-import bean.player.PlayerItem;
+import bean.player.PlayerItemBean;
 
 import java.util.List;
 
 public class PlayerItemQuery {
 
-    public static List<PlayerItem> queryPlayerItem(int playerIndex) {
+    public static List<PlayerItemBean> queryPlayerItem(int playerIndex) {
         return null;
     }
 }

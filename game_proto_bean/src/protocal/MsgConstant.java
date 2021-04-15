@@ -7,7 +7,6 @@ public class MsgConstant {
     /***********************************db server**************************************************/
 
     public static final int MSG_DB_QUERY_SCENE = 101;
-    public static final int MSG_DB_QUERY_ENTER_SCENE = 102;
 
 
     /************************************client server******************************************************/
