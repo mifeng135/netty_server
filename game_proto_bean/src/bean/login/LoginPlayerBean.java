@@ -10,4 +10,5 @@ import java.io.Serializable;
 public class LoginPlayerBean implements Serializable {
     private int playerIndex;
     private String serverInfo;
+    private String openId;
 }

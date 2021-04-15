@@ -2,7 +2,7 @@ package com.game.server.controller;
 
 
 import bean.player.PlayerScene;
-import com.game.server.query.SceneQuery;
+import com.game.server.query.PlayerSceneQuery;
 import com.game.server.util.HttpUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
@@ -19,7 +19,7 @@ public class SceneController {
     @CtrlCmd(cmd = MSG_DB_QUERY_SCENE)
     public void querySceneInfo(TransferMsg msg, ChannelHandlerContext context) {
         int playerIndex = msg.getHeaderProto().getPlayerIndex();
-        PlayerScene playerScene = SceneQuery.queryScene(playerIndex);
+        PlayerScene playerScene = PlayerSceneQuery.queryScene(playerIndex);
 
         PlayerSceneProto playerSceneProto = new PlayerSceneProto();
         playerSceneProto.setSceneId(playerScene.getSceneId());

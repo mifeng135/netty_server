@@ -28,12 +28,13 @@ public interface PlayerMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_DELETE, sqlType = SqlConstant.DELETE)
     @Delete("delete from game_player where player_index = #{playerIndex}")
-    void deletePlayer(PlayerBean playerBean);
+    void deletePlayer(@Param("playerIndex") int playerIndex);
 
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_INSERT, sqlType = SqlConstant.INSERT)
-    @Insert("INSERT INTO game_player (account, password, register_time, login_ip, last_login_time) " +
-            "VALUES (#{account}, #{password}, #{registerTime}, #{loginIp}, #{lastLoginTime})")
+    @Insert("INSERT INTO game_player (register_time, login_ip, server_id, open_id)" +
+            "VALUES (#{registerTime}, #{loginIp}, #{serverId}, #{openId})")
+    @Options(useGeneratedKeys = true, keyProperty = "playerIndex")
     void insertPlayerInfo(PlayerBean playerBean);
 
 }

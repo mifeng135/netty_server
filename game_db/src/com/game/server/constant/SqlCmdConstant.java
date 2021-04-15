@@ -28,4 +28,8 @@ public class SqlCmdConstant {
     public static final int PLAYER_ITEM_DELETE_ITEM                                     = 123; //删除某个玩家的某个物品
     public static final int PLAYER_ITEM_INSERT_ITEM                                     = 124; //给某个玩家插入某个物品
 
+    /********************************PLAYER ROLE***********************************/
+    public static final int PLAYER_ROLE_SELECT_ONE                                      = 130;
+    public static final int PLAYER_ROLE_INSERT                                          = 131;
+
 }

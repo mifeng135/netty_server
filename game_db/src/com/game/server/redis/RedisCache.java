@@ -2,6 +2,7 @@ package com.game.server.redis;
 
 
 import bean.player.PlayerBean;
+import bean.player.PlayerRole;
 import bean.player.PlayerScene;
 import core.redis.RedisManager;
 import core.util.ConfigUtil;
@@ -23,6 +24,7 @@ public class RedisCache {
 
     private RMapCache<Integer, PlayerBean> playerCache; // key account
     private RMapCache<Integer, PlayerScene> sceneCache;
+    private RMapCache<Integer, PlayerRole> roleCache;
 
     private RedisCache() {
         loadData();
@@ -45,6 +47,17 @@ public class RedisCache {
         RedissonClient redissonClient = RedisManager.getInstance().getRedisSon();
         sceneCache = redissonClient.getMapCache(REDIS_SCENE_KEY);
         sceneCache.setMaxSize(maxCount);
+    }
+
+    private void loadRoleMap() {
+        int maxCount = ConfigUtil.getInt("redis_max_online_player_count", 1);
+        RedissonClient redissonClient = RedisManager.getInstance().getRedisSon();
+        roleCache = redissonClient.getMapCache(REDIS_PLAYER_ROLE_KEY);
+        roleCache.setMaxSize(maxCount);
+    }
+
+    public RMapCache<Integer, PlayerRole> getRoleCache() {
+        return roleCache;
     }
 
     public RMapCache<Integer, PlayerBean> getPlayerCache() {
