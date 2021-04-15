@@ -3,6 +3,7 @@ package com.game.server.query;
 import bean.player.PlayerBean;
 import com.game.server.redis.RedisCache;
 import core.annotation.SqlAnnotation;
+import core.util.ConfigUtil;
 import org.redisson.api.RMapCache;
 
 import static com.game.server.constant.SqlCmdConstant.PLAYER_INFO_INSERT;
@@ -29,6 +30,7 @@ public class PlayerInfoQuery {
         playerBean.setName(name);
         playerBean.setOpenId(openId);
         playerBean.setPlayerIndex(playerIndex);
+        playerBean.setServerId(ConfigUtil.getInt("server_id"));
         int result = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_INFO_INSERT, playerBean);
         if (result == SQL_RESULT_SUCCESS) {
             RMapCache<Integer, PlayerBean> redisCache = RedisCache.getInstance().getPlayerCache();

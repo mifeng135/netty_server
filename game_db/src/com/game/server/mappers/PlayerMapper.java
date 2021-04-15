@@ -32,9 +32,8 @@ public interface PlayerMapper {
 
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_INSERT, sqlType = SqlConstant.INSERT)
-    @Insert("INSERT INTO game_player (register_time, login_ip, server_id, open_id)" +
-            "VALUES (#{registerTime}, #{loginIp}, #{serverId}, #{openId})")
-    @Options(useGeneratedKeys = true, keyProperty = "playerIndex")
+    @Insert("INSERT INTO game_player (player_index, register_time, login_ip, server_id, open_id)" +
+            "VALUES (#{playerIndex}, #{registerTime}, #{loginIp}, #{serverId}, #{openId})")
     void insertPlayerInfo(PlayerBean playerBean);
 
 }

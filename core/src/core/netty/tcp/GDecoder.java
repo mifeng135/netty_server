@@ -1,5 +1,6 @@
 package core.netty.tcp;
 
+import core.Constants;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
@@ -17,7 +18,7 @@ import static core.Constants.TCP_MSG_LEN;
 public class GDecoder extends ByteToMessageDecoder {
 
     @Override
-    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) {
+    protected void decode(ChannelHandlerContext context, ByteBuf byteBuf, List<Object> list) {
         if (!byteBuf.isReadable()) {
             return;
         }
@@ -43,6 +44,8 @@ public class GDecoder extends ByteToMessageDecoder {
         byte[] headerData = new byte[headerLen];
         byteBuf.readBytes(headerData);
         HeaderProto headerProto = ProtoUtil.deserializer(headerData, HeaderProto.class);
+        String ip = context.channel().attr(Constants.REMOTE_ADDRESS).get();
+        headerProto.setRemoteIp(ip);
 
         byte[] bodyData = new byte[bodyLen];
         byteBuf.readBytes(bodyData);

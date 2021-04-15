@@ -20,4 +20,5 @@ public class PlayerBean implements Serializable {
     private int lastLoginTime;
     private String header;
     private String openId;
+    private int serverId;
 }

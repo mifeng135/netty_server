@@ -40,8 +40,6 @@ public class AsyncHttp {
                 .setRequestTimeout(3000)
                 .setMaxRequestRetry(2)
                 .setThreadPoolName("AsyncHttp"));
-
-        baseUrl = ConfigUtil.getString("db_http_ip");
     }
 
     public void initBaseUrl(String url) {

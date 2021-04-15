@@ -32,4 +32,7 @@ public class SqlCmdConstant {
     public static final int PLAYER_ROLE_SELECT_ONE                                      = 130;
     public static final int PLAYER_ROLE_INSERT                                          = 131;
 
+    /********************************PLAYER SERVER INFO ***********************************/
+    public static final int PLAYER_SERVER_INFO_INSERT                                   = 141;
+
 }

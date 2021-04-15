@@ -21,6 +21,6 @@ public class SyncPositionController {
         syncPositionRsp.setPosition(sycPositionReq.getPosition());
         msg.getHeaderProto().setMsgId(MSG_SYNC_POSITION_RSP);
         syncPositionRsp.setMove(true);
-        TcpUtil.sendToGate(msg.getHeaderProto(), syncPositionRsp);
+        TcpUtil.sendMsg(msg.getHeaderProto(), syncPositionRsp);
     }
 }

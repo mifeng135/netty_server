@@ -23,7 +23,7 @@ public class BaseController {
         RegisterMsgCmdPush registerMsgCmdReq = new RegisterMsgCmdPush();
         msg.getHeaderProto().setMsgId(MSG_REGISTER_MSG_CMD_PUSH);
         registerMsgCmdReq.setMsgList(CtrlAnnotation.getInstance().getMsgList());
-        TcpUtil.sendToGate(msg.getHeaderProto(), registerMsgCmdReq);
+        TcpUtil.sendMsg(msg.getHeaderProto(), registerMsgCmdReq);
     }
 
     @CtrlCmd(cmd = MSG_REMOTE_SOCKET_CLOSE_PUSH)
