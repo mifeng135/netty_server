@@ -5,13 +5,13 @@ package protocal;
 public class MsgConstant {
 
 
-    /***********************************db server**************************************************/
+    /***********************************db center**************************************************/
 
     public static final int DB_CMD_QUERY_SCENE = 1000;
     public static final int DB_CMD_QUERY_PLAYER_INFO_REQ = 1001;
     public static final int DB_CMD_CREATE_PLAYER_REQ = 1002;
 
-    /************************************client server******************************************************/
+    /************************************client center******************************************************/
 
     public static final int MSG_SERVER_LIST_REQ = 10000;                        //获取服务器列表
     public static final int MSG_SERVER_LIST_RSP = 10001;

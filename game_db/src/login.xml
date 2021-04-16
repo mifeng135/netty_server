@@ -8,7 +8,7 @@
 
     <context:property-placeholder location="classpath:db.properties"/>
 
-    <context:component-scan base-package="com.game.server.mappers" />
+    <context:component-scan base-package="com.game.db.mappers" />
 
     <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init">
         <property name="url" value="${jdbc.login.url}"/>

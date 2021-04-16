@@ -11,8 +11,8 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <mappers>
-        <mapper class="com.game.server.mappers.ServerListMapper"></mapper>
-        <mapper class="com.game.server.mappers.ServerNoticeMapper"></mapper>
-        <mapper class="com.game.server.mappers.PlayerInfoMapper"></mapper>
+        <mapper class="com.game.login.mappers.ServerListMapper"></mapper>
+        <mapper class="com.game.login.mappers.ServerNoticeMapper"></mapper>
+        <mapper class="com.game.login.mappers.PlayerInfoMapper"></mapper>
     </mappers>
 </configuration>

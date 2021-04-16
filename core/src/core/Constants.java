@@ -40,8 +40,6 @@ public class Constants {
     public static final AttributeKey<String> CONNECT_IP = AttributeKey.valueOf("CONNECT_IP");
     public static final AttributeKey<Integer> PORT = AttributeKey.valueOf("PORT");
 
-    public static final String SERVER_PACKAGE_NAME = "com.game.server";
-
     public static final int TCP_MSG_LEN = 6;
 
     public static final int MSG_RESULT_SUCCESS = 0;

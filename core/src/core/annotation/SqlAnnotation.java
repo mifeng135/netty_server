@@ -34,6 +34,7 @@ public class SqlAnnotation {
     private Map<Integer, SqlSessionTemplate> sessionWithKey = new HashMap<>(); // key is master or slave
     private Map<Integer, SqlSessionTemplate> sessionWithServerId = new HashMap<>(); // key is serverId
 
+    private String packName;
     private static class DefaultInstance {
         static final SqlAnnotation INSTANCE = new SqlAnnotation();
     }
@@ -42,7 +43,12 @@ public class SqlAnnotation {
         return DefaultInstance.INSTANCE;
     }
 
-    public SqlAnnotation() {
+    private SqlAnnotation() {
+
+    }
+
+    public void init(String packName) {
+        this.packName = packName;
         initReflection();
         scanSqlMethodMap();
     }
@@ -52,8 +58,8 @@ public class SqlAnnotation {
      */
     private void initReflection() {
         configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.filterInputsBy(new FilterBuilder().includePackage(Constants.SERVER_PACKAGE_NAME));
-        configurationBuilder.addUrls(ClasspathHelper.forPackage(Constants.SERVER_PACKAGE_NAME));
+        configurationBuilder.filterInputsBy(new FilterBuilder().includePackage(packName));
+        configurationBuilder.addUrls(ClasspathHelper.forPackage(packName));
         configurationBuilder.setScanners(new TypeAnnotationsScanner(), new SubTypesScanner(), new MethodAnnotationsScanner());
         reflections = new Reflections(configurationBuilder);
     }

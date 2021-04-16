@@ -7,7 +7,7 @@ public class Config {
 
     public static final String DB_HTTP_URL = "http://" + DB_HTTP_SERVER_IP + ":" + DB_HTTP_SERVER_PORT;
 
-    /****************************server ip************************************/
+    /****************************center ip************************************/
     public static final String GATE_SERVER_IP = "127.0.0.1";
     public static final int GATE_SERVER_PORT = 7000;
 

@@ -9,9 +9,6 @@ import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.AsyncHttpClient;
 
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
-import org.asynchttpclient.proxy.ProxyServer;
-import org.asynchttpclient.proxy.ProxyServerSelector;
-import org.asynchttpclient.uri.Uri;
 import protocal.local.base.HeaderProto;
 
 import java.util.concurrent.ExecutionException;

@@ -36,7 +36,7 @@ public class CtrlAnnotation {
 
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
-
+    private String packName = "";
 
     private static class DefaultInstance {
         static final CtrlAnnotation INSTANCE = new CtrlAnnotation();
@@ -47,17 +47,20 @@ public class CtrlAnnotation {
     }
 
     private CtrlAnnotation() {
+
+    }
+    public void init(String packName) {
+        this.packName = packName;
         initReflection();
         scanMethodMap();
         scanClassMap();
     }
-
     /**
      * init reflection
      */
     private void initReflection() {
         configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.forPackages(Constants.SERVER_PACKAGE_NAME);
+        configurationBuilder.forPackages(packName);
         configurationBuilder.setScanners(new SubTypesScanner(false), new TypeAnnotationsScanner(), new MethodAnnotationsScanner());
         reflections = new Reflections(configurationBuilder);
     }

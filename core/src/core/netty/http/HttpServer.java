@@ -73,13 +73,13 @@ public class HttpServer {
     }
 
     /**
-     * start game server
+     * start game center
      */
     private void doStart() {
         try {
             ChannelFuture channelFuture = mChannelFuture = mServerBootstrap.bind(new InetSocketAddress(mIp, mPort)).sync();
             if (channelFuture.isSuccess()) {
-                logger.error("http server start success");
+                logger.error("http center start success");
             }
         } catch (InterruptedException e) {
             doStop();

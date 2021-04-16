@@ -12,7 +12,7 @@ import protocal.local.base.HeaderProto;
 @Getter
 @Setter
 public class TransferMsg {
-    HeaderProto headerProto;
+    private HeaderProto headerProto;
     private byte[] data;
     private ChannelHandlerContext context;
 }

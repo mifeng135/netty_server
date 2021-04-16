@@ -90,7 +90,7 @@ public class TcpServer {
     }
 
     /**
-     * start game server
+     * start game center
      */
     public void startServer() {
         try {
@@ -98,7 +98,7 @@ public class TcpServer {
             if (channelFutureListener != null) {
                 channelFuture.addListener(channelFutureListener);
             } else {
-                logger.error("start tcp server success");
+                logger.error("start tcp center success");
             }
         } catch (InterruptedException e) {
             doStop();
