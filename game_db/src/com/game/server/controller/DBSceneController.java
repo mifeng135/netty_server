@@ -10,7 +10,7 @@ import core.msg.TransferMsg;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.local.db.scene.DBSceneRsp;
 
-import static protocal.MsgConstant.DB_CMD_QUERY_SCENE;
+import static protocal.MsgConstant.*;
 
 @Ctrl
 public class DBSceneController {

@@ -12,6 +12,7 @@ public class HeaderProto {
     private int playerIndex;
     private int msgId;
     private int msdType; // local 0 remote 1
+    //only server use
     private boolean broadcast;
     private boolean success = true;
     private String remoteIp;

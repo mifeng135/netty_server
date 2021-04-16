@@ -8,7 +8,7 @@ public class MsgConstant {
     /***********************************db server**************************************************/
 
     public static final int DB_CMD_QUERY_SCENE = 1000;
-    public static final int DB_CMD_QUERY_PLAYER_INFO = 1001;
+    public static final int DB_CMD_QUERY_PLAYER_INFO_REQ = 1001;
     public static final int DB_CMD_CREATE_PLAYER_REQ = 1002;
 
     /************************************client server******************************************************/

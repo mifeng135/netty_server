@@ -1,18 +1,16 @@
 package com.game.server.controller;
 
-import com.game.server.util.TcpUtil;
+import com.game.server.util.MsgUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.netty.asyncHttp.AsyncHttp;
-import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
 import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.Response;
 import protocal.MsgConstant;
 
-import static protocal.MsgConstant.DB_CMD_CREATE_PLAYER_REQ;
-import static protocal.MsgConstant.MSG_CREATE_PLAYER_RSP;
+import static protocal.MsgConstant.*;
 
 @Ctrl
 public class CreatePlayerController extends AsyncCompletionHandler<Integer> {
@@ -27,7 +25,7 @@ public class CreatePlayerController extends AsyncCompletionHandler<Integer> {
     public Integer onCompleted(Response response) throws Exception {
         TransferMsg httpMsg = AsyncHttp.getInstance().transferData(response.getResponseBodyAsBytes());
         httpMsg.getHeaderProto().setMsgId(MSG_CREATE_PLAYER_RSP);
-        TcpUtil.sendMsg(httpMsg.getHeaderProto(), httpMsg.getData());
+        MsgUtil.sendMsg(httpMsg.getHeaderProto(), httpMsg.getData());
         return 1;
     }
 }

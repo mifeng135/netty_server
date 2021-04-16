@@ -1,6 +1,6 @@
 package com.game.server.controller;
 
-import com.game.server.util.TcpUtil;
+import com.game.server.util.MsgUtil;
 import core.Constants;
 import core.annotation.Ctrl;
 import core.annotation.CtrlAnnotation;
@@ -23,7 +23,7 @@ public class BaseController {
         RegisterMsgCmdPush registerMsgCmdReq = new RegisterMsgCmdPush();
         msg.getHeaderProto().setMsgId(MSG_REGISTER_MSG_CMD_PUSH);
         registerMsgCmdReq.setMsgList(CtrlAnnotation.getInstance().getMsgList());
-        TcpUtil.sendMsg(msg.getHeaderProto(), registerMsgCmdReq);
+        MsgUtil.sendMsg(msg.getHeaderProto(), registerMsgCmdReq);
     }
 
     @CtrlCmd(cmd = MSG_REMOTE_SOCKET_CLOSE_PUSH)

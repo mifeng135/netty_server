@@ -9,7 +9,7 @@ import protocal.local.base.HeaderProto;
 import static config.Config.*;
 
 
-public class TcpUtil {
+public class MsgUtil {
 
     public static void sendMsg(HeaderProto headerProto, Object msg) {
         byte[] data = ProtoUtil.serialize(msg);

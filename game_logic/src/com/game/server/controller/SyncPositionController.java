@@ -1,6 +1,6 @@
 package com.game.server.controller;
 
-import com.game.server.util.TcpUtil;
+import com.game.server.util.MsgUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
@@ -21,6 +21,6 @@ public class SyncPositionController {
         syncPositionRsp.setPosition(sycPositionReq.getPosition());
         msg.getHeaderProto().setMsgId(MSG_SYNC_POSITION_RSP);
         syncPositionRsp.setMove(true);
-        TcpUtil.sendMsg(msg.getHeaderProto(), syncPositionRsp);
+        MsgUtil.sendMsg(msg.getHeaderProto(), syncPositionRsp);
     }
 }

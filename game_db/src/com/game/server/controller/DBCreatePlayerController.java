@@ -17,7 +17,7 @@ import protocal.remote.user.CreatePlayerReq;
 import protocal.remote.user.CreatePlayerRsp;
 
 import static com.game.server.constant.SqlCmdConstant.PLAYER_SERVER_INFO_INSERT;
-import static protocal.MsgConstant.DB_CMD_CREATE_PLAYER_REQ;
+import static protocal.MsgConstant.*;
 
 @Ctrl
 public class DBCreatePlayerController {

@@ -19,7 +19,6 @@ import protocal.remote.system.ErroRsp;
 
 import java.util.List;
 
-import static core.Constants.SQL_RESULT_FAIL;
 import static core.Constants.SQL_RESULT_SUCCESS;
 
 @Ctrl

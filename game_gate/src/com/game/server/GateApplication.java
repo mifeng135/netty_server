@@ -3,8 +3,6 @@ package com.game.server;
 import core.group.EventThreadGroup;
 import core.netty.tcp.TcpConnection;
 import core.netty.tcp.TcpServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static config.Config.*;
 import static core.Constants.REMOTE;
