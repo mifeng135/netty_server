@@ -1,15 +1,19 @@
 package com.game.login.controller;
 
+import bean.login.LoginPlayerBean;
 import bean.login.NoticeBean;
 import com.game.login.query.NoticeListQuery;
+import com.game.login.query.PlayerInfoQuery;
 import com.game.login.util.HttpUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
+import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protocal.MsgConstant;
+import protocal.remote.login.GetServerListReq;
 import protocal.remote.login.ServerNoticeRsp;
 
 import java.util.List;
@@ -22,6 +26,11 @@ public class ServerNoticeController {
 
     @CtrlCmd(cmd = MsgConstant.MSG_NOTICE_LIST_REQ)
     public void getServerNotice(TransferMsg msg, ChannelHandlerContext context) {
+        GetServerListReq serverListReq = ProtoUtil.deserializer(msg.getData(), GetServerListReq.class);
+        String openId = serverListReq.getOpenId();
+        LoginPlayerBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
+
+
         List<NoticeBean> noticeList = NoticeListQuery.getAllNotice();
         ServerNoticeRsp serverNoticeRsp = new ServerNoticeRsp();
         serverNoticeRsp.setNoticeList(noticeList);

@@ -8,9 +8,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class PlayerSceneBean implements Serializable {
-    private int id;
     private int playerIndex;
-    private float playerPositionX;
-    private float playerPositionY;
+    private int playerPositionX;
+    private int playerPositionY;
     private int sceneId;
 }

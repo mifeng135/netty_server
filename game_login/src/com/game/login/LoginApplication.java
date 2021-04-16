@@ -1,6 +1,7 @@
 package com.game.login;
 
 
+import bean.player.PlayerServerInfoBean;
 import com.game.login.redis.RedisCache;
 import core.annotation.CtrlAnnotation;
 import core.annotation.SqlAnnotation;
@@ -9,6 +10,10 @@ import core.netty.http.HttpServer;
 import core.redis.RedisManager;
 import core.util.ConfigUtil;
 
+import java.util.List;
+import java.util.Map;
+
+import static com.game.login.constant.SqlCmdConstant.PLAYER_SERVER_INFO_SELECT_ALL;
 import static core.Constants.SQL_MASTER;
 
 /**
@@ -17,7 +22,7 @@ import static core.Constants.SQL_MASTER;
 public class LoginApplication {
 
     public static void main(String[] args) {
-        ConfigUtil.loadFile("login-config.properties");
+        new ProperticeConfig();
         SqlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName());
         CtrlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName());
         initSql();
@@ -28,25 +33,16 @@ public class LoginApplication {
     }
 
     private static void initRedis() {
-        String redisIp = ConfigUtil.getString("redis_ip");
-        String redisPassword = ConfigUtil.getString("redis_password");
-        int redisThreadCount = ConfigUtil.getInt("redis_thread_count", 1);
-        int redisNettyThreadCount = ConfigUtil.getInt("redis_netty_thread_count", 1);
-        RedisManager.getInstance().init(redisIp, redisPassword, redisThreadCount, redisNettyThreadCount);
+        RedisManager.getInstance().init(ProperticeConfig.redisIp, ProperticeConfig.redisPassword,
+                ProperticeConfig.redisThreadCount, ProperticeConfig.redisNettyThreadCount);
         RedisCache.getInstance();
     }
 
     private static void initSql() {
-        int loginServerId = ConfigUtil.getInt("login_server_id", 1);
-        SqlAnnotation.getInstance().initSql(SQL_MASTER, loginServerId, "login-master.xml");
-
-        int serverId100 = ConfigUtil.getInt("db_server_id_100", 100);
-        SqlAnnotation.getInstance().initSql(SQL_MASTER, serverId100, "login-master.xml");
+        SqlAnnotation.getInstance().initSql(SQL_MASTER, ProperticeConfig.loginServerId, "login-master.xml");
     }
 
     private static void initHttpServer() {
-        String httpIp = ConfigUtil.getString("http_ip");
-        int port = ConfigUtil.getInt("http_port", 8000);
-        new HttpServer(httpIp, port);
+        new HttpServer(ProperticeConfig.httpIp, ProperticeConfig.httpPort);
     }
 }

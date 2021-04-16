@@ -4,6 +4,7 @@ package com.game.login.query;
 import bean.login.LoginPlayerBean;
 import com.game.login.redis.RedisCache;
 import core.annotation.SqlAnnotation;
+import core.util.TimeUtil;
 import org.redisson.api.RMap;
 
 import static com.game.login.constant.SqlCmdConstant.PLAYER_INFO_INSERT;
@@ -26,8 +27,8 @@ public class PlayerInfoQuery {
 
     public static int createPlayer(String openId) {
         LoginPlayerBean playerBean = new LoginPlayerBean();
-        playerBean.setServerInfo("");
         playerBean.setOpenId(openId);
+        playerBean.setLoginTime(TimeUtil.getCurrentTimeSecond());
         int result = SqlAnnotation.getInstance().executeCommitSql(PLAYER_INFO_INSERT, playerBean);
         if (result == SQL_RESULT_SUCCESS) {
             RMap<String, LoginPlayerBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();

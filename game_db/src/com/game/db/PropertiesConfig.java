@@ -24,7 +24,7 @@ public class PropertiesConfig {
     }
 
     private void initData() {
-        serverId = ConfigUtil.getInt("server_id");
+        serverId = ConfigUtil.getInt("game_server_id_100");
         loginServerId = ConfigUtil.getInt("login_server_id");
 
         redisIp = ConfigUtil.getString("redis_ip");

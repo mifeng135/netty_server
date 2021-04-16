@@ -9,4 +9,5 @@ public class SqlConstant {
     public static final int UPDATE = 2;
     public static final int INSERT = 3;
     public static final int DELETE = 4;
+    public static final int SELECT_MAP = 5;
 }

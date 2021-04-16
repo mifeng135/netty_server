@@ -25,11 +25,20 @@ public class PlayerSceneQuery {
         return playerSceneBean;
     }
 
+    public static int createScene(PlayerSceneBean playerScene) {
+        int result = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_SCENE_INSERT_SCENE_INFO, playerScene);
+        if (result == SQL_RESULT_SUCCESS) {
+            RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
+            redisCache.put(playerScene.getPlayerIndex(), playerScene);
+        }
+        return result;
+    }
+
     public static int createScene(int playerIndex) {
         PlayerSceneBean playerScene = new PlayerSceneBean();
-        playerScene.setId(MAP_INIT_ID);
-        playerScene.setPlayerPositionX(400.00f);
-        playerScene.setPlayerPositionY(400.00f);
+        playerScene.setSceneId(MAP_INIT_ID);
+        playerScene.setPlayerPositionX(400);
+        playerScene.setPlayerPositionY(400);
         playerScene.setPlayerIndex(playerIndex);
         int result = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_SCENE_INSERT_SCENE_INFO, playerScene);
         if (result == SQL_RESULT_SUCCESS) {
@@ -39,7 +48,7 @@ public class PlayerSceneQuery {
         return result;
     }
 
-    public static int updateScene(int playerIndex, int sceneId, float positionX, float positionY) {
+    public static int updateScene(int playerIndex, int sceneId, int positionX, int positionY) {
         PlayerSceneBean playerScene = new PlayerSceneBean();
         playerScene.setPlayerIndex(playerIndex);
         playerScene.setPlayerPositionX(positionX);

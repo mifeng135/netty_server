@@ -23,6 +23,15 @@ public class PlayerRoleQuery {
         return playerRole;
     }
 
+    public static int createPlayerRole(PlayerRoleBean playerRole) {
+        int result = SqlAnnotation.getInstance().executeCommitSql(PLAYER_ROLE_INSERT, playerRole);
+        if (result == SQL_RESULT_SUCCESS) {
+            RMapCache<Integer, PlayerRoleBean> redisCache = RedisCache.getInstance().getRoleCache();
+            redisCache.put(playerRole.getPlayerIndex(), playerRole);
+        }
+        return result;
+    }
+
     public static int createPlayerRole(int playerIndex, int job, int sex) {
         PlayerRoleBean playerRole = new PlayerRoleBean();
         playerRole.setPlayerIndex(playerIndex);

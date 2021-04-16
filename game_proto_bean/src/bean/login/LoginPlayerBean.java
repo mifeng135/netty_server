@@ -9,7 +9,6 @@ import java.io.Serializable;
 @Setter
 public class LoginPlayerBean implements Serializable {
     private int playerIndex;
-    private String serverInfo;
     private String openId;
     private int loginTime;
 }

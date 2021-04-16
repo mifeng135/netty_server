@@ -9,7 +9,7 @@ import com.game.db.query.PlayerInfoQuery;
 import com.game.db.query.PlayerItemQuery;
 import com.game.db.query.PlayerRoleQuery;
 import com.game.db.query.PlayerSceneQuery;
-import com.game.db.util.HttpUtil;
+import com.game.db.util.MsgUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
@@ -30,7 +30,7 @@ public class DBPlayerInfoController {
         if (playerBean == null) {
             EnterGameRsp enterGameRsp = new EnterGameRsp();
             enterGameRsp.setHasRole(false);
-            HttpUtil.sendMsg(context, msg.getHeaderProto(), new EnterGameRsp());
+            MsgUtil.sendMsg(context, msg.getHeaderProto(), new EnterGameRsp());
             return;
         }
         PlayerSceneBean playerSceneBean = PlayerSceneQuery.queryScene(playerIndex);
@@ -39,10 +39,9 @@ public class DBPlayerInfoController {
 
         EnterGameRsp enterGameRsp = new EnterGameRsp();
         enterGameRsp.setHasRole(true);
-        enterGameRsp.setPlayerInfo(playerBean);
         enterGameRsp.setPlayerItemList(playerItemList);
         enterGameRsp.setPlayerScene(playerSceneBean);
         enterGameRsp.setPlayerRole(playerRoleBean);
-        HttpUtil.sendMsg(context, msg.getHeaderProto(), enterGameRsp);
+        MsgUtil.sendMsg(context, msg.getHeaderProto(), enterGameRsp);
     }
 }

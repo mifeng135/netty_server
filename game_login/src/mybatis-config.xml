@@ -14,5 +14,6 @@
         <mapper class="com.game.login.mappers.ServerListMapper"></mapper>
         <mapper class="com.game.login.mappers.ServerNoticeMapper"></mapper>
         <mapper class="com.game.login.mappers.PlayerInfoMapper"></mapper>
+        <mapper class="com.game.login.mappers.PlayerServerInfoMapper"></mapper>
     </mappers>
 </configuration>

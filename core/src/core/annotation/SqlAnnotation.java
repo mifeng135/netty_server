@@ -35,6 +35,7 @@ public class SqlAnnotation {
     private Map<Integer, SqlSessionTemplate> sessionWithServerId = new HashMap<>(); // key is serverId
 
     private String packName;
+
     private static class DefaultInstance {
         static final SqlAnnotation INSTANCE = new SqlAnnotation();
     }
@@ -178,6 +179,38 @@ public class SqlAnnotation {
         return null;
     }
 
+
+    public <K, V> Map<K, V> sqlSelectMap(int cmd, String key) {
+        return excuteSelectMap(cmd, null, key);
+    }
+
+    public <K, V> Map<K, V> sqlSelectMap(int cmd, String key, Object parameter) {
+        return excuteSelectMap(cmd, parameter, key);
+    }
+
+
+    private <K, V> Map<K, V> excuteSelectMap(int cmd, Object parameter, String mapKey) {
+        Method method = sqlMethodMap.get(cmd);
+        if (method == null) {
+            return null;
+        }
+        try {
+            int type = method.getAnnotation(SqlCmd.class).sqlType();
+            String declaringClass = method.getDeclaringClass().getName() + "." + method.getName();
+            int key = method.getAnnotation(SqlCmd.class).sqlKey();
+            if (type == SqlConstant.SELECT_MAP) {
+                if (parameter == null) {
+                    return getSqlSessionTemplate(key).selectMap(declaringClass, mapKey);
+                } else {
+                    return getSqlSessionTemplate(key).selectMap(declaringClass, parameter, mapKey);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * excute query sql with serverId
      *
@@ -246,6 +279,7 @@ public class SqlAnnotation {
 
     /**
      * excute sql with serverId
+     *
      * @param cmd
      * @param serverId
      * @param parameter

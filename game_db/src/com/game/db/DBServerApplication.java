@@ -7,7 +7,6 @@ import core.annotation.SqlAnnotation;
 import core.group.EventThreadGroup;
 import core.netty.http.HttpServer;
 import core.redis.RedisManager;
-import core.util.ConfigUtil;
 
 import static core.Constants.SQL_MASTER;
 import static core.Constants.SQL_SLAVE;

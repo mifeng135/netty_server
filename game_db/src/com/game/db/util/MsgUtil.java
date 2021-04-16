@@ -8,7 +8,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
 import protocal.local.base.HeaderProto;
 
-public class HttpUtil {
+public class MsgUtil {
 
     public static void sendMsg(ChannelHandlerContext context, HeaderProto headerProto, Object msg) {
 

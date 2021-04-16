@@ -14,15 +14,15 @@ import java.util.List;
 public interface PlayerInfoMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_SELECT_ONE, sqlType = SqlConstant.SELECT_ONE)
-    @Select("select player_index, open_id, server_info, login_time from game_player_info where open_id = #{openId} limit 1")
+    @Select("select player_index, open_id, login_time from game_player_info where open_id = #{openId} limit 1")
     LoginPlayerBean getPlayerInfo(@Param("openId") String openId);
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_INSERT, sqlType = SqlConstant.INSERT)
-    @Insert("insert into game_player_info (player_index, server_info, open_id)" + "values (#{playerIndex}, #{serverInfo}, #{openId})")
+    @Insert("insert into game_player_info (open_id, login_time)" + "values (#{openId}, #{loginTime})")
     @Options(useGeneratedKeys = true, keyProperty = "playerIndex")
     void insertPlayer(LoginPlayerBean loginPlayerBean);
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_INFO_SELECT_LAST_LOGIN, sqlType = SqlConstant.SELECT_LIST)
-    @Select("select player_index, open_id, server_info, login_time from game_player_info order by login_time desc limit 10000")
+    @Select("select open_id, player_index, login_time from game_player_info order by login_time desc limit 10000")
     List<LoginPlayerBean> getLastLogin();
 }

@@ -25,6 +25,17 @@ public class PlayerInfoQuery {
         return playerBean;
     }
 
+
+    public static int createPlayer(PlayerBean playerBean) {
+        int result = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_INFO_INSERT, playerBean);
+        if (result == SQL_RESULT_SUCCESS) {
+            RMapCache<Integer, PlayerBean> redisCache = RedisCache.getInstance().getPlayerCache();
+            redisCache.put(playerBean.getPlayerIndex(), playerBean);
+        }
+        return result;
+    }
+
+
     public static int createPlayer(int playerIndex, String name, String loginIp, String openId) {
         PlayerBean playerBean = new PlayerBean();
         playerBean.setLoginIp(loginIp);

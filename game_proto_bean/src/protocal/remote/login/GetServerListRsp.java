@@ -11,5 +11,4 @@ import java.util.List;
 public class GetServerListRsp {
     private List<ServerInfoBean> serverList;
     private List<ServerInfoBean> selfServerList;
-    private int playerIndex;
 }

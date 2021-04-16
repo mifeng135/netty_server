@@ -1,17 +1,17 @@
 package com.game.logic.controller;
 
+import com.game.logic.util.MsgUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.netty.asyncHttp.AsyncHttp;
-import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
 import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.Response;
 import protocal.MsgConstant;
-import protocal.remote.user.EnterGameRsp;
 
 import static protocal.MsgConstant.DB_CMD_QUERY_PLAYER_INFO_REQ;
+import static protocal.MsgConstant.MSG_ENTER_GAME_RSP;
 
 @Ctrl
 public class EnterGameController extends AsyncCompletionHandler<Integer> {
@@ -25,7 +25,8 @@ public class EnterGameController extends AsyncCompletionHandler<Integer> {
     @Override
     public Integer onCompleted(Response response) throws Exception {
         TransferMsg httpMsg = AsyncHttp.getInstance().transferData(response.getResponseBodyAsBytes());
-        EnterGameRsp enterGameRsp = ProtoUtil.deserializer(httpMsg.getData(), EnterGameRsp.class);
-        return null;
+        httpMsg.getHeaderProto().setMsgId(MSG_ENTER_GAME_RSP);
+        MsgUtil.sendMsg(httpMsg.getHeaderProto(), httpMsg.getData());
+        return 1;
     }
 }

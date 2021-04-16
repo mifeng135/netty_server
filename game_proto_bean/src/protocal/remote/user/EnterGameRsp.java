@@ -1,7 +1,6 @@
 package protocal.remote.user;
 
 
-import bean.player.PlayerBean;
 import bean.player.PlayerItemBean;
 import bean.player.PlayerRoleBean;
 import bean.player.PlayerSceneBean;
@@ -14,7 +13,6 @@ import java.util.List;
 @Setter
 public class EnterGameRsp {
     private boolean hasRole;
-    private PlayerBean playerInfo;
     private PlayerSceneBean playerScene;
     private PlayerRoleBean playerRole;
     private List<PlayerItemBean> playerItemList;

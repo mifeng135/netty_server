@@ -7,10 +7,15 @@ package com.game.login.constant;
 public class SqlCmdConstant {
 
 
-    /********************************PLAYER INFO***********************************/
+    /********************************PLAYER INFO*********************************************/
     public static final int PLAYER_INFO_SELECT_ONE                                      = 110;
     public static final int PLAYER_INFO_INSERT                                          = 111;
     public static final int PLAYER_INFO_SELECT_LAST_LOGIN                               = 112;
+
+    /********************************PLAYER INFO*******************************************/
+    public static final int PLAYER_SERVER_INFO_SELECT                                   = 120;
+    public static final int PLAYER_SERVER_INFO_SELECT_ALL                               = 121;
+
 
     /*********************************SERVER LIST********************************************/
     public static final int SERVER_LIST_SELECT_ALL                                      = 130; //获取所有的服务器列表

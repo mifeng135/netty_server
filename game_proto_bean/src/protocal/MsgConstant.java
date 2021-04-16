@@ -7,7 +7,6 @@ public class MsgConstant {
 
     /***********************************db center**************************************************/
 
-    public static final int DB_CMD_QUERY_SCENE = 1000;
     public static final int DB_CMD_QUERY_PLAYER_INFO_REQ = 1001;
     public static final int DB_CMD_CREATE_PLAYER_REQ = 1002;
 
@@ -34,9 +33,12 @@ public class MsgConstant {
     public static final int MSG_RECONNECT_REQ = 10012;                           //客户端重连
     public static final int MSG_RECONNECT_RSP = 10013;
 
-    public static final int MSG_SYNC_POSITION_REQ = 10014;                       //位置同步
+    public static final int MSG_GET_PLAYER_INDEX_REQ = 10014;                   //
+    public static final int MSG_GET_PLAYER_INDEX_RSP = 10015;
 
-    public static final int MSG_SYNC_POSITION_RSP = 10015;
+    public static final int MSG_SYNC_POSITION_REQ = 10016;                       //位置同步
+    public static final int MSG_SYNC_POSITION_RSP = 10017;
+
 
     /*********************************PUSH**********************************************************/
     /**
