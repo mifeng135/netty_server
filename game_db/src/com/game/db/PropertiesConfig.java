@@ -1,0 +1,40 @@
+package com.game.db;
+
+import core.util.ConfigUtil;
+
+public class PropertiesConfig {
+
+    public static int serverId;
+    public static int loginServerId;
+
+    public static String redisIp;
+    public static String redisPassword;
+    public static int redisThreadCount;
+    public static int redisNettyThreadCount;
+
+    public static String httpIp;
+    public static int httpPort;
+
+    public static int redisMaxCapacity;
+
+
+    public PropertiesConfig() {
+        ConfigUtil.loadFile("db-config.properties");
+        initData();
+    }
+
+    private void initData() {
+        serverId = ConfigUtil.getInt("server_id");
+        loginServerId = ConfigUtil.getInt("login_server_id");
+
+        redisIp = ConfigUtil.getString("redis_ip");
+        redisPassword = ConfigUtil.getString("redis_password");
+        redisThreadCount = ConfigUtil.getInt("redis_thread_count");
+        redisNettyThreadCount = ConfigUtil.getInt("redis_netty_thread_count");
+
+        httpIp = ConfigUtil.getString("db_http_ip");
+        httpPort = ConfigUtil.getInt("db_http_port");
+
+        redisMaxCapacity = ConfigUtil.getInt("redis_max_online_player_count");
+    }
+}

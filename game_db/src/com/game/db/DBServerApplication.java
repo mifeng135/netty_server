@@ -18,7 +18,7 @@ import static core.Constants.SQL_SLAVE;
 public class DBServerApplication {
 
     public static void main(String[] args) {
-        ConfigUtil.loadFile("db-config.properties");
+        new PropertiesConfig();
         initAnnotation();
         initSql();
         initRedis();
@@ -32,25 +32,18 @@ public class DBServerApplication {
     }
 
     private static void initSql() {
-        int serverId = ConfigUtil.getInt("server_id", 1);
-        int loginServerId = ConfigUtil.getInt("login_server_id", 8888);
-        SqlAnnotation.getInstance().initSql(SQL_MASTER, serverId, "db-master.xml");
-        SqlAnnotation.getInstance().initSql(SQL_SLAVE, serverId, "db-slave.xml");
-        SqlAnnotation.getInstance().initSql(SQL_MASTER, loginServerId, "login.xml");
+        SqlAnnotation.getInstance().initSql(SQL_MASTER, PropertiesConfig.serverId, "db-master.xml");
+        SqlAnnotation.getInstance().initSql(SQL_SLAVE, PropertiesConfig.serverId, "db-slave.xml");
+        SqlAnnotation.getInstance().initSql(SQL_MASTER, PropertiesConfig.loginServerId, "login.xml");
     }
 
     private static void initRedis() {
-        String redisIp = ConfigUtil.getString("redis_ip");
-        String redisPassword = ConfigUtil.getString("redis_password");
-        int redisThreadCount = ConfigUtil.getInt("redis_thread_count", 1);
-        int redisNettyThreadCount = ConfigUtil.getInt("redis_netty_thread_count", 1);
-        RedisManager.getInstance().init(redisIp, redisPassword, redisThreadCount, redisNettyThreadCount);
+        RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
+                PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount);
         RedisCache.getInstance();
     }
 
     private static void initHttpServer() {
-        String httpIp = ConfigUtil.getString("db_http_ip");
-        int port = ConfigUtil.getInt("db_http_port", 8001);
-        new HttpServer(httpIp, port);
+        new HttpServer(PropertiesConfig.httpIp, PropertiesConfig.httpPort);
     }
 }
