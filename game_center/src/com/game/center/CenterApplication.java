@@ -2,7 +2,6 @@ package com.game.center;
 
 
 import core.annotation.CtrlAnnotation;
-import core.annotation.SqlAnnotation;
 import core.group.EventThreadGroup;
 import core.netty.tcp.TcpServer;
 import org.slf4j.Logger;

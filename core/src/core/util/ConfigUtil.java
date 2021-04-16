@@ -7,6 +7,10 @@ public class ConfigUtil {
 
     private static Properties properties = new Properties();
 
+
+    private ConfigUtil() {
+
+    }
     public static void loadFile(String fileName) {
         InputStream inputStream = ConfigUtil.class.getClassLoader().getResourceAsStream(fileName);
         try {

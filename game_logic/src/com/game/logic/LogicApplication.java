@@ -12,7 +12,7 @@ import static core.Constants.LOCAL;
 public class LogicApplication {
 
     public static void main(String[] args) {
-        ConfigUtil.loadFile("logic-config.properties");
+        new PropertiesConfig();
         CtrlAnnotation.getInstance().init(LogicApplication.class.getPackage().getName());
         initAsyncHttp();
         initTcpServer();
@@ -20,12 +20,10 @@ public class LogicApplication {
     }
 
     private static void initAsyncHttp() {
-        AsyncHttp.getInstance().initBaseUrl(ConfigUtil.getString("db_http_url"));
+        AsyncHttp.getInstance().initBaseUrl(PropertiesConfig.httpDBUrl);
     }
 
     private static void initTcpServer() {
-        String tcpIp = ConfigUtil.getString("logic_tcp_ip");
-        int port = ConfigUtil.getInt("logic_tcp_port");
-        new TcpServer(tcpIp, port, LOCAL).startServer();
+        new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.serverPort, LOCAL).startServer();
     }
 }

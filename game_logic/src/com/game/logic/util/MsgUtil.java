@@ -1,12 +1,11 @@
 package com.game.logic.util;
 
+import com.game.logic.PropertiesConfig;
 import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
 import protocal.local.base.HeaderProto;
-
-import static config.Config.*;
 
 
 public class MsgUtil {
@@ -17,7 +16,7 @@ public class MsgUtil {
         transferMsg.setHeaderProto(headerProto);
         transferMsg.setData(data);
 
-        Channel channel = LocalSocketManager.getInstance().getChanel(GATE_SCENE_SOCKET_INDEX);
+        Channel channel = LocalSocketManager.getInstance().getChanel(PropertiesConfig.gateSocketIndex);
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(transferMsg);
         }
@@ -28,7 +27,7 @@ public class MsgUtil {
         transferMsg.setHeaderProto(headerProto);
         transferMsg.setData(data);
 
-        Channel channel = LocalSocketManager.getInstance().getChanel(GATE_SCENE_SOCKET_INDEX);
+        Channel channel = LocalSocketManager.getInstance().getChanel(PropertiesConfig.gateSocketIndex);
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(transferMsg);
         }
