@@ -1,19 +1,17 @@
 package com.game.login;
 
 
-import bean.player.PlayerServerInfoBean;
+import bean.login.LoginPlayerBean;
 import com.game.login.redis.RedisCache;
 import core.annotation.CtrlAnnotation;
 import core.annotation.SqlAnnotation;
 import core.group.EventThreadGroup;
 import core.netty.http.HttpServer;
 import core.redis.RedisManager;
-import core.util.ConfigUtil;
+import core.sql.SqlDao;
 
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
 
-import static com.game.login.constant.SqlCmdConstant.PLAYER_SERVER_INFO_SELECT_ALL;
 import static core.Constants.SQL_MASTER;
 
 /**
@@ -21,7 +19,17 @@ import static core.Constants.SQL_MASTER;
  */
 public class LoginApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, IOException, InterruptedException {
+
+        //SqlDao.getInstance().init(SQL_MASTER, "dao.properties");
+
+
+//        long t1 = System.currentTimeMillis();
+//        LoginPlayerBean playerBean = SqlDao.getInstance().getDao(SQL_MASTER).fetch(LoginPlayerBean.class, "3fd");
+//        long t2 = System.currentTimeMillis();
+//        System.out.println(t2 - t1);
+
+
         new ProperticeConfig();
         SqlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName());
         CtrlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName());
