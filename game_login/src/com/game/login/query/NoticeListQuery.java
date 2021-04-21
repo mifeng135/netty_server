@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.game.login.constant.SqlCmdConstant.NOTICE_DELETE;
-import static com.game.login.constant.SqlCmdConstant.NOTICE_INSERT;
-import static com.game.login.constant.SqlCmdConstant.NOTICE_UPDATE_CONTENT;
 import static core.Constants.SQL_MASTER;
 import static core.Constants.SQL_RESULT_FAIL;
 import static core.Constants.SQL_RESULT_SUCCESS;

@@ -6,6 +6,7 @@ import bean.login.PlayerLoginBean;
 import bean.player.PlayerServerInfoBean;
 import com.game.login.query.NoticeListQuery;
 import com.game.login.query.PlayerInfoQuery;
+import com.game.login.query.ServerListQuery;
 import com.game.login.redis.RedisCache;
 import core.annotation.CtrlAnnotation;
 import core.annotation.SqlAnnotation;
@@ -26,6 +27,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static core.Constants.SQL_MASTER;
 
@@ -65,7 +68,10 @@ public class LoginApplication {
             return list;
         });
         SqlDao.getInstance().getDao(SQL_MASTER).execute(sql);
-        List<PlayerLoginBean> list = sql.getList(PlayerLoginBean.class);
-        int mm = 0;
+        List<PlayerServerInfoBean> list = sql.getList(PlayerServerInfoBean.class);
+        Map<Integer, List<PlayerServerInfoBean>> groupBy = list.stream().collect(Collectors.groupingBy(PlayerServerInfoBean::getPlayerIndex));
+
+
+        ServerListQuery.deleteServer(1);
     }
 }
