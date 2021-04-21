@@ -1,6 +1,6 @@
 package com.game.login.query;
 
-import bean.login.ServerInfoBean;
+import bean.login.ServerListInfoBean;
 import com.game.login.redis.RedisCache;
 import core.annotation.SqlAnnotation;
 import org.redisson.api.RMap;
@@ -18,9 +18,9 @@ public class ServerListQuery {
      *
      * @return
      */
-    public static List<ServerInfoBean> queryAllServerList() {
-        RMap<Integer, ServerInfoBean> redisCache = RedisCache.getInstance().getServerListCache();
-        Collection<ServerInfoBean> valueCollection = redisCache.values();
+    public static List<ServerListInfoBean> queryAllServerList() {
+        RMap<Integer, ServerListInfoBean> redisCache = RedisCache.getInstance().getServerListCache();
+        Collection<ServerListInfoBean> valueCollection = redisCache.values();
         return new ArrayList<>(valueCollection);
     }
 
@@ -32,11 +32,11 @@ public class ServerListQuery {
      * @return 0 fail
      */
     public static int updateServerName(int serverId, String serverName) {
-        ServerInfoBean serverListBean = new ServerInfoBean();
+        ServerListInfoBean serverListBean = new ServerListInfoBean();
         serverListBean.setServerId(serverId);
         serverListBean.setServerName(serverName);
-        RMap<Integer, ServerInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
-        ServerInfoBean redisData = serverListCache.get(serverId);
+        RMap<Integer, ServerListInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
+        ServerListInfoBean redisData = serverListCache.get(serverId);
         redisData.setServerName(serverName);
         serverListCache.put(serverId, redisData);
         return SqlAnnotation.getInstance().executeCommitSql(SERVER_LIST_UPDATE_SERVER_NAME, serverListBean);
@@ -50,12 +50,12 @@ public class ServerListQuery {
      * @return
      */
     public static int updateServerState(int serverId, int state) {
-        ServerInfoBean serverListBean = new ServerInfoBean();
+        ServerListInfoBean serverListBean = new ServerListInfoBean();
         serverListBean.setServerId(serverId);
         serverListBean.setState(state);
 
-        RMap<Integer, ServerInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
-        ServerInfoBean redisData = serverListCache.get(serverId);
+        RMap<Integer, ServerListInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
+        ServerListInfoBean redisData = serverListCache.get(serverId);
         redisData.setState(state);
         serverListCache.put(serverId, redisData);
         return SqlAnnotation.getInstance().executeCommitSql(SERVER_LIST_UPDATE_SERVER_STATE, serverListBean);
@@ -68,7 +68,7 @@ public class ServerListQuery {
      * @return
      */
     public static int deleteServer(int serverId) {
-        ServerInfoBean serverListBean = new ServerInfoBean();
+        ServerListInfoBean serverListBean = new ServerListInfoBean();
         serverListBean.setServerId(serverId);
         RedisCache.getInstance().getServerListCache().remove(serverId);
         return SqlAnnotation.getInstance().executeCommitSql(SERVER_LIST_DELETE_SERVER, serverListBean);
@@ -84,7 +84,7 @@ public class ServerListQuery {
      * @return
      */
     public static int insertServer(String serverName, int serverId, int state, int openTime) {
-        ServerInfoBean serverListBean = new ServerInfoBean();
+        ServerListInfoBean serverListBean = new ServerListInfoBean();
         serverListBean.setServerName(serverName);
         serverListBean.setServerId(serverId);
         serverListBean.setState(state);
@@ -100,15 +100,14 @@ public class ServerListQuery {
      * @return
      */
     public static int updateServerIp(int serverId, String serverIp) {
-        ServerInfoBean serverListBean = new ServerInfoBean();
+        ServerListInfoBean serverListBean = new ServerListInfoBean();
         serverListBean.setServerId(serverId);
         serverListBean.setServerIp(serverIp);
 
-        RMap<Integer, ServerInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
-        ServerInfoBean redisData = serverListCache.get(serverId);
+        RMap<Integer, ServerListInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
+        ServerListInfoBean redisData = serverListCache.get(serverId);
         redisData.setServerIp(serverIp);
         serverListCache.put(serverId, redisData);
-
         return SqlAnnotation.getInstance().executeCommitSql(SERVER_LIST_UPDATE_SERVER_IP, serverListBean);
     }
 }

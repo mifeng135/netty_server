@@ -1,8 +1,6 @@
 package com.game.login.controller;
 
-import bean.login.LoginPlayerBean;
-import bean.login.ServerInfoBean;
-import com.game.login.query.PlayerInfoQuery;
+import bean.login.ServerListInfoBean;
 import com.game.login.query.ServerListQuery;
 import com.game.login.util.HttpUtil;
 import core.annotation.Ctrl;
@@ -24,7 +22,7 @@ public class ServerListController {
 
     @CtrlCmd(cmd = MsgConstant.MSG_SERVER_LIST_REQ)
     public void getServerList(TransferMsg msg, ChannelHandlerContext context) {
-        List<ServerInfoBean> serverList = ServerListQuery.queryAllServerList();
+        List<ServerListInfoBean> serverList = ServerListQuery.queryAllServerList();
         GetServerListRsp serverListRsp = new GetServerListRsp();
         serverListRsp.setServerList(serverList);
         HttpUtil.sendMsg(context, MsgConstant.MSG_SERVER_LIST_RSP, serverListRsp);

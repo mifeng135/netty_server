@@ -12,12 +12,16 @@ public class MessageThreadTask extends Thread {
     private final EventHandler mProcessEventHandler;
     private final int tag;
 
+
     public MessageThreadTask(MessageGroup messageGroup, EventHandler processEventHandler, int taskName) {
         tag = taskName;
         mMessageGroup = messageGroup;
         mProcessEventHandler = processEventHandler;
     }
 
+    public int getTag() {
+        return tag;
+    }
     @Override
     public void run() {
         while (true) {

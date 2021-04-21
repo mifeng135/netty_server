@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 import javax.sql.DataSource;
 
+import org.nutz.dao.impl.FileSqlManager;
 import org.nutz.dao.impl.NutDao;
 import org.nutz.lang.Files;
 import org.nutz.lang.Lang;
@@ -20,6 +21,7 @@ public class SqlDao {
     protected static Class<?> druidFactoryClass;
     protected String name;
     private Map<Integer, NutDao> daoMap = new HashMap<>();
+    private String prepareSqlFileName = "";
 
     public static SqlDao getInstance() {
         return sqlDao;
@@ -30,11 +32,30 @@ public class SqlDao {
     }
 
     public void setDataSource(int type, DataSource dataSource) {
-        daoMap.put(type, new NutDao(dataSource));
+        NutDao nutDao = new NutDao(dataSource);
+        if (prepareSqlFileName.length() == 0) {
+            daoMap.put(type, nutDao);
+        } else {
+            nutDao.setSqlManager(new FileSqlManager(prepareSqlFileName));
+            daoMap.put(type, nutDao);
+        }
     }
 
-    public void init(int type, String name) throws IOException {
-        this.init(type, new FileInputStream(Files.findFile(name)));
+    public void init(int type, String name) {
+        try {
+            this.init(type, new FileInputStream(Files.findFile(name)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void init(int type, String name, String preSqlName) {
+        try {
+            this.prepareSqlFileName = preSqlName;
+            this.init(type, new FileInputStream(Files.findFile(name)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void init(int type, InputStream in) throws IOException {

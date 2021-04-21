@@ -1,23 +1,24 @@
 package com.game.login.query;
 
 
-import bean.login.LoginPlayerBean;
+import bean.login.PlayerLoginBean;
 import com.game.login.redis.RedisCache;
 import core.annotation.SqlAnnotation;
+import core.sql.SqlDao;
 import core.util.TimeUtil;
 import org.redisson.api.RMap;
 
-import static com.game.login.constant.SqlCmdConstant.PLAYER_INFO_INSERT;
-import static com.game.login.constant.SqlCmdConstant.PLAYER_INFO_SELECT_ONE;
+import static core.Constants.SQL_MASTER;
+import static core.Constants.SQL_RESULT_FAIL;
 import static core.Constants.SQL_RESULT_SUCCESS;
 
 public class PlayerInfoQuery {
 
-    public static LoginPlayerBean queryPlayerInfo(String openId) {
-        RMap<String, LoginPlayerBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
-        LoginPlayerBean playerBean = redisCache.get(openId);
+    public static PlayerLoginBean queryPlayerInfo(String openId) {
+        RMap<String, PlayerLoginBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
+        PlayerLoginBean playerBean = redisCache.get(openId);
         if (playerBean == null) {
-            playerBean = SqlAnnotation.getInstance().sqlSelectOne(PLAYER_INFO_SELECT_ONE, openId);
+            playerBean = SqlDao.getInstance().getDao(SQL_MASTER).fetch(PlayerLoginBean.class, openId);
             if (playerBean != null) {
                 redisCache.put(playerBean.getOpenId(), playerBean);
             }
@@ -26,14 +27,15 @@ public class PlayerInfoQuery {
     }
 
     public static int createPlayer(String openId) {
-        LoginPlayerBean playerBean = new LoginPlayerBean();
+        PlayerLoginBean playerBean = new PlayerLoginBean();
         playerBean.setOpenId(openId);
         playerBean.setLoginTime(TimeUtil.getCurrentTimeSecond());
-        int result = SqlAnnotation.getInstance().executeCommitSql(PLAYER_INFO_INSERT, playerBean);
-        if (result == SQL_RESULT_SUCCESS) {
-            RMap<String, LoginPlayerBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
+        playerBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerBean);
+        if (playerBean != null) {
+            RMap<String, PlayerLoginBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
             redisCache.put(openId, playerBean);
+            return SQL_RESULT_SUCCESS;
         }
-        return result;
+        return SQL_RESULT_FAIL;
     }
 }

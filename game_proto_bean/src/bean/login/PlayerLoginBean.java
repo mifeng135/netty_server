@@ -11,8 +11,8 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Table("game_player_info")
-public class LoginPlayerBean implements Serializable {
+@Table("game_player_login_info")
+public class PlayerLoginBean implements Serializable {
     @Name()
     @Column("open_id")
     private String openId;

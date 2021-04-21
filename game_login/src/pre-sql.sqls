@@ -1,0 +1,7 @@
+/* select_player_server.data */
+select t.player_index,server_id from game_player_login_info as t left join game_player_server_info as m on t.player_index = m.player_index
+
+/* test.data */
+select * from game_player_login_info
+
+
