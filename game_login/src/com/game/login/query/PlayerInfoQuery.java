@@ -1,9 +1,8 @@
 package com.game.login.query;
 
 
-import bean.login.PlayerLoginBean;
+import bean.login.LoginPlayerInfoBean;
 import com.game.login.redis.RedisCache;
-import core.annotation.SqlAnnotation;
 import core.sql.SqlDao;
 import core.util.TimeUtil;
 import org.redisson.api.RMap;
@@ -14,11 +13,11 @@ import static core.Constants.SQL_RESULT_SUCCESS;
 
 public class PlayerInfoQuery {
 
-    public static PlayerLoginBean queryPlayerInfo(String openId) {
-        RMap<String, PlayerLoginBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
-        PlayerLoginBean playerBean = redisCache.get(openId);
+    public static LoginPlayerInfoBean queryPlayerInfo(String openId) {
+        RMap<String, LoginPlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
+        LoginPlayerInfoBean playerBean = redisCache.get(openId);
         if (playerBean == null) {
-            playerBean = SqlDao.getInstance().getDao(SQL_MASTER).fetch(PlayerLoginBean.class, openId);
+            playerBean = SqlDao.getInstance().getDao(SQL_MASTER).fetch(LoginPlayerInfoBean.class, openId);
             if (playerBean != null) {
                 redisCache.put(playerBean.getOpenId(), playerBean);
             }
@@ -27,12 +26,12 @@ public class PlayerInfoQuery {
     }
 
     public static int createPlayer(String openId) {
-        PlayerLoginBean playerBean = new PlayerLoginBean();
+        LoginPlayerInfoBean playerBean = new LoginPlayerInfoBean();
         playerBean.setOpenId(openId);
         playerBean.setLoginTime(TimeUtil.getCurrentTimeSecond());
         playerBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerBean);
         if (playerBean != null) {
-            RMap<String, PlayerLoginBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
+            RMap<String, LoginPlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
             redisCache.put(openId, playerBean);
             return SQL_RESULT_SUCCESS;
         }

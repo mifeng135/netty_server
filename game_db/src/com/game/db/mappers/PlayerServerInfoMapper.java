@@ -1,6 +1,6 @@
 package com.game.db.mappers;
 
-import bean.player.PlayerServerInfoBean;
+import bean.login.LoginPlayerServerInfoBean;
 import com.game.db.constant.SqlCmdConstant;
 import core.annotation.SqlCmd;
 import core.sql.SqlConstant;
@@ -12,5 +12,5 @@ public interface PlayerServerInfoMapper {
 
     @SqlCmd(sqlCmd = SqlCmdConstant.PLAYER_SERVER_INFO_INSERT, sqlType = SqlConstant.INSERT)
     @Insert("insert into game_player_server_info (player_index, server_id)" + "values (#{playerIndex}, #{serverId})")
-    List<PlayerServerInfoBean> inserRole(PlayerServerInfoBean playerItem);
+    List<LoginPlayerServerInfoBean> inserRole(LoginPlayerServerInfoBean playerItem);
 }

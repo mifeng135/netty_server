@@ -1,7 +1,7 @@
 package com.game.login.controller;
 
 
-import bean.login.PlayerLoginBean;
+import bean.login.LoginPlayerInfoBean;
 import com.game.login.query.PlayerInfoQuery;
 import com.game.login.util.HttpUtil;
 import core.annotation.Ctrl;
@@ -29,7 +29,7 @@ public class PlayerIndexController {
         PlayerIndexReq playerIndexReq = ProtoUtil.deserializer(msg.getData(), PlayerIndexReq.class);
         String openId = playerIndexReq.getOpenId();
         boolean success = true;
-        PlayerLoginBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
+        LoginPlayerInfoBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
         if (playerBean == null) {
             int result = PlayerInfoQuery.createPlayer(openId);
             if (result != SQL_RESULT_SUCCESS) {

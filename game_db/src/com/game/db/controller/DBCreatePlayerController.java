@@ -4,7 +4,7 @@ package com.game.db.controller;
 import bean.player.PlayerBean;
 import bean.player.PlayerRoleBean;
 import bean.player.PlayerSceneBean;
-import bean.player.PlayerServerInfoBean;
+import bean.login.LoginPlayerServerInfoBean;
 import com.game.db.PropertiesConfig;
 import com.game.db.query.PlayerInfoQuery;
 import com.game.db.query.PlayerRoleQuery;
@@ -87,7 +87,7 @@ public class DBCreatePlayerController {
     }
 
     private int updateLoginServerInfo(int playerIndex) {
-        PlayerServerInfoBean playerServerInfoBean = new PlayerServerInfoBean();
+        LoginPlayerServerInfoBean playerServerInfoBean = new LoginPlayerServerInfoBean();
         playerServerInfoBean.setPlayerIndex(playerIndex);
         playerServerInfoBean.setServerId(PropertiesConfig.serverId);
         return SqlAnnotation.getInstance().executeCommitSqlWithServerId(PropertiesConfig.loginServerId, PLAYER_SERVER_INFO_INSERT, playerServerInfoBean);

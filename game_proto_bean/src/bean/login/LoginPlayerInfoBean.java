@@ -9,10 +9,14 @@ import org.nutz.dao.entity.annotation.Table;
 
 import java.io.Serializable;
 
+
+/***
+ * 登录服务器 人物信息
+ */
 @Getter
 @Setter
 @Table("game_player_login_info")
-public class PlayerLoginBean implements Serializable {
+public class LoginPlayerInfoBean implements Serializable {
     @Name()
     @Column("open_id")
     private String openId;

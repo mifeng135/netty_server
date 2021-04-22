@@ -1,7 +1,7 @@
 package com.game.login.controller;
 
-import bean.login.PlayerLoginBean;
-import bean.login.NoticeBean;
+import bean.login.LoginPlayerInfoBean;
+import bean.login.LoginNoticeBean;
 import com.game.login.query.NoticeListQuery;
 import com.game.login.query.PlayerInfoQuery;
 import com.game.login.util.HttpUtil;
@@ -28,10 +28,10 @@ public class ServerNoticeController {
     public void getServerNotice(TransferMsg msg, ChannelHandlerContext context) {
         GetServerListReq serverListReq = ProtoUtil.deserializer(msg.getData(), GetServerListReq.class);
         String openId = serverListReq.getOpenId();
-        PlayerLoginBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
+        LoginPlayerInfoBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
 
 
-        List<NoticeBean> noticeList = NoticeListQuery.getAllNotice();
+        List<LoginNoticeBean> noticeList = NoticeListQuery.getAllNotice();
         ServerNoticeRsp serverNoticeRsp = new ServerNoticeRsp();
         serverNoticeRsp.setNoticeList(noticeList);
         HttpUtil.sendMsg(context, MsgConstant.MSG_NOTICE_LIST_RSP, serverNoticeRsp);

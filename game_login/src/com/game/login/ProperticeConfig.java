@@ -17,6 +17,8 @@ public class ProperticeConfig {
     public static int httpPort;
 
 
+    public static int redisPlayerCacheCount;
+
 
     public ProperticeConfig() {
         ConfigUtil.loadFile("login-config.properties");
@@ -33,5 +35,7 @@ public class ProperticeConfig {
 
         httpIp = ConfigUtil.getString("http_ip");
         httpPort = ConfigUtil.getInt("http_port");
+
+        redisPlayerCacheCount = ConfigUtil.getInt("redis_player_cache_count");
     }
 }

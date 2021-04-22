@@ -8,6 +8,11 @@ import org.nutz.dao.entity.annotation.Table;
 
 import java.io.Serializable;
 
+/**
+ * 登录服务器列表
+ */
+
+
 @Getter
 @Setter
 @Table("game_server_list")

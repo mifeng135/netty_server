@@ -1,7 +1,14 @@
 /* select_player_server.data */
 select t.player_index,server_id from game_player_login_info as t left join game_player_server_info as m on t.player_index = m.player_index
 
-/* test.data */
-select * from game_player_login_info
+/* delete_game_server_list_by_server_id.data */
+elete from game_server_list where server_id = @serverId
+
+/* select_player_login_info.data */
+select player_index from game_player_login_info order by login_time desc limit 10000;
+
+/* select_player_login_info.data */
+select player_index,server_id from game_player_server_info where player_index in (@value)
+
 
 
