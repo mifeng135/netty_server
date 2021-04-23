@@ -23,38 +23,40 @@ public class NoticeListQuery {
         return new ArrayList<>(valueCollection);
     }
 
-    public static int updateNoticeContent(int noticeId, String content) {
-        RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
-        int result = SqlDao.getInstance().getDao(SQL_MASTER).update(LoginNoticeBean.class,
+    public static boolean updateNoticeContent(int noticeId, String content) {
+        boolean result = SqlDao.getInstance().getDao(SQL_MASTER).update(LoginNoticeBean.class,
                 Chain.make("content", content),
-                Cnd.where("notice_id", "=", noticeId));
-        if (result == SQL_RESULT_SUCCESS) {
+                Cnd.where("notice_id", "=", noticeId)) > 0;
+        if (result) {
             LoginNoticeBean noticeBean = new LoginNoticeBean();
             noticeBean.setContent(content);
             noticeBean.setNoticeId(noticeId);
+            RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
             redisCache.put(noticeId, noticeBean);
         }
         return result;
     }
 
-    public static int deleteNotice(int noticeId) {
-        RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
-        int result = SqlDao.getInstance().getDao(SQL_MASTER).delete(LoginNoticeBean.class, noticeId);
-        if (result == SQL_RESULT_SUCCESS) {
+    public static boolean deleteNotice(int noticeId) {
+        boolean success = SqlDao.getInstance().getDao(SQL_MASTER).clear(LoginNoticeBean.class,
+                Cnd.where("notice_id", "=", noticeId)) > 0;
+
+        if (success) {
+            RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
             redisCache.remove(noticeId);
         }
-        return result;
+        return success;
     }
 
-    public static int insertNotice(String content) {
+    public static boolean insertNotice(String content) {
         LoginNoticeBean noticeBean = new LoginNoticeBean();
         noticeBean.setContent(content);
         noticeBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(noticeBean);
         if (noticeBean != null) {
             RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
             redisCache.put(noticeBean.getNoticeId(), noticeBean);
-            return SQL_RESULT_SUCCESS;
+            return true;
         }
-        return SQL_RESULT_FAIL;
+        return false;
     }
 }

@@ -31,10 +31,7 @@ public class PlayerIndexController {
         boolean success = true;
         LoginPlayerInfoBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
         if (playerBean == null) {
-            int result = PlayerInfoQuery.createPlayer(openId);
-            if (result != SQL_RESULT_SUCCESS) {
-                success = false;
-            }
+            success = PlayerInfoQuery.createPlayer(openId);
         }
         if (!success) {
             ErroRsp erroRsp = new ErroRsp();

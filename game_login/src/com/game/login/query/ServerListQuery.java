@@ -37,12 +37,12 @@ public class ServerListQuery {
      * @param serverName
      * @return 0 fail
      */
-    public static int updateServerName(int serverId, String serverName) {
-        int result = SqlDao.getInstance().getDao(SQL_MASTER).update(ServerListInfoBean.class,
+    public static boolean updateServerName(int serverId, String serverName) {
+        boolean result = SqlDao.getInstance().getDao(SQL_MASTER).update(ServerListInfoBean.class,
                 Chain.make("server_name", serverName),
-                Cnd.where("server_id", "=", serverId));
+                Cnd.where("server_id", "=", serverId)) > 0;
 
-        if (result == SQL_RESULT_SUCCESS) {
+        if (result) {
             RMap<Integer, ServerListInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
             ServerListInfoBean redisData = serverListCache.get(serverId);
             redisData.setServerName(serverName);
@@ -58,11 +58,11 @@ public class ServerListQuery {
      * @param state
      * @return
      */
-    public static int updateServerState(int serverId, int state) {
-        int result = SqlDao.getInstance().getDao(SQL_MASTER).update(ServerListInfoBean.class,
+    public static boolean updateServerState(int serverId, int state) {
+        boolean result = SqlDao.getInstance().getDao(SQL_MASTER).update(ServerListInfoBean.class,
                 Chain.make("state", state),
-                Cnd.where("server_id", "=", serverId));
-        if (result == SQL_RESULT_SUCCESS) {
+                Cnd.where("server_id", "=", serverId)) > 0;
+        if (result) {
             RMap<Integer, ServerListInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
             ServerListInfoBean redisData = serverListCache.get(serverId);
             redisData.setState(state);
@@ -77,12 +77,8 @@ public class ServerListQuery {
      * @param serverId
      * @return
      */
-    public static int deleteServer(int serverId) {
-        Sql sql = Sqls.create("delete_game_server_list_by_server_id.data");
-        sql.setParam("serverId", serverId);
-        sql = SqlDao.getInstance().getDao(SQL_MASTER).execute(sql);
-        int result = sql.getUpdateCount();
-        return result;
+    public static boolean deleteServer(int serverId) {
+        return SqlDao.getInstance().getDao(SQL_MASTER).clear(ServerListInfoBean.class, Cnd.where("server_id", "=", serverId)) > 0;
     }
 
     /**
@@ -94,7 +90,7 @@ public class ServerListQuery {
      * @param openTime
      * @return
      */
-    public static int insertServer(String serverName, int serverId, int state, int openTime, String serverIp) {
+    public static boolean insertServer(String serverName, int serverId, int state, int openTime, String serverIp) {
         ServerListInfoBean serverListBean = new ServerListInfoBean();
         serverListBean.setServerName(serverName);
         serverListBean.setServerId(serverId);
@@ -104,9 +100,9 @@ public class ServerListQuery {
         serverListBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(serverListBean);
         if (serverListBean != null) {
             RedisCache.getInstance().getServerListCache().put(serverId, serverListBean);
-            return SQL_RESULT_SUCCESS;
+            return true;
         }
-        return SQL_RESULT_FAIL;
+        return false;
     }
 
     /***
@@ -115,16 +111,16 @@ public class ServerListQuery {
      * @param serverIp
      * @return
      */
-    public static int updateServerIp(int serverId, String serverIp) {
+    public static boolean updateServerIp(int serverId, String serverIp) {
         ServerListInfoBean serverListBean = new ServerListInfoBean();
         serverListBean.setServerId(serverId);
         serverListBean.setServerIp(serverIp);
 
-        int result = SqlDao.getInstance().getDao(SQL_MASTER).
+        boolean result = SqlDao.getInstance().getDao(SQL_MASTER).
                 update(ServerListInfoBean.class,
-                Chain.make("server_ip", serverIp),
-                Cnd.where("server_id", "=", serverId));
-        if (result == SQL_RESULT_SUCCESS) {
+                        Chain.make("server_ip", serverIp),
+                        Cnd.where("server_id", "=", serverId)) > 0;
+        if (result) {
             RMap<Integer, ServerListInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
             ServerListInfoBean redisData = serverListCache.get(serverId);
             redisData.setServerIp(serverIp);
