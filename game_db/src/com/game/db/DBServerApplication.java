@@ -3,13 +3,9 @@ package com.game.db;
 
 import com.game.db.redis.RedisCache;
 import core.annotation.CtrlAnnotation;
-import core.annotation.SqlAnnotation;
 import core.group.EventThreadGroup;
 import core.netty.http.HttpServer;
 import core.redis.RedisManager;
-
-import static core.Constants.SQL_MASTER;
-import static core.Constants.SQL_SLAVE;
 
 /**
  * Created by Administrator on 2020/6/1.
@@ -27,13 +23,10 @@ public class DBServerApplication {
 
     public static void initAnnotation() {
         CtrlAnnotation.getInstance().init(DBServerApplication.class.getPackage().getName());
-        SqlAnnotation.getInstance().init(DBServerApplication.class.getPackage().getName());
     }
 
     private static void initSql() {
-        SqlAnnotation.getInstance().initSql(SQL_MASTER, PropertiesConfig.serverId, "db-master.xml");
-        SqlAnnotation.getInstance().initSql(SQL_SLAVE, PropertiesConfig.serverId, "db-slave.xml");
-        SqlAnnotation.getInstance().initSql(SQL_MASTER, PropertiesConfig.loginServerId, "login.xml");
+
     }
 
     private static void initRedis() {

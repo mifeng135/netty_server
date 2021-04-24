@@ -12,15 +12,15 @@ import com.game.db.query.PlayerSceneQuery;
 import com.game.db.util.MsgUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
-import core.annotation.SqlAnnotation;
 import core.msg.TransferMsg;
+import core.sql.SqlDao;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.remote.user.CreatePlayerReq;
 import protocal.remote.user.CreatePlayerRsp;
 
 import static com.game.db.constant.GameConstant.MAP_INIT_ID;
-import static com.game.db.constant.SqlCmdConstant.PLAYER_SERVER_INFO_INSERT;
+import static core.Constants.SQL_MASTER;
 import static protocal.MsgConstant.*;
 
 @Ctrl
@@ -36,19 +36,18 @@ public class DBCreatePlayerController {
         String openId = createPlayerReq.getOpenId();
 
         PlayerBean playerBean = initPlayer(playerIndex, name, msg.getHeaderProto().getRemoteIp(), openId);
-        int playerResult = PlayerInfoQuery.createPlayer(playerBean);
+        boolean playerResult = PlayerInfoQuery.createPlayer(playerBean);
 
         PlayerSceneBean playerSceneBean = initPlayerScene(playerIndex);
-        int secenResult = PlayerSceneQuery.createScene(playerSceneBean);
+        boolean secenResult = PlayerSceneQuery.createScene(playerSceneBean);
 
         PlayerRoleBean playerRoleBean = initPlayerRole(playerIndex, job, sex);
-        int playerRoleResult = PlayerRoleQuery.createPlayerRole(playerRoleBean);
+        boolean playerRoleResult = PlayerRoleQuery.createPlayerRole(playerRoleBean);
 
-
-        int updateLoginServer = updateLoginServerInfo(playerIndex);
+        boolean updateLoginServer = insertLoginServerInfo(playerIndex);
 
         CreatePlayerRsp createPlayerRsp = new CreatePlayerRsp();
-        if (playerResult == 1 && secenResult == 1 && playerRoleResult == 1 && updateLoginServer == 1) {
+        if (playerResult && secenResult && playerRoleResult && updateLoginServer) {
             createPlayerRsp.setHasRole(true);
             createPlayerRsp.setPlayerRole(playerRoleBean);
             createPlayerRsp.setPlayerScene(playerSceneBean);
@@ -86,10 +85,14 @@ public class DBCreatePlayerController {
         return playerRole;
     }
 
-    private int updateLoginServerInfo(int playerIndex) {
+    private boolean insertLoginServerInfo(int playerIndex) {
         LoginPlayerServerInfoBean playerServerInfoBean = new LoginPlayerServerInfoBean();
         playerServerInfoBean.setPlayerIndex(playerIndex);
         playerServerInfoBean.setServerId(PropertiesConfig.serverId);
-        return SqlAnnotation.getInstance().executeCommitSqlWithServerId(PropertiesConfig.loginServerId, PLAYER_SERVER_INFO_INSERT, playerServerInfoBean);
+        playerServerInfoBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerServerInfoBean);
+        if (playerServerInfoBean != null) {
+            return true;
+        }
+        return false;
     }
 }

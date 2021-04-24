@@ -24,9 +24,8 @@ public class PlayerServerInfoQuery {
         RMap<Integer, List<LoginPlayerServerInfoBean>> redisCache = RedisCache.getInstance().getPlayerServerInfoCache();
         List<LoginPlayerServerInfoBean> serverInfoBeanList = redisCache.get(playerIndex);
         if (serverInfoBeanList == null) {
-            serverInfoBeanList = SqlDao.getInstance().getDao(SQL_MASTER).
-                    query(LoginPlayerServerInfoBean.class,
-                            Cnd.where("player_index", "=", playerIndex));
+            serverInfoBeanList = SqlDao.getInstance().getDao(SQL_MASTER).query(LoginPlayerServerInfoBean.class,
+                    Cnd.where("player_index", "=", playerIndex));
 
             Map<Integer, List<LoginPlayerServerInfoBean>> playerMapInfo = serverInfoBeanList.stream().
                     collect(Collectors.groupingBy(LoginPlayerServerInfoBean::getPlayerIndex));
