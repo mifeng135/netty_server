@@ -89,7 +89,7 @@ public class DBCreatePlayerController {
         LoginPlayerServerInfoBean playerServerInfoBean = new LoginPlayerServerInfoBean();
         playerServerInfoBean.setPlayerIndex(playerIndex);
         playerServerInfoBean.setServerId(PropertiesConfig.serverId);
-        playerServerInfoBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerServerInfoBean);
+        playerServerInfoBean = SqlDao.getInstance().getDao().insert(playerServerInfoBean);
         if (playerServerInfoBean != null) {
             return true;
         }

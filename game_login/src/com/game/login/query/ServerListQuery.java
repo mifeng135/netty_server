@@ -38,7 +38,7 @@ public class ServerListQuery {
      * @return 0 fail
      */
     public static boolean updateServerName(int serverId, String serverName) {
-        boolean result = SqlDao.getInstance().getDao(SQL_MASTER).update(ServerListInfoBean.class,
+        boolean result = SqlDao.getInstance().getDao().update(ServerListInfoBean.class,
                 Chain.make("server_name", serverName),
                 Cnd.where("server_id", "=", serverId)) > 0;
 
@@ -59,7 +59,7 @@ public class ServerListQuery {
      * @return
      */
     public static boolean updateServerState(int serverId, int state) {
-        boolean result = SqlDao.getInstance().getDao(SQL_MASTER).update(ServerListInfoBean.class,
+        boolean result = SqlDao.getInstance().getDao().update(ServerListInfoBean.class,
                 Chain.make("state", state),
                 Cnd.where("server_id", "=", serverId)) > 0;
         if (result) {
@@ -78,7 +78,7 @@ public class ServerListQuery {
      * @return
      */
     public static boolean deleteServer(int serverId) {
-        return SqlDao.getInstance().getDao(SQL_MASTER).clear(ServerListInfoBean.class, Cnd.where("server_id", "=", serverId)) > 0;
+        return SqlDao.getInstance().getDao().clear(ServerListInfoBean.class, Cnd.where("server_id", "=", serverId)) > 0;
     }
 
     /**
@@ -97,7 +97,7 @@ public class ServerListQuery {
         serverListBean.setState(state);
         serverListBean.setServerIp(serverIp);
         serverListBean.setOpenTime(openTime);
-        serverListBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(serverListBean);
+        serverListBean = SqlDao.getInstance().getDao().insert(serverListBean);
         if (serverListBean != null) {
             RedisCache.getInstance().getServerListCache().put(serverId, serverListBean);
             return true;
@@ -116,7 +116,7 @@ public class ServerListQuery {
         serverListBean.setServerId(serverId);
         serverListBean.setServerIp(serverIp);
 
-        boolean result = SqlDao.getInstance().getDao(SQL_MASTER).
+        boolean result = SqlDao.getInstance().getDao().
                 update(ServerListInfoBean.class,
                         Chain.make("server_ip", serverIp),
                         Cnd.where("server_id", "=", serverId)) > 0;

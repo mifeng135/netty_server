@@ -12,8 +12,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static core.Constants.SQL_MASTER;
-import static core.Constants.SQL_RESULT_FAIL;
-import static core.Constants.SQL_RESULT_SUCCESS;
 
 public class NoticeListQuery {
 
@@ -24,7 +22,7 @@ public class NoticeListQuery {
     }
 
     public static boolean updateNoticeContent(int noticeId, String content) {
-        boolean result = SqlDao.getInstance().getDao(SQL_MASTER).update(LoginNoticeBean.class,
+        boolean result = SqlDao.getInstance().getDao().update(LoginNoticeBean.class,
                 Chain.make("content", content),
                 Cnd.where("notice_id", "=", noticeId)) > 0;
         if (result) {
@@ -38,7 +36,7 @@ public class NoticeListQuery {
     }
 
     public static boolean deleteNotice(int noticeId) {
-        boolean success = SqlDao.getInstance().getDao(SQL_MASTER).clear(LoginNoticeBean.class,
+        boolean success = SqlDao.getInstance().getDao().clear(LoginNoticeBean.class,
                 Cnd.where("notice_id", "=", noticeId)) > 0;
 
         if (success) {
@@ -51,7 +49,7 @@ public class NoticeListQuery {
     public static boolean insertNotice(String content) {
         LoginNoticeBean noticeBean = new LoginNoticeBean();
         noticeBean.setContent(content);
-        noticeBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(noticeBean);
+        noticeBean = SqlDao.getInstance().getDao().insert(noticeBean);
         if (noticeBean != null) {
             RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
             redisCache.put(noticeBean.getNoticeId(), noticeBean);

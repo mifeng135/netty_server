@@ -7,9 +7,6 @@ import core.sql.SqlDao;
 import core.util.TimeUtil;
 import org.redisson.api.RMap;
 
-import static core.Constants.SQL_MASTER;
-import static core.Constants.SQL_RESULT_FAIL;
-import static core.Constants.SQL_RESULT_SUCCESS;
 
 public class PlayerInfoQuery {
 
@@ -17,7 +14,7 @@ public class PlayerInfoQuery {
         RMap<String, LoginPlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
         LoginPlayerInfoBean playerBean = redisCache.get(openId);
         if (playerBean == null) {
-            playerBean = SqlDao.getInstance().getDao(SQL_MASTER).fetch(LoginPlayerInfoBean.class, openId);
+            playerBean = SqlDao.getInstance().getDao().fetch(LoginPlayerInfoBean.class, openId);
             if (playerBean != null) {
                 redisCache.put(playerBean.getOpenId(), playerBean);
             }
@@ -29,7 +26,7 @@ public class PlayerInfoQuery {
         LoginPlayerInfoBean playerBean = new LoginPlayerInfoBean();
         playerBean.setOpenId(openId);
         playerBean.setLoginTime(TimeUtil.getCurrentTimeSecond());
-        playerBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerBean);
+        playerBean = SqlDao.getInstance().getDao().insert(playerBean);
         if (playerBean != null) {
             RMap<String, LoginPlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
             redisCache.put(openId, playerBean);

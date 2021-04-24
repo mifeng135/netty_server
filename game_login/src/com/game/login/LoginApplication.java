@@ -7,7 +7,8 @@ import core.netty.http.HttpServer;
 import core.redis.RedisManager;
 import core.sql.SqlDao;
 
-import static core.Constants.SQL_MASTER;
+import java.util.Arrays;
+
 
 /**
  * Created by Administrator on 2020/6/1.
@@ -15,7 +16,10 @@ import static core.Constants.SQL_MASTER;
 public class LoginApplication {
 
     public static void main(String[] args) {
-        SqlDao.getInstance().init(SQL_MASTER, "dao.properties", "pre-sql.sqls");
+        SqlDao.getInstance().init("login-master-dao.properties",
+                "pre-sql.sqls",
+                Arrays.asList("login-master-slave.properties"));
+
         new ProperticeConfig();
         CtrlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName());
         RedisManager.getInstance().init(ProperticeConfig.redisIp, ProperticeConfig.redisPassword,

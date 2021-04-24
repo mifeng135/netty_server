@@ -6,7 +6,6 @@ import core.sql.SqlDao;
 import org.nutz.dao.Cnd;
 import org.redisson.api.RMapCache;
 
-import static core.Constants.SQL_MASTER;
 
 public class PlayerRoleQuery {
 
@@ -14,7 +13,7 @@ public class PlayerRoleQuery {
         RMapCache<Integer, PlayerRoleBean> redisCache = RedisCache.getInstance().getRoleCache();
         PlayerRoleBean playerRole = redisCache.get(playerIndex);
         if (playerRole == null) {
-            playerRole = SqlDao.getInstance().getDao(SQL_MASTER).fetch(PlayerRoleBean.class,
+            playerRole = SqlDao.getInstance().getDao().fetch(PlayerRoleBean.class,
                     Cnd.where("player_index", "=", playerIndex));
             if (playerRole != null) {
                 redisCache.put(playerIndex, playerRole);
@@ -24,7 +23,7 @@ public class PlayerRoleQuery {
     }
 
     public static boolean createPlayerRole(PlayerRoleBean playerRole) {
-        playerRole = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerRole);
+        playerRole = SqlDao.getInstance().getDao().insert(playerRole);
         if (playerRole != null) {
             RMapCache<Integer, PlayerRoleBean> redisCache = RedisCache.getInstance().getRoleCache();
             redisCache.put(playerRole.getPlayerIndex(), playerRole);
@@ -38,7 +37,7 @@ public class PlayerRoleQuery {
         playerRole.setPlayerIndex(playerIndex);
         playerRole.setJob(job);
         playerRole.setSex(sex);
-        playerRole = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerRole);
+        playerRole = SqlDao.getInstance().getDao().insert(playerRole);
         if (playerRole != null) {
             RMapCache<Integer, PlayerRoleBean> redisCache = RedisCache.getInstance().getRoleCache();
             redisCache.put(playerIndex, playerRole);

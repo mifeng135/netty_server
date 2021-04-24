@@ -8,7 +8,6 @@ import org.nutz.dao.Cnd;
 import org.redisson.api.RMapCache;
 
 import static com.game.db.constant.GameConstant.MAP_INIT_ID;
-import static core.Constants.SQL_MASTER;
 
 public class PlayerSceneQuery {
 
@@ -16,7 +15,7 @@ public class PlayerSceneQuery {
         RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
         PlayerSceneBean playerSceneBean = redisCache.get(playerIndex);
         if (playerSceneBean == null) {
-            playerSceneBean = SqlDao.getInstance().getDao(SQL_MASTER).fetch(PlayerSceneBean.class,
+            playerSceneBean = SqlDao.getInstance().getDao().fetch(PlayerSceneBean.class,
                     Cnd.where("player_index", "=", playerIndex));
             if (playerSceneBean != null) {
                 redisCache.put(playerSceneBean.getPlayerIndex(), playerSceneBean);
@@ -26,7 +25,7 @@ public class PlayerSceneQuery {
     }
 
     public static boolean createScene(PlayerSceneBean playerScene) {
-        playerScene = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerScene);
+        playerScene = SqlDao.getInstance().getDao().insert(playerScene);
         if (playerScene != null) {
             RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
             redisCache.put(playerScene.getPlayerIndex(), playerScene);
@@ -41,7 +40,7 @@ public class PlayerSceneQuery {
         playerScene.setPlayerPositionX(400);
         playerScene.setPlayerPositionY(400);
         playerScene.setPlayerIndex(playerIndex);
-        playerScene = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerScene);
+        playerScene = SqlDao.getInstance().getDao().insert(playerScene);
         if (playerScene != null) {
             RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
             redisCache.put(playerIndex, playerScene);
@@ -51,7 +50,7 @@ public class PlayerSceneQuery {
     }
 
     public static boolean updateScene(int playerIndex, int sceneId, int positionX, int positionY) {
-        boolean result = SqlDao.getInstance().getDao(SQL_MASTER).update(PlayerSceneBean.class,
+        boolean result = SqlDao.getInstance().getDao().update(PlayerSceneBean.class,
                 Chain.make("player_position_x", positionX).
                         add("player_position_y", positionY).
                         add("scene_id", sceneId),

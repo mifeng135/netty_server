@@ -7,7 +7,6 @@ import core.sql.SqlDao;
 import org.nutz.dao.Cnd;
 import org.redisson.api.RMapCache;
 
-import static core.Constants.SQL_MASTER;
 
 public class PlayerInfoQuery {
 
@@ -15,7 +14,7 @@ public class PlayerInfoQuery {
         RMapCache<Integer, PlayerBean> redisCache = RedisCache.getInstance().getPlayerCache();
         PlayerBean playerBean = redisCache.get(playerIndex);
         if (playerBean == null) {
-            playerBean = SqlDao.getInstance().getDao(SQL_MASTER).fetch(PlayerBean.class,
+            playerBean = SqlDao.getInstance().getDao().fetch(PlayerBean.class,
                     Cnd.where("player_index", "=", playerIndex));
             if (playerBean != null) {
                 redisCache.put(playerBean.getPlayerIndex(), playerBean);
@@ -26,7 +25,7 @@ public class PlayerInfoQuery {
 
 
     public static boolean createPlayer(PlayerBean playerBean) {
-        playerBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerBean);
+        playerBean = SqlDao.getInstance().getDao().insert(playerBean);
         if (playerBean != null) {
             RMapCache<Integer, PlayerBean> redisCache = RedisCache.getInstance().getPlayerCache();
             redisCache.put(playerBean.getPlayerIndex(), playerBean);
@@ -43,7 +42,7 @@ public class PlayerInfoQuery {
         playerBean.setOpenId(openId);
         playerBean.setPlayerIndex(playerIndex);
         playerBean.setServerId(PropertiesConfig.serverId);
-        playerBean = SqlDao.getInstance().getDao(SQL_MASTER).insert(playerBean);
+        playerBean = SqlDao.getInstance().getDao().insert(playerBean);
         if (playerBean != null) {
             RMapCache<Integer, PlayerBean> redisCache = RedisCache.getInstance().getPlayerCache();
             redisCache.put(playerBean.getPlayerIndex(), playerBean);
