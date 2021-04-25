@@ -20,6 +20,7 @@ import protocal.remote.user.CreatePlayerReq;
 import protocal.remote.user.CreatePlayerRsp;
 
 import static com.game.db.constant.GameConstant.MAP_INIT_ID;
+import static com.game.db.constant.GameConstant.SQL_KEY_LOGIN;
 import static core.Constants.SQL_MASTER;
 import static protocal.MsgConstant.*;
 
@@ -55,7 +56,7 @@ public class DBCreatePlayerController {
             return;
         }
         createPlayerRsp.setHasRole(true);
-        MsgUtil.sendMsg(context, msg.getHeaderProto(), new Object());
+        MsgUtil.sendMsg(context, msg.getHeaderProto(), createPlayerRsp);
     }
 
     private PlayerBean initPlayer(int playerIndex, String name, String remoteIp, String openId) {
@@ -89,7 +90,7 @@ public class DBCreatePlayerController {
         LoginPlayerServerInfoBean playerServerInfoBean = new LoginPlayerServerInfoBean();
         playerServerInfoBean.setPlayerIndex(playerIndex);
         playerServerInfoBean.setServerId(PropertiesConfig.serverId);
-        playerServerInfoBean = SqlDao.getInstance().getDao().insert(playerServerInfoBean);
+        playerServerInfoBean = SqlDao.getInstance().getDao(SQL_KEY_LOGIN).insert(playerServerInfoBean);
         if (playerServerInfoBean != null) {
             return true;
         }

@@ -1,4 +1,4 @@
-package protocal.local.base;
+package protocal;
 
 import lombok.Getter;
 import lombok.Setter;

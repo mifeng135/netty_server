@@ -1,7 +1,6 @@
 package core.netty.asyncHttp;
 
 import core.msg.TransferMsg;
-import core.util.ConfigUtil;
 import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -9,7 +8,7 @@ import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.AsyncHttpClient;
 
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
-import protocal.local.base.HeaderProto;
+import protocal.HeaderProto;
 
 import java.util.concurrent.ExecutionException;
 

@@ -4,76 +4,18 @@
     <list default="true" id="1f9629e3-c1c9-4018-8d91-84435f450e3a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/core/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/core/annotation/CtrlAnnotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/annotation/CtrlAnnotation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/core/annotation/SqlAnnotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/annotation/SqlAnnotation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/core/msg/TransferMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/msg/TransferMsg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/core/netty/asyncHttp/AsyncHttp.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/netty/asyncHttp/AsyncHttp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/core/netty/http/HttpServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/netty/http/HttpServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/core/netty/tcp/TcpServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/netty/tcp/TcpServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/log4j.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_center/src/com/game/server/CenterApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_center/src/com/game/server/controller/BaseController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_center/src/com/game/server/util/TcpUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_config/src/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_config/src/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/game_db.iml" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/game_db.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/DBServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/DBServerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/constant/GameConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/constant/GameConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/constant/RedisConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/constant/SqlCmdConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/constant/SqlCmdConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/controller/DBCreatePlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/controller/DBCreatePlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/controller/DBPlayerInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/controller/DBPlayerInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/controller/DBSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/controller/DBSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/mappers/PlayerItemMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/mappers/PlayerItemMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/mappers/PlayerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/mappers/PlayerMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/mappers/PlayerRoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/mappers/PlayerRoleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/mappers/PlayerSceneMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/mappers/PlayerSceneMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/mappers/PlayerServerInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/mappers/PlayerServerInfoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/query/PlayerInfoQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerInfoQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/query/PlayerItemQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerItemQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/query/PlayerRoleQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerRoleQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/query/PlayerSceneQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerSceneQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/redis/RedisCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/redis/RedisCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/server/util/HttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/util/HttpUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/db-master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/db-master.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/db-slave.xml" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/db-slave.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_db/src/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/mybatis-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_gate/game_gate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/game_gate/game_gate.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_gate/src/com/game/server/CustomEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_gate/src/com/game/gate/CustomEventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_gate/src/com/game/server/GateApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_gate/src/com/game/gate/GateApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_gate/src/com/game/server/controller/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_gate/src/com/game/gate/controller/BaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_gate/src/com/game/server/util/TcpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_gate/src/com/game/gate/util/TcpUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/game_logic.iml" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/game_logic.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/LogicApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/LogicApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/controller/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/controller/BaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/controller/CreatePlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/controller/CreatePlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/controller/EnterGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/controller/EnterGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/controller/SyncPositionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/controller/SyncPositionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/manager/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/manager/PlayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/manager/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/manager/SceneManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/model/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/model/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/model/Scene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/server/util/MsgUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/util/MsgUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/game_login.iml" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/game_login.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/LoginApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/LoginApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/constant/RedisConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/constant/SqlCmdConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/constant/SqlCmdConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/controller/ServerListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/controller/ServerNoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerNoticeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/mappers/PlayerInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/mappers/PlayerInfoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/mappers/ServerListMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/mappers/ServerListMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/mappers/ServerNoticeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/mappers/ServerNoticeMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/query/NoticeListQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/query/NoticeListQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/query/PlayerInfoQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/query/PlayerInfoQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/query/ServerListQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/query/ServerListQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/redis/RedisCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/redis/RedisCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/com/game/server/util/HttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/com/game/login/util/HttpUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/db.properties" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/db.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/login-master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/login-master.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_login/src/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/game_login/src/mybatis-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_proto_bean/src/protocal/MsgConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_proto_bean/src/protocal/MsgConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_proto_bean/src/protocal/local/base/HeaderProto.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_proto_bean/src/protocal/local/base/HeaderProto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/core/netty/http/HttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/netty/http/HttpHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/core/netty/tcp/CDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/netty/tcp/CDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/core/netty/tcp/ConnectionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/netty/tcp/ConnectionListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/core/netty/tcp/GDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/netty/tcp/GDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/core/util/ProtoUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/core/util/ProtoUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_center/src/com/game/center/util/TcpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_center/src/com/game/center/util/TcpUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/db/controller/DBCreatePlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/controller/DBCreatePlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_db/src/com/game/db/util/MsgUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_db/src/com/game/db/util/MsgUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_logic/src/com/game/logic/util/MsgUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_logic/src/com/game/logic/util/MsgUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_proto_bean/src/protocal/local/base/HeaderProto.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_proto_bean/src/protocal/HeaderProto.java" afterDir="false" />
     </list>
     <ignored path="MServer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -248,25 +190,26 @@
     <session id="-38509067">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="2" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.open.time.7" value="1" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="45" />
-          <entry key="java" value="7877" />
+          <entry key="java" value="9422" />
           <entry key="properties" value="560" />
           <entry key="xml" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="7877" />
+          <entry key="JAVA" value="9422" />
           <entry key="PLAIN_TEXT" value="45" />
           <entry key="Properties" value="560" />
           <entry key="XML" value="8" />
@@ -274,17 +217,19 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="class" value="22" />
-          <entry key="java" value="546" />
-          <entry key="properties" value="17" />
+          <entry key="class" value="29" />
+          <entry key="java" value="633" />
+          <entry key="properties" value="22" />
+          <entry key="sqls" value="1" />
           <entry key="xml" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="22" />
-          <entry key="JAVA" value="546" />
-          <entry key="Properties" value="17" />
+          <entry key="CLASS" value="29" />
+          <entry key="JAVA" value="633" />
+          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="Properties" value="22" />
           <entry key="XML" value="14" />
         </counts>
       </usages-collector>
@@ -296,125 +241,95 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/redis/RedisCache.java">
+        <entry file="file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/EnterGameController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="250">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#832#833#0" expanded="true" />
-                <element signature="e#879#880#0" expanded="true" />
-              </folding>
+              <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerSceneQuery.java">
+        <entry file="file://$PROJECT_DIR$/core/src/core/msg/HttpTransferMsg.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="6" column="24" lean-forward="true" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/core/sql/SqlDaoInterceptor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/core/sql/SqlDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="791">
-              <caret line="103" column="22" lean-forward="true" selection-start-line="103" selection-start-column="22" selection-end-line="103" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#720#721#0" expanded="true" />
-                <element signature="e#749#750#0" expanded="true" />
-                <element signature="e#3136#3137#0" expanded="true" />
-                <element signature="e#3165#3166#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="50">
+              <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/src/core/sql/MFNutDaoRunner.java">
+        <entry file="file://$PROJECT_DIR$/game_proto_bean/src/protocal/HeaderProto.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="597">
-              <caret line="66" selection-start-line="66" selection-end-line="66" />
+            <state relative-caret-position="175">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/core/netty/asyncHttp/AsyncHttp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="211">
+              <caret line="84" column="61" selection-start-line="84" selection-start-column="48" selection-end-line="84" selection-end-column="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/core/msg/TransferMsg.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="250">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.ideaLibSources/async-http-client-2.10.4-sources.jar!/org/asynchttpclient/BoundRequestBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="445">
+              <caret line="34" column="24" lean-forward="true" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5199#5200#0" expanded="true" />
-                <element signature="e#5257#5258#0" expanded="true" />
-                <element signature="e#5312#5313#0" expanded="true" />
-                <element signature="e#5354#5355#0" expanded="true" />
+                <element signature="e#1435#1436#0" expanded="true" />
+                <element signature="e#1491#1492#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerRoleQuery.java">
+        <entry file="jar://$USER_HOME$/.ideaLibSources/async-http-client-2.10.4-sources.jar!/org/asynchttpclient/RequestBuilderBase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="497">
-              <caret line="39" column="49" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="660">
+              <caret line="372" column="11" selection-start-line="372" selection-start-column="11" selection-end-line="372" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/query/PlayerServerInfoQuery.java">
+        <entry file="jar://$USER_HOME$/.ideaLibSources/async-http-client-2.10.4-sources.jar!/org/asynchttpclient/AsyncHttpClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="26" column="61" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="660">
+              <caret line="198" column="40" lean-forward="true" selection-start-line="198" selection-start-column="40" selection-end-line="198" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/query/ServerListQuery.java">
+        <entry file="jar://$PROJECT_DIR$/lib/async-http-client-2.10.4.jar!/org/asynchttpclient/AsyncHttpClient.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1287">
-              <caret line="61" column="53" selection-start-line="61" selection-start-column="53" selection-end-line="61" selection-end-column="53" />
+            <state relative-caret-position="244">
+              <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/query/PlayerInfoQuery.java">
+        <entry file="jar://$USER_HOME$/.ideaLibSources/async-http-client-2.10.4-sources.jar!/org/asynchttpclient/DefaultAsyncHttpClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerInfoQuery.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="44" column="47" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="319">
+              <caret line="225" column="20" selection-start-line="225" selection-start-column="20" selection-end-line="225" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -476,16 +391,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/game_login/src/com/game/login/mappers/PlayerInfoMapper.java" />
-        <option value="$PROJECT_DIR$/game_proto_bean/src/protocal/remote/login/GetServerListReq.java" />
-        <option value="$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerNoticeController.java" />
-        <option value="$PROJECT_DIR$/game_login/src/com/game/login/constant/SqlCmdConstant.java" />
-        <option value="$PROJECT_DIR$/game_login/src/mybatis-config.xml" />
-        <option value="$PROJECT_DIR$/core/src/core/sql/SqlConstant.java" />
-        <option value="$PROJECT_DIR$/game_login/src/com/game/login/mappers/PlayerServerInfoMapper.java" />
-        <option value="$PROJECT_DIR$/game_proto_bean/src/bean/login/LoginPlayerBean.java" />
-        <option value="$PROJECT_DIR$/game_login/src/dao.js" />
-        <option value="$PROJECT_DIR$/game_login/src/db.properties" />
         <option value="$PROJECT_DIR$/game_login/src/dao.properties" />
         <option value="$PROJECT_DIR$/nuts/src/nutz/mvc/adaptor/injector/RequestInjector.java" />
         <option value="$PROJECT_DIR$/nuts/src/org/nutz/resource/Scans.java" />
@@ -511,22 +416,32 @@
         <option value="$PROJECT_DIR$/core/src/core/annotation/SqlAnnotation.java" />
         <option value="$PROJECT_DIR$/game_db/src/db-config.properties" />
         <option value="$PROJECT_DIR$/core/src/core/sql/SqlDaoInterceptor.java" />
-        <option value="$PROJECT_DIR$/game_db/src/com/game/db/DBServerApplication.java" />
         <option value="$PROJECT_DIR$/game_login/src/login-config.properties" />
         <option value="$PROJECT_DIR$/core/src/core/sql/MfNutDaoRunner.java" />
         <option value="$PROJECT_DIR$/game_login/src/login-master-slave.properties" />
-        <option value="$PROJECT_DIR$/game_login/src/com/game/login/LoginApplication.java" />
-        <option value="$PROJECT_DIR$/core/src/core/sql/SqlDao.java" />
-        <option value="$PROJECT_DIR$/game_db/src/com/game/db/controller/DBCreatePlayerController.java" />
-        <option value="$PROJECT_DIR$/game_login/src/com/game/login/query/NoticeListQuery.java" />
         <option value="$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerInfoQuery.java" />
-        <option value="$PROJECT_DIR$/game_login/src/com/game/login/query/PlayerInfoQuery.java" />
         <option value="$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerRoleQuery.java" />
-        <option value="$PROJECT_DIR$/game_login/src/com/game/login/query/PlayerServerInfoQuery.java" />
-        <option value="$PROJECT_DIR$/game_login/src/com/game/login/query/ServerListQuery.java" />
         <option value="$PROJECT_DIR$/game_login/src/com/game/login/redis/RedisCache.java" />
         <option value="$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerSceneQuery.java" />
         <option value="$PROJECT_DIR$/core/src/core/sql/MFNutDaoRunner.java" />
+        <option value="$PROJECT_DIR$/game_login/src/com/game/login/query/ServerListQuery.java" />
+        <option value="$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerNoticeController.java" />
+        <option value="$PROJECT_DIR$/game_proto_bean/src/protocal/remote/login/GetServerListRsp.java" />
+        <option value="$PROJECT_DIR$/game_login/src/com/game/login/query/PlayerInfoQuery.java" />
+        <option value="$PROJECT_DIR$/game_login/src/com/game/login/controller/PlayerIndexController.java" />
+        <option value="$PROJECT_DIR$/game_login/src/com/game/login/query/PlayerServerInfoQuery.java" />
+        <option value="$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerListController.java" />
+        <option value="$PROJECT_DIR$/core/src/core/sql/SqlDaoManager.java" />
+        <option value="$PROJECT_DIR$/game_login/src/com/game/login/query/NoticeListQuery.java" />
+        <option value="$PROJECT_DIR$/game_db/src/com/game/db/constant/GameConstant.java" />
+        <option value="$PROJECT_DIR$/core/src/core/sql/SqlDao.java" />
+        <option value="$PROJECT_DIR$/core/src/core/sql/SqlDaoConfig.java" />
+        <option value="$PROJECT_DIR$/game_login/src/com/game/login/LoginApplication.java" />
+        <option value="$PROJECT_DIR$/game_db/src/com/game/db/DBServerApplication.java" />
+        <option value="$PROJECT_DIR$/game_db/src/com/game/db/controller/DBCreatePlayerController.java" />
+        <option value="$PROJECT_DIR$/game_db/src/com/game/db/controller/DBPlayerInfoController.java" />
+        <option value="$PROJECT_DIR$/core/src/core/netty/asyncHttp/AsyncHttp.java" />
+        <option value="$PROJECT_DIR$/game_proto_bean/src/protocal/HeaderProto.java" />
       </list>
     </option>
   </component>
@@ -904,7 +819,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -928,7 +842,7 @@
               <item name="core" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="sql" type="462c0819:PsiDirectoryNode" />
+              <item name="msg" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
@@ -961,10 +875,25 @@
             </path>
             <path>
               <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="game_db" type="462c0819:PsiDirectoryNode" />
+              <item name="game_logic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_logic" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
-              <item name="query" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_logic" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_logic" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
@@ -986,7 +915,7 @@
               <item name="game_login" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="login" type="462c0819:PsiDirectoryNode" />
-              <item name="query" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
@@ -996,19 +925,39 @@
               <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
               <item name="game_proto_bean" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_proto_bean" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="bean" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_proto_bean" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="protocal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="netty_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_proto_bean" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="protocal" type="462c0819:PsiDirectoryNode" />
+              <item name="local" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
         <option name="show-excluded-files" value="false" />
       </pane>
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1619279010733" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1619343455396" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -1373,11 +1322,12 @@
       <workItem from="1618759034589" duration="866000" />
       <workItem from="1618760279136" duration="2482000" />
       <workItem from="1618846169457" duration="21370000" />
+      <workItem from="1619324036162" duration="8488000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="661565000" />
+    <option name="totallyTimeSpent" value="675616000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1392,7 +1342,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" x="694" y="190" width="532" height="659" id="Project" order="0" visible="true" weight="0.34488273" />
+      <window_info active="true" content_ui="combo" x="694" y="190" width="532" height="659" id="Project" order="0" visible="true" weight="0.3523454" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info id="Palette&#9;" order="3" />
@@ -1400,12 +1350,12 @@
       <window_info id="Image Layers" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.5791757" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.06514658" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.29392624" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49840087" weight="0.2537961" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.17480999" />
+      <window_info anchor="bottom" id="TODO" order="6" visible="true" weight="0.17480999" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32899022" />
       <window_info anchor="bottom" id="Spring" order="8" weight="0.32900432" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32900432" />
@@ -1524,331 +1474,191 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/game_proto_bean/src/bean/player/PlayerItemBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerItemQuery.java">
+    <entry file="file://$PROJECT_DIR$/core/src/core/redis/RedisOptions.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/mappers/PlayerServerInfoMapper.java">
+    <entry file="file://$PROJECT_DIR$/core/src/core/redis/RedisManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+        <state relative-caret-position="25">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_proto_bean/src/bean/login/LoginPlayerServerInfoBean.java">
+    <entry file="file://$PROJECT_DIR$/core/src/core/redis/DelayedQueue.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        <state relative-caret-position="25">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/db-master.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/login.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/db.properties">
+    <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerNoticeController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="26" lean-forward="true" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/constant/GameConstant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/constant/RedisConstant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_proto_bean/src/bean/player/PlayerSceneBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="22" column="21" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/dao.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/master-slave.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/login.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/master-db.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/constant/SqlCmdConstant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-100">
-          <caret line="11" column="46" lean-forward="true" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/controller/DBPlayerInfoController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/core/annotation/SqlAnnotation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        <state relative-caret-position="396">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/core/sql/MysqlBatchHandle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="41" column="20" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/PropertiesConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/DBServerApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/log/Logs.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/trans/Trans.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="163" selection-start-line="163" selection-end-line="163" />
-          <folding>
-            <element signature="e#683#684#0" expanded="true" />
-            <element signature="e#730#731#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/druid-1.1.22.jar!/com/alibaba/druid/pool/DruidDataSource.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="1341" selection-start-line="1341" selection-end-line="1341" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/dao/jdbc/Jdbcs.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="68" column="24" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/core/util/ConfigUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/db-config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/ProperticeConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/login-config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/dao/impl/DaoRunner.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/dao/impl/sql/run/NutDaoRunner.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="169" selection-start-line="169" selection-end-line="169" />
-          <folding>
-            <element signature="e#0#6238#0" expanded="true" />
-            <element signature="e#5350#5351#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/dao/sql/DaoStatement.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="95" column="12" selection-start-line="95" selection-start-column="12" selection-end-line="95" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/lang/Files.class">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_91/src.zip!/java/util/stream/Collectors.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
-          <caret line="379" selection-start-line="379" selection-end-line="379" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/dao/DaoInterceptorChain.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="63" selection-start-line="63" selection-end-line="63" />
+          <caret line="803" column="4" selection-start-line="803" selection-start-column="4" selection-end-line="803" selection-end-column="4" />
           <folding>
-            <element signature="e#1759#1760#0" expanded="true" />
+            <element signature="e#33990#33991#0" expanded="true" />
+            <element signature="e#34045#34046#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/login-dao.properties">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_91/src.zip!/java/util/stream/Stream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="806" column="13" selection-start-line="806" selection-start-column="13" selection-end-line="806" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_proto_bean/src/bean/login/LoginPlayerServerInfoBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_db/src/master-slave.properties">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/login-master-slave.properties">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_91/src.zip!/java/util/Properties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="339" column="29" selection-start-line="339" selection-start-column="29" selection-end-line="339" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/LoginApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="18" column="57" lean-forward="true" selection-start-line="18" selection-start-column="57" selection-end-line="18" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_db/src/master-db.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="8" selection-start-column="5" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_db/src/login.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_login/src/login-master-dao.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/login-master-dao.properties">
+    <entry file="file://$PROJECT_DIR$/game_login/src/login-master-slave.properties">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/dao/impl/DaoSupport.class">
+    <entry file="jar://$USER_HOME$/.ideaLibSources/nutz-1.r.68.v20201205-sources.jar!/org/nutz/lang/Files.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="201" selection-start-line="201" selection-end-line="201" />
-          <folding>
-            <element signature="e#6014#6015#0" expanded="true" />
-            <element signature="e#6072#6073#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="321">
+          <caret line="651" column="23" selection-start-line="651" selection-start-column="23" selection-end-line="651" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/dao/impl/NutDao.class">
+    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/DBServerApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="614" selection-start-line="614" selection-end-line="614" />
-          <folding>
-            <element signature="e#21996#21997#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="450">
+          <caret line="32" column="39" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/LoginApplication.java">
+    <entry file="file://$PROJECT_DIR$/core/src/core/sql/SqlDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="18" column="17" lean-forward="true" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+        <state relative-caret-position="446">
+          <caret line="94" column="29" lean-forward="true" selection-start-line="94" selection-start-column="29" selection-end-line="94" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#728#729#0" expanded="true" />
+            <element signature="e#757#758#0" expanded="true" />
+            <element signature="e#4086#4087#0" expanded="true" />
+            <element signature="e#4127#4128#0" expanded="true" />
+            <element signature="e#4157#4158#0" expanded="true" />
+            <element signature="e#4193#4194#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/PropertiesConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/controller/DBCreatePlayerController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="91" column="56" selection-start-line="91" selection-start-column="56" selection-end-line="91" selection-end-column="56" />
+        <state relative-caret-position="1096">
+          <caret line="87" lean-forward="true" selection-start-line="87" selection-end-line="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/core/sql/SqlDaoConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/query/NoticeListQuery.java">
+    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/constant/GameConstant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="51" column="47" lean-forward="true" selection-start-line="51" selection-start-column="47" selection-end-line="51" selection-end-column="47" />
+        <state relative-caret-position="175">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/constant/RedisConstant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="45" lean-forward="true" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/redis/RedisCache.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="43" column="5" lean-forward="true" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/controller/PlayerIndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="24" column="87" lean-forward="true" selection-start-line="24" selection-start-column="87" selection-end-line="24" selection-end-column="87" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerInfoQuery.java">
+    <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerListController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="44" column="47" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/query/PlayerInfoQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerRoleQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
-          <caret line="39" column="49" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
+        <state relative-caret-position="570">
+          <caret line="46" column="57" selection-start-line="46" selection-start-column="57" selection-end-line="46" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1857,29 +1667,88 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/query/PlayerServerInfoQuery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="26" column="61" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
+        <state relative-caret-position="525">
+          <caret line="21" column="107" lean-forward="true" selection-start-line="21" selection-start-column="107" selection-end-line="21" selection-end-column="107" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/query/ServerListQuery.java">
+    <entry file="file://$PROJECT_DIR$/game_login/src/pre-sql.sqls">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1287">
-          <caret line="61" column="53" selection-start-line="61" selection-start-column="53" selection-end-line="61" selection-end-column="53" />
+        <state>
+          <caret column="31" lean-forward="true" selection-start-column="31" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game_login/src/com/game/login/redis/RedisCache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="506">
+          <caret line="100" column="70" lean-forward="true" selection-start-line="100" selection-start-column="70" selection-end-line="100" selection-end-column="70" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#832#833#0" expanded="true" />
-            <element signature="e#879#880#0" expanded="true" />
+            <element signature="e#5271#5272#0" expanded="true" />
+            <element signature="e#5315#5316#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_logic/src/com/game/logic/manager/PlayerManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/BaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="31" column="35" lean-forward="true" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_logic/src/com/game/logic/util/MsgUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="27" column="34" lean-forward="true" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/async-http-client-2.10.4.jar!/org/asynchttpclient/BoundRequestBuilder.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/async-http-client-2.10.4.jar!/org/asynchttpclient/RequestBuilderBase.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="632">
+          <caret line="315" column="13" selection-start-line="315" selection-start-column="13" selection-end-line="315" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_gate/src/com/game/gate/CustomEventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="54" column="23" selection-start-line="54" selection-start-column="23" selection-end-line="54" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_proto_bean/src/protocal/remote/user/EnterGameRsp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerItemQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+          <folding>
+            <element signature="e#192#193#0" expanded="true" />
+            <element signature="e#219#220#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1887,45 +1756,113 @@
     <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/query/PlayerSceneQuery.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="6" column="24" lean-forward="true" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/core/sql/SqlDaoInterceptor.java">
+    <entry file="file://$PROJECT_DIR$/game_db/src/com/game/db/controller/DBPlayerInfoController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_proto_bean/src/protocal/MsgConstant.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_91/src.zip!/javax/swing/text/JTextComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="2332" column="45" selection-start-line="2332" selection-start-column="45" selection-end-line="2332" selection-end-column="45" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#87521#87739#0" expanded="true" />
+            <element signature="e#87738#87739#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/core/sql/SqlDao.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_91/src.zip!/java/util/concurrent/Future.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="791">
-          <caret line="103" column="22" lean-forward="true" selection-start-line="103" selection-start-column="22" selection-end-line="103" selection-end-column="22" />
+        <state relative-caret-position="244">
+          <caret line="150" column="6" selection-start-line="150" selection-start-column="6" selection-end-line="150" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ideaLibSources/async-http-client-2.10.4-sources.jar!/org/asynchttpclient/DefaultAsyncHttpClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="225" column="20" selection-start-line="225" selection-start-column="20" selection-end-line="225" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ideaLibSources/async-http-client-2.10.4-sources.jar!/org/asynchttpclient/BoundRequestBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="34" column="24" lean-forward="true" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#720#721#0" expanded="true" />
-            <element signature="e#749#750#0" expanded="true" />
-            <element signature="e#3136#3137#0" expanded="true" />
-            <element signature="e#3165#3166#0" expanded="true" />
+            <element signature="e#1435#1436#0" expanded="true" />
+            <element signature="e#1491#1492#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/core/sql/MFNutDaoRunner.java">
+    <entry file="file://$PROJECT_DIR$/core/src/core/msg/TransferMsg.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="66" selection-start-line="66" selection-end-line="66" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5199#5200#0" expanded="true" />
-            <element signature="e#5257#5258#0" expanded="true" />
-            <element signature="e#5312#5313#0" expanded="true" />
-            <element signature="e#5354#5355#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="250">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ideaLibSources/async-http-client-2.10.4-sources.jar!/org/asynchttpclient/RequestBuilderBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="372" column="11" selection-start-line="372" selection-start-column="11" selection-end-line="372" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ideaLibSources/async-http-client-2.10.4-sources.jar!/org/asynchttpclient/AsyncHttpClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="198" column="40" lean-forward="true" selection-start-line="198" selection-start-column="40" selection-end-line="198" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/async-http-client-2.10.4.jar!/org/asynchttpclient/AsyncHttpClient.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/EnterGameController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/core/netty/asyncHttp/AsyncHttp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="84" column="61" selection-start-line="84" selection-start-column="48" selection-end-line="84" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/core/msg/HttpTransferMsg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game_proto_bean/src/protocal/HeaderProto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
         </state>
       </provider>
     </entry>

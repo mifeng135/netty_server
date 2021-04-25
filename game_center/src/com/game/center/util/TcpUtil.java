@@ -5,7 +5,7 @@ import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
-import protocal.local.base.HeaderProto;
+import protocal.HeaderProto;
 
 import static config.Config.GATE_CENTER_SOCKET_INDEX;
 
