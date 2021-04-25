@@ -3,7 +3,7 @@ package core.msg;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import lombok.Setter;
-import protocal.HeaderProto;
+import protocal.TcpHeaderProto;
 
 
 /**
@@ -12,7 +12,7 @@ import protocal.HeaderProto;
 @Getter
 @Setter
 public class TransferMsg {
-    private HeaderProto headerProto;
+    private TcpHeaderProto headerProto;
     private byte[] data;
     private ChannelHandlerContext context;
 }

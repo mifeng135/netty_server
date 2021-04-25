@@ -5,13 +5,13 @@ import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
-import protocal.HeaderProto;
+import protocal.TcpHeaderProto;
 
 import static config.Config.GATE_CENTER_SOCKET_INDEX;
 
 public class TcpUtil {
 
-    public static void sendToGate(HeaderProto headerProto, Object msg) {
+    public static void sendToGate(TcpHeaderProto headerProto, Object msg) {
         byte[] data = ProtoUtil.serialize(msg);
         TransferMsg transferMsg = new TransferMsg();
         transferMsg.setHeaderProto(headerProto);

@@ -8,7 +8,7 @@ import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.AsyncHttpClient;
 
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
-import protocal.HeaderProto;
+import protocal.TcpHeaderProto;
 
 import java.util.concurrent.ExecutionException;
 
@@ -48,7 +48,7 @@ public class AsyncHttp {
      * @param msg
      * @param handler
      */
-    public void postAsync(HeaderProto headerDBProto, Object msg, AsyncCompletionHandler handler) {
+    public void postAsync(TcpHeaderProto headerDBProto, Object msg, AsyncCompletionHandler handler) {
         byte[] headerData = ProtoUtil.serialize(headerDBProto);
         byte[] data = ProtoUtil.serialize(msg);
         ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
@@ -65,7 +65,7 @@ public class AsyncHttp {
      * @param data
      * @param handler
      */
-    public void postAsync(HeaderProto headerDBProto, byte[] data, AsyncCompletionHandler handler) {
+    public void postAsync(TcpHeaderProto headerDBProto, byte[] data, AsyncCompletionHandler handler) {
         byte[] headerData = ProtoUtil.serialize(headerDBProto);
         ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
         byteBuf.writeShort(headerData.length);
@@ -81,7 +81,7 @@ public class AsyncHttp {
      * @param headerDBProto
      * @param msg
      */
-    public TransferMsg postSync(HeaderProto headerDBProto, Object msg) {
+    public TransferMsg postSync(TcpHeaderProto headerDBProto, Object msg) {
         byte[] headerData = ProtoUtil.serialize(headerDBProto);
         byte[] data = ProtoUtil.serialize(msg);
         ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
@@ -108,7 +108,7 @@ public class AsyncHttp {
      * @param headerDBProto
      * @param data
      */
-    public TransferMsg postSync(HeaderProto headerDBProto, byte[] data) {
+    public TransferMsg postSync(TcpHeaderProto headerDBProto, byte[] data) {
         byte[] headerData = ProtoUtil.serialize(headerDBProto);
         ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
         byteBuf.writeShort(headerData.length);
@@ -140,7 +140,7 @@ public class AsyncHttp {
         byte[] bodyData = new byte[bodyLen];
         buf.readBytes(bodyData);
 
-        HeaderProto headerProto = ProtoUtil.deserializer(headerData, HeaderProto.class);
+        TcpHeaderProto headerProto = ProtoUtil.deserializer(headerData, TcpHeaderProto.class);
         TransferMsg transferMsg = new TransferMsg();
         transferMsg.setHeaderProto(headerProto);
         transferMsg.setData(bodyData);

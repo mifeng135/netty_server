@@ -6,7 +6,7 @@ import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import protocal.HeaderProto;
+import protocal.TcpHeaderProto;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class GDecoder extends ByteToMessageDecoder {
 
         byte[] headerData = new byte[headerLen];
         byteBuf.readBytes(headerData);
-        HeaderProto headerProto = ProtoUtil.deserializer(headerData, HeaderProto.class);
+        TcpHeaderProto headerProto = ProtoUtil.deserializer(headerData, TcpHeaderProto.class);
         String ip = context.channel().attr(Constants.REMOTE_ADDRESS).get();
         headerProto.setRemoteIp(ip);
 

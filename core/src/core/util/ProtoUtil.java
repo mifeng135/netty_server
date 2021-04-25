@@ -4,7 +4,7 @@ import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtobufIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
-import protocal.HeaderProto;
+import protocal.TcpHeaderProto;
 
 import java.util.List;
 
@@ -32,16 +32,16 @@ public class ProtoUtil {
         return message;
     }
 
-    public static HeaderProto initHeaderProto(int msgId, int playerIndex, List<Integer> noticePlayer) {
-        HeaderProto headerProto = new HeaderProto();
+    public static TcpHeaderProto initHeaderProto(int msgId, int playerIndex, List<Integer> noticePlayer) {
+        TcpHeaderProto headerProto = new TcpHeaderProto();
         headerProto.setMsgId(msgId);
         headerProto.setPlayerIndex(playerIndex);
         headerProto.setNoticeList(noticePlayer);
         return headerProto;
     }
 
-    public static HeaderProto initHeaderProto(int msgId, int playerIndex) {
-        HeaderProto headerProto = new HeaderProto();
+    public static TcpHeaderProto initHeaderProto(int msgId, int playerIndex) {
+        TcpHeaderProto headerProto = new TcpHeaderProto();
         headerProto.setMsgId(msgId);
         headerProto.setPlayerIndex(playerIndex);
         return headerProto;

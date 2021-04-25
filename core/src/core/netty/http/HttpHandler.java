@@ -10,7 +10,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
-import protocal.HeaderProto;
+import protocal.TcpHeaderProto;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,7 +47,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
                 byte[] bodyData = new byte[bodyLen];
                 buf.readBytes(bodyData);
 
-                HeaderProto headerProto = ProtoUtil.deserializer(headerData, HeaderProto.class);
+                TcpHeaderProto headerProto = ProtoUtil.deserializer(headerData, TcpHeaderProto.class);
                 int playerIndex = headerProto.getPlayerIndex() == 0 ? httpIndex : headerProto.getPlayerIndex();
                 headerProto.setPlayerIndex(playerIndex);
                 TransferMsg transferMsg = new TransferMsg();
