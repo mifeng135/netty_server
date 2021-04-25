@@ -11,7 +11,6 @@ import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
-import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protocal.MsgConstant;
@@ -30,7 +29,7 @@ public class ServerListController {
     private static Logger logger = LoggerFactory.getLogger(ServerListController.class);
 
     @CtrlCmd(cmd = MsgConstant.MSG_SERVER_LIST_REQ)
-    public void getServerList(TransferMsg msg, ChannelHandlerContext context) {
+    public void getServerList(TransferMsg msg) {
         GetServerListReq serverListReq = ProtoUtil.deserializer(msg.getData(), GetServerListReq.class);
         String openId = serverListReq.getOpenId();
         List<LoginPlayerServerInfoBean> selfServerList = getSelfPlayerServerList(openId);
@@ -38,7 +37,7 @@ public class ServerListController {
         GetServerListRsp serverListRsp = new GetServerListRsp();
         serverListRsp.setServerList(serverList);
         serverListRsp.setSelfServerList(selfServerList);
-        HttpUtil.sendMsg(context, MsgConstant.MSG_SERVER_LIST_RSP, serverListRsp);
+        HttpUtil.sendMsg(msg.getContext(), MsgConstant.MSG_SERVER_LIST_RSP, serverListRsp);
     }
 
     private List<LoginPlayerServerInfoBean> getSelfPlayerServerList(String openId) {

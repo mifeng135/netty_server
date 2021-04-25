@@ -28,42 +28,42 @@ import static protocal.MsgConstant.*;
 public class BaseController {
 
     @CtrlCmd(cmd = MSG_REMOTE_OPEN_SOCKET_REQ)
-    public void remoteSocketOpen(TransferMsg msg, ChannelHandlerContext context) {
+    public void remoteSocketOpen(TransferMsg msg) {
         ClientSocketLoginReq clientSocketLoginReq = ProtoUtil.deserializer(msg.getData(), ClientSocketLoginReq.class);
         int playerIndex = clientSocketLoginReq.getPlayerIndex();
-        process(context, playerIndex);
+        process(msg.getContext(), playerIndex);
         TcpUtil.sendToClient(playerIndex, MsgConstant.MSG_REMOTE_OPEN_SOCKET_RSP, new ClientSocketLoginRsp());
         LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
     }
 
     @CtrlCmd(cmd = MSG_HEART_BEAT_REQ)
-    public void heartBeat(TransferMsg msg, ChannelHandlerContext context) {
+    public void heartBeat(TransferMsg msg) {
         HeartBeartRsp heatbeartRsq = new HeartBeartRsp();
         heatbeartRsq.setTime(TimeUtil.getCurrentTimeSecond());
         TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), MsgConstant.MSG_HEART_BEAT_RSP, heatbeartRsq);
     }
 
     @CtrlCmd(cmd = MSG_RECONNECT_REQ)
-    public void reconnect(TransferMsg msg, ChannelHandlerContext context) {
+    public void reconnect(TransferMsg msg) {
         ReconnectReq reconnectReq = ProtoUtil.deserializer(msg.getData(), ReconnectReq.class);
         int socketIndex = reconnectReq.getSocketIndex();
-        process(context, socketIndex);
+        process(msg.getContext(), socketIndex);
         TcpUtil.sendToClient(socketIndex, MSG_RECONNECT_RSP, new ReconnectRsp());
     }
 
     @CtrlCmd(cmd = MSG_REMOTE_SOCKET_CLOSE_PUSH)
-    public void remoteSocketClose(TransferMsg msg, ChannelHandlerContext context) {
+    public void remoteSocketClose(TransferMsg msg) {
         LocalRouterSocketManager.getInstance().sendRouterMsg(msg);
-        RemoteSocketManager.getInstance().removeChannel(context.channel());
+        RemoteSocketManager.getInstance().removeChannel(msg.getContext().channel());
     }
 
     @CtrlCmd(cmd = MSG_LOCAL_SOCKET_CLOSE_PUSH)
-    public void localSocketClose(TransferMsg msg, ChannelHandlerContext context) {
-        LocalSocketManager.getInstance().removeChannel(context.channel());
+    public void localSocketClose(TransferMsg msg) {
+        LocalSocketManager.getInstance().removeChannel(msg.getContext().channel());
     }
 
     @CtrlCmd(cmd = MSG_REGISTER_MSG_CMD_PUSH)
-    public void localSocket(TransferMsg msg, ChannelHandlerContext context) {
+    public void localSocket(TransferMsg msg) {
         RegisterMsgCmdPush registerMsgCmdReq = ProtoUtil.deserializer(msg.getData(), RegisterMsgCmdPush.class);
         Set<Integer> set = new HashSet<>();
         set.addAll(registerMsgCmdReq.getMsgList());

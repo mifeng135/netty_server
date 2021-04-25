@@ -1,5 +1,6 @@
 package com.game.db.util;
 
+import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -10,18 +11,10 @@ import protocal.HeaderProto;
 
 public class MsgUtil {
 
-    public static void sendMsg(ChannelHandlerContext context, HeaderProto headerProto, Object msg) {
-
-        byte[] headerData = ProtoUtil.serialize(headerProto);
-        byte[] bodyData = ProtoUtil.serialize(msg);
-        ByteBuf buf = Unpooled.buffer(4 + headerData.length + bodyData.length);
-        buf.writeShort(headerData.length);
-        buf.writeShort(bodyData.length);
-        buf.writeBytes(headerData);
-        buf.writeBytes(bodyData);
-
-        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
+    public static void sendMsg(TransferMsg transferMsg, Object msgObj) {
+        ByteBuf byteBuf = ProtoUtil.encodeDBHttpMsg(transferMsg, msgObj);
+        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, byteBuf);
         response.headers().set(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-        context.channel().writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+        transferMsg.getContext().channel().writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 }

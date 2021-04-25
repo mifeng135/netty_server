@@ -33,7 +33,7 @@ public class AsyncHttp {
                 .setIoThreadsCount(Runtime.getRuntime().availableProcessors() * 2)
                 .setConnectTimeout(1000)
                 .setReadTimeout(1000)
-                .setRequestTimeout(3000)
+                .setRequestTimeout(1000)
                 .setMaxRequestRetry(2)
                 .setThreadPoolName("AsyncHttp"));
     }
@@ -49,13 +49,8 @@ public class AsyncHttp {
      * @param handler
      */
     public void postAsync(HeaderProto headerDBProto, Object msg, AsyncCompletionHandler handler) {
-        byte[] headerData = ProtoUtil.serialize(headerDBProto);
         byte[] data = ProtoUtil.serialize(msg);
-        ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
-        byteBuf.writeShort(headerData.length);
-        byteBuf.writeShort(data.length);
-        byteBuf.writeBytes(headerData);
-        byteBuf.writeBytes(data);
+        ByteBuf byteBuf = assignByteBuf(headerDBProto, data);
         asyncHttpClient.preparePost(baseUrl).setBody(byteBuf.array()).execute(handler);
     }
 
@@ -66,12 +61,7 @@ public class AsyncHttp {
      * @param handler
      */
     public void postAsync(HeaderProto headerDBProto, byte[] data, AsyncCompletionHandler handler) {
-        byte[] headerData = ProtoUtil.serialize(headerDBProto);
-        ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
-        byteBuf.writeShort(headerData.length);
-        byteBuf.writeShort(data.length);
-        byteBuf.writeBytes(headerData);
-        byteBuf.writeBytes(data);
+        ByteBuf byteBuf = assignByteBuf(headerDBProto, data);
         asyncHttpClient.preparePost(baseUrl).setBody(byteBuf.array()).execute(handler);
     }
 
@@ -82,17 +72,12 @@ public class AsyncHttp {
      * @param msg
      */
     public TransferMsg postSync(HeaderProto headerDBProto, Object msg) {
-        byte[] headerData = ProtoUtil.serialize(headerDBProto);
         byte[] data = ProtoUtil.serialize(msg);
-        ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
-        byteBuf.writeShort(headerData.length);
-        byteBuf.writeShort(data.length);
-        byteBuf.writeBytes(headerData);
-        byteBuf.writeBytes(data);
+        ByteBuf byteBuf = assignByteBuf(headerDBProto, data);
         TransferMsg transferMsg = null;
         try {
             byte[] responseData = asyncHttpClient.preparePost(baseUrl).setBody(byteBuf.array()).execute().get().getResponseBodyAsBytes();
-            transferMsg = transferData(responseData);
+            transferMsg = ProtoUtil.decodeDBHttpMsg(responseData);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -109,16 +94,11 @@ public class AsyncHttp {
      * @param data
      */
     public TransferMsg postSync(HeaderProto headerDBProto, byte[] data) {
-        byte[] headerData = ProtoUtil.serialize(headerDBProto);
-        ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
-        byteBuf.writeShort(headerData.length);
-        byteBuf.writeShort(data.length);
-        byteBuf.writeBytes(headerData);
-        byteBuf.writeBytes(data);
+        ByteBuf byteBuf = assignByteBuf(headerDBProto, data);
         TransferMsg transferMsg = null;
         try {
             byte[] responseData = asyncHttpClient.preparePost(baseUrl).setBody(byteBuf.array()).execute().get().getResponseBodyAsBytes();
-            transferMsg = transferData(responseData);
+            transferMsg = ProtoUtil.decodeDBHttpMsg(responseData);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -127,23 +107,19 @@ public class AsyncHttp {
         return transferMsg;
     }
 
-    public TransferMsg transferData(byte[] data) {
 
-        ByteBuf buf = Unpooled.wrappedBuffer(data);
-
-        int headerLen = buf.readShort();
-        int bodyLen = buf.readShort();
-
-        byte[] headerData = new byte[headerLen];
-        buf.readBytes(headerData);
-
-        byte[] bodyData = new byte[bodyLen];
-        buf.readBytes(bodyData);
-
-        HeaderProto headerProto = ProtoUtil.deserializer(headerData, HeaderProto.class);
-        TransferMsg transferMsg = new TransferMsg();
-        transferMsg.setHeaderProto(headerProto);
-        transferMsg.setData(bodyData);
-        return transferMsg;
+    /**
+     * @param headerDBProto
+     * @param data
+     * @return
+     */
+    private ByteBuf assignByteBuf(HeaderProto headerDBProto, byte[] data) {
+        byte[] headerData = ProtoUtil.serialize(headerDBProto);
+        ByteBuf byteBuf = Unpooled.buffer(4 + data.length + headerData.length);
+        byteBuf.writeShort(headerData.length);
+        byteBuf.writeShort(data.length);
+        byteBuf.writeBytes(headerData);
+        byteBuf.writeBytes(data);
+        return byteBuf;
     }
 }

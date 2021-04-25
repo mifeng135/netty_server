@@ -17,9 +17,9 @@ import static protocal.MsgConstant.*;
 public class BaseController {
 
     @CtrlCmd(cmd = MSG_LOCAL_OPEN_SOCKET_PUSH)
-    public void localSocketOpen(TransferMsg msg, ChannelHandlerContext context) {
+    public void localSocketOpen(TransferMsg msg) {
         int socketIndex = msg.getHeaderProto().getPlayerIndex();
-        process(context, socketIndex);
+        process(msg.getContext(), socketIndex);
         RegisterMsgCmdPush registerMsgCmdReq = new RegisterMsgCmdPush();
         msg.getHeaderProto().setMsgId(MSG_REGISTER_MSG_CMD_PUSH);
         registerMsgCmdReq.setMsgList(CtrlAnnotation.getInstance().getMsgList());
@@ -27,12 +27,12 @@ public class BaseController {
     }
 
     @CtrlCmd(cmd = MSG_LOCAL_SOCKET_CLOSE_PUSH)
-    public void localSocketClose(TransferMsg msg, ChannelHandlerContext context) {
-        LocalSocketManager.getInstance().removeChannel(context.channel());
+    public void localSocketClose(TransferMsg msg) {
+        LocalSocketManager.getInstance().removeChannel(msg.getContext().channel());
     }
 
     @CtrlCmd(cmd = MSG_REMOTE_SOCKET_CLOSE_PUSH)
-    public void remoteSocketClose(TransferMsg msg, ChannelHandlerContext context) {
+    public void remoteSocketClose(TransferMsg msg) {
         // TODO: 2021/4/14
         //need process socket close
     }

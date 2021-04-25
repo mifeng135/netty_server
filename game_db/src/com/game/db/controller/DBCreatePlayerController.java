@@ -15,20 +15,18 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.sql.SqlDao;
 import core.util.ProtoUtil;
-import io.netty.channel.ChannelHandlerContext;
 import protocal.remote.user.CreatePlayerReq;
 import protocal.remote.user.CreatePlayerRsp;
 
 import static com.game.db.constant.GameConstant.MAP_INIT_ID;
 import static com.game.db.constant.GameConstant.SQL_KEY_LOGIN;
-import static core.Constants.SQL_MASTER;
 import static protocal.MsgConstant.*;
 
 @Ctrl
 public class DBCreatePlayerController {
 
     @CtrlCmd(cmd = DB_CMD_CREATE_PLAYER_REQ)
-    public void dbCreatePlayer(TransferMsg msg, ChannelHandlerContext context) {
+    public void dbCreatePlayer(TransferMsg msg) {
         CreatePlayerReq createPlayerReq = ProtoUtil.deserializer(msg.getData(), CreatePlayerReq.class);
         int playerIndex = msg.getHeaderProto().getPlayerIndex();
         int job = createPlayerReq.getJob();
@@ -52,11 +50,11 @@ public class DBCreatePlayerController {
             createPlayerRsp.setHasRole(true);
             createPlayerRsp.setPlayerRole(playerRoleBean);
             createPlayerRsp.setPlayerScene(playerSceneBean);
-            MsgUtil.sendMsg(context, msg.getHeaderProto(), createPlayerRsp);
+            MsgUtil.sendMsg(msg, createPlayerRsp);
             return;
         }
         createPlayerRsp.setHasRole(true);
-        MsgUtil.sendMsg(context, msg.getHeaderProto(), createPlayerRsp);
+        MsgUtil.sendMsg(msg, createPlayerRsp);
     }
 
     private PlayerBean initPlayer(int playerIndex, String name, String remoteIp, String openId) {

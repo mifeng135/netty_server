@@ -114,7 +114,7 @@ public class CtrlAnnotation {
         return msgList;
     }
 
-    public void invokeMethod(TransferMsg transferMsg, ChannelHandlerContext context) {
+    public void invokeMethod(TransferMsg transferMsg) {
         int msgId = transferMsg.getHeaderProto().getMsgId();
         Method method = methodMap.get(msgId);
         if (method == null) {
@@ -126,7 +126,7 @@ public class CtrlAnnotation {
         MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
         String methodName = method.getName();
         try {
-            methodAccess.invoke(oc, methodName, transferMsg, context);
+            methodAccess.invoke(oc, methodName, transferMsg);
         } catch (Exception e) {
             e.printStackTrace();
         }

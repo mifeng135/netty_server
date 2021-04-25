@@ -21,7 +21,6 @@ public class DBServerApplication {
 
     public static void main(String[] args) {
 
-
         SqlDaoConfig dbSqlConfig = new SqlDaoConfig();
         dbSqlConfig.setMasterFileName("master-db.properties");
         dbSqlConfig.setPreSqlName("pre-sql.sqls");
@@ -31,7 +30,6 @@ public class DBServerApplication {
         loginSqlConfig.setMasterFileName("login.properties");
 
         SqlDao.getInstance().initWithConfigList(dbSqlConfig, loginSqlConfig);
-
 
         new PropertiesConfig();
         CtrlAnnotation.getInstance().init(DBServerApplication.class.getPackage().getName());
