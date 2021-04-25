@@ -19,9 +19,6 @@ public class MessageThreadTask extends Thread {
         mProcessEventHandler = processEventHandler;
     }
 
-    public int getTag() {
-        return tag;
-    }
     @Override
     public void run() {
         while (true) {

@@ -9,7 +9,7 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.EventLoop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protocal.TcpHeaderProto;
+import protocal.HeaderProto;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +39,7 @@ public class ConnectionListener implements ChannelFutureListener {
             logger.info("connect success ip = {} port = {} playerIndex = {}", ip, port, playerIndex);
             LocalSocketManager.getInstance().putChannel(playerIndex, channelFuture.channel());
 
-            TcpHeaderProto headerProto = ProtoUtil.initHeaderProto(MSG_LOCAL_OPEN_SOCKET_PUSH, playerIndex);
+            HeaderProto headerProto = ProtoUtil.initHeaderProto(MSG_LOCAL_OPEN_SOCKET_PUSH, playerIndex);
             TransferMsg transferMsg = new TransferMsg();
             transferMsg.setHeaderProto(headerProto);
             channelFuture.channel().writeAndFlush(transferMsg);

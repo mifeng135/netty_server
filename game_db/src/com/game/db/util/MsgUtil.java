@@ -6,11 +6,11 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
-import protocal.TcpHeaderProto;
+import protocal.HeaderProto;
 
 public class MsgUtil {
 
-    public static void sendMsg(ChannelHandlerContext context, TcpHeaderProto headerProto, Object msg) {
+    public static void sendMsg(ChannelHandlerContext context, HeaderProto headerProto, Object msg) {
 
         byte[] headerData = ProtoUtil.serialize(headerProto);
         byte[] bodyData = ProtoUtil.serialize(msg);

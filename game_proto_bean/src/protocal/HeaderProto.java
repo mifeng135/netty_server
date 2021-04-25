@@ -8,7 +8,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class TcpHeaderProto {
+public class HeaderProto {
     private int playerIndex;
     private int msgId;
     private int msdType; // local 0 remote 1

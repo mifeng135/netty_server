@@ -5,12 +5,12 @@ import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
-import protocal.TcpHeaderProto;
+import protocal.HeaderProto;
 
 
 public class MsgUtil {
 
-    public static void sendMsg(TcpHeaderProto headerProto, Object msg) {
+    public static void sendMsg(HeaderProto headerProto, Object msg) {
         byte[] data = ProtoUtil.serialize(msg);
         TransferMsg transferMsg = new TransferMsg();
         transferMsg.setHeaderProto(headerProto);
@@ -22,7 +22,7 @@ public class MsgUtil {
         }
     }
 
-    public static void sendMsg(TcpHeaderProto headerProto, byte[] data) {
+    public static void sendMsg(HeaderProto headerProto, byte[] data) {
         TransferMsg transferMsg = new TransferMsg();
         transferMsg.setHeaderProto(headerProto);
         transferMsg.setData(data);
