@@ -48,7 +48,7 @@ public class MsgUtil {
         transferMsg.setHeaderProto(headerProto);
         transferMsg.setData(data);
 
-        Channel channel = LocalSocketManager.getInstance().getChanel(PropertiesConfig.gateSocketIndex);
+        Channel channel = LocalSocketManager.getInstance().getChanel(PropertiesConfig.gateLogicSocketIndex);
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(transferMsg);
         }

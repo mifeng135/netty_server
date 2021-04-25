@@ -20,8 +20,8 @@ import static protocal.MsgConstant.*;
  */
 @ChannelHandler.Sharable
 public class TcpServerHandler extends ChannelInboundHandlerAdapter {
-    private static Logger logger = LoggerFactory.getLogger(TcpServerHandler.class);
 
+    private static Logger logger = LoggerFactory.getLogger(TcpServerHandler.class);
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {

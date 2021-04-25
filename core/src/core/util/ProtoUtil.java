@@ -75,14 +75,6 @@ public class ProtoUtil {
         return transferMsg;
     }
 
-    public static HeaderProto initHeaderProto(int msgId, int playerIndex, List<Integer> noticePlayer) {
-        HeaderProto headerProto = new HeaderProto();
-        headerProto.setMsgId(msgId);
-        headerProto.setPlayerIndex(playerIndex);
-        headerProto.setNoticeList(noticePlayer);
-        return headerProto;
-    }
-
     public static HeaderProto initHeaderProto(int msgId, int playerIndex) {
         HeaderProto headerProto = new HeaderProto();
         headerProto.setMsgId(msgId);

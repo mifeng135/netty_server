@@ -9,7 +9,7 @@ public class PropertiesConfig {
     public static String serverIp;
     public static int serverPort;
 
-    public static int gateSocketIndex;
+    public static int gateLogicSocketIndex;
 
 
     public PropertiesConfig() {
@@ -23,6 +23,6 @@ public class PropertiesConfig {
         serverIp = ConfigUtil.getString("logic_server_ip");
         serverPort = ConfigUtil.getInt("logic_server_port");
 
-        gateSocketIndex = ConfigUtil.getInt("gate_logic_socket_index");
+        gateLogicSocketIndex = ConfigUtil.getInt("gate_logic_socket_index");
     }
 }
