@@ -3,9 +3,7 @@ package core.sql;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import javax.sql.DataSource;
 
 import org.nutz.dao.impl.FileSqlManager;
@@ -17,109 +15,92 @@ import org.nutz.lang.Streams;
 
 public class SqlDao {
 
-    protected static SqlDao sqlDao = new SqlDao("_defult_");
+    protected static SqlDao sqlDao = new SqlDao();
     protected static Class<?> druidFactoryClass;
-    protected String name;
-    private String prepareSqlFileName = "";
-    private NutDao nutDao;
-    private MFNutDaoRunner mfNutDaoRunner;
+    private Map<String, NutDao> nutDaoMap = new HashMap<>();
+    private NutDao defaultNutDao;
 
     public static SqlDao getInstance() {
         return sqlDao;
     }
 
-    protected SqlDao(String name) {
-        this.name = name;
+    protected SqlDao() {
+
     }
 
-    public void setDataSource(DataSource dataSource) {
-        nutDao = new NutDao(dataSource);
-        mfNutDaoRunner = new MFNutDaoRunner();
-        mfNutDaoRunner.setMeta(nutDao.meta());
-        nutDao.setRunner(mfNutDaoRunner);
-        if (prepareSqlFileName.length() != 0) {
-            nutDao.setSqlManager(new FileSqlManager(prepareSqlFileName));
+    public void initWithConfigList(SqlDaoConfig... configList) {
+        for (int i = 0; i < configList.length; i++) {
+            SqlDaoConfig config = configList[i];
+            try {
+                DataSource dataSource = createDataSource(new FileInputStream(Files.findFile(config.getMasterFileName())));
+                initNutDao(dataSource, config);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void init(String name, List<String> slave) {
-        try {
-            DataSource dataSource = this.init(new FileInputStream(Files.findFile(name)));
-            setDataSource(dataSource);
-            initSlave(slave);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void init(String name, String preSqlName, List<String> slave) {
-        try {
-            this.prepareSqlFileName = preSqlName;
-            DataSource dataSource = this.init(new FileInputStream(Files.findFile(name)));
-            setDataSource(dataSource);
-            initSlave(slave);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public DataSource init(InputStream in) throws IOException {
+    public DataSource createDataSource(InputStream in) throws IOException {
         DataSource dataSource;
         Properties props = new Properties();
         try {
             props.load(in);
-            dataSource = createDataSource(props);
+            Mirror<?> mirror = Mirror.me(druidFactoryClass);
+            dataSource = (DataSource) mirror.invoke(null, "createDataSource", new Object[]{props});
+            if (!props.containsKey("maxWait")) {
+                Mirror.me(dataSource).setValue(dataSource, "maxWait", 15000);
+            }
         } finally {
             Streams.safeClose(in);
         }
         return dataSource;
     }
 
-    private void initSlave(List<String> slave) {
+    private void initNutDao(DataSource dataSource, SqlDaoConfig config) {
+        NutDao nutDao = new NutDao(dataSource);
+        MFNutDaoRunner mfNutDaoRunner = new MFNutDaoRunner();
+        mfNutDaoRunner.setMeta(nutDao.meta());
+        nutDao.setRunner(mfNutDaoRunner);
+        if (config.getPreSqlName().length() != 0) {
+            nutDao.setSqlManager(new FileSqlManager(config.getPreSqlName()));
+        }
+        initSlave(config.getSlaveFileList(), mfNutDaoRunner);
+        if (config.getSqlKey().equals("default")) {
+            defaultNutDao = nutDao;
+        }
+        nutDaoMap.put(config.getSqlKey(), nutDao);
+    }
+
+    private void initSlave(List<String> slave, MFNutDaoRunner runner) {
         if (slave == null || slave.size() <= 0) {
             return;
         }
         List<DataSource> dataSourceList = new ArrayList<>();
         for (int i = 0; i < slave.size(); i++) {
             try {
-                DataSource dataSource = this.init(new FileInputStream(Files.findFile(slave.get(i))));
+                DataSource dataSource = this.createDataSource(new FileInputStream(Files.findFile(slave.get(i))));
                 dataSourceList.add(dataSource);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        mfNutDaoRunner.setSlaveDataSourceList(dataSourceList);
+        runner.setSlaveDataSourceList(dataSourceList);
     }
 
-    public DataSource createDataSource(Properties props) {
-        Mirror<?> mirror = Mirror.me(druidFactoryClass);
-        DataSource ds = (DataSource) mirror.invoke(null, "createDataSource", new Object[]{props});
-        if (!props.containsKey("maxWait")) {
-            Mirror.me(ds).setValue(ds, "maxWait", 15000);
-        }
-        return ds;
+    public NutDao getDao(String key) {
+        return nutDaoMap.get(key);
     }
 
     public NutDao getDao() {
-        return nutDao;
+        return defaultNutDao;
     }
 
     public synchronized void close() {
-        DataSource dataSource = nutDao.getDataSource();
+        DataSource dataSource = defaultNutDao.getDataSource();
         if (dataSource != null) {
             try {
                 Mirror.me(dataSource).invoke(dataSource, "close", new Object[0]);
             } catch (Throwable var2) {
-            }
-        }
-
-        List<DataSource> slaveList = mfNutDaoRunner.getSlaveDataSourceList();
-        if (slaveList != null) {
-            for (int i = 0; i < slaveList.size(); i++) {
-                try {
-                    Mirror.me(dataSource).invoke(slaveList.get(i), "close", new Object[0]);
-                } catch (Throwable var2) {
-                }
             }
         }
     }

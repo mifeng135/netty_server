@@ -1,5 +1,6 @@
 package protocal.remote.login;
 
+import bean.login.LoginPlayerServerInfoBean;
 import bean.login.ServerListInfoBean;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,5 +11,5 @@ import java.util.List;
 @Setter
 public class GetServerListRsp {
     private List<ServerListInfoBean> serverList;
-    private List<ServerListInfoBean> selfServerList;
+    private List<LoginPlayerServerInfoBean> selfServerList;
 }

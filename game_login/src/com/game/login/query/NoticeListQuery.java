@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static core.Constants.SQL_MASTER;
 
 public class NoticeListQuery {
 
@@ -38,7 +37,6 @@ public class NoticeListQuery {
     public static boolean deleteNotice(int noticeId) {
         boolean success = SqlDao.getInstance().getDao().clear(LoginNoticeBean.class,
                 Cnd.where("notice_id", "=", noticeId)) > 0;
-
         if (success) {
             RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
             redisCache.remove(noticeId);

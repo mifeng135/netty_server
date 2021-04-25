@@ -78,7 +78,11 @@ public class ServerListQuery {
      * @return
      */
     public static boolean deleteServer(int serverId) {
-        return SqlDao.getInstance().getDao().clear(ServerListInfoBean.class, Cnd.where("server_id", "=", serverId)) > 0;
+        boolean result = SqlDao.getInstance().getDao().clear(ServerListInfoBean.class, Cnd.where("server_id", "=", serverId)) > 0;
+        if (result) {
+            RedisCache.getInstance().getServerListCache().remove(serverId);
+        }
+        return result;
     }
 
     /**
@@ -112,10 +116,6 @@ public class ServerListQuery {
      * @return
      */
     public static boolean updateServerIp(int serverId, String serverIp) {
-        ServerListInfoBean serverListBean = new ServerListInfoBean();
-        serverListBean.setServerId(serverId);
-        serverListBean.setServerIp(serverIp);
-
         boolean result = SqlDao.getInstance().getDao().
                 update(ServerListInfoBean.class,
                         Chain.make("server_ip", serverIp),

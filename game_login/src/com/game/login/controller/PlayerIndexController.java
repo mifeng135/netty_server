@@ -26,21 +26,21 @@ public class PlayerIndexController {
 
     @CtrlCmd(cmd = MsgConstant.MSG_GET_PLAYER_INDEX_REQ)
     public void getPlayerIndex(TransferMsg msg, ChannelHandlerContext context) {
-        PlayerIndexReq playerIndexReq = ProtoUtil.deserializer(msg.getData(), PlayerIndexReq.class);
-        String openId = playerIndexReq.getOpenId();
-        boolean success = true;
-        LoginPlayerInfoBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
-        if (playerBean == null) {
-            success = PlayerInfoQuery.createPlayer(openId);
-        }
-        if (!success) {
-            ErroRsp erroRsp = new ErroRsp();
-            erroRsp.setErrorCode(1);
-            HttpUtil.sendErrorMsg(context, MsgConstant.MSG_SERVER_LIST_RSP, erroRsp);
-            return;
-        }
-        PlayerIndexRsp playerIndexRsp = new PlayerIndexRsp();
-        playerIndexRsp.setPlayerIndex(playerBean.getPlayerIndex());
-        HttpUtil.sendMsg(context, MSG_GET_PLAYER_INDEX_RSP, playerIndexRsp);
+//        PlayerIndexReq playerIndexReq = ProtoUtil.deserializer(msg.getData(), PlayerIndexReq.class);
+//        String openId = playerIndexReq.getOpenId();
+//        boolean success = true;
+//        LoginPlayerInfoBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
+//        if (playerBean == null) {
+//            success = PlayerInfoQuery.createPlayer(openId);
+//        }
+//        if (!success) {
+//            ErroRsp erroRsp = new ErroRsp();
+//            erroRsp.setErrorCode(1);
+//            HttpUtil.sendErrorMsg(context, MsgConstant.MSG_SERVER_LIST_RSP, erroRsp);
+//            return;
+//        }
+//        PlayerIndexRsp playerIndexRsp = new PlayerIndexRsp();
+//        playerIndexRsp.setPlayerIndex(playerBean.getPlayerIndex());
+//        HttpUtil.sendMsg(context, MSG_GET_PLAYER_INDEX_RSP, playerIndexRsp);
     }
 }

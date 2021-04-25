@@ -22,7 +22,7 @@ public class PlayerInfoQuery {
         return playerBean;
     }
 
-    public static boolean createPlayer(String openId) {
+    public static LoginPlayerInfoBean createPlayer(String openId) {
         LoginPlayerInfoBean playerBean = new LoginPlayerInfoBean();
         playerBean.setOpenId(openId);
         playerBean.setLoginTime(TimeUtil.getCurrentTimeSecond());
@@ -30,8 +30,8 @@ public class PlayerInfoQuery {
         if (playerBean != null) {
             RMap<String, LoginPlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
             redisCache.put(openId, playerBean);
-            return true;
+            return playerBean;
         }
-        return false;
+        return null;
     }
 }

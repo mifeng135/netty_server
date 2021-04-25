@@ -6,8 +6,7 @@ import core.group.EventThreadGroup;
 import core.netty.http.HttpServer;
 import core.redis.RedisManager;
 import core.sql.SqlDao;
-
-import java.util.Arrays;
+import core.sql.SqlDaoConfig;
 
 
 /**
@@ -16,9 +15,12 @@ import java.util.Arrays;
 public class LoginApplication {
 
     public static void main(String[] args) {
-        SqlDao.getInstance().init("login-master-dao.properties",
-                "pre-sql.sqls",
-                Arrays.asList("login-master-slave.properties"));
+
+        SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
+        loginSqlConfig.setMasterFileName("login-master-dao.properties");
+        loginSqlConfig.setPreSqlName("pre-sql.sqls");
+        loginSqlConfig.getSlaveFileList().add("login-master-slave.properties");
+        SqlDao.getInstance().initWithConfigList(loginSqlConfig);
 
         new ProperticeConfig();
         CtrlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName());
