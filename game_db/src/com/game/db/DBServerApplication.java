@@ -34,7 +34,7 @@ public class DBServerApplication {
         new PropertiesConfig();
         CtrlAnnotation.getInstance().init(DBServerApplication.class.getPackage().getName());
         RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
-                PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount);
+                PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.redisDB);
         RedisCache.getInstance();
         new HttpServer(PropertiesConfig.httpIp, PropertiesConfig.httpPort);
         new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, DBServerApplication.class.getName());

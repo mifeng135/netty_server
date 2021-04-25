@@ -95,6 +95,9 @@ public class RedisCache {
 
         List<Integer> playerIndexList = lastLoginPlayerList.stream().map(LoginPlayerInfoBean::getPlayerIndex).collect(Collectors.toList());
 
+        if (playerIndexList.size() <= 0) {
+            return;
+        }
         Sql sql = SqlDao.getInstance().getDao().sqls().create("select_player_login_info.data");
         sql.setParam("value", playerIndexList);
         sql.setCallback((conn, rs, sql1) -> {

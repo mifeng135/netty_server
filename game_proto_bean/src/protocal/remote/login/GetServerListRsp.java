@@ -12,4 +12,5 @@ import java.util.List;
 public class GetServerListRsp {
     private List<ServerListInfoBean> serverList;
     private List<LoginPlayerServerInfoBean> selfServerList;
+    private int playerIndex;
 }

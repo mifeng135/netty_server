@@ -24,6 +24,7 @@ public class MFNutDaoRunner implements DaoRunner, Configurable {
 
     private static final Log log = Logs.get();
 
+    protected DatabaseMeta meta;
 
     protected List<DataSource> slaveDataSourceList;
 
@@ -146,7 +147,6 @@ public class MFNutDaoRunner implements DaoRunner, Configurable {
         callback.invoke(conn);
     }
 
-    protected DatabaseMeta meta;
 
     public void setMeta(DatabaseMeta meta) {
         this.meta = meta;

@@ -19,13 +19,13 @@ public class LoginApplication {
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
         loginSqlConfig.setMasterFileName("login-master-dao.properties");
         loginSqlConfig.setPreSqlName("pre-sql.sqls");
-        loginSqlConfig.getSlaveFileList().add("login-master-slave.properties");
+        //loginSqlConfig.getSlaveFileList().add("login-master-slave.properties");
         SqlDao.getInstance().initWithConfigList(loginSqlConfig);
 
         new ProperticeConfig();
         CtrlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName());
         RedisManager.getInstance().init(ProperticeConfig.redisIp, ProperticeConfig.redisPassword,
-                ProperticeConfig.redisThreadCount, ProperticeConfig.redisNettyThreadCount);
+                ProperticeConfig.redisThreadCount, ProperticeConfig.redisNettyThreadCount, ProperticeConfig.db);
         RedisCache.getInstance();
         new HttpServer(ProperticeConfig.httpIp, ProperticeConfig.httpPort);
         new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginApplication.class.getName());

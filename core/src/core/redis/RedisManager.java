@@ -28,12 +28,15 @@ public class RedisManager {
     public void init(String ip, String pwd) {
         config.useSingleServer().setAddress(ip);
         config.useSingleServer().setPassword(pwd);
+        config.useSingleServer().setDatabase(2);
         redissonClient = Redisson.create(config);
+
     }
 
-    public void init(String ip, String pwd, int thread, int nettyThread) {
+    public void init(String ip, String pwd, int thread, int nettyThread,int db) {
         config.useSingleServer().setAddress(ip);
         config.useSingleServer().setPassword(pwd);
+        config.useSingleServer().setDatabase(db);
         config.setThreads(thread);
         config.setNettyThreads(nettyThread);
         redissonClient = Redisson.create(config);

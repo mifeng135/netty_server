@@ -11,6 +11,7 @@ public class PropertiesConfig {
     public static String redisPassword;
     public static int redisThreadCount;
     public static int redisNettyThreadCount;
+    public static int redisDB;
 
     public static String httpIp;
     public static int httpPort;
@@ -31,6 +32,7 @@ public class PropertiesConfig {
         redisPassword = ConfigUtil.getString("redis_password");
         redisThreadCount = ConfigUtil.getInt("redis_thread_count");
         redisNettyThreadCount = ConfigUtil.getInt("redis_netty_thread_count");
+        redisDB = ConfigUtil.getInt("redis_db");
 
         httpIp = ConfigUtil.getString("db_http_ip");
         httpPort = ConfigUtil.getInt("db_http_port");

@@ -32,21 +32,22 @@ public class ServerListController {
     public void getServerList(TransferMsg msg) {
         GetServerListReq serverListReq = ProtoUtil.deserializer(msg.getData(), GetServerListReq.class);
         String openId = serverListReq.getOpenId();
-        List<LoginPlayerServerInfoBean> selfServerList = getSelfPlayerServerList(openId);
+        LoginPlayerInfoBean playerInfoBean = queryLoginPlayerInfo(openId);
+        List<LoginPlayerServerInfoBean> selfServerList = PlayerServerInfoQuery.queryPlayerServerInfo(playerInfoBean.getPlayerIndex());
         List<ServerListInfoBean> serverList = ServerListQuery.queryAllServerList();
         GetServerListRsp serverListRsp = new GetServerListRsp();
         serverListRsp.setServerList(serverList);
         serverListRsp.setSelfServerList(selfServerList);
+        serverListRsp.setPlayerIndex(playerInfoBean.getPlayerIndex());
         HttpUtil.sendMsg(msg.getContext(), MsgConstant.MSG_SERVER_LIST_RSP, serverListRsp);
     }
 
-    private List<LoginPlayerServerInfoBean> getSelfPlayerServerList(String openId) {
+
+    private LoginPlayerInfoBean queryLoginPlayerInfo(String openId) {
         LoginPlayerInfoBean playerBean = PlayerInfoQuery.queryPlayerInfo(openId);
-        if (playerBean != null) {
-            return PlayerServerInfoQuery.queryPlayerServerInfo(playerBean.getPlayerIndex());
-        } else {
-            PlayerInfoQuery.createPlayer(openId);
+        if (playerBean == null) {
+            playerBean = PlayerInfoQuery.createPlayer(openId);
         }
-        return null;
+        return playerBean;
     }
 }
