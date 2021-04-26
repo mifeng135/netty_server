@@ -1,7 +1,7 @@
 package com.game.db.controller;
 
 
-import bean.player.PlayerBean;
+import bean.player.PlayerInfoBean;
 import bean.player.PlayerRoleBean;
 import bean.player.PlayerSceneBean;
 import bean.login.LoginPlayerServerInfoBean;
@@ -15,8 +15,8 @@ import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.sql.SqlDao;
 import core.util.ProtoUtil;
+import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.CreatePlayerReq;
-import protocal.remote.user.CreatePlayerRsp;
 
 import static com.game.db.constant.GameConstant.MAP_INIT_ID;
 import static com.game.db.constant.GameConstant.SQL_KEY_LOGIN;
@@ -34,8 +34,8 @@ public class DBCreatePlayerController {
         String name = createPlayerReq.getName();
         String openId = createPlayerReq.getOpenId();
 
-        PlayerBean playerBean = initPlayer(playerIndex, name, msg.getHeaderProto().getRemoteIp(), openId);
-        boolean playerResult = PlayerInfoQuery.createPlayer(playerBean);
+        PlayerInfoBean playerInfoBean = initPlayer(playerIndex, name, msg.getHeaderProto().getRemoteIp(), openId);
+        boolean playerResult = PlayerInfoQuery.createPlayer(playerInfoBean);
 
         PlayerSceneBean playerSceneBean = initPlayerScene(playerIndex);
         boolean secenResult = PlayerSceneQuery.createScene(playerSceneBean);
@@ -45,20 +45,19 @@ public class DBCreatePlayerController {
 
         boolean updateLoginServer = insertLoginServerInfo(playerIndex);
 
-        CreatePlayerRsp createPlayerRsp = new CreatePlayerRsp();
+        PlayerAllInfoDB playerAllInfoDB = new PlayerAllInfoDB();
         if (playerResult && secenResult && playerRoleResult && updateLoginServer) {
-            createPlayerRsp.setHasRole(true);
-            createPlayerRsp.setPlayerRole(playerRoleBean);
-            createPlayerRsp.setPlayerScene(playerSceneBean);
-            MsgUtil.sendMsg(msg, createPlayerRsp);
+            playerAllInfoDB.setPlayerRole(playerRoleBean);
+            playerAllInfoDB.setPlayerInfo(playerInfoBean);
+            playerAllInfoDB.setPlayerScene(playerSceneBean);
+            MsgUtil.sendMsg(msg, playerAllInfoDB);
             return;
         }
-        createPlayerRsp.setHasRole(true);
-        MsgUtil.sendMsg(msg, createPlayerRsp);
+        MsgUtil.sendMsg(msg, playerAllInfoDB);
     }
 
-    private PlayerBean initPlayer(int playerIndex, String name, String remoteIp, String openId) {
-        PlayerBean playerBean = new PlayerBean();
+    private PlayerInfoBean initPlayer(int playerIndex, String name, String remoteIp, String openId) {
+        PlayerInfoBean playerBean = new PlayerInfoBean();
         playerBean.setServerId(PropertiesConfig.serverId);
         playerBean.setPlayerIndex(playerIndex);
         playerBean.setName(name);

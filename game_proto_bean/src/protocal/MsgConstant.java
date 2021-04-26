@@ -2,12 +2,14 @@ package protocal;
 
 
 public class MsgConstant {
+    /***************************************************************************************/
 
+    public static final int MSG_SYSTEM_EXCEPTION_PUSH = 1;
 
     /***********************************db center**************************************************/
 
-    public static final int DB_CMD_QUERY_PLAYER_INFO_REQ = 1001;                //查询玩家信息
-    public static final int DB_CMD_CREATE_PLAYER_REQ = 1002;                    //创建角色
+    public static final int DB_CMD_QUERY_ALL_PLAYER_INFO_REQ = 1001;                //查询玩家信息
+    public static final int DB_CMD_CREATE_PLAYER_REQ = 1002;                        //创建角色
 
     /************************************client center******************************************************/
 

@@ -1,7 +1,7 @@
 package com.game.db.controller;
 
 
-import bean.player.PlayerBean;
+import bean.player.PlayerInfoBean;
 import bean.player.PlayerItemBean;
 import bean.player.PlayerRoleBean;
 import bean.player.PlayerSceneBean;
@@ -13,34 +13,34 @@ import com.game.db.util.MsgUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
+import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.EnterGameRsp;
 
 import java.util.List;
 
-import static protocal.MsgConstant.DB_CMD_QUERY_PLAYER_INFO_REQ;
+import static protocal.MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_REQ;
 
 @Ctrl
 public class DBPlayerInfoController {
 
-    @CtrlCmd(cmd = DB_CMD_QUERY_PLAYER_INFO_REQ)
+    @CtrlCmd(cmd = DB_CMD_QUERY_ALL_PLAYER_INFO_REQ)
     public void getPlayerInfo(TransferMsg msg) {
         int playerIndex = msg.getHeaderProto().getPlayerIndex();
-        PlayerBean playerBean = PlayerInfoQuery.queryPlayer(playerIndex);
+        PlayerInfoBean playerBean = PlayerInfoQuery.queryPlayer(playerIndex);
         if (playerBean == null) {
-            EnterGameRsp enterGameRsp = new EnterGameRsp();
-            enterGameRsp.setHasRole(false);
-            MsgUtil.sendMsg(msg, new EnterGameRsp());
+            PlayerAllInfoDB playerAllInfoDB = new PlayerAllInfoDB();
+            MsgUtil.sendMsg(msg, playerAllInfoDB);
             return;
         }
         PlayerSceneBean playerSceneBean = PlayerSceneQuery.queryScene(playerIndex);
         List<PlayerItemBean> playerItemList = PlayerItemQuery.queryPlayerItem(playerIndex);
         PlayerRoleBean playerRoleBean = PlayerRoleQuery.queryPlayerRole(playerIndex);
 
-        EnterGameRsp enterGameRsp = new EnterGameRsp();
-        enterGameRsp.setHasRole(true);
-        enterGameRsp.setPlayerItemList(playerItemList);
-        enterGameRsp.setPlayerScene(playerSceneBean);
-        enterGameRsp.setPlayerRole(playerRoleBean);
-        MsgUtil.sendMsg(msg, enterGameRsp);
+        PlayerAllInfoDB playerAllInfoDB = new PlayerAllInfoDB();
+        playerAllInfoDB.setPlayerInfo(playerBean);
+        playerAllInfoDB.setPlayerItemList(playerItemList);
+        playerAllInfoDB.setPlayerScene(playerSceneBean);
+        playerAllInfoDB.setPlayerRole(playerRoleBean);
+        MsgUtil.sendMsg(msg, playerAllInfoDB);
     }
 }

@@ -1,6 +1,6 @@
 package com.game.db.query;
 
-import bean.player.PlayerBean;
+import bean.player.PlayerInfoBean;
 import com.game.db.PropertiesConfig;
 import com.game.db.redis.RedisCache;
 import core.sql.SqlDao;
@@ -10,11 +10,11 @@ import org.redisson.api.RMapCache;
 
 public class PlayerInfoQuery {
 
-    public static PlayerBean queryPlayer(int playerIndex) {
-        RMapCache<Integer, PlayerBean> redisCache = RedisCache.getInstance().getPlayerCache();
-        PlayerBean playerBean = redisCache.get(playerIndex);
+    public static PlayerInfoBean queryPlayer(int playerIndex) {
+        RMapCache<Integer, PlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerCache();
+        PlayerInfoBean playerBean = redisCache.get(playerIndex);
         if (playerBean == null) {
-            playerBean = SqlDao.getInstance().getDao().fetch(PlayerBean.class,
+            playerBean = SqlDao.getInstance().getDao().fetch(PlayerInfoBean.class,
                     Cnd.where("player_index", "=", playerIndex));
             if (playerBean != null) {
                 redisCache.put(playerBean.getPlayerIndex(), playerBean);
@@ -24,10 +24,10 @@ public class PlayerInfoQuery {
     }
 
 
-    public static boolean createPlayer(PlayerBean playerBean) {
+    public static boolean createPlayer(PlayerInfoBean playerBean) {
         playerBean = SqlDao.getInstance().getDao().insert(playerBean);
         if (playerBean != null) {
-            RMapCache<Integer, PlayerBean> redisCache = RedisCache.getInstance().getPlayerCache();
+            RMapCache<Integer, PlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerCache();
             redisCache.put(playerBean.getPlayerIndex(), playerBean);
             return true;
         }
@@ -36,7 +36,7 @@ public class PlayerInfoQuery {
 
 
     public static boolean createPlayer(int playerIndex, String name, String loginIp, String openId) {
-        PlayerBean playerBean = new PlayerBean();
+        PlayerInfoBean playerBean = new PlayerInfoBean();
         playerBean.setLoginIp(loginIp);
         playerBean.setName(name);
         playerBean.setOpenId(openId);
@@ -44,7 +44,7 @@ public class PlayerInfoQuery {
         playerBean.setServerId(PropertiesConfig.serverId);
         playerBean = SqlDao.getInstance().getDao().insert(playerBean);
         if (playerBean != null) {
-            RMapCache<Integer, PlayerBean> redisCache = RedisCache.getInstance().getPlayerCache();
+            RMapCache<Integer, PlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerCache();
             redisCache.put(playerBean.getPlayerIndex(), playerBean);
             return true;
         }

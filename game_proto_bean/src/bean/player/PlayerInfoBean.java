@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table("game_player")
-public class PlayerBean implements Serializable {
+public class PlayerInfoBean implements Serializable {
     @Id(auto = false)
     @Column("player_index")
     private int playerIndex;

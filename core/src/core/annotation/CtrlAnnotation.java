@@ -3,6 +3,7 @@ package core.annotation;
 import com.esotericsoftware.reflectasm.ConstructorAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
 import core.Constants;
+import core.exception.ExceptionHandler;
 import core.msg.TransferMsg;
 import io.netty.channel.ChannelHandlerContext;
 import org.reflections.Reflections;
@@ -37,6 +38,7 @@ public class CtrlAnnotation {
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
     private String packName = "";
+    private ExceptionHandler exceptionHandler;
 
     private static class DefaultInstance {
         static final CtrlAnnotation INSTANCE = new CtrlAnnotation();
@@ -49,12 +51,23 @@ public class CtrlAnnotation {
     private CtrlAnnotation() {
 
     }
+
     public void init(String packName) {
+        initScan(packName);
+    }
+
+    public void init(String packName, ExceptionHandler handler) {
+        initScan(packName);
+        exceptionHandler = handler;
+    }
+
+    private void initScan(String packName) {
         this.packName = packName;
         initReflection();
         scanMethodMap();
         scanClassMap();
     }
+
     /**
      * init reflection
      */
@@ -114,8 +127,8 @@ public class CtrlAnnotation {
         return msgList;
     }
 
-    public void invokeMethod(TransferMsg transferMsg) {
-        int msgId = transferMsg.getHeaderProto().getMsgId();
+    public void invokeMethod(TransferMsg msg) {
+        int msgId = msg.getHeaderProto().getMsgId();
         Method method = methodMap.get(msgId);
         if (method == null) {
             logger.info("can not find msgId = {}", msgId);
@@ -126,9 +139,13 @@ public class CtrlAnnotation {
         MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
         String methodName = method.getName();
         try {
-            methodAccess.invoke(oc, methodName, transferMsg);
-        } catch (Exception e) {
-            e.printStackTrace();
+            methodAccess.invoke(oc, methodName, msg);
+        } catch (Throwable err) {
+            if (exceptionHandler != null) {
+                exceptionHandler.onException(err, msg);
+            } else {
+                err.printStackTrace();
+            }
         }
     }
 }

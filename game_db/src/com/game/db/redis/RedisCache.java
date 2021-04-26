@@ -1,7 +1,7 @@
 package com.game.db.redis;
 
 
-import bean.player.PlayerBean;
+import bean.player.PlayerInfoBean;
 import bean.player.PlayerRoleBean;
 import bean.player.PlayerSceneBean;
 import core.redis.RedisManager;
@@ -22,7 +22,7 @@ public class RedisCache {
         return RedisCache.DefaultInstance.INSTANCE;
     }
 
-    private RMapCache<Integer, PlayerBean> playerCache; // key account
+    private RMapCache<Integer, PlayerInfoBean> playerCache; // key account
     private RMapCache<Integer, PlayerSceneBean> sceneCache;
     private RMapCache<Integer, PlayerRoleBean> roleCache;
 
@@ -61,7 +61,7 @@ public class RedisCache {
         return roleCache;
     }
 
-    public RMapCache<Integer, PlayerBean> getPlayerCache() {
+    public RMapCache<Integer, PlayerInfoBean> getPlayerCache() {
         return playerCache;
     }
 

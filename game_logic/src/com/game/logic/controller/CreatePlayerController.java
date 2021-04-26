@@ -9,7 +9,10 @@ import core.util.ProtoUtil;
 import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.Response;
 import protocal.MsgConstant;
+import protocal.local.db.player.PlayerAllInfoDB;
+import protocal.remote.user.CreatePlayerRsp;
 
+import static config.ErrorConstants.ERROR_CODE_CREATE_PLAYER_FAIL;
 import static protocal.MsgConstant.*;
 
 @Ctrl
@@ -23,9 +26,17 @@ public class CreatePlayerController extends AsyncCompletionHandler<Integer> {
 
     @Override
     public Integer onCompleted(Response response) throws Exception {
-        TransferMsg httpMsg = ProtoUtil.decodeDBHttpMsg(response.getResponseBodyAsBytes());
-        httpMsg.getHeaderProto().setMsgId(MSG_CREATE_PLAYER_RSP);
-        MsgUtil.sendMsg(httpMsg.getHeaderProto(), httpMsg.getData());
+        TransferMsg msg = ProtoUtil.decodeDBHttpMsg(response.getResponseBodyAsBytes());
+        msg.getHeaderProto().setMsgId(MSG_CREATE_PLAYER_RSP);
+        PlayerAllInfoDB playerAllInfoDB = ProtoUtil.deserializer(msg.getData(), PlayerAllInfoDB.class);
+        CreatePlayerRsp createPlayerRsp = new CreatePlayerRsp();
+        if (playerAllInfoDB != null) {
+            createPlayerRsp.setSuccess(true);
+            createPlayerRsp.setPlayerAllInfoDB(playerAllInfoDB);
+            MsgUtil.sendMsg(msg.getHeaderProto(), createPlayerRsp);
+        } else {
+            MsgUtil.sendErrorMsg(msg.getHeaderProto(), ERROR_CODE_CREATE_PLAYER_FAIL);
+        }
         return 1;
     }
 }

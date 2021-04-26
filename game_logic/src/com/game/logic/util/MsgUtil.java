@@ -6,6 +6,7 @@ import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
 import protocal.HeaderProto;
+import protocal.remote.system.ErroRsp;
 
 import java.util.List;
 
@@ -18,6 +19,25 @@ public class MsgUtil {
     }
 
     public static void sendMsg(HeaderProto headerProto, byte[] data) {
+        excuteSendMsg(headerProto, data);
+    }
+
+    public static void sendErrorMsg(HeaderProto headerProto, byte[] data) {
+        headerProto.setSuccess(false);
+        excuteSendMsg(headerProto, data);
+    }
+
+    public static void sendErrorMsg(HeaderProto headerProto, Object msg) {
+        byte[] data = ProtoUtil.serialize(msg);
+        headerProto.setSuccess(false);
+        excuteSendMsg(headerProto, data);
+    }
+
+    public static void sendErrorMsg(HeaderProto headerProto, int errorCode) {
+        ErroRsp erroRsp = new ErroRsp();
+        erroRsp.setErrorCode(errorCode);
+        headerProto.setSuccess(false);
+        byte[] data = ProtoUtil.serialize(erroRsp);
         excuteSendMsg(headerProto, data);
     }
 

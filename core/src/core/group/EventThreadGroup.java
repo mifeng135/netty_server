@@ -9,6 +9,13 @@ public class EventThreadGroup {
     private String threadName = "";
     private MessageGroup mMessageGroup = MessageGroup.getInstance();
 
+
+    /**
+     *
+     * @param count 处理的线程数量
+     * @param handler handler
+     * @param name 线程名称
+     */
     public EventThreadGroup(int count, Class<? extends EventHandler> handler, String name) {
         mThreadCount = count;
         mMessageGroup.setThreadCount(count);
@@ -17,6 +24,10 @@ public class EventThreadGroup {
         initTaskThread(handler);
     }
 
+    /***
+     *
+     * @param count 处理的线程数量
+     */
     public EventThreadGroup(int count) {
         mThreadCount = count;
         mMessageGroup.setThreadCount(count);
@@ -24,6 +35,12 @@ public class EventThreadGroup {
         initTaskThread(null);
     }
 
+
+    /**
+     *
+     * @param count 处理的线程数量
+     * @param name 线程名称
+     */
     public EventThreadGroup(int count, String name) {
         mThreadCount = count;
         mMessageGroup.setThreadCount(count);
