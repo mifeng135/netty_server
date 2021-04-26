@@ -39,14 +39,16 @@ public class ProtoUtil {
     public static ByteBuf encodeDBHttpMsg(TransferMsg transferMsg, Object msg) {
         byte[] headerData = ProtoUtil.serialize(transferMsg.getHeaderProto());
         byte[] bodyData = ProtoUtil.serialize(msg);
-        byte[] attackData = transferMsg.getAttackData();
+        byte[] attackData = transferMsg.getData();
         ByteBuf buf = Unpooled.buffer(6 + headerData.length + bodyData.length + attackData.length);
+
         buf.writeShort(headerData.length);
         buf.writeShort(bodyData.length);
         buf.writeShort(attackData.length);
+
         buf.writeBytes(headerData);
         buf.writeBytes(bodyData);
-        buf.readBytes(attackData);
+        buf.writeBytes(attackData);
         return buf;
     }
 
