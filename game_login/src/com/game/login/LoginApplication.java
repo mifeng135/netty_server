@@ -21,27 +21,20 @@ import static protocal.MsgConstant.MSG_GET_PLAYER_INDEX_REQ;
 public class LoginApplication {
 
     public static void main(String[] args) {
-
-
-//        CreatePlayerRsp playerAllInfoDB = new CreatePlayerRsp();
-//        SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
-//        loginSqlConfig.setMasterFileName("login-master-dao.properties");
-//        loginSqlConfig.setPreSqlName("pre-sql.sqls");
-//        //loginSqlConfig.getSlaveFileList().add("login-master-slave.properties");
-//        SqlDao.getInstance().initWithConfigList(loginSqlConfig);
+        SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
+        loginSqlConfig.setMasterFileName("login-master-dao.properties");
+        loginSqlConfig.setPreSqlName("pre-sql.sqls");
+        //loginSqlConfig.getSlaveFileList().add("login-master-slave.properties");
+        SqlDao.getInstance().initWithConfigList(loginSqlConfig);
 
         new ProperticeConfig();
         CtrlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName(),new LoginExceptionHandler());
-//        RedisManager.getInstance().init(ProperticeConfig.redisIp, ProperticeConfig.redisPassword,
-//                ProperticeConfig.redisThreadCount, ProperticeConfig.redisNettyThreadCount, ProperticeConfig.db);
-//        RedisCache.getInstance();
-//        new HttpServer(ProperticeConfig.httpIp, ProperticeConfig.httpPort);
+
+        RedisManager.getInstance().init(ProperticeConfig.redisIp, ProperticeConfig.redisPassword,
+                ProperticeConfig.redisThreadCount, ProperticeConfig.redisNettyThreadCount, ProperticeConfig.db);
+        RedisCache.getInstance();
+
+        new HttpServer(ProperticeConfig.httpIp, ProperticeConfig.httpPort);
         new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginApplication.class.getName());
-
-
-        TransferMsg msg = new TransferMsg();
-        msg.setHeaderProto(ProtoUtil.initHeaderProto(MSG_GET_PLAYER_INDEX_REQ,1));
-        CtrlAnnotation.getInstance().invokeMethod(msg);
-        CtrlAnnotation.getInstance().invokeMethod(msg);
     }
 }

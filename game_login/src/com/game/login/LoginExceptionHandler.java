@@ -18,10 +18,10 @@ public class LoginExceptionHandler implements ExceptionHandler {
 
     @Override
     public void onException(Throwable throwable, TransferMsg msg) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        throwable.printStackTrace(pw);
-        String exceptionStr = sw.toString();
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        throwable.printStackTrace(printWriter);
+        String exceptionStr = stringWriter.toString();
         ExceptionMsg exceptionMsg = new ExceptionMsg();
         exceptionMsg.setException(exceptionStr);
         HttpUtil.sendErrorMsg(msg.getContext(), MSG_SYSTEM_EXCEPTION_PUSH, exceptionMsg);
