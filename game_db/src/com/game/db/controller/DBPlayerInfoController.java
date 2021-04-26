@@ -14,7 +14,6 @@ import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import protocal.local.db.player.PlayerAllInfoDB;
-import protocal.remote.user.EnterGameRsp;
 
 import java.util.List;
 

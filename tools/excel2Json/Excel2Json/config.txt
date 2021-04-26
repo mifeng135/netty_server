@@ -1,0 +1,9 @@
+//excel文件路径
+import = ./excel
+
+//lua文件导出路径
+export = ./json
+
+
+说明：相关文件路径默认基于配置文件所在目录
+

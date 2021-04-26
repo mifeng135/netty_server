@@ -1,18 +1,24 @@
 package com.game.logic.model;
 
 
+import com.game.logic.manager.WatchTower;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Scene {
 
-    public static Map<Integer, Player> playerMap = new ConcurrentHashMap<>();
+    private int sceneId;
+    private Map<Integer, Player> playerMap = new ConcurrentHashMap<>();
+    private List<WatchTower> watchTowerList = new ArrayList<>();
 
-    public static void addPlayer(Player player) {
-        playerMap.put(player.getPlayerIndex(), player);
+    public Scene(int id) {
+        sceneId = id;
     }
 
-    public static void removePlayer(int playerIndex) {
-        playerMap.remove(playerIndex);
+    public void createWatchTower() {
+
     }
 }
