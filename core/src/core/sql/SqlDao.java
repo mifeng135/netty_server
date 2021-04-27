@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.*;
 import javax.sql.DataSource;
 
+import core.util.FileUtil;
 import org.nutz.dao.DaoInterceptor;
 import org.nutz.dao.impl.FileSqlManager;
 import org.nutz.dao.impl.NutDao;
@@ -33,7 +34,7 @@ public class SqlDao {
         for (int i = 0; i < configList.length; i++) {
             SqlDaoConfig config = configList[i];
             try {
-                DataSource dataSource = createDataSource(new FileInputStream(Files.findFile(config.getMasterFileName())));
+                DataSource dataSource = createDataSource(FileUtil.getInputStream(config.getMasterFileName()));
                 initNutDao(dataSource, config);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -64,7 +65,7 @@ public class SqlDao {
         mfNutDaoRunner.setMeta(nutDao.meta());
         nutDao.setRunner(mfNutDaoRunner);
         if (config.getPreSqlName().length() != 0) {
-            nutDao.setSqlManager(new FileSqlManager(config.getPreSqlName()));
+            nutDao.setSqlManager(new FileSqlManager(FileUtil.getFilePath(config.getPreSqlName())));
         }
         DaoInterceptor daoInterceptor = config.getDaoInterceptor();
         if (daoInterceptor != null) {
@@ -84,7 +85,7 @@ public class SqlDao {
         List<DataSource> dataSourceList = new ArrayList<>();
         for (int i = 0; i < slave.size(); i++) {
             try {
-                DataSource dataSource = this.createDataSource(new FileInputStream(Files.findFile(slave.get(i))));
+                DataSource dataSource = this.createDataSource(FileUtil.getInputStream(slave.get(i)));
                 dataSourceList.add(dataSource);
             } catch (IOException e) {
                 e.printStackTrace();

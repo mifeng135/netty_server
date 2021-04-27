@@ -12,7 +12,7 @@ public class ConfigUtil {
 
     }
     public static void loadFile(String fileName) {
-        InputStream inputStream = ConfigUtil.class.getClassLoader().getResourceAsStream(fileName);
+        InputStream inputStream = FileUtil.getInputStream(fileName);
         try {
             properties.load(inputStream);
         } catch (IOException e) {

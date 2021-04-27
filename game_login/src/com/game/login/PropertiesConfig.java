@@ -2,7 +2,7 @@ package com.game.login;
 
 import core.util.ConfigUtil;
 
-public class ProperticeConfig {
+public class PropertiesConfig {
 
     public static int loginServerId;
 
@@ -21,8 +21,8 @@ public class ProperticeConfig {
     public static int redisPlayerCacheCount;
 
 
-    public ProperticeConfig() {
-        ConfigUtil.loadFile("login-config.properties");
+    public PropertiesConfig(String fileName) {
+        ConfigUtil.loadFile(fileName);
         initData();
     }
 

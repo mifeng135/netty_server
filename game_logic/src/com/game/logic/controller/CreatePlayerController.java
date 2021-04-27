@@ -12,7 +12,6 @@ import protocal.MsgConstant;
 import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.CreatePlayerRsp;
 
-import static config.ErrorConstants.ERROR_CODE_CREATE_PLAYER_FAIL;
 import static protocal.MsgConstant.*;
 
 @Ctrl
@@ -35,7 +34,7 @@ public class CreatePlayerController extends AsyncCompletionHandler<Integer> {
             createPlayerRsp.setPlayerAllInfoDB(playerAllInfoDB);
             MsgUtil.sendMsg(msg.getHeaderProto(), createPlayerRsp);
         } else {
-            MsgUtil.sendErrorMsg(msg.getHeaderProto(), ERROR_CODE_CREATE_PLAYER_FAIL);
+            MsgUtil.sendErrorMsg(msg.getHeaderProto(), 1);
         }
         return 1;
     }

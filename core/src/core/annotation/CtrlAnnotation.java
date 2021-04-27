@@ -75,6 +75,7 @@ public class CtrlAnnotation {
         configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.forPackages(packName);
         configurationBuilder.setScanners(new SubTypesScanner(false), new TypeAnnotationsScanner(), new MethodAnnotationsScanner());
+        configurationBuilder.filterInputsBy(new FilterBuilder().includePackage(packName));
         reflections = new Reflections(configurationBuilder);
     }
 

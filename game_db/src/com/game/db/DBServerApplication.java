@@ -9,10 +9,6 @@ import core.redis.RedisManager;
 import core.sql.SqlDao;
 import core.sql.SqlDaoConfig;
 
-import java.util.Arrays;
-
-import static com.game.db.constant.GameConstant.SQL_KEY_GAME;
-import static com.game.db.constant.GameConstant.SQL_KEY_LOGIN;
 
 /**
  * Created by Administrator on 2020/6/1.

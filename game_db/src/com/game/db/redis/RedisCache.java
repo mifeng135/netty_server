@@ -19,7 +19,7 @@ public class RedisCache {
     }
 
     public static RedisCache getInstance() {
-        return RedisCache.DefaultInstance.INSTANCE;
+        return DefaultInstance.INSTANCE;
     }
 
     private RMapCache<Integer, PlayerInfoBean> playerCache; // key account

@@ -12,7 +12,6 @@ import protocal.MsgConstant;
 import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.EnterGameRsp;
 
-import static config.ErrorConstants.ERROR_CODE_PLAYER_DO_NOT_HAS_PLAYER;
 import static protocal.MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_REQ;
 import static protocal.MsgConstant.MSG_ENTER_GAME_RSP;
 
@@ -36,7 +35,7 @@ public class EnterGameController extends AsyncCompletionHandler<Integer> {
             enterGameRsp.setPlayerAllInfoDB(playerAllInfoDB);
             MsgUtil.sendMsg(msg.getHeaderProto(), enterGameRsp);
         } else {
-            MsgUtil.sendErrorMsg(msg.getHeaderProto(), ERROR_CODE_PLAYER_DO_NOT_HAS_PLAYER);
+            MsgUtil.sendErrorMsg(msg.getHeaderProto(), 1);
         }
         return 1;
     }

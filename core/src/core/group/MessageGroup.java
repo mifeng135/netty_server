@@ -24,7 +24,7 @@ public class MessageGroup {
     }
 
     public static MessageGroup getInstance() {
-        return MessageGroup.DefaultInstance.INSTANCE;
+        return DefaultInstance.INSTANCE;
     }
 
     private MessageGroup() {

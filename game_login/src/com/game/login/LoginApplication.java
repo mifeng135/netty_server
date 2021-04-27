@@ -3,16 +3,10 @@ package com.game.login;
 import com.game.login.redis.RedisCache;
 import core.annotation.CtrlAnnotation;
 import core.group.EventThreadGroup;
-import core.msg.TransferMsg;
 import core.netty.http.HttpServer;
 import core.redis.RedisManager;
 import core.sql.SqlDao;
 import core.sql.SqlDaoConfig;
-import core.util.ProtoUtil;
-import protocal.local.db.player.PlayerAllInfoDB;
-import protocal.remote.user.CreatePlayerRsp;
-
-import static protocal.MsgConstant.MSG_GET_PLAYER_INDEX_REQ;
 
 
 /**
@@ -27,14 +21,14 @@ public class LoginApplication {
         //loginSqlConfig.getSlaveFileList().add("login-master-slave.properties");
         SqlDao.getInstance().initWithConfigList(loginSqlConfig);
 
-        new ProperticeConfig();
-        CtrlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName(),new LoginExceptionHandler());
+        new PropertiesConfig("login-config.properties");
+        CtrlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName(), new LoginExceptionHandler());
 
-        RedisManager.getInstance().init(ProperticeConfig.redisIp, ProperticeConfig.redisPassword,
-                ProperticeConfig.redisThreadCount, ProperticeConfig.redisNettyThreadCount, ProperticeConfig.db);
+        RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
+                PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.db);
         RedisCache.getInstance();
 
-        new HttpServer(ProperticeConfig.httpIp, ProperticeConfig.httpPort);
+        new HttpServer(PropertiesConfig.httpIp, PropertiesConfig.httpPort);
         new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginApplication.class.getName());
     }
 }

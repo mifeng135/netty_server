@@ -5,7 +5,7 @@ import bean.login.LoginPlayerInfoBean;
 import bean.login.LoginNoticeBean;
 import bean.login.ServerListInfoBean;
 import bean.login.LoginPlayerServerInfoBean;
-import com.game.login.ProperticeConfig;
+import com.game.login.PropertiesConfig;
 import core.redis.RedisManager;
 import core.sql.SqlDao;
 import org.nutz.dao.Cnd;
@@ -91,7 +91,7 @@ public class RedisCache {
         List<LoginPlayerInfoBean> lastLoginPlayerList = SqlDao.getInstance().getDao().
                 query(LoginPlayerInfoBean.class,
                         Cnd.orderBy().desc("login_time"),
-                        new Pager(0, ProperticeConfig.redisPlayerCacheCount));
+                        new Pager(0, PropertiesConfig.redisPlayerCacheCount));
 
         List<Integer> playerIndexList = lastLoginPlayerList.stream().map(LoginPlayerInfoBean::getPlayerIndex).collect(Collectors.toList());
 
