@@ -4,7 +4,7 @@ package protocal;
 public class MsgConstant {
     /***************************************************************************************/
 
-    public static final int MSG_SYSTEM_EXCEPTION_PUSH = 1;
+    public static final int MSG_SYSTEM_EXCEPTION_PUSH = 100;
 
     /***********************************db center**************************************************/
 

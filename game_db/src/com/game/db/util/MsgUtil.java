@@ -3,11 +3,8 @@ package com.game.db.util;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
-import protocal.HeaderProto;
 
 public class MsgUtil {
 

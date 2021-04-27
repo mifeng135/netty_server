@@ -3,7 +3,6 @@ package core.msg;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import lombok.Setter;
-import protocal.HeaderProto;
 
 
 /**

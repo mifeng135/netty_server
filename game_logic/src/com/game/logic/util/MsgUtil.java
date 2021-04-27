@@ -5,7 +5,7 @@ import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.Channel;
-import protocal.HeaderProto;
+import core.msg.HeaderProto;
 import protocal.remote.system.ErroRsp;
 
 import java.util.List;

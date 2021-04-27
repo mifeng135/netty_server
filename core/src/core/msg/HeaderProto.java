@@ -1,4 +1,4 @@
-package protocal;
+package core.msg;
 
 import lombok.Getter;
 import lombok.Setter;

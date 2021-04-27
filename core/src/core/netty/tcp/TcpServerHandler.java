@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static core.Constants.LOCAL_SOCKET_RANGE;
-import static protocal.MsgConstant.*;
-
+import static core.msg.SysMsgConstants.MSG_LOCAL_SOCKET_CLOSE_PUSH;
+import static core.msg.SysMsgConstants.MSG_REMOTE_SOCKET_CLOSE_PUSH;
 
 /**
  * Created by Administrator on 2020/12/19.

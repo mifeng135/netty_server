@@ -2,6 +2,7 @@ package core.netty.tcp;
 
 import core.Constants;
 import core.manager.LocalSocketManager;
+import core.msg.HeaderProto;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelFuture;
@@ -9,11 +10,11 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.EventLoop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protocal.HeaderProto;
 
 import java.util.concurrent.TimeUnit;
 
-import static protocal.MsgConstant.MSG_LOCAL_OPEN_SOCKET_PUSH;
+import static core.msg.SysMsgConstants.MSG_LOCAL_OPEN_SOCKET_PUSH;
+
 
 public class ConnectionListener implements ChannelFutureListener {
 

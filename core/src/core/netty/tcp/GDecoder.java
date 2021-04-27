@@ -1,12 +1,12 @@
 package core.netty.tcp;
 
 import core.Constants;
+import core.msg.HeaderProto;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import protocal.HeaderProto;
 
 import java.util.List;
 

@@ -45,5 +45,4 @@ public class RedisManager {
     public RedissonClient getRedisSon() {
         return redissonClient;
     }
-
 }

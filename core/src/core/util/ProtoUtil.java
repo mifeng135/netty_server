@@ -1,5 +1,6 @@
 package core.util;
 
+import core.msg.HeaderProto;
 import core.msg.TransferMsg;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -7,9 +8,6 @@ import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtobufIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
-import protocal.HeaderProto;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2020/7/4.

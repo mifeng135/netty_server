@@ -3,6 +3,7 @@ package core.netty.http;
 
 import core.Constants;
 import core.group.MessageGroup;
+import core.msg.HeaderProto;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
@@ -10,7 +11,6 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
-import protocal.HeaderProto;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.atomic.AtomicInteger;

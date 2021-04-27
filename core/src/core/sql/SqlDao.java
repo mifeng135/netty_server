@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.*;
 import javax.sql.DataSource;
 
+import org.nutz.dao.DaoInterceptor;
 import org.nutz.dao.impl.FileSqlManager;
 import org.nutz.dao.impl.NutDao;
 import org.nutz.lang.Files;
@@ -58,11 +59,16 @@ public class SqlDao {
 
     private void initNutDao(DataSource dataSource, SqlDaoConfig config) {
         NutDao nutDao = new NutDao(dataSource);
+
         MFNutDaoRunner mfNutDaoRunner = new MFNutDaoRunner();
         mfNutDaoRunner.setMeta(nutDao.meta());
         nutDao.setRunner(mfNutDaoRunner);
         if (config.getPreSqlName().length() != 0) {
             nutDao.setSqlManager(new FileSqlManager(config.getPreSqlName()));
+        }
+        DaoInterceptor daoInterceptor = config.getDaoInterceptor();
+        if (daoInterceptor != null) {
+            nutDao.addInterceptor(daoInterceptor);
         }
         initSlave(config.getSlaveFileList(), mfNutDaoRunner);
         if (config.getSqlKey().equals("default")) {
