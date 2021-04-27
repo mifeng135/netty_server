@@ -1,6 +1,6 @@
-package com.game.login;
+package com.game.gate;
 
-import com.game.login.util.HttpUtil;
+import com.game.gate.util.TcpUtil;
 import core.exception.ExceptionHandler;
 import core.msg.TransferMsg;
 import org.slf4j.Logger;
@@ -12,9 +12,11 @@ import java.io.StringWriter;
 
 import static protocal.MsgConstant.MSG_SYSTEM_EXCEPTION_PUSH;
 
-public class LoginExceptionHandler implements ExceptionHandler {
+public class GateExceptionHandler implements ExceptionHandler {
 
-    private static Logger logger = LoggerFactory.getLogger(LoginExceptionHandler.class);
+
+    private static Logger logger = LoggerFactory.getLogger(CustomEventHandler.class);
+
 
     @Override
     public void onException(Throwable throwable, TransferMsg msg) {
@@ -24,7 +26,7 @@ public class LoginExceptionHandler implements ExceptionHandler {
         String exceptionStr = stringWriter.toString();
         ExceptionMsg exceptionMsg = new ExceptionMsg();
         exceptionMsg.setException(exceptionStr);
-        HttpUtil.sendMsg(msg.getContext(), MSG_SYSTEM_EXCEPTION_PUSH, exceptionMsg);
+        TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), MSG_SYSTEM_EXCEPTION_PUSH, exceptionMsg);
         logger.error(exceptionStr);
     }
 }

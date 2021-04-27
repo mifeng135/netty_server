@@ -19,8 +19,8 @@ public class PropertiesConfig {
     public static int redisMaxCapacity;
 
 
-    public PropertiesConfig() {
-        ConfigUtil.loadFile("db-config.properties");
+    public PropertiesConfig(String fileName) {
+        ConfigUtil.loadFile(fileName);
         initData();
     }
 

@@ -8,6 +8,10 @@ import core.netty.http.HttpServer;
 import core.redis.RedisManager;
 import core.sql.SqlDao;
 import core.sql.SqlDaoConfig;
+import core.util.FileUtil;
+import org.apache.log4j.PropertyConfigurator;
+
+import static com.game.db.constant.GameConstant.SQL_KEY_LOGIN;
 
 
 /**
@@ -17,18 +21,22 @@ public class DBServerApplication {
 
     public static void main(String[] args) {
 
+        PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
+
         SqlDaoConfig dbSqlConfig = new SqlDaoConfig();
-        dbSqlConfig.setMasterFileName("master-db.properties");
+        dbSqlConfig.setMasterFileName("db-master-dao.properties");
         dbSqlConfig.setPreSqlName("pre-sql.sqls");
-        dbSqlConfig.getSlaveFileList().add("lmaster-slave.properties");
+        dbSqlConfig.getSlaveFileList().add("db-slave-dao.properties");
 
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
-        loginSqlConfig.setMasterFileName("login.properties");
+        loginSqlConfig.setMasterFileName("db-login-dao.properties");
+        loginSqlConfig.setSqlKey(SQL_KEY_LOGIN);
 
         SqlDao.getInstance().initWithConfigList(dbSqlConfig, loginSqlConfig);
 
-        new PropertiesConfig();
-        CtrlAnnotation.getInstance().init(DBServerApplication.class.getPackage().getName());
+        new PropertiesConfig("db-config.properties");
+
+        CtrlAnnotation.getInstance().init(DBServerApplication.class.getPackage().getName(), new DBExceptionHandler());
         RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
                 PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.redisDB);
         RedisCache.getInstance();

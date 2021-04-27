@@ -4,6 +4,8 @@ import core.annotation.CtrlAnnotation;
 import core.group.EventThreadGroup;
 import core.netty.tcp.TcpConnection;
 import core.netty.tcp.TcpServer;
+import core.util.FileUtil;
+import org.apache.log4j.PropertyConfigurator;
 
 import static core.Constants.REMOTE;
 
@@ -14,7 +16,8 @@ import static core.Constants.REMOTE;
 public class GateApplication {
 
     public static void main(String[] arg) {
-        CtrlAnnotation.getInstance().init(GateApplication.class.getPackage().getName());
+        PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
+        CtrlAnnotation.getInstance().init(GateApplication.class.getPackage().getName(), new GateExceptionHandler());
         new PropertiesConfig();
         new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.port, REMOTE).startServer();
         new TcpConnection(PropertiesConfig.connectCenterSocketIndex).connect(PropertiesConfig.connectCenterServerIp, PropertiesConfig.connectCenterServerPort);

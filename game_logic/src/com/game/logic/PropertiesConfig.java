@@ -12,8 +12,8 @@ public class PropertiesConfig {
     public static int gateLogicSocketIndex;
 
 
-    public PropertiesConfig() {
-        ConfigUtil.loadFile("logic-config.properties");
+    public PropertiesConfig(String fileName) {
+        ConfigUtil.loadFile(fileName);
         initData();
     }
 
