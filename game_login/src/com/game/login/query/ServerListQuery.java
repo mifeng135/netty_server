@@ -5,17 +5,12 @@ import com.game.login.redis.RedisCache;
 import core.sql.SqlDao;
 import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
-import org.nutz.dao.Sqls;
-import org.nutz.dao.sql.Sql;
 import org.redisson.api.RMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static core.Constants.SQL_MASTER;
-import static core.Constants.SQL_RESULT_FAIL;
-import static core.Constants.SQL_RESULT_SUCCESS;
 
 public class ServerListQuery {
 
