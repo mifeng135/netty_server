@@ -1,5 +1,7 @@
 package core.util;
 
+import org.nutz.lang.Streams;
+
 import java.io.*;
 import java.util.Properties;
 
@@ -11,12 +13,15 @@ public class ConfigUtil {
     private ConfigUtil() {
 
     }
+
     public static void loadFile(String fileName) {
         InputStream inputStream = FileUtil.getInputStream(fileName);
         try {
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            Streams.safeClose(inputStream);
         }
     }
 

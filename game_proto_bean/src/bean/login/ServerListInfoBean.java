@@ -34,4 +34,7 @@ public class ServerListInfoBean implements Serializable {
 
     @Column("open_time")
     private int openTime;
+
+    @Column("group_id")
+    private int groupId;
 }

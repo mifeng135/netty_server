@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 /*****
- * message route manager
+ * message route map
  */
 public class LocalRouterSocketManager {
 

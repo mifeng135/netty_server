@@ -2,6 +2,7 @@ package com.game.logic;
 
 
 import core.annotation.CtrlAnnotation;
+import core.annotation.TableAnnotation;
 import core.group.EventThreadGroup;
 import core.netty.asyncHttp.AsyncHttp;
 import core.netty.tcp.TcpServer;
@@ -15,6 +16,8 @@ public class LogicApplication {
 
     public static void main(String[] args) {
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
+        TableAnnotation.getInstance().init(LogicApplication.class.getPackage().getName());
+        new LoadConfig().load();
         new PropertiesConfig("logic-config.properties");
         CtrlAnnotation.getInstance().init(LogicApplication.class.getPackage().getName(), new LogicExceptionHandler());
         AsyncHttp.getInstance().initBaseUrl(PropertiesConfig.httpDBUrl);
