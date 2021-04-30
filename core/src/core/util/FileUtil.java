@@ -1,10 +1,7 @@
 package core.util;
 
-import org.nutz.lang.Files;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 
 public class FileUtil {
 
@@ -20,5 +17,27 @@ public class FileUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public static String getConfigFileString(String fileName) {
+        try {
+            String path = System.getProperty("user.dir") + "/json_config/" + fileName;
+            Reader reader = new FileReader(path);
+            BufferedReader buffReader = new BufferedReader(reader);
+            String line = buffReader.readLine();
+            StringBuffer buffer = new StringBuffer();
+            while (line != null) {
+                buffer.append(line);
+                line = buffReader.readLine();
+            }
+            return buffer.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }

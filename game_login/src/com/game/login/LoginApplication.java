@@ -18,6 +18,9 @@ public class LoginApplication {
 
     public static void main(String[] args) {
 
+
+
+        String value = FileUtil.getConfigFileString("MapConfig.json");
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
 
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();

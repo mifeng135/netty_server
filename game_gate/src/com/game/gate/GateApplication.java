@@ -21,7 +21,7 @@ public class GateApplication {
         new PropertiesConfig();
         new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.port, REMOTE).startServer();
         new TcpConnection(PropertiesConfig.connectCenterSocketIndex).connect(PropertiesConfig.connectCenterServerIp, PropertiesConfig.connectCenterServerPort);
-        new TcpConnection(PropertiesConfig.connectLogicSokcetIndex).connect(PropertiesConfig.connectLogicServerIp, PropertiesConfig.connectLogicServerPort);
+        new TcpConnection(PropertiesConfig.connectLogicSocketIndex).connect(PropertiesConfig.connectLogicServerIp, PropertiesConfig.connectLogicServerPort);
         new EventThreadGroup(Runtime.getRuntime().availableProcessors(), CustomEventHandler.class, GateApplication.class.getName());
     }
 }

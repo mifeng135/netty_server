@@ -14,7 +14,7 @@ public class PropertiesConfig {
     public static String connectCenterServerIp;
     public static int connectCenterServerPort;
 
-    public static int connectLogicSokcetIndex;
+    public static int connectLogicSocketIndex;
     public static String connectLogicServerIp;
     public static int connectLogicServerPort;
 
@@ -31,7 +31,7 @@ public class PropertiesConfig {
         connectCenterServerIp = ConfigUtil.getString("connect_center_server_ip");
         connectCenterServerPort = ConfigUtil.getInt("connect_center_server_port");
 
-        connectLogicSokcetIndex = ConfigUtil.getInt("gate_logic_socket_index");
+        connectLogicSocketIndex = ConfigUtil.getInt("gate_logic_socket_index");
         connectLogicServerIp = ConfigUtil.getString("connect_logic_server_ip");
         connectLogicServerPort = ConfigUtil.getInt("connect_logic_server_port");
     }
