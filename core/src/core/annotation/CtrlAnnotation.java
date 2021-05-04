@@ -132,7 +132,9 @@ public class CtrlAnnotation {
         int msgId = msg.getHeaderProto().getMsgId();
         Method method = methodMap.get(msgId);
         if (method == null) {
-            logger.info("can not find msgId = {}", msgId);
+            if (msgId > 1000) {
+                logger.info("can not find msgId = {}", msgId);
+            }
             return;
         }
         String declaringClassName = method.getDeclaringClass().getName();

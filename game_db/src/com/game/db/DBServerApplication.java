@@ -26,7 +26,7 @@ public class DBServerApplication {
         SqlDaoConfig dbSqlConfig = new SqlDaoConfig();
         dbSqlConfig.setMasterFileName("db-master-dao.properties");
         dbSqlConfig.setPreSqlName("pre-sql.sqls");
-        dbSqlConfig.getSlaveFileList().add("db-slave-dao.properties");
+        //dbSqlConfig.getSlaveFileList().add("db-slave-dao.properties");
 
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
         loginSqlConfig.setMasterFileName("db-login-dao.properties");

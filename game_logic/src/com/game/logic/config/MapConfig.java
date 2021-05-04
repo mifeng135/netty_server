@@ -19,14 +19,16 @@ public class MapConfig implements BaseTable {
     private String mapName;
     private int width;
     private int height;
+    private int cellWidth;
+    private int cellHeight;
 
+    //private static Map<Integer, MapConfig> data;
 
-    private Map<Integer, MapConfig> data;
+    public static List<MapConfig> mapConfigList;
 
     @Override
     public void init(String jsonStr) {
-        List<MapConfig> mapConfigList = JSON.parseArray(jsonStr, MapConfig.class);
-        data = mapConfigList.stream().collect(Collectors.toMap(MapConfig::getId, (p) -> p));
-        int mm = 0;
+        mapConfigList = JSON.parseArray(jsonStr, MapConfig.class);
+        //data = mapConfigList.stream().collect(Collectors.toMap(MapConfig::getId, (p) -> p));
     }
 }

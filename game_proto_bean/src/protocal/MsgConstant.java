@@ -46,8 +46,4 @@ public class MsgConstant {
      * 主动推送
      */
     public static final int MSG_REPLACE_ACCOUNT_PUSH = 200000;                   //顶号
-    public static final int MSG_REMOTE_SOCKET_CLOSE_PUSH = 200001;               //客户端断开连接
-    public static final int MSG_LOCAL_SOCKET_CLOSE_PUSH = 200002;                //本地服务器断开连接
-    public static final int MSG_LOCAL_OPEN_SOCKET_PUSH = 200003;                 //本地socket发送连接请求
-    public static final int MSG_REGISTER_MSG_CMD_PUSH = 200004;                  //其他服务器向gate注册消息 注册以后的消息 gate才可以向其转发
 }

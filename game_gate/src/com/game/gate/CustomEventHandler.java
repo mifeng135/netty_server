@@ -32,7 +32,7 @@ public class CustomEventHandler implements EventHandler {
         MethodAccess methodAccess = ctrlAnnotation.getMethodAccessMap().get(declaringClassName);
         String methodName = method.getName();
         try {
-            methodAccess.invoke(oc, methodName, transferMsg, transferMsg.getContext());
+            methodAccess.invoke(oc, methodName, transferMsg);
         } catch (Exception e) {
             e.printStackTrace();
         }

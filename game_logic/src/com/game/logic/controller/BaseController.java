@@ -11,7 +11,8 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.local.system.RegisterMsgCmdPush;
 
-import static protocal.MsgConstant.*;
+import static core.msg.SysMsgConstants.*;
+
 
 @Ctrl
 public class BaseController {

@@ -26,7 +26,7 @@ public class LoadConfig {
 
         for (File childFile : file.listFiles()) {
             String fileName = getFileName(childFile);
-            logger.info("load file = {}", fileName);
+            logger.info("load config file = {}", fileName);
             String fileString = FileUtil.getConfigFileString(childFile.getName());
             ConstructorAccess<BaseTable> constructorAccess = TableAnnotation.getInstance().getTableMap(fileName);
             BaseTable baseTable = constructorAccess.newInstance();

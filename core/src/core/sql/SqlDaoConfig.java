@@ -13,7 +13,7 @@ import java.util.List;
 public class SqlDaoConfig {
     private String masterFileName;
     private String sqlKey = "default";
-    private String preSqlName;
+    private String preSqlName = "";
     private List<String> slaveFileList = new ArrayList<>();
     private DaoInterceptor daoInterceptor;
 }

@@ -47,7 +47,7 @@ public class Constants {
 
     public static final String IDLE_STATE_HANDLER = "idleStateHandler";
 
-    public static final int LOCAL_SOCKET_RANGE = 0; // 本地预留socket id
+    public static final int LOCAL_SOCKET_RANGE = 100000; // 本地预留socket id
 
     public static final int LOCAL = 1;
     public static final int REMOTE = 2;

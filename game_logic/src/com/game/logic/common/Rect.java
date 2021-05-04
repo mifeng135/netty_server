@@ -19,4 +19,30 @@ public class Rect {
         this.position = position;
         this.size = size;
     }
+
+
+    public int getMaxX() {
+        return position.getX() + size.getWidth();
+    }
+
+    public int getMaxY() {
+        return position.getY() + size.getHeight();
+    }
+
+
+    public int getMinX() {
+        return position.getX();
+    }
+
+    public int getMinY() {
+        return position.getY();
+    }
+
+    public boolean containsPoint(Position position) {
+        boolean bRet = false;
+        if (position.getX() >= getMinX() && position.getX() <= getMaxX() && position.getY() >= getMinY() && position.getY() <= getMaxY()) {
+            bRet = true;
+        }
+        return bRet;
+    }
 }

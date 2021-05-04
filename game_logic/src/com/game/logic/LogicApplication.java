@@ -1,6 +1,7 @@
 package com.game.logic;
 
 
+import com.game.logic.manager.SceneManager;
 import core.annotation.CtrlAnnotation;
 import core.annotation.TableAnnotation;
 import core.group.EventThreadGroup;
@@ -9,6 +10,9 @@ import core.netty.tcp.TcpServer;
 import core.util.ConfigUtil;
 import core.util.FileUtil;
 import org.apache.log4j.PropertyConfigurator;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static core.Constants.LOCAL;
 
@@ -23,5 +27,6 @@ public class LogicApplication {
         AsyncHttp.getInstance().initBaseUrl(PropertiesConfig.httpDBUrl);
         new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.serverPort, LOCAL).startServer();
         new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, LogicApplication.class.getName());
+        SceneManager.initSceneMap();
     }
 }
