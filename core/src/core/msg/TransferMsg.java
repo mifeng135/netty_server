@@ -13,6 +13,5 @@ import lombok.Setter;
 public class TransferMsg {
     private HeaderProto headerProto;
     private byte[] data;
-    private byte[] attackData; //only http use
     private ChannelHandlerContext context;
 }

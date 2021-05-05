@@ -6,6 +6,7 @@ import core.annotation.CtrlAnnotation;
 import core.annotation.TableAnnotation;
 import core.group.EventThreadGroup;
 import core.netty.asyncHttp.AsyncHttp;
+import core.netty.tcp.TcpConnection;
 import core.netty.tcp.TcpServer;
 import core.util.ConfigUtil;
 import core.util.FileUtil;
@@ -22,10 +23,10 @@ public class LogicApplication {
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
         TableAnnotation.getInstance().init(LogicApplication.class.getPackage().getName());
         new LoadConfig().load();
-        new PropertiesConfig("logic-config.properties");
+        new PropertiesConfig("config.properties");
         CtrlAnnotation.getInstance().init(LogicApplication.class.getPackage().getName(), new LogicExceptionHandler());
-        AsyncHttp.getInstance().initBaseUrl(PropertiesConfig.httpDBUrl);
         new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.serverPort, LOCAL).startServer();
+        new TcpConnection(PropertiesConfig.logicDBSocketIndex).connect(PropertiesConfig.dbServerIp, PropertiesConfig.dbServerPort);
         new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, LogicApplication.class.getName());
         SceneManager.initSceneMap();
     }

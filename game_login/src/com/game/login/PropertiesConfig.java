@@ -29,15 +29,15 @@ public class PropertiesConfig {
     private void initData() {
         loginServerId = ConfigUtil.getInt("login_server_id");
 
-        redisIp = ConfigUtil.getString("redis_ip");
-        redisPassword = ConfigUtil.getString("redis_password");
-        redisThreadCount = ConfigUtil.getInt("redis_thread_count");
-        redisNettyThreadCount = ConfigUtil.getInt("redis_netty_thread_count");
-        db = ConfigUtil.getInt("redis_db");
+        redisIp = ConfigUtil.getString("login_redis_ip");
+        redisPassword = ConfigUtil.getString("login_redis_password");
+        redisThreadCount = ConfigUtil.getInt("login_redis_thread_count");
+        redisNettyThreadCount = ConfigUtil.getInt("login_redis_netty_thread_count");
+        db = ConfigUtil.getInt("login_redis_db");
 
-        httpIp = ConfigUtil.getString("http_ip");
-        httpPort = ConfigUtil.getInt("http_port");
+        httpIp = ConfigUtil.getString("login_http_ip");
+        httpPort = ConfigUtil.getInt("login_http_port");
 
-        redisPlayerCacheCount = ConfigUtil.getInt("redis_player_cache_count");
+        redisPlayerCacheCount = ConfigUtil.getInt("login_redis_player_cache_count");
     }
 }

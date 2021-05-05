@@ -71,7 +71,7 @@ public class ProtoUtil {
         TransferMsg transferMsg = new TransferMsg();
         transferMsg.setHeaderProto(headerProto);
         transferMsg.setData(bodyData);
-        transferMsg.setAttackData(attackData);
+//        transferMsg.setAttackData(attackData);
         return transferMsg;
     }
 

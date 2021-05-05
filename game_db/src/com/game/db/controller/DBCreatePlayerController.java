@@ -38,7 +38,7 @@ public class DBCreatePlayerController {
         boolean playerResult = PlayerInfoQuery.createPlayer(playerInfoBean);
 
         PlayerSceneBean playerSceneBean = initPlayerScene(playerIndex);
-        boolean secenResult = PlayerSceneQuery.createScene(playerSceneBean);
+        boolean sceneResult = PlayerSceneQuery.createScene(playerSceneBean);
 
         PlayerRoleBean playerRoleBean = initPlayerRole(playerIndex, job, sex);
         boolean playerRoleResult = PlayerRoleQuery.createPlayerRole(playerRoleBean);
@@ -46,14 +46,14 @@ public class DBCreatePlayerController {
         boolean updateLoginServer = insertLoginServerInfo(playerIndex);
 
         PlayerAllInfoDB playerAllInfoDB = new PlayerAllInfoDB();
-        if (playerResult && secenResult && playerRoleResult && updateLoginServer) {
+        if (playerResult && sceneResult && playerRoleResult && updateLoginServer) {
             playerAllInfoDB.setPlayerRole(playerRoleBean);
             playerAllInfoDB.setPlayerInfo(playerInfoBean);
             playerAllInfoDB.setPlayerScene(playerSceneBean);
-            MsgUtil.sendMsg(msg, playerAllInfoDB);
+            MsgUtil.sendToLogic(msg, playerAllInfoDB);
             return;
         }
-        MsgUtil.sendMsg(msg, playerAllInfoDB);
+        MsgUtil.sendToLogic(msg, playerAllInfoDB);
     }
 
     private PlayerInfoBean initPlayer(int playerIndex, String name, String remoteIp, String openId) {

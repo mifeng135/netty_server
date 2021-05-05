@@ -37,6 +37,7 @@ public class LocalSocketManager {
         channelMap.put(playerIndex, channel);
         channelIdMap.put(playerIndex, channel.id());
         channelGroup.add(channel);
+        logger.info("connect success playerIndex = {}", playerIndex);
     }
 
     public void removeChannel(int playerIndex) {
@@ -45,9 +46,9 @@ public class LocalSocketManager {
     }
 
     public void removeChannel(Channel channel) {
-        int socketIndex = channel.attr(Constants.PLAYER_INDEX).get();
-        removeChannel(socketIndex);
-        logger.info("disconnect socketIindex = {}", socketIndex);
+        int playerIndex = channel.attr(Constants.PLAYER_INDEX).get();
+        removeChannel(playerIndex);
+        logger.info("disconnect playerIndex = {}", playerIndex);
     }
 
     public void broadcast(TransferMsg msg) {

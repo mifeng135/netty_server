@@ -13,6 +13,8 @@ public class HeaderProto {
     private int msgId;
     private int msdType; // local 0 remote 1
 
+    private byte[] attackData; // db msg
+
     //only local server use
     private boolean broadcast;
     private boolean success = true;

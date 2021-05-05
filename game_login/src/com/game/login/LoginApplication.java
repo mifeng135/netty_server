@@ -18,18 +18,15 @@ public class LoginApplication {
 
     public static void main(String[] args) {
 
-
-
-        String value = FileUtil.getConfigFileString("MapConfig.json");
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
 
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
-        loginSqlConfig.setMasterFileName("login-master-dao.properties");
+        loginSqlConfig.setMasterFileName("login/login-master-dao.properties");
         loginSqlConfig.setPreSqlName("pre-sql.sqls");
-        //loginSqlConfig.getSlaveFileList().add("login-master-slave.properties");
+        //loginSqlConfig.getSlaveFileList().add("login/login-master-slave.properties");
         SqlDao.getInstance().initWithConfigList(loginSqlConfig);
 
-        new PropertiesConfig("login-config.properties");
+        new PropertiesConfig("config.properties");
         CtrlAnnotation.getInstance().init(LoginApplication.class.getPackage().getName(), new LoginExceptionHandler());
 
         RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,

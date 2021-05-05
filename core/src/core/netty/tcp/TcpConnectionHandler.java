@@ -7,11 +7,17 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.EventLoop;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
 @ChannelHandler.Sharable
 public class TcpConnectionHandler extends ChannelInboundHandlerAdapter {
+
+
+    private static Logger logger = LoggerFactory.getLogger(TcpConnectionHandler.class);
+
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
@@ -22,15 +28,14 @@ public class TcpConnectionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        int playerIndex = ctx.channel().attr(Constants.PLAYER_INDEX).get();
+        logger.info("connect socket close playerIndex = {}", playerIndex);
         final EventLoop loop = ctx.channel().eventLoop();
-        loop.schedule(new Runnable() {
-            @Override
-            public void run() {
-                TcpConnection connection = ctx.channel().attr(Constants.TCP).get();
-                String ip = ctx.channel().attr(Constants.CONNECT_IP).get();
-                int port = ctx.channel().attr(Constants.PORT).get();
-                connection.connect(ip, port);
-            }
+        loop.schedule(() -> {
+            TcpConnection connection = ctx.channel().attr(Constants.TCP).get();
+            String ip = ctx.channel().attr(Constants.CONNECT_IP).get();
+            int port = ctx.channel().attr(Constants.PORT).get();
+            connection.connect(ip, port);
         }, 1L, TimeUnit.SECONDS);
         super.channelInactive(ctx);
     }

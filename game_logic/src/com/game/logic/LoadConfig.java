@@ -5,7 +5,6 @@ import com.esotericsoftware.reflectasm.ConstructorAccess;
 import core.BaseTable;
 import core.annotation.TableAnnotation;
 import core.util.FileUtil;
-import org.nutz.json.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

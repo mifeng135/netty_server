@@ -16,19 +16,17 @@ import static protocal.MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_REQ;
 import static protocal.MsgConstant.MSG_ENTER_GAME_RSP;
 
 @Ctrl
-public class EnterGameController extends AsyncCompletionHandler<Integer> {
+public class EnterGameController {
 
     @CtrlCmd(cmd = MsgConstant.MSG_ENTER_GAME_REQ)
     public void playerEnterGame(TransferMsg msg) {
         msg.getHeaderProto().setMsgId(DB_CMD_QUERY_ALL_PLAYER_INFO_REQ);
-        AsyncHttp.getInstance().postAsync(msg.getHeaderProto(), msg.getData(), this);
+        MsgUtil.sendToDB(msg);
     }
 
-    @Override
-    public Integer onCompleted(Response response) throws Exception {
-        TransferMsg msg = ProtoUtil.decodeDBHttpMsg(response.getResponseBodyAsBytes());
+    @CtrlCmd(cmd = MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_RSP)
+    public void playerAllInfo(TransferMsg msg) {
         msg.getHeaderProto().setMsgId(MSG_ENTER_GAME_RSP);
-
         PlayerAllInfoDB playerAllInfoDB = ProtoUtil.deserializer(msg.getData(), PlayerAllInfoDB.class);
         EnterGameRsp enterGameRsp = new EnterGameRsp();
         if (playerAllInfoDB.getPlayerInfo() != null) {
@@ -37,6 +35,5 @@ public class EnterGameController extends AsyncCompletionHandler<Integer> {
         } else {
             MsgUtil.sendErrorMsg(msg.getHeaderProto(), 1);
         }
-        return 1;
     }
 }

@@ -9,7 +9,10 @@ public class MsgConstant {
     /***********************************db center**************************************************/
 
     public static final int DB_CMD_QUERY_ALL_PLAYER_INFO_REQ = 1001;                //查询玩家信息
-    public static final int DB_CMD_CREATE_PLAYER_REQ = 1002;                        //创建角色
+    public static final int DB_CMD_QUERY_ALL_PLAYER_INFO_RSP = 1002;                //查询玩家信息
+
+    public static final int DB_CMD_CREATE_PLAYER_REQ = 1003;                        //创建角色
+    public static final int DB_CMD_CREATE_PLAYER_RSP = 1004;                        //创建角色
 
     /************************************client center******************************************************/
 

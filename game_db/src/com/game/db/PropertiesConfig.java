@@ -13,10 +13,12 @@ public class PropertiesConfig {
     public static int redisNettyThreadCount;
     public static int redisDB;
 
-    public static String httpIp;
-    public static int httpPort;
+    public static String dbServerIp;
+    public static int dbServerPort;
 
     public static int redisMaxCapacity;
+
+    public static int logicDBSocketIndex;
 
 
     public PropertiesConfig(String fileName) {
@@ -28,15 +30,17 @@ public class PropertiesConfig {
         serverId = ConfigUtil.getInt("game_server_id_100");
         loginServerId = ConfigUtil.getInt("login_server_id");
 
-        redisIp = ConfigUtil.getString("redis_ip");
-        redisPassword = ConfigUtil.getString("redis_password");
-        redisThreadCount = ConfigUtil.getInt("redis_thread_count");
-        redisNettyThreadCount = ConfigUtil.getInt("redis_netty_thread_count");
-        redisDB = ConfigUtil.getInt("redis_db");
+        redisIp = ConfigUtil.getString("db_redis_ip");
+        redisPassword = ConfigUtil.getString("db_redis_password");
+        redisThreadCount = ConfigUtil.getInt("db_redis_thread_count");
+        redisNettyThreadCount = ConfigUtil.getInt("db_redis_netty_thread_count");
+        redisDB = ConfigUtil.getInt("db_redis_db");
 
-        httpIp = ConfigUtil.getString("db_http_ip");
-        httpPort = ConfigUtil.getInt("db_http_port");
+        dbServerIp = ConfigUtil.getString("db_server_ip");
+        dbServerPort = ConfigUtil.getInt("db_server_port");
 
-        redisMaxCapacity = ConfigUtil.getInt("redis_max_online_player_count");
+        redisMaxCapacity = ConfigUtil.getInt("db_redis_max_online_player_count");
+
+        logicDBSocketIndex = ConfigUtil.getInt("logic_db_socket_index");
     }
 }

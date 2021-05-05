@@ -28,7 +28,7 @@ public class DBPlayerInfoController {
         PlayerInfoBean playerBean = PlayerInfoQuery.queryPlayer(playerIndex);
         if (playerBean == null) {
             PlayerAllInfoDB playerAllInfoDB = new PlayerAllInfoDB();
-            MsgUtil.sendMsg(msg, playerAllInfoDB);
+            MsgUtil.sendToLogic(msg, playerAllInfoDB);
             return;
         }
         PlayerSceneBean playerSceneBean = PlayerSceneQuery.queryScene(playerIndex);
@@ -40,6 +40,6 @@ public class DBPlayerInfoController {
         playerAllInfoDB.setPlayerItemList(playerItemList);
         playerAllInfoDB.setPlayerScene(playerSceneBean);
         playerAllInfoDB.setPlayerRole(playerRoleBean);
-        MsgUtil.sendMsg(msg, playerAllInfoDB);
+        MsgUtil.sendToLogic(msg, playerAllInfoDB);
     }
 }
