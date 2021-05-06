@@ -12,9 +12,11 @@ import java.util.List;
 
 import static core.Constants.TCP_MSG_LEN;
 
-/**
- * Created by Administrator on 2020/12/19.
- */
+
+//-----------------------------------------------------------------------------------------------------------------------
+//|              short                             |   short               |  short     | bytes           | bytes       |
+//|  msg total len(short short short bytes bytes)  |   header proto len    |  body len  | header bytes    | body bytes  |
+//-----------------------------------------------------------------------------------------------------------------------
 public class GDecoder extends ByteToMessageDecoder {
 
     @Override
@@ -23,23 +25,19 @@ public class GDecoder extends ByteToMessageDecoder {
             return;
         }
         byteBuf.markReaderIndex();
-        int length = byteBuf.readableBytes();
-        if (length < TCP_MSG_LEN) {
+        int readLength = byteBuf.readableBytes();
+        if (readLength < 2) {
             byteBuf.resetReaderIndex();
             return;
         }
-
-        byteBuf.markReaderIndex();
-        int msgLength = byteBuf.readShort();
-        int readLength = byteBuf.readableBytes();
-        if (readLength < msgLength - TCP_MSG_LEN) {
+        int msgLength = byteBuf.readShort();//包体消息总长度
+        if (readLength < msgLength) {
             byteBuf.resetReaderIndex();
             return;
         }
 
         short headerLen = byteBuf.readShort();
         short bodyLen = byteBuf.readShort();
-
 
         byte[] headerData = new byte[headerLen];
         byteBuf.readBytes(headerData);

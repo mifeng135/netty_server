@@ -10,6 +10,12 @@ import static core.Constants.REMOTE_MSG_ENCODER_HEADER_LEN;
 /**
  * Created by Administrator on 2020/12/19.
  */
+
+//--------------------------------------------------------------------------------------
+//                  short                       |   int       |  short     | bytes     |
+//  msg total len(short + int + short + bytes)  |   msg id    |  result    | body bytes|
+//--------------------------------------------------------------------------------------
+
 public class GEncoder extends MessageToByteEncoder<TransferClientMsg> {
 
     @Override

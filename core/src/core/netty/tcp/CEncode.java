@@ -12,6 +12,11 @@ import static core.Constants.TCP_MSG_LEN;
 /***
  * local encoder
  */
+
+//-----------------------------------------------------------------------------------------------------------------------
+//              short                             |   short               |  short     | bytes           | bytes        |
+//  msg total len(short short short bytes bytes)  |   header proto len    |  body len  | header bytes    | body bytes   |
+//-----------------------------------------------------------------------------------------------------------------------
 public class CEncode extends MessageToByteEncoder<TransferMsg> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, TransferMsg in, ByteBuf out) {

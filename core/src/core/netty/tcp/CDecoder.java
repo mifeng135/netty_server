@@ -15,6 +15,11 @@ import static core.Constants.TCP_MSG_LEN;
 /***
  * local decoder
  */
+
+//-----------------------------------------------------------------------------------------------------------------------
+//|              short                             |   short               |  short     | bytes           | bytes       |
+//|  msg total len(short short short bytes bytes)  |   header proto len    |  body len  | header bytes    | body bytes  |
+//-----------------------------------------------------------------------------------------------------------------------
 public class CDecoder extends ByteToMessageDecoder {
 
     @Override
@@ -23,23 +28,19 @@ public class CDecoder extends ByteToMessageDecoder {
             return;
         }
         byteBuf.markReaderIndex();
-        int length = byteBuf.readableBytes();
-        if (length < TCP_MSG_LEN) {
+        int readLength = byteBuf.readableBytes();// 获取可读字节长度
+        if (readLength < 2) {
             byteBuf.resetReaderIndex();
             return;
         }
 
-        byteBuf.markReaderIndex();
-        int msgLength = byteBuf.readShort();
-        int readLength = byteBuf.readableBytes();
-        if (readLength < msgLength - TCP_MSG_LEN) {
+        int msgLength = byteBuf.readShort(); //消息总长度
+        if (readLength < msgLength) {
             byteBuf.resetReaderIndex();
             return;
         }
-
-        short headerLen = byteBuf.readShort();
-        short bodyLen = byteBuf.readShort();
-
+        short headerLen = byteBuf.readShort(); //proto header len
+        short bodyLen = byteBuf.readShort(); // proto body len
 
         byte[] headerData = new byte[headerLen];
         byteBuf.readBytes(headerData);
