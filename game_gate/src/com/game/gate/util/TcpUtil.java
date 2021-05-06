@@ -6,6 +6,7 @@ import core.util.ProtoUtil;
 import io.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import protocal.MsgConstant;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class TcpUtil {
     public static void sendToClientError(int playerIndex, int msgId, byte[] data) {
         TransferClientMsg transferMsg = new TransferClientMsg();
         transferMsg.setData(data);
+        transferMsg.setMsgId(msgId);
         transferMsg.setResult(MSG_RESULT_FAIL);
         Channel channel = RemoteSocketManager.getInstance().getChanel(playerIndex);
         if (channel != null && channel.isActive()) {
@@ -46,6 +48,7 @@ public class TcpUtil {
         byte[] data = ProtoUtil.serialize(msg);
         TransferClientMsg transferMsg = new TransferClientMsg();
         transferMsg.setData(data);
+        transferMsg.setMsgId(msgId);
         transferMsg.setResult(MSG_RESULT_FAIL);
         Channel channel = RemoteSocketManager.getInstance().getChanel(playerIndex);
         if (channel != null && channel.isActive()) {
@@ -72,7 +75,9 @@ public class TcpUtil {
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(transferMsg);
         }
-        logger.info("send msg to client playerIndex = {} msgId = {}", playerIndex, msgId);
+        if (msgId != MsgConstant.MSG_HEART_BEAT_RSP) {
+            logger.info("send msg to client playerIndex = {} msgId = {}", playerIndex, msgId);
+        }
     }
 
     /**
@@ -91,7 +96,9 @@ public class TcpUtil {
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(transferMsg);
         }
-        logger.info("send msg to client playerIndex = {} msgId = {}", playerIndex, msgId);
+        if (msgId != MsgConstant.MSG_HEART_BEAT_RSP) {
+            logger.info("send msg to client playerIndex = {} msgId = {}", playerIndex, msgId);
+        }
     }
 
 

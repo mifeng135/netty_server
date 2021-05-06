@@ -18,12 +18,14 @@ import protocal.local.db.player.PlayerAllInfoDB;
 import java.util.List;
 
 import static protocal.MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_REQ;
+import static protocal.MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_RSP;
 
 @Ctrl
 public class DBPlayerInfoController {
 
     @CtrlCmd(cmd = DB_CMD_QUERY_ALL_PLAYER_INFO_REQ)
     public void getPlayerInfo(TransferMsg msg) {
+        msg.getHeaderProto().setMsgId(DB_CMD_QUERY_ALL_PLAYER_INFO_RSP);
         int playerIndex = msg.getHeaderProto().getPlayerIndex();
         PlayerInfoBean playerBean = PlayerInfoQuery.queryPlayer(playerIndex);
         if (playerBean == null) {

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ErroRsp {
+public class ErrorRsp {
     private int errorCode;
+    private int msgId;
 }
