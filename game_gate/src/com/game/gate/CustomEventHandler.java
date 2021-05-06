@@ -40,7 +40,7 @@ public class CustomEventHandler implements EventHandler {
 
     private void transmitMsg(TransferMsg transferMsg) {
         int msgType = transferMsg.getHeaderProto().getMsdType();
-        if (msgType != MSG_TYPE_REMOTE) {
+        if (msgType == MSG_TYPE_REMOTE) {
             sendRemoteMsg(transferMsg);
         } else {
             LocalRouterSocketManager.getInstance().sendRouterMsg(transferMsg);

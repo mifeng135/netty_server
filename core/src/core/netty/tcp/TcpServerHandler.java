@@ -2,6 +2,7 @@ package core.netty.tcp;
 
 import core.Constants;
 import core.group.MessageGroup;
+import core.msg.SysMsgConstants;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.channel.ChannelHandler;
@@ -10,6 +11,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.InetSocketAddress;
 
 import static core.Constants.LOCAL_SOCKET_RANGE;
 import static core.msg.SysMsgConstants.MSG_LOCAL_SOCKET_CLOSE_PUSH;
@@ -28,6 +31,9 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
         TransferMsg transferMsg = (TransferMsg) msg;
         transferMsg.setContext(ctx);
         MessageGroup.getInstance().pushMessage(transferMsg);
+        if (transferMsg.getHeaderProto().getMsgId() != 10010) {
+            logger.info("receive msg msgId = {}, playerIndex = {}", transferMsg.getHeaderProto().getMsgId(), transferMsg.getHeaderProto().getPlayerIndex());
+        }
     }
 
     @Override
@@ -42,6 +48,9 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
+        InetSocketAddress address = (InetSocketAddress) ctx.channel().remoteAddress();
+        String ip = address.getAddress().getHostAddress();
+        ctx.channel().attr(Constants.REMOTE_ADDRESS).setIfAbsent(ip);
     }
 
     @Override
@@ -60,7 +69,7 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
         transferMsg.setContext(context);
         if (playerIndex < LOCAL_SOCKET_RANGE) {
             transferMsg.setHeaderProto(ProtoUtil.initHeaderProto(MSG_LOCAL_SOCKET_CLOSE_PUSH, playerIndex));
-        }else {
+        } else {
             transferMsg.setHeaderProto(ProtoUtil.initHeaderProto(MSG_REMOTE_SOCKET_CLOSE_PUSH, playerIndex));
         }
         MessageGroup.getInstance().pushMessage(transferMsg);

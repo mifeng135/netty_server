@@ -44,6 +44,7 @@ public class LocalRouterSocketManager {
         int msgId = msg.getHeaderProto().getMsgId();
         routerMap.forEach((socketIndex, value) -> {
             if (value.contains(msgId)) {
+                logger.info("sendRouterMsg socketIndex = {},msgId = {}", socketIndex, msgId);
                 Channel channel = LocalSocketManager.getInstance().getChanel(socketIndex);
                 if (channel != null && channel.isActive()) {
                     channel.writeAndFlush(msg);

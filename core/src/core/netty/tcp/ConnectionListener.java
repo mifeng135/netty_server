@@ -32,7 +32,7 @@ public class ConnectionListener implements ChannelFutureListener {
                     int port = channelFuture.channel().attr(Constants.PORT).get();
                     connection.connect(ip, port);
                 }
-            }, 10L, TimeUnit.SECONDS);
+            }, 1L, TimeUnit.SECONDS);
         } else {
             int playerIndex = channelFuture.channel().attr(Constants.PLAYER_INDEX).get();
             String ip = channelFuture.channel().attr(Constants.CONNECT_IP).get();

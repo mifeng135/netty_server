@@ -15,9 +15,7 @@ import java.util.concurrent.TimeUnit;
 @ChannelHandler.Sharable
 public class TcpConnectionHandler extends ChannelInboundHandlerAdapter {
 
-
     private static Logger logger = LoggerFactory.getLogger(TcpConnectionHandler.class);
-
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
