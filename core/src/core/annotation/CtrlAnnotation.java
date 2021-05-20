@@ -29,6 +29,7 @@ public class CtrlAnnotation {
 
 
     private final Map<Integer, Method> methodMap = new HashMap<>();
+    private final Map<String, Method> httpMethodMap = new HashMap<>();
     private final Map<String, Object> classMap = new HashMap<>();
     private final Map<String, MethodAccess> methodAccessMap = new HashMap<>();
 
@@ -87,6 +88,10 @@ public class CtrlAnnotation {
         Set<Method> methodSet = reflections.getMethodsAnnotatedWith(CtrlCmd.class);
         for (Method method : methodSet) {
             int cmd = method.getAnnotation(CtrlCmd.class).cmd();
+            String httpCmd = method.getAnnotation(CtrlCmd.class).httpCmd();
+            if (httpCmd.length() > 0) {
+                httpMethodMap.put(httpCmd,method);
+            }
             methodMap.put(cmd, method);
             msgList.add(cmd);
         }
@@ -126,6 +131,30 @@ public class CtrlAnnotation {
 
     public List<Integer> getMsgList() {
         return msgList;
+    }
+
+
+
+    public void invokeHttpMethod(TransferMsg msg) {
+        String httpUrl = msg.getHttpUrl();
+        Method method = httpMethodMap.get(httpUrl);
+        if (method == null) {
+            logger.info("can not find msgId = {}", httpUrl);
+            return;
+        }
+        String declaringClassName = method.getDeclaringClass().getName();
+        Object oc = classMap.get(declaringClassName);
+        MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
+        String methodName = method.getName();
+        try {
+            methodAccess.invoke(oc, methodName, msg);
+        } catch (Throwable err) {
+            if (exceptionHandler != null) {
+                exceptionHandler.onException(err, msg);
+            } else {
+                err.printStackTrace();
+            }
+        }
     }
 
     public void invokeMethod(TransferMsg msg) {

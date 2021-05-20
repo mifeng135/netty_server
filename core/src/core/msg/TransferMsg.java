@@ -4,6 +4,8 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 
 /**
  * Created by Administrator on 2020/12/5.
@@ -14,4 +16,6 @@ public class TransferMsg {
     private HeaderProto headerProto;
     private byte[] data;
     private ChannelHandlerContext context;
+    private Map<String ,String> params;
+    private String httpUrl;
 }

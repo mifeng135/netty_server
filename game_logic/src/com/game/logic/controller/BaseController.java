@@ -7,7 +7,6 @@ import core.annotation.CtrlAnnotation;
 import core.annotation.CtrlCmd;
 import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.local.system.RegisterMsgCmdPush;
 

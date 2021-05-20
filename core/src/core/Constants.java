@@ -57,4 +57,8 @@ public class Constants {
     public static final int MSG_TYPE_LOCAL = 0;
     public static final int MSG_TYPE_REMOTE = 1;
 
+
+    public static final int HTTP_DECODER_TYPE_JSON = 1;
+    public static final int HTTP_DECODER_TYPE_PROTO_BUFFER = 2;
+
 }

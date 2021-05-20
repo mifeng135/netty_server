@@ -3,12 +3,15 @@ package com.game.login;
 import com.game.login.redis.RedisCache;
 import core.annotation.CtrlAnnotation;
 import core.group.EventThreadGroup;
+import core.netty.http.HttpHandler;
 import core.netty.http.HttpServer;
 import core.redis.RedisManager;
 import core.sql.SqlDao;
 import core.sql.SqlDaoConfig;
 import core.util.FileUtil;
 import org.apache.log4j.PropertyConfigurator;
+
+import static core.Constants.HTTP_DECODER_TYPE_JSON;
 
 
 /**
@@ -33,7 +36,7 @@ public class LoginApplication {
                 PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.db);
         RedisCache.getInstance();
 
-        new HttpServer(PropertiesConfig.httpIp, PropertiesConfig.httpPort);
-        new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginApplication.class.getName());
+        new HttpServer(PropertiesConfig.httpIp, PropertiesConfig.httpPort, new HttpHandler(HTTP_DECODER_TYPE_JSON));
+        new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginEventHandler.class, LoginApplication.class.getName());
     }
 }

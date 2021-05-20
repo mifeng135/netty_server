@@ -19,7 +19,7 @@ public class HttpUtil {
             return;
         }
         byte[] data = ProtoUtil.serialize(msg);
-        excuteSendMsg(channel, msgId, data, MSG_RESULT_FAIL);
+        executeSendMsg(channel, msgId, data, MSG_RESULT_FAIL);
     }
 
     public static void sendMsg(ChannelHandlerContext context, int msgId, Object msg) {
@@ -28,10 +28,10 @@ public class HttpUtil {
             return;
         }
         byte[] data = ProtoUtil.serialize(msg);
-        excuteSendMsg(channel, msgId, data, MSG_RESULT_SUCCESS);
+        executeSendMsg(channel, msgId, data, MSG_RESULT_SUCCESS);
     }
 
-    private static void excuteSendMsg(Channel channel, int msgId, byte[] data, int result) {
+    private static void executeSendMsg(Channel channel, int msgId, byte[] data, int result) {
         ByteBuf buf = Unpooled.buffer(data.length + 6);
         buf.writeInt(msgId);
         buf.writeShort(result);
