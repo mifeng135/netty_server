@@ -41,9 +41,9 @@ public class BaseController {
 
     @CtrlCmd(cmd = MSG_HEART_BEAT_REQ)
     public void heartBeat(TransferMsg msg) {
-        HeartBeartRsp heatbeartRsq = new HeartBeartRsp();
-        heatbeartRsq.setTime(TimeUtil.getCurrentTimeSecond());
-        TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), MsgConstant.MSG_HEART_BEAT_RSP, heatbeartRsq);
+        HeartBeartRsp heartBeartRsp = new HeartBeartRsp();
+        heartBeartRsp.setTime(TimeUtil.getCurrentTimeSecond());
+        TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), MsgConstant.MSG_HEART_BEAT_RSP, heartBeartRsp);
     }
 
     @CtrlCmd(cmd = MSG_RECONNECT_REQ)
