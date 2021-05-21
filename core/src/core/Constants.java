@@ -61,4 +61,6 @@ public class Constants {
     public static final int HTTP_DECODER_TYPE_JSON = 1;
     public static final int HTTP_DECODER_TYPE_PROTO_BUFFER = 2;
 
+    public static final String HTTP_HEADER_PATH = "PATH";
+
 }

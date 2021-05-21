@@ -24,7 +24,7 @@ public class LoginExceptionHandler implements ExceptionHandler {
         String exceptionStr = stringWriter.toString();
         ExceptionMsg exceptionMsg = new ExceptionMsg();
         exceptionMsg.setException(exceptionStr);
-        HttpUtil.sendMsg(msg.getContext(), MSG_SYSTEM_EXCEPTION_PUSH, exceptionMsg);
+        HttpUtil.sendMsg(msg, MSG_SYSTEM_EXCEPTION_PUSH, exceptionMsg);
         logger.error(exceptionStr);
     }
 }

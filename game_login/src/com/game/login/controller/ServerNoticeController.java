@@ -13,17 +13,19 @@ import protocal.remote.login.ServerNoticeRsp;
 
 import java.util.List;
 
+import static protocal.MsgConstant.HTTP_URL_GET_NOTICE;
+
 
 @Ctrl
 public class ServerNoticeController {
 
     private static Logger logger = LoggerFactory.getLogger(ServerNoticeController.class);
 
-    @CtrlCmd(cmd = MsgConstant.MSG_NOTICE_LIST_REQ)
+    @CtrlCmd(cmd = MsgConstant.MSG_NOTICE_LIST_REQ, httpCmd = HTTP_URL_GET_NOTICE)
     public void getServerNotice(TransferMsg msg) {
         List<LoginNoticeBean> noticeList = NoticeListQuery.getAllNotice();
         ServerNoticeRsp serverNoticeRsp = new ServerNoticeRsp();
         serverNoticeRsp.setNoticeList(noticeList);
-        HttpUtil.sendMsg(msg.getContext(), MsgConstant.MSG_NOTICE_LIST_RSP, serverNoticeRsp);
+        HttpUtil.sendMsg(msg, MsgConstant.MSG_NOTICE_LIST_RSP, serverNoticeRsp);
     }
 }

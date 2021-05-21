@@ -49,4 +49,10 @@ public class MsgConstant {
      * 主动推送
      */
     public static final int MSG_REPLACE_ACCOUNT_PUSH = 200000;                   //顶号
+
+
+    /*********************************HTTP URL**********************************************************/
+
+    public static final String HTTP_URL_GET_SERVER_LIST = "/getServerList";
+    public static final String HTTP_URL_GET_NOTICE = "/getNotice";
 }
