@@ -2,6 +2,8 @@ package com.game.login.query;
 
 import bean.login.LoginNoticeBean;
 import com.game.login.redis.RedisCache;
+import core.annotation.Query;
+import core.annotation.QueryCtrl;
 import core.sql.SqlDao;
 import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
@@ -12,9 +14,18 @@ import java.util.Collection;
 import java.util.List;
 
 
+@QueryCtrl
 public class NoticeListQuery {
 
-    public static List<LoginNoticeBean> getAllNotice() {
+    @Query(cmd = 1)
+    public List<LoginNoticeBean> getAllNotice() {
+        RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
+        Collection<LoginNoticeBean> valueCollection = redisCache.values();
+        return new ArrayList<>(valueCollection);
+    }
+
+
+    public List<LoginNoticeBean> getAllNotice(int te, String mm) {
         RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
         Collection<LoginNoticeBean> valueCollection = redisCache.values();
         return new ArrayList<>(valueCollection);

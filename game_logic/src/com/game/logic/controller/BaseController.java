@@ -2,8 +2,8 @@ package com.game.logic.controller;
 
 import com.game.logic.util.MsgUtil;
 import core.Constants;
+import core.annotation.CA;
 import core.annotation.Ctrl;
-import core.annotation.CtrlAnnotation;
 import core.annotation.CtrlCmd;
 import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
@@ -22,7 +22,7 @@ public class BaseController {
         process(msg.getContext(), socketIndex);
         RegisterMsgCmdPush registerMsgCmdReq = new RegisterMsgCmdPush();
         msg.getHeaderProto().setMsgId(MSG_REGISTER_MSG_CMD_PUSH);
-        registerMsgCmdReq.setMsgList(CtrlAnnotation.getInstance().getMsgList());
+        registerMsgCmdReq.setMsgList(CA.getInstance().getMsgList());
         MsgUtil.sendMsg(msg.getHeaderProto(), registerMsgCmdReq);
     }
 

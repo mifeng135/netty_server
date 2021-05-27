@@ -51,6 +51,7 @@ public class GDecoder extends ByteToMessageDecoder {
         TransferMsg msg = new TransferMsg();
         msg.setData(bodyData);
         msg.setHeaderProto(headerProto);
+        msg.setContext(context);
         list.add(msg);
     }
 }

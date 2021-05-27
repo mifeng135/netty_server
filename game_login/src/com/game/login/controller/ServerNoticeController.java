@@ -23,9 +23,9 @@ public class ServerNoticeController {
 
     @CtrlCmd(cmd = MsgConstant.MSG_NOTICE_LIST_REQ, httpCmd = HTTP_URL_GET_NOTICE)
     public void getServerNotice(TransferMsg msg) {
-        List<LoginNoticeBean> noticeList = NoticeListQuery.getAllNotice();
-        ServerNoticeRsp serverNoticeRsp = new ServerNoticeRsp();
-        serverNoticeRsp.setNoticeList(noticeList);
-        HttpUtil.sendMsg(msg, MsgConstant.MSG_NOTICE_LIST_RSP, serverNoticeRsp);
+//        List<LoginNoticeBean> noticeList = NoticeListQuery.getAllNotice();
+//        ServerNoticeRsp serverNoticeRsp = new ServerNoticeRsp();
+//        serverNoticeRsp.setNoticeList(noticeList);
+//        HttpUtil.sendMsg(msg, MsgConstant.MSG_NOTICE_LIST_RSP, serverNoticeRsp);
     }
 }

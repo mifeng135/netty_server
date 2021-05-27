@@ -1,7 +1,6 @@
 package core.annotation;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
-import com.esotericsoftware.reflectasm.MethodAccess;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class TableAnnotation {
+public class TA {
 
 
     private ConfigurationBuilder configurationBuilder;
@@ -22,14 +21,14 @@ public class TableAnnotation {
     private Map<String, ConstructorAccess> tableMap = new HashMap<>();
 
     private static class DefaultInstance {
-        static final TableAnnotation INSTANCE = new TableAnnotation();
+        static final TA INSTANCE = new TA();
     }
 
-    public static TableAnnotation getInstance() {
-        return TableAnnotation.DefaultInstance.INSTANCE;
+    public static TA getInstance() {
+        return TA.DefaultInstance.INSTANCE;
     }
 
-    private TableAnnotation() {
+    private TA() {
 
     }
 

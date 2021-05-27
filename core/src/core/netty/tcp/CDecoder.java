@@ -51,6 +51,7 @@ public class CDecoder extends ByteToMessageDecoder {
 
         TransferMsg msg = new TransferMsg();
         msg.setData(bodyData);
+        msg.setContext(channelHandlerContext);
         msg.setHeaderProto(headerProto);
         list.add(msg);
     }

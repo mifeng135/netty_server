@@ -2,15 +2,10 @@ package core.annotation;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
-import core.Constants;
-import core.exception.ExceptionHandler;
-import core.msg.TransferMsg;
-import io.netty.channel.ChannelHandlerContext;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
-import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 import org.slf4j.Logger;
@@ -19,47 +14,36 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 import java.util.*;
 
+
 /**
- * Created by Administrator on 2020/5/28.
+ * query annotation
  */
-public class CtrlAnnotation {
+public class QA {
 
-
-    private static Logger logger = LoggerFactory.getLogger(CtrlAnnotation.class);
-
+    private static Logger logger = LoggerFactory.getLogger(CA.class);
 
     private final Map<Integer, Method> methodMap = new HashMap<>();
-    private final Map<String, Method> httpMethodMap = new HashMap<>();
     private final Map<String, Object> classMap = new HashMap<>();
     private final Map<String, MethodAccess> methodAccessMap = new HashMap<>();
-
-
-    private final List<Integer> msgList = new ArrayList<>();
 
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
     private String packName = "";
-    private ExceptionHandler exceptionHandler;
 
     private static class DefaultInstance {
-        static final CtrlAnnotation INSTANCE = new CtrlAnnotation();
+        static final QA INSTANCE = new QA();
     }
 
-    public static CtrlAnnotation getInstance() {
-        return DefaultInstance.INSTANCE;
+    public static QA getInstance() {
+        return QA.DefaultInstance.INSTANCE;
     }
 
-    private CtrlAnnotation() {
+    private QA() {
 
     }
 
     public void init(String packName) {
         initScan(packName);
-    }
-
-    public void init(String packName, ExceptionHandler handler) {
-        initScan(packName);
-        exceptionHandler = handler;
     }
 
     private void initScan(String packName) {
@@ -85,15 +69,10 @@ public class CtrlAnnotation {
      * add all method to method map
      */
     private void scanMethodMap() {
-        Set<Method> methodSet = reflections.getMethodsAnnotatedWith(CtrlCmd.class);
+        Set<Method> methodSet = reflections.getMethodsAnnotatedWith(Query.class);
         for (Method method : methodSet) {
-            int cmd = method.getAnnotation(CtrlCmd.class).cmd();
-            String httpCmd = method.getAnnotation(CtrlCmd.class).httpCmd();
-            if (httpCmd.length() > 0) {
-                httpMethodMap.put(httpCmd,method);
-            }
+            int cmd = method.getAnnotation(Query.class).cmd();
             methodMap.put(cmd, method);
-            msgList.add(cmd);
         }
     }
 
@@ -102,7 +81,7 @@ public class CtrlAnnotation {
      * add all class instance to class map
      */
     private void scanClassMap() {
-        Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Ctrl.class);
+        Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(QueryCtrl.class);
         for (Class cl : classSet) {
             MethodAccess access = MethodAccess.get(cl);
             ConstructorAccess<?> classAccess = ConstructorAccess.get(cl);
@@ -117,67 +96,59 @@ public class CtrlAnnotation {
         }
     }
 
-    public Map<Integer, Method> getMethodMap() {
-        return methodMap;
-    }
-
-    public Map<String, Object> getClassMap() {
-        return classMap;
-    }
-
-    public Map<String, MethodAccess> getMethodAccessMap() {
-        return methodAccessMap;
-    }
-
-    public List<Integer> getMsgList() {
-        return msgList;
-    }
-
-
-
-    public void invokeHttpMethod(TransferMsg msg) {
-        String httpUrl = msg.getHttpUrl();
-        Method method = httpMethodMap.get(httpUrl);
+    public <T> T invokeQuery(int cmd, Object... args) {
+        Method method = methodMap.get(cmd);
         if (method == null) {
-            logger.info("can not find msgId = {}", httpUrl);
-            return;
+            return null;
         }
+
+        T ret = null;
         String declaringClassName = method.getDeclaringClass().getName();
         Object oc = classMap.get(declaringClassName);
         MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
         String methodName = method.getName();
         try {
-            methodAccess.invoke(oc, methodName, msg);
+            ret = (T) methodAccess.invoke(oc, methodName, args);
         } catch (Throwable err) {
-            if (exceptionHandler != null) {
-                exceptionHandler.onException(err, msg);
-            } else {
-                err.printStackTrace();
-            }
+            err.printStackTrace();
         }
+        return ret;
     }
 
-    public void invokeMethod(TransferMsg msg) {
-        int msgId = msg.getHeaderProto().getMsgId();
-        Method method = methodMap.get(msgId);
+    public <T> T invokeQuery(int cmd, Map args) {
+        Method method = methodMap.get(cmd);
         if (method == null) {
-            if (msgId > 1000) {
-                logger.info("can not find msgId = {}", msgId);
-            }
-            return;
+            return null;
         }
+        T ret = null;
         String declaringClassName = method.getDeclaringClass().getName();
         Object oc = classMap.get(declaringClassName);
         MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
         String methodName = method.getName();
         try {
-            methodAccess.invoke(oc, methodName, msg);
+            ret = (T) methodAccess.invoke(oc, methodName, args);
         } catch (Throwable err) {
-            if (exceptionHandler != null) {
-                exceptionHandler.onException(err, msg);
-            } else {
-                err.printStackTrace();
-            }
+            err.printStackTrace();
         }
+        return ret;
+    }
+
+
+    public <T> T invokeQuery(int cmd, List args) {
+        Method method = methodMap.get(cmd);
+        if (method == null) {
+            return null;
+        }
+        T ret = null;
+        String declaringClassName = method.getDeclaringClass().getName();
+        Object oc = classMap.get(declaringClassName);
+        MethodAccess methodAccess = methodAccessMap.get(declaringClassName);
+        String methodName = method.getName();
+        try {
+            ret = (T) methodAccess.invoke(oc, methodName, args);
+        } catch (Throwable err) {
+            err.printStackTrace();
+        }
+        return ret;
     }
 }

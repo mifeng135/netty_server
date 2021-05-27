@@ -3,7 +3,7 @@ package com.game.center.controller;
 import com.game.center.util.TcpUtil;
 import core.Constants;
 import core.annotation.Ctrl;
-import core.annotation.CtrlAnnotation;
+import core.annotation.CA;
 import core.annotation.CtrlCmd;
 import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
@@ -22,7 +22,7 @@ public class BaseController {
         process(msg.getContext(), socketIndex);
         RegisterMsgCmdPush registerMsgCmdReq = new RegisterMsgCmdPush();
         msg.getHeaderProto().setMsgId(MSG_REGISTER_MSG_CMD_PUSH);
-        registerMsgCmdReq.setMsgList(CtrlAnnotation.getInstance().getMsgList());
+        registerMsgCmdReq.setMsgList(CA.getInstance().getMsgList());
         TcpUtil.sendToGate(msg.getHeaderProto(), registerMsgCmdReq);
     }
 
