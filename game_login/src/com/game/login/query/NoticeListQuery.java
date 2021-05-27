@@ -10,7 +10,6 @@ import org.nutz.dao.Cnd;
 import org.redisson.api.RMap;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -20,14 +19,7 @@ public class NoticeListQuery {
     @Query(cmd = 1)
     public List<LoginNoticeBean> getAllNotice() {
         RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
-        Collection<LoginNoticeBean> valueCollection = redisCache.values();
-        return new ArrayList<>(valueCollection);
-    }
-
-    public List<LoginNoticeBean> getAllNotice(int te, String mm) {
-        RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
-        Collection<LoginNoticeBean> valueCollection = redisCache.values();
-        return new ArrayList<>(valueCollection);
+        return new ArrayList<>(redisCache.values());
     }
 
     public static boolean updateNoticeContent(int noticeId, String content) {

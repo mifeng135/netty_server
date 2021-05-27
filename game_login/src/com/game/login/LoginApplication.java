@@ -13,6 +13,7 @@ import core.sql.SqlDaoConfig;
 import core.util.FileUtil;
 import org.apache.log4j.PropertyConfigurator;
 
+import java.util.Collection;
 import java.util.List;
 
 import static core.Constants.HTTP_DECODER_TYPE_JSON;
@@ -30,11 +31,13 @@ public class LoginApplication {
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
         loginSqlConfig.setMasterFileName("login/login-master-dao.properties");
         loginSqlConfig.setPreSqlName("pre-sql.sqls");
-        //loginSqlConfig.getSlaveFileList().add("login/login-master-slave.properties");
         SqlDao.getInstance().initWithConfigList(loginSqlConfig);
-        new PropertiesConfig("config.properties");
+
         CtrlA.getInstance().init(LoginApplication.class.getPackage().getName(), new LoginExceptionHandler());
         QueryA.getInstance().init(LoginApplication.class.getPackage().getName());
+
+
+        new PropertiesConfig("config.properties");
 
         RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
                 PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.db);
@@ -43,7 +46,15 @@ public class LoginApplication {
         new HttpServer(PropertiesConfig.httpIp, PropertiesConfig.httpPort, new HttpHandler(HTTP_DECODER_TYPE_JSON));
         new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginEventHandler.class, LoginApplication.class.getName());
 
-        List<LoginNoticeBean> mm = QueryA.getInstance().invokeQuery(1, 1, "1");
+        RedisManager.getInstance().scoreSetAdd("eee", 200, 1);
+        RedisManager.getInstance().scoreSetAdd("eee", 12, 2);
+        RedisManager.getInstance().scoreSetAdd("eee", 1, 3);
 
+        Collection mm = RedisManager.getInstance().scoreSetGet("eee", 1);
+
+        int rank = RedisManager.getInstance().scoreSetRank("eee", 2);
+
+
+        int index = RedisManager.getInstance().getNextIndex();
     }
 }

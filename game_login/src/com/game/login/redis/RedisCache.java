@@ -53,10 +53,9 @@ public class RedisCache {
         serverListCache = redissonClient.getMapCache(REDIS_SERVER_LIST_KEY);
         serverListCache.clear();
         List<ServerListInfoBean> allServerList = SqlDao.getInstance().getDao().query(ServerListInfoBean.class, null);
-        for (int i = 0; i < allServerList.size(); i++) {
-            ServerListInfoBean serverInfoBean = allServerList.get(i);
-            serverListCache.put(serverInfoBean.getServerId(), serverInfoBean);
-        }
+        Map<Integer, ServerListInfoBean> collect = allServerList.stream().
+                collect(Collectors.toMap(ServerListInfoBean::getServerId, Function.identity(), (key1, key2) -> key2));
+        serverListCache.putAll(collect);
     }
 
     private void loadServerNoticeMap() {

@@ -2,6 +2,7 @@ package com.game.login.query;
 
 import bean.login.ServerListInfoBean;
 import com.game.login.redis.RedisCache;
+import core.redis.RedisManager;
 import core.sql.SqlDao;
 import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
@@ -10,6 +11,8 @@ import org.redisson.api.RMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static com.game.login.constant.RedisConstant.REDIS_SERVER_LIST_KEY;
 
 
 public class ServerListQuery {
@@ -20,9 +23,8 @@ public class ServerListQuery {
      * @return
      */
     public static List<ServerListInfoBean> queryAllServerList() {
-        RMap<Integer, ServerListInfoBean> redisCache = RedisCache.getInstance().getServerListCache();
-        Collection<ServerListInfoBean> valueCollection = redisCache.values();
-        return new ArrayList<>(valueCollection);
+        RMap<Integer, ServerListInfoBean> redisCache = RedisManager.getInstance().getMap(REDIS_SERVER_LIST_KEY);
+        return new ArrayList<>(redisCache.values());
     }
 
     /**
