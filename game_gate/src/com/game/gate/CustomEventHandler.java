@@ -2,7 +2,7 @@ package com.game.gate;
 
 import com.esotericsoftware.reflectasm.MethodAccess;
 import com.game.gate.util.TcpUtil;
-import core.annotation.CA;
+import core.annotation.CtrlA;
 import core.group.EventHandler;
 import core.manager.LocalRouterSocketManager;
 import core.msg.TransferMsg;
@@ -20,7 +20,7 @@ public class CustomEventHandler implements EventHandler {
 
     @Override
     public void onEvent(TransferMsg transferMsg) {
-        CA ctrlAnnotation = CA.getInstance();
+        CtrlA ctrlAnnotation = CtrlA.getInstance();
         int msgId = transferMsg.getHeaderProto().getMsgId();
         Method method = ctrlAnnotation.getMethodMap().get(msgId);
         if (method == null) {

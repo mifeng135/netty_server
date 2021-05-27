@@ -1,6 +1,6 @@
 package core.group;
 
-import core.annotation.CA;
+import core.annotation.CtrlA;
 import core.msg.TransferMsg;
 
 /**
@@ -31,7 +31,7 @@ public class MessageThreadTask extends Thread {
                     if (mProcessEventHandler != null) {
                         mProcessEventHandler.onEvent(transferMsg);
                     } else {
-                        CA.getInstance().invokeMethod(transferMsg);
+                        CtrlA.getInstance().invokeMethod(transferMsg);
                     }
                 }
                 Thread.sleep(10);

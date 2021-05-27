@@ -3,7 +3,7 @@ package com.game.logic;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
 import core.BaseTable;
-import core.annotation.TA;
+import core.annotation.TableA;
 import core.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class LoadConfig {
             String fileName = getFileName(childFile);
             logger.info("load config file = {}", fileName);
             String fileString = FileUtil.getConfigFileString(childFile.getName());
-            ConstructorAccess<BaseTable> constructorAccess = TA.getInstance().getTableMap(fileName);
+            ConstructorAccess<BaseTable> constructorAccess = TableA.getInstance().getTableMap(fileName);
             BaseTable baseTable = constructorAccess.newInstance();
             baseTable.init(fileString);
         }

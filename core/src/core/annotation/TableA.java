@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class TA {
+public class TableA {
 
 
     private ConfigurationBuilder configurationBuilder;
@@ -21,14 +21,14 @@ public class TA {
     private Map<String, ConstructorAccess> tableMap = new HashMap<>();
 
     private static class DefaultInstance {
-        static final TA INSTANCE = new TA();
+        static final TableA INSTANCE = new TableA();
     }
 
-    public static TA getInstance() {
-        return TA.DefaultInstance.INSTANCE;
+    public static TableA getInstance() {
+        return TableA.DefaultInstance.INSTANCE;
     }
 
-    private TA() {
+    private TableA() {
 
     }
 

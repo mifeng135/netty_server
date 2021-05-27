@@ -20,10 +20,10 @@ import java.util.*;
  * Created by Administrator on 2020/5/28.
  * ctrl annotation
  */
-public class CA {
+public class CtrlA {
 
 
-    private static Logger logger = LoggerFactory.getLogger(CA.class);
+    private static Logger logger = LoggerFactory.getLogger(CtrlA.class);
 
 
     private final Map<Integer, Method> methodMap = new HashMap<>();
@@ -40,14 +40,14 @@ public class CA {
     private ExceptionHandler exceptionHandler;
 
     private static class DefaultInstance {
-        static final CA INSTANCE = new CA();
+        static final CtrlA INSTANCE = new CtrlA();
     }
 
-    public static CA getInstance() {
+    public static CtrlA getInstance() {
         return DefaultInstance.INSTANCE;
     }
 
-    private CA() {
+    private CtrlA() {
 
     }
 

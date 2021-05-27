@@ -2,7 +2,7 @@ package com.game.db;
 
 
 import com.game.db.redis.RedisCache;
-import core.annotation.CA;
+import core.annotation.CtrlA;
 import core.group.EventThreadGroup;
 import core.netty.tcp.TcpServer;
 import core.redis.RedisManager;
@@ -37,7 +37,7 @@ public class DBServerApplication {
 
         new PropertiesConfig("config.properties");
 
-        CA.getInstance().init(DBServerApplication.class.getPackage().getName(), new DBExceptionHandler());
+        CtrlA.getInstance().init(DBServerApplication.class.getPackage().getName(), new DBExceptionHandler());
         RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
                 PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.redisDB);
         RedisCache.getInstance();

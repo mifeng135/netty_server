@@ -2,6 +2,8 @@ package core.redis;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.BaseCodec;
+import org.redisson.codec.FstCodec;
 import org.redisson.config.Config;
 
 /**
@@ -39,6 +41,7 @@ public class RedisManager {
         config.useSingleServer().setDatabase(db);
         config.setThreads(thread);
         config.setNettyThreads(nettyThread);
+        config.setCodec(new FstCodec());
         redissonClient = Redisson.create(config);
     }
 

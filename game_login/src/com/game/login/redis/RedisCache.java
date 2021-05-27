@@ -17,6 +17,7 @@ import org.redisson.api.RedissonClient;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.game.login.constant.RedisConstant.*;
@@ -63,10 +64,8 @@ public class RedisCache {
         noticeListCache = redissonClient.getMapCache(REDIS_SERVER_NOTICE_KEY);
         noticeListCache.clear();
         List<LoginNoticeBean> allNoticeList = SqlDao.getInstance().getDao().query(LoginNoticeBean.class, null);
-        for (int i = 0; i < allNoticeList.size(); i++) {
-            LoginNoticeBean noticeBean = allNoticeList.get(i);
-            noticeListCache.put(noticeBean.getNoticeId(), noticeBean);
-        }
+        Map<Integer, LoginNoticeBean> collect = allNoticeList.stream().collect(Collectors.toMap(LoginNoticeBean::getNoticeId, Function.identity(), (key1, key2) -> key2));
+        noticeListCache.putAll(collect);
     }
 
     private void loadPlayInfoMap() {
@@ -77,10 +76,9 @@ public class RedisCache {
                 query(LoginPlayerInfoBean.class,
                         Cnd.orderBy().desc("login_time"),
                         new Pager(1, 5000));
-        for (int i = 0; i < lastLoginPlayerList.size(); i++) {
-            LoginPlayerInfoBean loginPlayerBean = lastLoginPlayerList.get(i);
-            playerInfoCache.put(loginPlayerBean.getOpenId(), loginPlayerBean);
-        }
+
+        Map<String, LoginPlayerInfoBean> collect = lastLoginPlayerList.stream().collect(Collectors.toMap(LoginPlayerInfoBean::getOpenId, Function.identity(), (key1, key2) -> key2));
+        playerInfoCache.putAll(collect);
     }
 
     private void loadPlayerServerInfoMap() {

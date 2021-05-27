@@ -2,8 +2,8 @@ package com.game.login;
 
 import bean.login.LoginNoticeBean;
 import com.game.login.redis.RedisCache;
-import core.annotation.CA;
-import core.annotation.QA;
+import core.annotation.CtrlA;
+import core.annotation.QueryA;
 import core.group.EventThreadGroup;
 import core.netty.http.HttpHandler;
 import core.netty.http.HttpServer;
@@ -33,8 +33,8 @@ public class LoginApplication {
         //loginSqlConfig.getSlaveFileList().add("login/login-master-slave.properties");
         SqlDao.getInstance().initWithConfigList(loginSqlConfig);
         new PropertiesConfig("config.properties");
-        CA.getInstance().init(LoginApplication.class.getPackage().getName(), new LoginExceptionHandler());
-        QA.getInstance().init(LoginApplication.class.getPackage().getName());
+        CtrlA.getInstance().init(LoginApplication.class.getPackage().getName(), new LoginExceptionHandler());
+        QueryA.getInstance().init(LoginApplication.class.getPackage().getName());
 
         RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
                 PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.db);
@@ -43,7 +43,7 @@ public class LoginApplication {
         new HttpServer(PropertiesConfig.httpIp, PropertiesConfig.httpPort, new HttpHandler(HTTP_DECODER_TYPE_JSON));
         new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginEventHandler.class, LoginApplication.class.getName());
 
-        List<LoginNoticeBean> mm = QA.getInstance().invokeQuery(1, 1, "1");
+        List<LoginNoticeBean> mm = QueryA.getInstance().invokeQuery(1, 1, "1");
 
     }
 }

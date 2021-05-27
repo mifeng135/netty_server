@@ -18,9 +18,9 @@ import java.util.*;
 /**
  * query annotation
  */
-public class QA {
+public class QueryA {
 
-    private static Logger logger = LoggerFactory.getLogger(CA.class);
+    private static Logger logger = LoggerFactory.getLogger(CtrlA.class);
 
     private final Map<Integer, Method> methodMap = new HashMap<>();
     private final Map<String, Object> classMap = new HashMap<>();
@@ -31,14 +31,14 @@ public class QA {
     private String packName = "";
 
     private static class DefaultInstance {
-        static final QA INSTANCE = new QA();
+        static final QueryA INSTANCE = new QueryA();
     }
 
-    public static QA getInstance() {
-        return QA.DefaultInstance.INSTANCE;
+    public static QueryA getInstance() {
+        return QueryA.DefaultInstance.INSTANCE;
     }
 
-    private QA() {
+    private QueryA() {
 
     }
 

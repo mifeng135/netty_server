@@ -24,7 +24,6 @@ public class NoticeListQuery {
         return new ArrayList<>(valueCollection);
     }
 
-
     public List<LoginNoticeBean> getAllNotice(int te, String mm) {
         RMap<Integer, LoginNoticeBean> redisCache = RedisCache.getInstance().getNoticeListCache();
         Collection<LoginNoticeBean> valueCollection = redisCache.values();
