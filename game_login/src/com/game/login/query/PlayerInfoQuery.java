@@ -2,21 +2,20 @@ package com.game.login.query;
 
 
 import bean.login.LoginPlayerInfoBean;
-import com.game.login.redis.RedisCache;
-import core.sql.SqlDao;
+import core.util.Instance;
 import core.util.TimeUtil;
-import org.redisson.api.RMap;
+
+import static com.game.login.constant.RedisConstant.REDIS_PLAYER_OPEN_INFO_LIST;
 
 
 public class PlayerInfoQuery {
 
     public static LoginPlayerInfoBean queryPlayerInfo(String openId) {
-        RMap<String, LoginPlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
-        LoginPlayerInfoBean playerBean = redisCache.get(openId);
+        LoginPlayerInfoBean playerBean = Instance.redis().cacheMapGet(REDIS_PLAYER_OPEN_INFO_LIST, openId);
         if (playerBean == null) {
-            playerBean = SqlDao.getInstance().getDao().fetch(LoginPlayerInfoBean.class, openId);
+            playerBean = Instance.sql().fetch(LoginPlayerInfoBean.class, openId);
             if (playerBean != null) {
-                redisCache.put(playerBean.getOpenId(), playerBean);
+                Instance.redis().cacheMapPut(REDIS_PLAYER_OPEN_INFO_LIST, playerBean.getOpenId(), playerBean);
             }
         }
         return playerBean;
@@ -26,10 +25,9 @@ public class PlayerInfoQuery {
         LoginPlayerInfoBean playerBean = new LoginPlayerInfoBean();
         playerBean.setOpenId(openId);
         playerBean.setLoginTime(TimeUtil.getCurrentTimeSecond());
-        playerBean = SqlDao.getInstance().getDao().insert(playerBean);
+        playerBean = Instance.sql().insert(playerBean);
         if (playerBean != null) {
-            RMap<String, LoginPlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerInfoCache();
-            redisCache.put(openId, playerBean);
+            Instance.redis().cacheMapPut(REDIS_PLAYER_OPEN_INFO_LIST, openId, playerBean);
             return playerBean;
         }
         return null;

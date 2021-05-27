@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class QueryA {
 
-    private static Logger logger = LoggerFactory.getLogger(CtrlA.class);
+    private static final Logger logger = LoggerFactory.getLogger(CtrlA.class);
 
     private final Map<Integer, Method> methodMap = new HashMap<>();
     private final Map<String, Object> classMap = new HashMap<>();
