@@ -8,7 +8,8 @@ import core.util.ProtoUtil;
 import protocal.local.scene.SyncPositionReq;
 import protocal.local.scene.SyncPositionRsp;
 
-import static MsgConstant.*;
+import static constants.MsgConstant.*;
+
 
 @Ctrl
 public class SyncPositionController {

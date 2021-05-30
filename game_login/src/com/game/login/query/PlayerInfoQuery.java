@@ -5,7 +5,7 @@ import bean.login.LoginPlayerInfoBean;
 import core.util.Instance;
 import core.util.TimeUtil;
 
-import static com.game.login.constant.RedisConstant.REDIS_PLAYER_OPEN_INFO_LIST;
+import static constants.RedisConstant.REDIS_PLAYER_OPEN_INFO_LIST;
 
 
 public class PlayerInfoQuery {

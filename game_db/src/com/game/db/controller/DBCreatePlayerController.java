@@ -20,7 +20,7 @@ import protocal.remote.user.CreatePlayerReq;
 
 import static com.game.db.constant.GameConstant.MAP_INIT_ID;
 import static com.game.db.constant.GameConstant.SQL_KEY_LOGIN;
-import static MsgConstant.*;
+import static constants.MsgConstant.*;
 
 @Ctrl
 public class DBCreatePlayerController {

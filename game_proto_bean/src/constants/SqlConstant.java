@@ -1,3 +1,5 @@
+package constants;
+
 public class SqlConstant {
 
     public static final int QUERY_ALL_NOTICE = 1;

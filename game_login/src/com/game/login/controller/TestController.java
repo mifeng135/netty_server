@@ -4,7 +4,7 @@ package com.game.login.controller;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
-import MsgConstant;
+import constants.MsgConstant;
 
 @Ctrl
 public class TestController {

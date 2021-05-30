@@ -9,10 +9,9 @@ import org.nutz.dao.Cnd;
 import org.redisson.api.RMap;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import static com.game.login.constant.RedisConstant.REDIS_SERVER_LIST_KEY;
+import static constants.RedisConstant.REDIS_SERVER_LIST_KEY;
 
 
 public class ServerListQuery {

@@ -20,7 +20,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.game.login.constant.RedisConstant.*;
+import static constants.RedisConstant.*;
+
 
 public class RedisCache {
 

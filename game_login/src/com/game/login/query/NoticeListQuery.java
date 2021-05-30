@@ -13,8 +13,8 @@ import org.redisson.api.RMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import static SqlConstant.*;
-import static com.game.login.constant.RedisConstant.REDIS_SERVER_NOTICE_KEY;
+import static constants.RedisConstant.*;
+import static constants.SqlConstant.*;
 
 
 @QueryCtrl

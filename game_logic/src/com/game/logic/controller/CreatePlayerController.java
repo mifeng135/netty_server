@@ -1,15 +1,16 @@
 package com.game.logic.controller;
 
 import com.game.logic.util.MsgUtil;
+import constants.MsgConstant;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
-import MsgConstant;
 import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.CreatePlayerRsp;
 
-import static MsgConstant.*;
+import static constants.MsgConstant.*;
+
 
 @Ctrl
 public class CreatePlayerController {

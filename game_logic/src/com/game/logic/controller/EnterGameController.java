@@ -5,12 +5,11 @@ import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
-import MsgConstant;
+import constants.MsgConstant;
 import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.EnterGameRsp;
 
-import static MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_REQ;
-import static MsgConstant.MSG_ENTER_GAME_RSP;
+import static constants.MsgConstant.*;
 
 @Ctrl
 public class EnterGameController {

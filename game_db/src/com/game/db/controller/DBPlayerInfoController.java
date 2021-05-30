@@ -17,8 +17,8 @@ import protocal.local.db.player.PlayerAllInfoDB;
 
 import java.util.List;
 
-import static MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_REQ;
-import static MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_RSP;
+import static constants.MsgConstant.*;
+
 
 @Ctrl
 public class DBPlayerInfoController {

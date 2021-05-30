@@ -13,13 +13,14 @@ import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import MsgConstant;
+import constants.MsgConstant;
 import protocal.remote.login.GetServerListReq;
 import protocal.remote.login.GetServerListRsp;
 
 import java.util.List;
 
-import static MsgConstant.HTTP_URL_GET_SERVER_LIST;
+import static constants.MsgConstant.*;
+
 
 
 /***
@@ -30,7 +31,7 @@ public class ServerListController {
 
     private static Logger logger = LoggerFactory.getLogger(ServerListController.class);
 
-    @CtrlCmd(cmd = MsgConstant.MSG_SERVER_LIST_REQ)
+    @CtrlCmd(cmd = MSG_SERVER_LIST_REQ)
     public void getServerList(TransferMsg msg) {
         GetServerListReq serverListReq = ProtoUtil.deserializer(msg.getData(), GetServerListReq.class);
         String openId = serverListReq.getOpenId();

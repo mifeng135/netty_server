@@ -2,6 +2,7 @@ package com.game.gate.controller;
 
 
 import com.game.gate.util.TcpUtil;
+import constants.MsgConstant;
 import core.Constants;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
@@ -15,17 +16,16 @@ import core.util.TimeUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import MsgConstant;
 import protocal.local.system.RegisterMsgCmdPush;
 import protocal.remote.system.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import static constants.MsgConstant.*;
 import static core.msg.SysMsgConstants.MSG_LOCAL_SOCKET_CLOSE_PUSH;
 import static core.msg.SysMsgConstants.MSG_REGISTER_MSG_CMD_PUSH;
 import static core.msg.SysMsgConstants.MSG_REMOTE_SOCKET_CLOSE_PUSH;
-import static MsgConstant.*;
 
 @Ctrl
 public class BaseController {
