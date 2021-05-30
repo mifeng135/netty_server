@@ -1,5 +1,7 @@
 package bean.login;
 
+import core.annotation.Redis;
+import core.annotation.RedisId;
 import lombok.Getter;
 import lombok.Setter;
 import org.nutz.dao.entity.annotation.Column;
@@ -14,11 +16,13 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table("game_notice_list")
+@Redis(name = "game_notice_list", redisKey = "22")
 public class LoginNoticeBean implements Serializable {
     @Id
     @Column("notice_id")
-    private int noticeId;
+    @RedisId
+    public int noticeId;
 
     @Column()
-    private String content;
+    public String content;
 }

@@ -1,8 +1,6 @@
 package core.util;
 
-import core.annotation.CtrlA;
-import core.annotation.QueryA;
-import core.annotation.TableA;
+import core.annotation.*;
 import core.redis.RedisManager;
 import core.sql.SqlDao;
 import org.nutz.dao.impl.NutDao;
@@ -31,5 +29,9 @@ public class Instance {
 
     public static NutDao sql(String key) {
         return SqlDao.getInstance().getDao(key);
+    }
+
+    public static RedisA redisTable() {
+        return RedisA.getInstance();
     }
 }

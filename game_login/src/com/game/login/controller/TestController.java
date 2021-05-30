@@ -4,8 +4,7 @@ package com.game.login.controller;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
-import io.netty.channel.ChannelHandlerContext;
-import protocal.MsgConstant;
+import MsgConstant;
 
 @Ctrl
 public class TestController {

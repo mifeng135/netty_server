@@ -15,7 +15,7 @@ import core.util.TimeUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import protocal.MsgConstant;
+import MsgConstant;
 import protocal.local.system.RegisterMsgCmdPush;
 import protocal.remote.system.*;
 
@@ -25,7 +25,7 @@ import java.util.Set;
 import static core.msg.SysMsgConstants.MSG_LOCAL_SOCKET_CLOSE_PUSH;
 import static core.msg.SysMsgConstants.MSG_REGISTER_MSG_CMD_PUSH;
 import static core.msg.SysMsgConstants.MSG_REMOTE_SOCKET_CLOSE_PUSH;
-import static protocal.MsgConstant.*;
+import static MsgConstant.*;
 
 @Ctrl
 public class BaseController {

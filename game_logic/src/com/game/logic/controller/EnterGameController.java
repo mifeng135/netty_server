@@ -4,16 +4,13 @@ import com.game.logic.util.MsgUtil;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
-import core.netty.asyncHttp.AsyncHttp;
 import core.util.ProtoUtil;
-import org.asynchttpclient.AsyncCompletionHandler;
-import org.asynchttpclient.Response;
-import protocal.MsgConstant;
+import MsgConstant;
 import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.EnterGameRsp;
 
-import static protocal.MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_REQ;
-import static protocal.MsgConstant.MSG_ENTER_GAME_RSP;
+import static MsgConstant.DB_CMD_QUERY_ALL_PLAYER_INFO_REQ;
+import static MsgConstant.MSG_ENTER_GAME_RSP;
 
 @Ctrl
 public class EnterGameController {

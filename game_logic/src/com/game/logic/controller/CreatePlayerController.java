@@ -5,12 +5,11 @@ import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
-import org.asynchttpclient.Response;
-import protocal.MsgConstant;
+import MsgConstant;
 import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.CreatePlayerRsp;
 
-import static protocal.MsgConstant.*;
+import static MsgConstant.*;
 
 @Ctrl
 public class CreatePlayerController {

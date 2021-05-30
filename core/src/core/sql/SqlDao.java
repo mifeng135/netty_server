@@ -1,6 +1,5 @@
 package core.sql;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -10,7 +9,6 @@ import core.util.FileUtil;
 import org.nutz.dao.DaoInterceptor;
 import org.nutz.dao.impl.FileSqlManager;
 import org.nutz.dao.impl.NutDao;
-import org.nutz.lang.Files;
 import org.nutz.lang.Lang;
 import org.nutz.lang.Mirror;
 import org.nutz.lang.Streams;

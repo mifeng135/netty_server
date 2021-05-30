@@ -1,5 +1,9 @@
 /* select_player_login_info.data */
 select player_index,server_id from game_player_server_info where player_index in (@value)
 
+/* select_table_struct.data */
+select column_name from Information_schema.columns  where table_Name = @tableName and TABLE_SCHEMA = @dbName
+
+
 
 

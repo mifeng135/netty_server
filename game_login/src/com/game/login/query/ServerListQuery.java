@@ -115,14 +115,14 @@ public class ServerListQuery {
     public static boolean updateServerIp(int serverId, String serverIp) {
         boolean result = SqlDao.getInstance().getDao().
                 update(ServerListInfoBean.class,
-                        Chain.make("server_ip", serverIp),
+                        Chain.make("server_ip", serverIp).add("state", 2),
                         Cnd.where("server_id", "=", serverId)) > 0;
-        if (result) {
-            RMap<Integer, ServerListInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
-            ServerListInfoBean redisData = serverListCache.get(serverId);
-            redisData.setServerIp(serverIp);
-            serverListCache.put(serverId, redisData);
-        }
+//        if (result) {
+//            RMap<Integer, ServerListInfoBean> serverListCache = RedisCache.getInstance().getServerListCache();
+//            ServerListInfoBean redisData = serverListCache.get(serverId);
+//            redisData.setServerIp(serverIp);
+//            serverListCache.put(serverId, redisData);
+//        }
         return result;
     }
 }

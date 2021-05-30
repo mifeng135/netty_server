@@ -10,7 +10,7 @@ import protocal.ExceptionMsg;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import static protocal.MsgConstant.MSG_SYSTEM_EXCEPTION_PUSH;
+import static MsgConstant.MSG_SYSTEM_EXCEPTION_PUSH;
 
 public class GateExceptionHandler implements ExceptionHandler {
 

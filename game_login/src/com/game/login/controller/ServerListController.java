@@ -13,13 +13,13 @@ import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protocal.MsgConstant;
+import MsgConstant;
 import protocal.remote.login.GetServerListReq;
 import protocal.remote.login.GetServerListRsp;
 
 import java.util.List;
 
-import static protocal.MsgConstant.HTTP_URL_GET_SERVER_LIST;
+import static MsgConstant.HTTP_URL_GET_SERVER_LIST;
 
 
 /***
