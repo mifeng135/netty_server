@@ -1,12 +1,10 @@
 package com.game.login;
 
-import bean.login.LoginNoticeBean;
 import com.github.shyiko.mysql.binlog.BinaryLogClient;
 import com.github.shyiko.mysql.binlog.event.Event;
 import com.github.shyiko.mysql.binlog.event.EventType;
 import com.github.shyiko.mysql.binlog.event.TableMapEventData;
 import com.github.shyiko.mysql.binlog.event.UpdateRowsEventData;
-import core.annotation.RedisId;
 import core.annotation.RedisInfo;
 import core.sql.SqlHelper;
 import core.sql.SqlTable;
@@ -14,10 +12,12 @@ import core.util.Instance;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static core.redis.RedisStoreType.R_CACHE_MAP;
+import static core.redis.RedisStoreType.R_MAP;
 
 public class LoginSqlBinLog implements BinaryLogClient.EventListener {
 
@@ -66,10 +66,11 @@ public class LoginSqlBinLog implements BinaryLogClient.EventListener {
         for (Map.Entry<Serializable[], Serializable[]> row : rows) {
             Serializable[] key = row.getKey();
             Serializable[] value = row.getValue();
+            assignUpdateBean(value, tableName, tableId);
         }
     }
 
-    private void assignBean(Serializable[] data, String tableName, String tableId) {
+    private void assignUpdateBean(Serializable[] data, String tableName, long tableId) {
         RedisInfo redisInfo = Instance.redisTable().getRedisInfo(tableName);
         if (redisInfo == null) {
             return;
@@ -78,24 +79,38 @@ public class LoginSqlBinLog implements BinaryLogClient.EventListener {
         List<String> tableColumn = table.getTableColumn();
         try {
             Object oc = redisInfo.getCls().newInstance();
-            String redisKey = redisInfo.getRedisKey();
-            Object key = null;
+            String redisId = redisInfo.getId();
+            int storeType = redisInfo.getStoreType();
+            Object mapKey = null;
             for (int i = 0; i < tableColumn.size(); i++) {
                 String columnName = tableColumn.get(i);
                 Object value = data[i];
                 Field field = oc.getClass().getDeclaredField(columnName);
                 field.setAccessible(true);
                 field.set(oc, value);
-                if (columnName.equals(redisKey)) {
-                    key = value;
+                if (columnName.equals(redisId)) {
+                    mapKey = value;
                 }
             }
+            storeToRedis(storeType, redisInfo.getKey(), mapKey, oc);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void storeToRedis(int storeType, String redisKe, Object mapKey, Object oc) {
+        System.out.println("212222");
+        switch (storeType) {
+            case R_MAP:
+                Instance.redis().mapPut(redisKe, mapKey, oc);
+                break;
+            case R_CACHE_MAP:
+                Instance.redis().cacheMapPut(redisKe, mapKey, oc);
+                break;
         }
     }
 }

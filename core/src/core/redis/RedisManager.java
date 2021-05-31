@@ -74,7 +74,7 @@ public class RedisManager {
         redissonClient.getMap(mapKey).clear();
     }
 
-    public <T> T getMap(String mapKey, Object key) {
+    public <T> T mapGet(String mapKey, Object key) {
         return (T) redissonClient.getMap(mapKey).get(key);
     }
 
@@ -123,7 +123,7 @@ public class RedisManager {
     /************************* MultiMap BEGIN *****************************/
 
     public <K, V> void mulMapPut(String mapKey, K key, V value) {
-        redissonClient.getSetMultimap(mapKey).put(key, value);
+        redissonClient.getListMultimap(mapKey).put(key, value);
     }
 
     public Set mulMapRemove(String mapKey, Object key) {
@@ -196,5 +196,4 @@ public class RedisManager {
     public int getNextIndex() {
         return (int) redissonClient.getAtomicLong("increment").incrementAndGet();
     }
-
 }

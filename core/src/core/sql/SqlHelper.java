@@ -1,5 +1,6 @@
 package core.sql;
 
+import core.util.Instance;
 import core.util.StringUtil;
 import org.nutz.dao.sql.Sql;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public class SqlHelper {
 
     public static List<String> getTableStruct(String tableName, String dbName) {
-        Sql sql = SqlDao.getInstance().getDao().sqls().create("select_table_struct.data");
+        Sql sql = Instance.sql().sqls().create("select_table_struct.data");
         sql.setParam("tableName", tableName).setParam("dbName", dbName);
         sql.setCallback((conn, rs, sql1) -> {
             List<String> name = new LinkedList<>();
@@ -19,7 +20,7 @@ public class SqlHelper {
             }
             return name;
         });
-        List<String> value = SqlDao.getInstance().getDao().execute(sql).getList(String.class);
+        List<String> value = Instance.sql().execute(sql).getList(String.class);
         return value;
     }
 }

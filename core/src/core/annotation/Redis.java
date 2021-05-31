@@ -8,5 +8,11 @@ import java.lang.annotation.*;
 @Documented
 public @interface Redis {
     String name() default "";
-    String redisKey();
+
+    String key();
+
+    int storeType() default 1;
+
+    int maxStoreSize() default 1000;
+
 }

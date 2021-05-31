@@ -1,11 +1,14 @@
 package com.game.login.query;
 
 import bean.login.LoginNoticeBean;
+import bean.login.LoginPlayerInfoBean;
+import com.game.login.TestMap;
 import com.game.login.redis.RedisCache;
 import core.annotation.Query;
 import core.annotation.QueryCtrl;
 import core.sql.SqlDao;
 import core.util.Instance;
+import core.util.ProtoUtil;
 import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
 import org.redisson.api.RMap;
@@ -32,12 +35,6 @@ public class NoticeListQuery {
                 Chain.make("content", content),
                 Cnd.where("notice_id", "=", noticeId)) > 0;
 
-        if (result) {
-            LoginNoticeBean noticeBean = new LoginNoticeBean();
-            noticeBean.setContent(content);
-            noticeBean.setNoticeId(noticeId);
-            Instance.redis().mapPut(REDIS_SERVER_NOTICE_KEY, noticeId, noticeBean);
-        }
         return result;
     }
 
@@ -60,5 +57,21 @@ public class NoticeListQuery {
             return true;
         }
         return false;
+    }
+
+    @Query(cmd = NOTICE_TEST)
+    public boolean updateNoticeContent(int noticeId, byte[] data) {
+        boolean result = Instance.sql().update(LoginNoticeBean.class,
+                Chain.make("item", data),
+                Cnd.where("notice_id", "=", noticeId)) > 0;
+
+        return result;
+    }
+
+    @Query(cmd = NOTICE_TEST1)
+    public byte[] queryByteData(int noticeId) {
+        LoginNoticeBean mm = Instance.sql().fetch(LoginNoticeBean.class, Cnd.where("notice_id", "=", noticeId)) ;
+        TestMap ppp = ProtoUtil.deserializer(mm.getItem(), TestMap.class);
+        return null;
     }
 }

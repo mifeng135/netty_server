@@ -1,6 +1,7 @@
 package core.annotation;
 
 
+import core.util.Instance;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -12,6 +13,8 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import static core.redis.RedisStoreType.R_CACHE_MAP;
 
 public class RedisA {
     private final Map<String, RedisInfo> classMap = new HashMap<>();
@@ -57,15 +60,19 @@ public class RedisA {
                 String name = field.getName();
                 RedisId redisId = field.getAnnotation(RedisId.class);
                 if (redisId != null) {
-                    redisInfo.setRedisId(name);
+                    redisInfo.setId(name);
                     break;
                 }
             }
-            Redis cmd = (Redis) cl.getAnnotation(Redis.class);
-            redisInfo.setRedisKey(cmd.redisKey());
+            Redis redis = (Redis) cl.getAnnotation(Redis.class);
+            redisInfo.setKey(redis.key());
+            redisInfo.setStoreType(redis.storeType());
             redisInfo.setCls(cl);
+            if (redis.storeType() == R_CACHE_MAP) {
+                Instance.redis().setCacheMapMaxSize(redis.key(), redis.maxStoreSize());
+            }
             try {
-                classMap.put(cmd.name(), redisInfo);
+                classMap.put(redis.name(), redisInfo);
             } catch (Exception e) {
                 e.printStackTrace();
             }
