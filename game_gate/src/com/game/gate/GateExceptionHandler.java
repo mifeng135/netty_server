@@ -5,12 +5,12 @@ import core.exception.ExceptionHandler;
 import core.msg.TransferMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protocal.ExceptionMsg;
+import core.msg.ExceptionMsg;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import static constants.MsgConstant.MSG_SYSTEM_EXCEPTION_PUSH;
+import static core.msg.SysMsgConstants.MSG_SYSTEM_EXCEPTION_PUSH;
 
 
 public class GateExceptionHandler implements ExceptionHandler {

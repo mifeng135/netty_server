@@ -27,7 +27,4 @@ public class LoginNoticeBean implements Serializable {
 
     @Column()
     private String content;
-
-    @Column
-    private byte[] item;
 }

@@ -1,4 +1,4 @@
-package com.game.login;
+package core.sql;
 
 import com.github.shyiko.mysql.binlog.BinaryLogClient;
 import com.github.shyiko.mysql.binlog.event.Event;
@@ -19,8 +19,7 @@ import java.util.Map;
 import static core.redis.RedisStoreType.R_CACHE_MAP;
 import static core.redis.RedisStoreType.R_MAP;
 
-public class LoginSqlBinLog implements BinaryLogClient.EventListener {
-
+public class SqlBinLog implements BinaryLogClient.EventListener {
 
     private Map<Long, SqlTable> tableMap = new HashMap<>();
 
@@ -102,14 +101,13 @@ public class LoginSqlBinLog implements BinaryLogClient.EventListener {
         }
     }
 
-    private void storeToRedis(int storeType, String redisKe, Object mapKey, Object oc) {
-        System.out.println("212222");
+    private void storeToRedis(int storeType, String redisKey, Object mapKey, Object oc) {
         switch (storeType) {
             case R_MAP:
-                Instance.redis().mapPut(redisKe, mapKey, oc);
+                Instance.redis().mapPut(redisKey, mapKey, oc);
                 break;
             case R_CACHE_MAP:
-                Instance.redis().cacheMapPut(redisKe, mapKey, oc);
+                Instance.redis().cacheMapPut(redisKey, mapKey, oc);
                 break;
         }
     }

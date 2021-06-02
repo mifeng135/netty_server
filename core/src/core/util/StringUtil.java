@@ -1,5 +1,9 @@
 package core.util;
 
+import core.msg.TransferMsg;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,5 +68,13 @@ public class StringUtil {
             sb.replace(position - 1, position + 1, sb.substring(position, position + 1).toUpperCase());
         }
         return sb.toString();
+    }
+
+
+    public static String throwableToStr(Throwable throwable, TransferMsg msg) {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        throwable.printStackTrace(printWriter);
+        return stringWriter.toString();
     }
 }

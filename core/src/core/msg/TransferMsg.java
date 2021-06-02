@@ -18,10 +18,9 @@ import static core.Constants.HTTP_DECODER_TYPE_PROTO_BUFFER;
 public class TransferMsg {
     private HeaderProto headerProto;
     private byte[] data;
-    private ChannelHandlerContext context;
-    private Map<String, String> params;
-    private String httpUrl;
-
+    private transient ChannelHandlerContext context;
+    private transient Map<String, String> params;
+    private transient String httpUrl;
 
     public int getMsgType() {
         if (httpUrl.length() > 0) {

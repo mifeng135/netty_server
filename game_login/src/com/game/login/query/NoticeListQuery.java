@@ -1,8 +1,6 @@
 package com.game.login.query;
 
 import bean.login.LoginNoticeBean;
-import bean.login.LoginPlayerInfoBean;
-import com.game.login.TestMap;
 import com.game.login.redis.RedisCache;
 import core.annotation.Query;
 import core.annotation.QueryCtrl;
@@ -57,21 +55,5 @@ public class NoticeListQuery {
             return true;
         }
         return false;
-    }
-
-    @Query(cmd = NOTICE_TEST)
-    public boolean updateNoticeContent(int noticeId, byte[] data) {
-        boolean result = Instance.sql().update(LoginNoticeBean.class,
-                Chain.make("item", data),
-                Cnd.where("notice_id", "=", noticeId)) > 0;
-
-        return result;
-    }
-
-    @Query(cmd = NOTICE_TEST1)
-    public byte[] queryByteData(int noticeId) {
-        LoginNoticeBean mm = Instance.sql().fetch(LoginNoticeBean.class, Cnd.where("notice_id", "=", noticeId)) ;
-        TestMap ppp = ProtoUtil.deserializer(mm.getItem(), TestMap.class);
-        return null;
     }
 }

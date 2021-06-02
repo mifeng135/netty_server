@@ -3,7 +3,6 @@ package constants;
 public class MsgConstant {
     /***************************************************************************************/
 
-    public static final int MSG_SYSTEM_EXCEPTION_PUSH = 100;
 
     /***********************************db center**************************************************/
 
