@@ -1,6 +1,7 @@
 package core.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.sun.org.apache.bcel.internal.generic.ARETURN;
 import core.util.ProtoUtil;
@@ -13,13 +14,18 @@ import org.redisson.client.protocol.Encoder;
 public class FastJsonCodec extends BaseCodec {
 
     private final Encoder encoder = in -> {
-        byte[] data = ProtoUtil.serialize(in);
-        ByteBuf byteBuf = Unpooled.buffer(data.length);
-        byteBuf.writeBytes(data);
-        return byteBuf;
+        ByteBuf out = ByteBufAllocator.DEFAULT.buffer();
+        try {
+            ByteBufOutputStream os = new ByteBufOutputStream(out);
+            JSON.writeJSONString(os, in, SerializerFeature.WriteClassName);
+            return os.buffer();
+        } catch (Exception e) {
+            out.release();
+            throw e;
+        }
     };
     private final Decoder<Object> decoder = (buf, state) -> {
-        Object oc = ProtoUtil.deserializer(buf.array(), Object.class);
+        Object oc = JSON.parseObject(new ByteBufInputStream(buf), Object.class);
         return oc;
     };
 
@@ -33,4 +39,7 @@ public class FastJsonCodec extends BaseCodec {
         return encoder;
     }
 
+    static {
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+    }
 }

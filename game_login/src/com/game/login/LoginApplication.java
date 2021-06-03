@@ -47,7 +47,7 @@ public class LoginApplication {
 
         new PropertiesConfig("config.properties");
 
-        new MysqlBinLog("127.0.0.1", 3306, "root", "123456").registerEvent(new SqlBinLog()).start();
+        //new MysqlBinLog("127.0.0.1", 3306, "root", "123456").registerEvent(new SqlBinLog()).start();
 
         RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
                 PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.db);
@@ -64,11 +64,13 @@ public class LoginApplication {
         Instance.redis().mapPut("1", 2, new PlayerItemBean());
         Instance.redis().mapPut("1", 3, new PlayerSceneBean());
 
+        PlayerItemBean playerItemBean = Instance.redis().mapGet("1", 2);
 
-        LoginNoticeBean bean =  new LoginNoticeBean();
-        bean.setNoticeId(1);
-        bean.setContent("2121");
-        Instance.sql().update(bean);
+
+//        LoginNoticeBean bean =  new LoginNoticeBean();
+//        bean.setNoticeId(1);
+//        bean.setContent("2121");
+//        Instance.sql().update(bean);
 
     }
 }

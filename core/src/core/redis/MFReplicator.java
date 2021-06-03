@@ -1,5 +1,6 @@
 package core.redis;
 
+import com.alibaba.fastjson.JSON;
 import com.moilioncircle.redis.replicator.Configuration;
 import com.moilioncircle.redis.replicator.RedisReplicator;
 import com.moilioncircle.redis.replicator.Replicator;
@@ -11,6 +12,7 @@ import com.moilioncircle.redis.replicator.event.Event;
 import com.moilioncircle.redis.replicator.event.EventListener;
 import com.moilioncircle.redis.replicator.io.RawByteListener;
 import core.util.ProtoUtil;
+import io.netty.buffer.ByteBufInputStream;
 import org.nutz.json.Json;
 
 import java.io.IOException;
@@ -27,15 +29,25 @@ public class MFReplicator extends Thread {
         replicator.addEventListener(new EventListener() {
             @Override
             public void onEvent(Replicator replicator, Event event) {
-                System.out.println(event.toString());
                 if (event instanceof HSetCommand) {
                     Map<byte[], byte[]> data = ((HSetCommand) event).getFields();
 
                     for (Map.Entry<byte[], byte[]> entry : data.entrySet()) {
                         byte[] mapKey = entry.getKey();
                         byte[] mapValue = entry.getValue();
-                        int value = ProtoUtil.deserializer(mapKey, Integer.class);
-                        Object oc = ProtoUtil.deserializer(mapValue, PlayerItemBean.class);
+                        String key = new String(mapKey);
+                        String value = new String(mapValue);
+
+
+                        long time = System.currentTimeMillis();
+                        Object oc = JSON.parseObject(value, Object.class);
+
+                        long last = System.currentTimeMillis();
+
+                        System.out.println(last - time);
+
+
+                        System.out.println(Thread.currentThread().getName());
                         int mm1 = 0;
                     }
                 }
