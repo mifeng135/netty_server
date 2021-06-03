@@ -1,11 +1,17 @@
 package com.game.login.controller;
 
+import bean.login.LoginNoticeBean;
+import com.game.login.query.NoticeListQuery;
+import com.game.login.util.HttpUtil;
 import constants.MsgConstant;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import protocal.remote.login.ServerNoticeRsp;
+
+import java.util.List;
 
 import static constants.MsgConstant.HTTP_URL_GET_NOTICE;
 

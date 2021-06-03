@@ -6,7 +6,4 @@ public class SqlConstant {
     public static final int UPDATE_NOTICE = 2;
     public static final int DELETE_NOTICE = 3;
     public static final int INSERT_NOTICE = 4;
-    public static final int NOTICE_TEST = 5;
-    public static final int NOTICE_TEST1 = 6;
-    
 }

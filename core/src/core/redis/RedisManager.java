@@ -48,7 +48,7 @@ public class RedisManager {
         config.useSingleServer().setDatabase(db);
         config.setThreads(thread);
         config.setNettyThreads(nettyThread);
-        config.setCodec(new FstCodec());
+        config.setCodec(new FastJsonCodec());
         redissonClient = Redisson.create(config);
         initIndex();
     }
@@ -65,6 +65,7 @@ public class RedisManager {
     public void mapFastRemove(String mapKey, Object key) {
         redissonClient.getMap(mapKey).fastRemove(key);
     }
+
 
     public <T> T mapRemove(String mapKey, Object key) {
         return (T) redissonClient.getMap(mapKey).remove(key);
