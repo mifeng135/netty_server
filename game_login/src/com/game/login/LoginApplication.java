@@ -64,7 +64,8 @@ public class LoginApplication {
         Instance.redis().mapPut("1", 2, new PlayerItemBean());
         Instance.redis().mapPut("1", 3, new PlayerSceneBean());
 
-        PlayerItemBean playerItemBean = Instance.redis().mapGet("1", 2);
+        Instance.redis().mapRemove("1", 2);
+
 
 
 //        LoginNoticeBean bean =  new LoginNoticeBean();
