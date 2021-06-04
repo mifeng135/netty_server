@@ -38,10 +38,15 @@ public class MFReplicator extends Thread {
                         Object oc = JSON.parseObject(mapValue, Object.class);
                     }
                 } else if (event instanceof EvalCommand) {
-
-                    String mm = new String(((EvalCommand) event).getScript());
+                    EvalCommand evalCommand = (EvalCommand) event;
+                    int keyNumber = evalCommand.getNumkeys();
+                    String key = new String(evalCommand.getKeys()[0]);
+                    String arg = new String(evalCommand.getArgs()[0]);
+                    String mm = new String(evalCommand.getScript());
                     System.out.println(mm);
                     int mm1 = 0;
+                } else if (event instanceof HDelCommand) {
+                    byte[][] data = ((HDelCommand) event).getFields();
                 }
             }
         });
