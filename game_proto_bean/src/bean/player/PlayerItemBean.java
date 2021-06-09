@@ -1,5 +1,6 @@
 package bean.player;
 
+import bean.sub.SubItemInfoBean;
 import com.alibaba.fastjson.JSON;
 import core.sql.BaseIntBean;
 import lombok.Getter;
@@ -17,20 +18,11 @@ public class PlayerItemBean extends BaseIntBean {
     @Column("item_info")
     private String itemInfo;
 
-    private transient Map<String, ItemInfoBean> itemInfoBean;
-
-    public void decode() {
-        itemInfoBean = JSON.parseObject(itemInfo, ConcurrentHashMap.class);
+    public Map decode() {
+        return JSON.parseObject(itemInfo, ConcurrentHashMap.class);
     }
 
-    public void encode() {
-        itemInfo = JSON.toJSONString(itemInfoBean);
-    }
-
-    @Getter
-    @Setter
-    public static class ItemInfoBean {
-        private int itemId;
-        private int itemCount;
+    public void encode(Map<Integer, SubItemInfoBean> data) {
+        itemInfo = JSON.toJSONString(data);
     }
 }

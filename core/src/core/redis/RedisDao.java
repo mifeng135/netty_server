@@ -3,13 +3,10 @@ package core.redis;
 import core.annotation.RedisA;
 import core.annotation.RedisInfo;
 import core.sql.BaseBean;
-import core.sql.BaseIntBean;
-import core.sql.BaseStringBean;
 import core.sql.SqlHelper;
 import core.util.Ins;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Sqls;
-import org.nutz.dao.entity.Record;
 import org.nutz.dao.sql.Sql;
 import org.redisson.Redisson;
 import org.redisson.api.*;
@@ -28,9 +25,9 @@ import java.util.stream.Collectors;
  */
 public class RedisDao {
 
-    private static Config config = new Config();
+    private static final Config config = new Config();
     private static RedissonClient redissonClient;
-    private static String incr = "_incr";
+    private static final String incr = "_incr";
     private Map<String, RedisInfo> classMap;
 
     private static class DefaultInstance {
@@ -146,7 +143,7 @@ public class RedisDao {
     public void initSqlTableIncrement() {
         List<RedisInfo> list = RedisA.getInstance().getClassList();
         for (RedisInfo redisInfo : list) {
-            if (redisInfo.getIncrName().length() >= 0) {
+            if (redisInfo.getIncrName().length() > 0) {
                 Sql sql = Ins.sql().sqls().create("table_max.data");
                 sql.setVar("tableName", redisInfo.getTableName()).setVar("name", redisInfo.getIncrName());
                 sql.setCallback(Sqls.callback.integer());

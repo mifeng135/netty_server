@@ -65,7 +65,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -214,7 +214,7 @@
       <workItem from="1620575319530" duration="523000" />
       <workItem from="1620575892764" duration="705000" />
       <workItem from="1621428741686" duration="65164000" />
-      <workItem from="1623050641107" duration="85054000" />
+      <workItem from="1623050641107" duration="96630000" />
     </task>
     <servers />
   </component>

@@ -17,7 +17,7 @@ import org.nutz.dao.entity.annotation.Table;
 @Getter
 @Setter
 @Table("game_server_list")
-@Redis(name = "game_server_list", IncrName = "id")
+@Redis(name = "game_server_list", IncrName = "id", immediately = true)
 public class ServerListInfoBean extends BaseIntBean {
     @Column("server_name")
     private String serverName;

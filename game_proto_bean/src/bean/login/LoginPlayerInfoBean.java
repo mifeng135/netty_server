@@ -1,6 +1,6 @@
 package bean.login;
 
-import bean.player.PlayerItemBean;
+import bean.sub.SubPlayerServerInfoBean;
 import com.alibaba.fastjson.JSON;
 import core.annotation.Redis;
 import core.sql.BaseStringBean;
@@ -30,20 +30,11 @@ public class LoginPlayerInfoBean extends BaseStringBean {
     @Column("player_server_info")
     private String playerServerInfo;
 
-    private transient Map<String, PlayerServerInfoBean> playerServerInfoBean;
-
-    public void decode() {
-        playerServerInfoBean = JSON.parseObject(playerServerInfo, ConcurrentHashMap.class);
+    public Map decode() {
+        return JSON.parseObject(playerServerInfo, ConcurrentHashMap.class);
     }
 
-    public void encode() {
-        playerServerInfo = JSON.toJSONString(playerServerInfoBean);
-    }
-
-    @Getter
-    @Setter
-    public static class PlayerServerInfoBean {
-        private int serverId;
-        private int playerHead;
+    public void encode(Map<Integer, SubPlayerServerInfoBean> data) {
+        playerServerInfo = JSON.toJSONString(data);
     }
 }
