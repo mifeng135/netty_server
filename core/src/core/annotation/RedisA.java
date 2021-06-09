@@ -55,7 +55,6 @@ public class RedisA {
             redisInfo.setTableName(redis.name());
             redisInfo.setIncrName(redis.IncrName());
             redisInfo.setDbName(redis.dbName());
-            redisInfo.setType(redis.type());
             redisInfo.setImmediately(redis.immediately());
             try {
                 classMap.put(redis.name(), redisInfo);

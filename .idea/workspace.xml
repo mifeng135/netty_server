@@ -214,7 +214,7 @@
       <workItem from="1620575319530" duration="523000" />
       <workItem from="1620575892764" duration="705000" />
       <workItem from="1621428741686" duration="65164000" />
-      <workItem from="1623050641107" duration="78503000" />
+      <workItem from="1623050641107" duration="85054000" />
     </task>
     <servers />
   </component>
@@ -228,11 +228,6 @@
           <url>jar://$PROJECT_DIR$/lib/druid-1.1.22.jar!/com/alibaba/druid/pool/DruidDataSource.class</url>
           <line>1185</line>
           <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerListController.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>jar://$PROJECT_DIR$/lib/nutz-1.r.68.v20201205.jar!/org/nutz/dao/entity/annotation/Table.class</url>

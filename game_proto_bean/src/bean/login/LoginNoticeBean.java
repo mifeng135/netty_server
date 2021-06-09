@@ -13,7 +13,7 @@ import org.nutz.dao.entity.annotation.Table;
 @Getter
 @Setter
 @Table("game_notice_list")
-@Redis(name = "game_notice_list", IncrName = "id", type = Redis.IncrType.INT, immediately = true)
+@Redis(name = "game_notice_list", IncrName = "id", immediately = true)
 public class LoginNoticeBean extends BaseIntBean {
     @Column
     private String content;

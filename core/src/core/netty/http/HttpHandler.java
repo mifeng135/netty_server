@@ -99,8 +99,6 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
             Map.Entry<String, List<String>> next = iterator.next();
             requestParams.put(next.getKey(), next.getValue().get(0));
         }
-        String param = request.content().toString(StandardCharsets.UTF_8);
-
         HeaderProto headerProto = new HeaderProto();
         headerProto.setPlayerIndex(httpIndex);
 

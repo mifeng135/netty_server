@@ -1,12 +1,13 @@
 package com.game.login.controller;
 
 import bean.login.LoginPlayerInfoBean;
-import constants.RedisTableKey;
+import constants.TableKey;
 import core.annotation.Ctrl;
 import core.annotation.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.Ins;
 import core.util.ProtoUtil;
+import core.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protocal.remote.login.GetServerListReq;
@@ -35,10 +36,15 @@ public class ServerListController {
         process(openId, msg);
     }
 
-    private void process(String openId, TransferMsg msg) {
-        LoginPlayerInfoBean bean = Ins.redis().fetch(RedisTableKey.GAME_PLAYER_LOGIN_INFO, openId);
-        if (bean != null) {
-
+    private LoginPlayerInfoBean process(String openId, TransferMsg msg) {
+        LoginPlayerInfoBean bean = Ins.redis().fetch(TableKey.GAME_PLAYER_LOGIN_INFO, openId);
+        if (bean == null) {
+            bean = new LoginPlayerInfoBean();
+            bean.setId(openId);
+            bean.setCreateTime(TimeUtil.getCurrentTimeSecond());
+            bean.setPlayerIndex(Ins.redis().getNextIncrement(TableKey.GAME_PLAYER_LOGIN_INFO));
+            Ins.redis().put(TableKey.GAME_PLAYER_LOGIN_INFO, bean);
         }
+        return bean;
     }
 }

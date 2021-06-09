@@ -5,17 +5,21 @@ import core.annotation.RedisInfo;
 import core.sql.BaseBean;
 import core.sql.BaseIntBean;
 import core.sql.BaseStringBean;
+import core.sql.SqlHelper;
 import core.util.Ins;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Sqls;
+import org.nutz.dao.entity.Record;
 import org.nutz.dao.sql.Sql;
 import org.redisson.Redisson;
 import org.redisson.api.*;
 import org.redisson.config.Config;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -90,6 +94,20 @@ public class RedisDao {
             }
         }
         return (T) data;
+    }
+
+    public List fetchAll(String tableKey) {
+        RMap map = redissonClient.getMap(tableKey);
+        int cacheCount = map.size();
+        int tableCount = SqlHelper.getTableCount(tableKey);
+        if (cacheCount >= tableCount) {
+            return new ArrayList(map.values());
+        }
+        Class cls = classMap.get(tableKey).getCls();
+        List<BaseBean> data = Ins.sql().query(cls, null);
+        Map mapData = data.stream().collect(Collectors.toMap(BaseBean::getId, (p) -> p));
+        putAll(tableKey, mapData);
+        return data;
     }
 
     public void putAll(String tableKey, Map value) {

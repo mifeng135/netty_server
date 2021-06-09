@@ -11,6 +11,5 @@ public class RedisInfo {
     private String tableName;
     private String incrName;
     private String dbName;
-    private Redis.IncrType type;
     private boolean immediately;
 }

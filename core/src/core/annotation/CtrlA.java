@@ -4,6 +4,7 @@ import com.esotericsoftware.reflectasm.ConstructorAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
 import core.exception.ExceptionHandler;
 import core.msg.TransferMsg;
+import core.util.Util;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -60,6 +61,11 @@ public class CtrlA {
         exceptionHandler = handler;
     }
 
+    public void init(Class cls, ExceptionHandler handler) {
+        initScan(Util.getPackageName(cls));
+        exceptionHandler = handler;
+    }
+
     private void initScan(String packName) {
         this.packName = packName;
         initReflection();
@@ -88,7 +94,7 @@ public class CtrlA {
             int cmd = method.getAnnotation(CtrlCmd.class).cmd();
             String httpCmd = method.getAnnotation(CtrlCmd.class).httpCmd();
             if (httpCmd.length() > 0) {
-                httpMethodMap.put(httpCmd,method);
+                httpMethodMap.put(httpCmd, method);
             }
             methodMap.put(cmd, method);
             msgList.add(cmd);
@@ -130,7 +136,6 @@ public class CtrlA {
     public List<Integer> getMsgList() {
         return msgList;
     }
-
 
 
     public void invokeHttpMethod(TransferMsg msg) {

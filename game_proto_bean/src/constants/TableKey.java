@@ -3,7 +3,7 @@ package constants;
 /**
  * Created by Administrator on 2020/6/23.
  */
-public class RedisTableKey {
+public class TableKey {
 
     public static final String GAME_NOTICE_LIST = "game_notice_list";
     public static final String GAME_PLAYER_LOGIN_INFO = "game_player_login_info";

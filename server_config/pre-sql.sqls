@@ -13,6 +13,9 @@ select * from information_schema.tables where table_schema = @dbName
 /* table_max.data */
 select max($name) from $tableName
 
+/* table_count.data */
+select count($name) from $tableName
+
 
 
 

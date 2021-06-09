@@ -8,6 +8,7 @@ import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Table;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class PlayerItemBean extends BaseIntBean {
     private transient Map<String, ItemInfoBean> itemInfoBean;
 
     public void decode() {
-        itemInfoBean = JSON.parseObject(itemInfo, Map.class);
+        itemInfoBean = JSON.parseObject(itemInfo, ConcurrentHashMap.class);
     }
 
     public void encode() {

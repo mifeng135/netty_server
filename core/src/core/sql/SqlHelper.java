@@ -2,6 +2,7 @@ package core.sql;
 
 import core.util.Ins;
 import core.util.StringUtil;
+import org.nutz.dao.Sqls;
 import org.nutz.dao.sql.Sql;
 
 import java.util.LinkedList;
@@ -54,5 +55,12 @@ public class SqlHelper {
             return list;
         });
         return Ins.sql().execute(sql).getList(SqlTableInfo.class);
+    }
+
+    public static int getTableCount(String tableName) {
+        Sql sql = Ins.sql().sqls().create("table_count.data");
+        sql.setVar("tableName", tableName).setVar("name", "id");
+        sql.setCallback(Sqls.callback.integer());
+        return Ins.sql().execute(sql).getInt();
     }
 }
