@@ -2,6 +2,7 @@ package core.redis;
 
 import core.annotation.RedisA;
 import core.annotation.RedisInfo;
+import core.sql.BaseBean;
 import core.sql.BaseIntBean;
 import core.sql.BaseStringBean;
 import core.util.Ins;
@@ -66,29 +67,20 @@ public class RedisDao {
 
     /************************* MAP BEGIN *******************************/
 
-    public void put(String tableKey, BaseStringBean bean) {
+
+    public void put(String tableKey, BaseBean bean) {
         RedisInfo redisInfo = classMap.get(tableKey);
-        boolean immediately = redisInfo.isImmediately();
         redissonClient.getMap(tableKey).fastPut(bean.getId(), bean);
-        if (immediately) {
+        if (redisInfo.isImmediately()) {
             Ins.sql().insertOrUpdate(bean);
         }
     }
 
-    public void put(String tableKey, BaseIntBean bean) {
-        RedisInfo redisInfo = classMap.get(tableKey);
-        boolean immediately = redisInfo.isImmediately();
-        redissonClient.getMap(tableKey).fastPut(bean.getId(), bean);
-        if (immediately) {
-            Ins.sql().insertOrUpdate(bean);
-        }
-    }
-
-    public void remove(String tableKey, Object key) {
+    public void delete(String tableKey, Object key) {
         redissonClient.getMap(tableKey).fastRemove(key);
     }
 
-    public <T> T get(String tableKey, Object key) {
+    public <T> T fetch(String tableKey, Object key) {
         Object data = redissonClient.getMap(tableKey).get(key);
         if (data == null) {
             Class cls = classMap.get(tableKey).getCls();

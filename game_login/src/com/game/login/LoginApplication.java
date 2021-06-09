@@ -2,7 +2,7 @@ package com.game.login;
 
 import bean.login.LoginNoticeBean;
 import com.alibaba.fastjson.JSON;
-import constants.RedisConstant;
+import constants.RedisTableKey;
 import core.annotation.CtrlA;
 import core.group.EventThreadGroup;
 import core.netty.http.HttpHandler;
@@ -50,9 +50,9 @@ public class LoginApplication {
 
 
         LoginNoticeBean loginNoticeBean = new LoginNoticeBean();
-        loginNoticeBean.setId(Ins.redis().getNextIncrement(RedisConstant.GAME_NOTICE_LIST));
+        loginNoticeBean.setId(Ins.redis().getNextIncrement(RedisTableKey.GAME_NOTICE_LIST));
         loginNoticeBean.setContent("111111111");
-        Ins.redis().put(RedisConstant.GAME_NOTICE_LIST, loginNoticeBean);
+        Ins.redis().put(RedisTableKey.GAME_NOTICE_LIST, loginNoticeBean);
         int mmm = 0;
     }
 }

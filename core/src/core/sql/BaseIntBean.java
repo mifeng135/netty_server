@@ -1,15 +1,22 @@
 package core.sql;
 
 
-import lombok.Getter;
-import lombok.Setter;
 import org.nutz.dao.entity.annotation.Id;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
-public class BaseIntBean implements Serializable {
+
+public class BaseIntBean extends BaseBean<Integer> implements Serializable {
     @Id(auto = false)
     private int id;
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer value) {
+        id = value;
+    }
 }
