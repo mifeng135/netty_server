@@ -8,7 +8,9 @@ import lombok.Setter;
 @Setter
 public class RedisInfo {
     private Class cls;
-    private String id;
-    private String key;
-    private int storeType;
+    private String tableName;
+    private String incrName;
+    private String dbName;
+    private Redis.IncrType type;
+    private boolean immediately;
 }

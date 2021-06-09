@@ -4,7 +4,6 @@ package com.game.db.controller;
 import bean.player.PlayerInfoBean;
 import bean.player.PlayerRoleBean;
 import bean.player.PlayerSceneBean;
-import bean.login.LoginPlayerServerInfoBean;
 import com.game.db.PropertiesConfig;
 import com.game.db.query.PlayerInfoQuery;
 import com.game.db.query.PlayerRoleQuery;
@@ -59,7 +58,7 @@ public class DBCreatePlayerController {
     private PlayerInfoBean initPlayer(int playerIndex, String name, String remoteIp, String openId) {
         PlayerInfoBean playerBean = new PlayerInfoBean();
         playerBean.setServerId(PropertiesConfig.serverId);
-        playerBean.setPlayerIndex(playerIndex);
+        playerBean.setId(playerIndex);
         playerBean.setName(name);
         playerBean.setOpenId(openId);
         playerBean.setLoginIp(remoteIp);
@@ -71,26 +70,19 @@ public class DBCreatePlayerController {
         playerScene.setSceneId(MAP_INIT_ID);
         playerScene.setPlayerPositionX(400);
         playerScene.setPlayerPositionY(400);
-        playerScene.setPlayerIndex(playerIndex);
+        playerScene.setId(playerIndex);
         return playerScene;
     }
 
     private PlayerRoleBean initPlayerRole(int playerIndex, int job, int sex) {
         PlayerRoleBean playerRole = new PlayerRoleBean();
-        playerRole.setPlayerIndex(playerIndex);
+        playerRole.setId(playerIndex);
         playerRole.setJob(job);
         playerRole.setSex(sex);
         return playerRole;
     }
 
     private boolean insertLoginServerInfo(int playerIndex) {
-        LoginPlayerServerInfoBean playerServerInfoBean = new LoginPlayerServerInfoBean();
-        playerServerInfoBean.setPlayerIndex(playerIndex);
-        playerServerInfoBean.setServerId(PropertiesConfig.serverId);
-        playerServerInfoBean = SqlDao.getInstance().getDao(SQL_KEY_LOGIN).insert(playerServerInfoBean);
-        if (playerServerInfoBean != null) {
-            return true;
-        }
         return false;
     }
 }

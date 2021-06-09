@@ -1,7 +1,6 @@
 package core.annotation;
 
 
-import core.util.Instance;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -9,12 +8,8 @@ import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import static core.redis.RedisStoreType.R_CACHE_MAP;
 
 public class RedisA {
     private final Map<String, RedisInfo> classMap = new HashMap<>();
@@ -54,23 +49,14 @@ public class RedisA {
     private void scanClassMap() {
         Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Redis.class);
         for (Class cl : classSet) {
-            Field[] fields = cl.getDeclaredFields();
             RedisInfo redisInfo = new RedisInfo();
-            for (Field field : fields) {
-                String name = field.getName();
-                RedisId redisId = field.getAnnotation(RedisId.class);
-                if (redisId != null) {
-                    redisInfo.setId(name);
-                    break;
-                }
-            }
             Redis redis = (Redis) cl.getAnnotation(Redis.class);
-            redisInfo.setKey(redis.key());
-            redisInfo.setStoreType(redis.storeType());
             redisInfo.setCls(cl);
-            if (redis.storeType() == R_CACHE_MAP) {
-                Instance.redis().setCacheMapMaxSize(redis.key(), redis.maxStoreSize());
-            }
+            redisInfo.setTableName(redis.name());
+            redisInfo.setIncrName(redis.IncrName());
+            redisInfo.setDbName(redis.dbName());
+            redisInfo.setType(redis.type());
+            redisInfo.setImmediately(redis.immediately());
             try {
                 classMap.put(redis.name(), redisInfo);
             } catch (Exception e) {
@@ -79,7 +65,12 @@ public class RedisA {
         }
     }
 
-    public RedisInfo getRedisInfo(String tableName) {
-        return classMap.get(tableName);
+
+    public Map<String, RedisInfo> getClassMap() {
+        return classMap;
+    }
+
+    public List<RedisInfo> getClassList() {
+        return new ArrayList<>(classMap.values());
     }
 }

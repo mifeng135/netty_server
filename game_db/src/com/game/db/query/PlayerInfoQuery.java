@@ -16,9 +16,6 @@ public class PlayerInfoQuery {
         if (playerBean == null) {
             playerBean = SqlDao.getInstance().getDao().fetch(PlayerInfoBean.class,
                     Cnd.where("player_index", "=", playerIndex));
-            if (playerBean != null) {
-                redisCache.put(playerBean.getPlayerIndex(), playerBean);
-            }
         }
         return playerBean;
     }
@@ -26,11 +23,6 @@ public class PlayerInfoQuery {
 
     public static boolean createPlayer(PlayerInfoBean playerBean) {
         playerBean = SqlDao.getInstance().getDao().insert(playerBean);
-        if (playerBean != null) {
-            RMapCache<Integer, PlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerCache();
-            redisCache.put(playerBean.getPlayerIndex(), playerBean);
-            return true;
-        }
         return false;
     }
 
@@ -40,14 +32,9 @@ public class PlayerInfoQuery {
         playerBean.setLoginIp(loginIp);
         playerBean.setName(name);
         playerBean.setOpenId(openId);
-        playerBean.setPlayerIndex(playerIndex);
+        playerBean.setId(playerIndex);
         playerBean.setServerId(PropertiesConfig.serverId);
         playerBean = SqlDao.getInstance().getDao().insert(playerBean);
-        if (playerBean != null) {
-            RMapCache<Integer, PlayerInfoBean> redisCache = RedisCache.getInstance().getPlayerCache();
-            redisCache.put(playerBean.getPlayerIndex(), playerBean);
-            return true;
-        }
         return false;
     }
 }

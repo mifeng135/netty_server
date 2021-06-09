@@ -15,11 +15,7 @@ public class PlayerSceneQuery {
         RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
         PlayerSceneBean playerSceneBean = redisCache.get(playerIndex);
         if (playerSceneBean == null) {
-            playerSceneBean = SqlDao.getInstance().getDao().fetch(PlayerSceneBean.class,
-                    Cnd.where("player_index", "=", playerIndex));
-            if (playerSceneBean != null) {
-                redisCache.put(playerSceneBean.getPlayerIndex(), playerSceneBean);
-            }
+
         }
         return playerSceneBean;
     }
@@ -27,9 +23,7 @@ public class PlayerSceneQuery {
     public static boolean createScene(PlayerSceneBean playerScene) {
         playerScene = SqlDao.getInstance().getDao().insert(playerScene);
         if (playerScene != null) {
-            RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
-            redisCache.put(playerScene.getPlayerIndex(), playerScene);
-            return true;
+
         }
         return false;
     }
@@ -39,7 +33,7 @@ public class PlayerSceneQuery {
         playerScene.setSceneId(MAP_INIT_ID);
         playerScene.setPlayerPositionX(400);
         playerScene.setPlayerPositionY(400);
-        playerScene.setPlayerIndex(playerIndex);
+        playerScene.setId(playerIndex);
         playerScene = SqlDao.getInstance().getDao().insert(playerScene);
         if (playerScene != null) {
             RMapCache<Integer, PlayerSceneBean> redisCache = RedisCache.getInstance().getSceneCache();
@@ -57,7 +51,7 @@ public class PlayerSceneQuery {
                 Cnd.where("player_index", "=", playerIndex)) > 0;
         if (result) {
             PlayerSceneBean playerScene = new PlayerSceneBean();
-            playerScene.setPlayerIndex(playerIndex);
+            playerScene.setId(playerIndex);
             playerScene.setPlayerPositionX(positionX);
             playerScene.setPlayerPositionY(positionY);
             playerScene.setSceneId(sceneId);

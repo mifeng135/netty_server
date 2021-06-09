@@ -4,6 +4,21 @@ select player_index,server_id from game_player_server_info where player_index in
 /* select_table_struct.data */
 select column_name from Information_schema.columns  where table_Name = @tableName and TABLE_SCHEMA = @dbName
 
+/* table_increment.data */
+select auto_increment from  information_schema.tables where table_schema = @dbName AND  TABLE_NAME = @tableName
+
+/* table_info.data */
+select * from information_schema.tables where table_schema = @dbName
+
+/* table_max.data */
+select max($name) from $tableName
+
+
+
+
+
+
+
 
 
 

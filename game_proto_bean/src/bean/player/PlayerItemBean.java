@@ -1,23 +1,35 @@
 package bean.player;
 
+import com.alibaba.fastjson.JSON;
+import core.sql.BaseIntBean;
 import lombok.Getter;
 import lombok.Setter;
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Table;
 
-import java.io.Serializable;
+import java.util.Map;
 
 @Getter
 @Setter
 @Table("game_player_item")
-public class PlayerItemBean implements Serializable {
+public class PlayerItemBean extends BaseIntBean {
+    @Column("item_info")
+    private String itemInfo;
 
-    @Column("player_index")
-    private int playerIndex;
+    private transient Map<String, ItemInfoBean> itemInfoBean;
 
-    @Column
-    private int itemId;
+    public void decode() {
+        itemInfoBean = JSON.parseObject(itemInfo, Map.class);
+    }
 
-    @Column("item_count")
-    private int itemCount;
+    public void encode() {
+        itemInfo = JSON.toJSONString(itemInfoBean);
+    }
+
+    @Getter
+    @Setter
+    public static class ItemInfoBean {
+        private int itemId;
+        private int itemCount;
+    }
 }

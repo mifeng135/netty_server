@@ -7,9 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class SqlTable {
-    private long tableId;
-    private String dbName;
+public class SqlTableInfo {
     private String tableName;
-    private List<String> tableColumn;
+    private int increment;
 }

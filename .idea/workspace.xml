@@ -152,15 +152,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -216,6 +214,7 @@
       <workItem from="1620575319530" duration="523000" />
       <workItem from="1620575892764" duration="705000" />
       <workItem from="1621428741686" duration="65164000" />
+      <workItem from="1623050641107" duration="75258000" />
     </task>
     <servers />
   </component>
@@ -232,7 +231,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerListController.java</url>
-          <line>32</line>
+          <line>22</line>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -244,11 +243,6 @@
           <url>file://$PROJECT_DIR$/game_login/src/com/game/login/LoginSqlBinLog.java</url>
           <line>36</line>
           <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/game_login/src/com/game/login/LoginApplication.java</url>
-          <line>85</line>
-          <option name="timeStamp" value="79" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/game_login/src/com/game/login/LoginSqlBinLog.java</url>

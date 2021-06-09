@@ -1,12 +1,13 @@
 package bean.login;
 
+import core.annotation.Redis;
+import core.sql.BaseIntBean;
 import lombok.Getter;
 import lombok.Setter;
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Table;
 
-import java.io.Serializable;
 
 /**
  * 登录服务器列表
@@ -16,8 +17,9 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table("game_server_list")
-public class ServerListInfoBean implements Serializable {
-    @Id
+@Redis(name = "game_server_list", IncrName = "id")
+public class ServerListInfoBean extends BaseIntBean {
+    @Id(auto = false)
     private int id;
 
     @Column("server_name")

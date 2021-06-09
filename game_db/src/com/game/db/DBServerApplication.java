@@ -5,7 +5,7 @@ import com.game.db.redis.RedisCache;
 import core.annotation.CtrlA;
 import core.group.EventThreadGroup;
 import core.netty.tcp.TcpServer;
-import core.redis.RedisManager;
+import core.redis.RedisDao;
 import core.sql.SqlDao;
 import core.sql.SqlDaoConfig;
 import core.util.FileUtil;
@@ -38,7 +38,7 @@ public class DBServerApplication {
         new PropertiesConfig("config.properties");
 
         CtrlA.getInstance().init(DBServerApplication.class.getPackage().getName(), new DBExceptionHandler());
-        RedisManager.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
+        RedisDao.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
                 PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.redisDB);
         RedisCache.getInstance();
         new TcpServer(PropertiesConfig.dbServerIp, PropertiesConfig.dbServerPort, LOCAL).startServer();

@@ -24,25 +24,11 @@ public class PlayerRoleQuery {
 
     public static boolean createPlayerRole(PlayerRoleBean playerRole) {
         playerRole = SqlDao.getInstance().getDao().insert(playerRole);
-        if (playerRole != null) {
-            RMapCache<Integer, PlayerRoleBean> redisCache = RedisCache.getInstance().getRoleCache();
-            redisCache.put(playerRole.getPlayerIndex(), playerRole);
-            return true;
-        }
         return false;
     }
 
     public static boolean createPlayerRole(int playerIndex, int job, int sex) {
         PlayerRoleBean playerRole = new PlayerRoleBean();
-        playerRole.setPlayerIndex(playerIndex);
-        playerRole.setJob(job);
-        playerRole.setSex(sex);
-        playerRole = SqlDao.getInstance().getDao().insert(playerRole);
-        if (playerRole != null) {
-            RMapCache<Integer, PlayerRoleBean> redisCache = RedisCache.getInstance().getRoleCache();
-            redisCache.put(playerIndex, playerRole);
-            return true;
-        }
         return false;
     }
 }

@@ -7,12 +7,16 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Documented
 public @interface Redis {
+
+    enum IncrType {INT, STRING};
+
     String name() default "";
 
-    String key();
+    String IncrName() default "";
 
-    int storeType() default 1;
+    String dbName() default "";
 
-    int maxStoreSize() default 1000;
+    IncrType type() default IncrType.INT;
 
+    boolean immediately() default false;
 }
