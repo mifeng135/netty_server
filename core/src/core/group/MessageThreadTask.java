@@ -1,6 +1,6 @@
 package core.group;
 
-import core.annotation.CtrlA;
+import core.annotation.ctrl.CtrlA;
 import core.msg.TransferMsg;
 
 /**

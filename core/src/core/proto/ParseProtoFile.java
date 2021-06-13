@@ -2,17 +2,16 @@ package core.proto;
 
 import core.util.FileUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 public class ParseProtoFile {
-
 
     private static final String begin = "m{";
     private static final String end = "}";
 
+    public static final String mapCodeBegin = "<";
+    public static final String mapCodeEnd = ">";
 
     private static final String TYPE_BOOL = "bool";
     private static final String TYPE_INT32 = "int32";
@@ -26,6 +25,20 @@ public class ParseProtoFile {
     private static final String TYPE_STRING = "string";
     private static final String TYPE_REPEATED = "repeated";
     private static final String TYPE_MAP = "map";
+
+
+    private static final String writePath = "game_proto_bean/src/protocal";
+    private static final String readPath = "/proto_file";
+
+    public static void init() {
+        File importDir = new File(System.getProperty("user.dir"), writePath);
+        for (File file : importDir.listFiles()) {
+            if (file.isDirectory()) {
+
+            }
+            parse(file.getName());
+        }
+    }
 
 
     public static void parse(String fileName) {
@@ -51,7 +64,7 @@ public class ParseProtoFile {
                 }
             }
             if (isBegin) {
-                classFieldList.add(parseProperty(str));
+                parseProperty(classFieldList, str);
                 continue;
             }
             if (isEnd) {
@@ -59,13 +72,33 @@ public class ParseProtoFile {
                 className = "";
             }
         }
-        int dd = 0;
+
+        Set<String> importClass = parseImportClass(mapClass);
+    }
+
+
+    public static Set<String> parseImportClass(Map<String, List<ProtoProperty>> mapClass) {
+        Set<String> hasClassList = mapClass.keySet();
+        Map<String, Integer> importClassMap = new HashMap<>();
+        for (Map.Entry<String, List<ProtoProperty>> entry : mapClass.entrySet()) {
+            List<ProtoProperty> protoPropertyList = entry.getValue();
+            for (ProtoProperty property : protoPropertyList) {
+                String className = property.getClassName();
+                if (className != null && className.length() > 0) {
+                    if (!hasClassList.contains(className)) {
+                        importClassMap.putIfAbsent(className, 1);
+                    }
+                }
+            }
+        }
+        return importClassMap.keySet();
     }
 
     public static String parseClassName(String str) {
         String[] list = str.split(" ");
         List<String> arrayList = new ArrayList<>();
         for (String value : list) {
+            value = value.trim();
             if (value.length() > 0) {
                 arrayList.add(value);
             }
@@ -77,27 +110,46 @@ public class ParseProtoFile {
     }
 
 
-    public static ProtoProperty parseProperty(String str) {
+    public static void parseProperty(List<ProtoProperty> protoProperties, String str) {
         String property = str.split("=")[0];
-        String[] list = property.split(" ");
-        List<String> arrayList = new ArrayList<>();
-        for (String value : list) {
-            if (value.length() > 0) {
-                arrayList.add(value);
+
+        if (property.indexOf(mapCodeBegin) > 0) {
+            int beingIndex = property.indexOf(mapCodeBegin);
+            int endIndex = property.indexOf(mapCodeEnd);
+            String subStr = property.substring(beingIndex + 1, endIndex);
+            String name = property.substring(endIndex + 1, property.length() - 1).trim();
+            String[] subList = subStr.split(",");
+            String mapKey = subList[0].trim();
+            String mapClass = subList[1].trim();
+            ProtoProperty protoProperty = new ProtoProperty();
+            protoProperty.setType(TYPE_MAP);
+            protoProperty.setMapKey(mapKey);
+            protoProperty.setClassName(mapClass);
+            protoProperty.setName(name);
+            protoProperties.add(protoProperty);
+        } else {
+            String[] list = property.split(" ");
+            List<String> arrayList = new ArrayList<>();
+            for (String value : list) {
+                value = value.trim();
+                if (value.length() > 0) {
+                    arrayList.add(value);
+                }
+            }
+            ProtoProperty protoProperty = new ProtoProperty();
+            if (arrayList.size() == 2) {
+                protoProperty.setType(arrayList.get(0));
+                protoProperty.setName(arrayList.get(1));
+                protoProperties.add(protoProperty);
+            }
+            if (arrayList.size() == 3) {
+                protoProperty.setType(arrayList.get(0));
+                protoProperty.setClassName(arrayList.get(1));
+                protoProperty.setName(arrayList.get(2));
+                protoProperties.add(protoProperty);
             }
         }
 
-        ProtoProperty protoProperty = new ProtoProperty();
-        if (arrayList.size() == 2) {
-            protoProperty.setType(arrayList.get(0));
-            protoProperty.setName(arrayList.get(1));
-        }
-        if (arrayList.size() == 3) {
-            protoProperty.setType(arrayList.get(0));
-            protoProperty.setClassName(arrayList.get(1));
-            protoProperty.setName(arrayList.get(2));
-        }
-        return protoProperty;
     }
 
     public static boolean checkBegin(String str) {

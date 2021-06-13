@@ -10,8 +10,8 @@ import com.game.db.query.PlayerItemQuery;
 import com.game.db.query.PlayerRoleQuery;
 import com.game.db.query.PlayerSceneQuery;
 import com.game.db.util.MsgUtil;
-import core.annotation.Ctrl;
-import core.annotation.CtrlCmd;
+import core.annotation.ctrl.Ctrl;
+import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
 import protocal.local.db.player.PlayerAllInfoDB;
 

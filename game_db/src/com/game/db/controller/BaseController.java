@@ -1,8 +1,8 @@
 package com.game.db.controller;
 
 import core.Constants;
-import core.annotation.Ctrl;
-import core.annotation.CtrlCmd;
+import core.annotation.ctrl.Ctrl;
+import core.annotation.ctrl.CtrlCmd;
 import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import io.netty.channel.ChannelHandlerContext;

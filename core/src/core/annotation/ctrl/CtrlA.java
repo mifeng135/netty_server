@@ -1,4 +1,4 @@
-package core.annotation;
+package core.annotation.ctrl;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
@@ -108,6 +108,7 @@ public class CtrlA {
     private void scanClassMap() {
         Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Ctrl.class);
         for (Class cl : classSet) {
+            String mm = cl.getPackage().getName();
             MethodAccess access = MethodAccess.get(cl);
             ConstructorAccess<?> classAccess = ConstructorAccess.get(cl);
             String name = cl.getName();

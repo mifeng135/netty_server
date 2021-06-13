@@ -2,9 +2,9 @@ package com.game.logic.controller;
 
 import com.game.logic.util.MsgUtil;
 import core.Constants;
-import core.annotation.CtrlA;
-import core.annotation.Ctrl;
-import core.annotation.CtrlCmd;
+import core.annotation.ctrl.CtrlA;
+import core.annotation.ctrl.Ctrl;
+import core.annotation.ctrl.CtrlCmd;
 import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import io.netty.channel.ChannelHandlerContext;

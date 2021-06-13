@@ -1,6 +1,6 @@
-package core.annotation;
+package core.annotation.proto;
 
-import com.esotericsoftware.reflectasm.ConstructorAccess;
+
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -8,36 +8,25 @@ import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class TableA {
 
+public class ProtoA {
+    private final Map<String, List<Class>> classMap = new HashMap<>();
 
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
     private String packName = "";
-    private Map<String, ConstructorAccess> tableMap = new HashMap<>();
 
     private static class DefaultInstance {
-        static final TableA INSTANCE = new TableA();
+        static final ProtoA INSTANCE = new ProtoA();
     }
 
-    public static TableA getInstance() {
-        return TableA.DefaultInstance.INSTANCE;
+    public static ProtoA getInstance() {
+        return ProtoA.DefaultInstance.INSTANCE;
     }
 
-    private TableA() {
-
-    }
-
-    public void init(String packName) {
-        initScan(packName);
-    }
-
-    private void initScan(String packName) {
-        this.packName = packName;
+    private ProtoA() {
         initReflection();
         scanClassMap();
     }
@@ -47,7 +36,7 @@ public class TableA {
      */
     private void initReflection() {
         configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.forPackages(packName);
+        configurationBuilder.forPackages("bean.login");
         configurationBuilder.setScanners(new SubTypesScanner(false), new TypeAnnotationsScanner(), new MethodAnnotationsScanner());
         configurationBuilder.filterInputsBy(new FilterBuilder().includePackage(packName));
         reflections = new Reflections(configurationBuilder);
@@ -58,16 +47,15 @@ public class TableA {
      * add all class instance to class map
      */
     private void scanClassMap() {
-        Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Table.class);
-        for (Class clazz : classSet) {
-            ConstructorAccess<?> classAccess = ConstructorAccess.get(clazz);
-            Table table = (Table) clazz.getAnnotation(Table.class);
-            String tableName = table.name();
-            tableMap.put(tableName, classAccess);
-        }
-    }
+        Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Proto.class);
+        for (Class cl : classSet) {
+            try {
 
-    public ConstructorAccess getTableMap(String key) {
-        return tableMap.get(key);
+                String 
+                classMap.put(redis.name(), redisInfo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

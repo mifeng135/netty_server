@@ -216,7 +216,7 @@
       <workItem from="1621428741686" duration="65164000" />
       <workItem from="1623050641107" duration="106397000" />
       <workItem from="1623424820520" duration="627000" />
-      <workItem from="1623505078716" duration="12308000" />
+      <workItem from="1623505078716" duration="21260000" />
     </task>
     <servers />
   </component>
@@ -248,7 +248,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerListController.java</url>
-          <line>34</line>
+          <line>33</line>
           <option name="timeStamp" value="151" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -256,16 +256,12 @@
           <line>11</line>
           <option name="timeStamp" value="152" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/core/proto/ParseProtoFile.java</url>
-          <line>61</line>
-          <option name="timeStamp" value="173" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="this" />
+        <watch expression="((HashMap)mapClass).entrySet().toArray()[0]" custom="java.util.HashMap" />
       </configuration>
     </watches-manager>
   </component>

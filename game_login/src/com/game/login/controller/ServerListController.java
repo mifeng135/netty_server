@@ -4,8 +4,8 @@ import bean.login.LoginPlayerInfoBean;
 import bean.login.ServerListInfoBean;
 import com.game.login.util.HttpUtil;
 import constants.TableKey;
-import core.annotation.Ctrl;
-import core.annotation.CtrlCmd;
+import core.annotation.ctrl.Ctrl;
+import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.Ins;
 import core.util.ProtoUtil;
@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import protocal.remote.login.ServerListReq;
 import protocal.remote.login.ServerListRsp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static constants.MsgConstant.*;

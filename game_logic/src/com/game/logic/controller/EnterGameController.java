@@ -1,8 +1,8 @@
 package com.game.logic.controller;
 
 import com.game.logic.util.MsgUtil;
-import core.annotation.Ctrl;
-import core.annotation.CtrlCmd;
+import core.annotation.ctrl.Ctrl;
+import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import constants.MsgConstant;

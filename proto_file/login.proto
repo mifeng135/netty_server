@@ -28,7 +28,7 @@ message LoginPlayerServerInfoBean {
 
 
 message ServerNoticeReq {
-	
+	map<string, LoginPlayerServerInfoBean> test = 1;
 }
 
 message ServerNoticeRsp {

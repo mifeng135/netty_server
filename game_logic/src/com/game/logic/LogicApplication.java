@@ -2,8 +2,8 @@ package com.game.logic;
 
 
 import com.game.logic.manager.SceneManager;
-import core.annotation.CtrlA;
-import core.annotation.TableA;
+import core.annotation.ctrl.CtrlA;
+import core.annotation.table.TableA;
 import core.group.EventThreadGroup;
 import core.netty.tcp.TcpConnection;
 import core.netty.tcp.TcpServer;

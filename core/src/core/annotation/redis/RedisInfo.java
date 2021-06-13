@@ -1,4 +1,4 @@
-package core.annotation;
+package core.annotation.redis;
 
 import lombok.Getter;
 import lombok.Setter;

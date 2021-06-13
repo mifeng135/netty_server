@@ -1,6 +1,6 @@
 package com.game.login;
 
-import core.annotation.CtrlA;
+import core.annotation.ctrl.CtrlA;
 import core.group.EventHandler;
 import core.msg.TransferMsg;
 

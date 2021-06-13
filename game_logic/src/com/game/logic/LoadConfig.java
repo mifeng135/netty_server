@@ -3,7 +3,7 @@ package com.game.logic;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
 import core.BaseTable;
-import core.annotation.TableA;
+import core.annotation.table.TableA;
 import core.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

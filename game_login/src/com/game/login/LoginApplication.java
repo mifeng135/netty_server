@@ -1,20 +1,13 @@
 package com.game.login;
 
-import core.annotation.CtrlA;
+import core.annotation.ctrl.CtrlA;
 import core.group.EventThreadGroup;
-import core.netty.http.HttpHandler;
 import core.netty.http.HttpServer;
 import core.proto.ParseProtoFile;
 import core.redis.RedisDao;
 import core.sql.*;
 import core.util.*;
 import org.apache.log4j.PropertyConfigurator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
-
-import static core.Constants.HTTP_DECODER_TYPE_JSON;
 
 
 /**
@@ -23,7 +16,7 @@ import static core.Constants.HTTP_DECODER_TYPE_JSON;
 public class LoginApplication {
     public static void main(String[] args) {
 
-         ParseProtoFile.parse("login.proto");
+        ParseProtoFile.init();
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
 
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();

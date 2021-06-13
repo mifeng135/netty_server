@@ -2,9 +2,9 @@ package com.game.center.controller;
 
 import com.game.center.util.TcpUtil;
 import core.Constants;
-import core.annotation.Ctrl;
-import core.annotation.CtrlA;
-import core.annotation.CtrlCmd;
+import core.annotation.ctrl.Ctrl;
+import core.annotation.ctrl.CtrlA;
+import core.annotation.ctrl.CtrlCmd;
 import core.manager.LocalSocketManager;
 import core.msg.TransferMsg;
 import io.netty.channel.Channel;

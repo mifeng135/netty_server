@@ -9,16 +9,14 @@ import com.game.db.query.PlayerInfoQuery;
 import com.game.db.query.PlayerRoleQuery;
 import com.game.db.query.PlayerSceneQuery;
 import com.game.db.util.MsgUtil;
-import core.annotation.Ctrl;
-import core.annotation.CtrlCmd;
+import core.annotation.ctrl.Ctrl;
+import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
-import core.sql.SqlDao;
 import core.util.ProtoUtil;
 import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.CreatePlayerReq;
 
 import static com.game.db.constant.GameConstant.MAP_INIT_ID;
-import static com.game.db.constant.GameConstant.SQL_KEY_LOGIN;
 import static constants.MsgConstant.*;
 
 @Ctrl

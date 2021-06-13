@@ -3,13 +3,11 @@ package com.game.logic.config;
 
 import com.alibaba.fastjson.JSON;
 import core.BaseTable;
-import core.annotation.Table;
+import core.annotation.table.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Setter
 @Getter

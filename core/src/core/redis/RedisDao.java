@@ -1,7 +1,7 @@
 package core.redis;
 
-import core.annotation.RedisA;
-import core.annotation.RedisInfo;
+import core.annotation.redis.RedisA;
+import core.annotation.redis.RedisInfo;
 import core.sql.BaseBean;
 import core.sql.SqlHelper;
 import core.util.Ins;

@@ -1,6 +1,6 @@
 package com.game.gate;
 
-import core.annotation.CtrlA;
+import core.annotation.ctrl.CtrlA;
 import core.group.EventThreadGroup;
 import core.netty.tcp.TcpConnection;
 import core.netty.tcp.TcpServer;

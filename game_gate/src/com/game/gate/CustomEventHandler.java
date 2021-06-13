@@ -2,7 +2,7 @@ package com.game.gate;
 
 import com.esotericsoftware.reflectasm.MethodAccess;
 import com.game.gate.util.TcpUtil;
-import core.annotation.CtrlA;
+import core.annotation.ctrl.CtrlA;
 import core.group.EventHandler;
 import core.manager.LocalRouterSocketManager;
 import core.msg.TransferMsg;

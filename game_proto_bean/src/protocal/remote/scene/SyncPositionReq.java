@@ -1,12 +1,14 @@
-package protocal.local.scene;
+package protocal.remote.scene;
 
 
+import core.annotation.proto.Proto;
 import lombok.Getter;
 import lombok.Setter;
 import protocal.remote.common.Position;
 
 @Getter
 @Setter
+@Proto
 public class SyncPositionReq {
     private Position position;
     private int sceneId;

@@ -1,6 +1,6 @@
 package bean.login;
 
-import core.annotation.Redis;
+import core.annotation.redis.Redis;
 import core.sql.BaseIntBean;
 import lombok.Getter;
 import lombok.Setter;

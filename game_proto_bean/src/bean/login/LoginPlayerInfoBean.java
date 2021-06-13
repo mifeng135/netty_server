@@ -2,7 +2,7 @@ package bean.login;
 
 import bean.sub.SubPlayerServerInfoBean;
 import com.alibaba.fastjson.JSON;
-import core.annotation.Redis;
+import core.annotation.redis.Redis;
 import core.sql.BaseStringBean;
 import lombok.Getter;
 import lombok.Setter;
