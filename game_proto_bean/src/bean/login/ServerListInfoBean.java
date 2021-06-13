@@ -5,14 +5,12 @@ import core.sql.BaseIntBean;
 import lombok.Getter;
 import lombok.Setter;
 import org.nutz.dao.entity.annotation.Column;
-import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Table;
 
 
 /**
  * 登录服务器列表
  */
-
 
 @Getter
 @Setter

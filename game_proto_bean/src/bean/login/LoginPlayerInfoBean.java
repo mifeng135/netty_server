@@ -31,6 +31,9 @@ public class LoginPlayerInfoBean extends BaseStringBean {
     private String playerServerInfo;
 
     public Map decode() {
+        if (playerServerInfo == null) {
+            return null;
+        }
         return JSON.parseObject(playerServerInfo, ConcurrentHashMap.class);
     }
 

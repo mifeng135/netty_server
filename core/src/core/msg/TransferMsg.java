@@ -23,7 +23,7 @@ public class TransferMsg {
     private transient String httpUrl;
 
     public int getMsgType() {
-        if (httpUrl.length() > 0) {
+        if (httpUrl != null && httpUrl.length() > 0) {
             return HTTP_DECODER_TYPE_JSON;
         }
         return HTTP_DECODER_TYPE_PROTO_BUFFER;

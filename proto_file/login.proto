@@ -1,0 +1,52 @@
+syntax = "proto3";
+package doushen;
+
+message  ServerListReq  {
+      string openId = 1;
+}
+
+message ServerListRsp {
+	repeated ServerInfoBean serverInfo = 1;
+	repeated LoginPlayerServerInfoBean selfServerList = 2;
+	int32 playerIndex = 3;
+}
+
+message ServerInfoBean {
+	int32 id = 1;
+	string serverName = 2;
+	int32 serverId = 3;
+	int32 state = 4;
+	string serverIp = 5;
+	int32 openTime = 6;
+	int32 groupId = 7;
+}
+
+message LoginPlayerServerInfoBean {
+	int32 serverId = 1;
+	int32 playerHead = 2;
+}
+
+
+message ServerNoticeReq {
+	
+}
+
+message ServerNoticeRsp {
+	repeated NoticeBean noticeList = 1;
+}
+
+
+message NoticeBean {
+	int32 noticeId = 1;
+	string content = 2;
+}
+
+
+message PlayerIndexReq {
+	string openId = 1;
+}
+
+message PlayerIndexRsp {
+	int32 playerIndex = 1;
+}
+

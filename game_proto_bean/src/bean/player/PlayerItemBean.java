@@ -19,6 +19,9 @@ public class PlayerItemBean extends BaseIntBean {
     private String itemInfo;
 
     public Map decode() {
+        if (itemInfo == null) {
+            return null;
+        }
         return JSON.parseObject(itemInfo, ConcurrentHashMap.class);
     }
 

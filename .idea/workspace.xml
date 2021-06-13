@@ -65,18 +65,18 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\server\netty_server\proto_file" />
       <recent name="D:\server\netty_server\json_config" />
       <recent name="F:\game_server\server_config\game_db" />
       <recent name="F:\game_server\server_config\login" />
       <recent name="F:\game_server\game_proto_bean\src" />
-      <recent name="F:\game_server\game_login\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\server\netty_server\server_config\login" />
@@ -214,7 +214,9 @@
       <workItem from="1620575319530" duration="523000" />
       <workItem from="1620575892764" duration="705000" />
       <workItem from="1621428741686" duration="65164000" />
-      <workItem from="1623050641107" duration="96630000" />
+      <workItem from="1623050641107" duration="106397000" />
+      <workItem from="1623424820520" duration="627000" />
+      <workItem from="1623505078716" duration="12308000" />
     </task>
     <servers />
   </component>
@@ -244,6 +246,21 @@
           <line>64</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerListController.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="151" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/game_login/src/com/game/login/LoginEventHandler.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="152" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/core/proto/ParseProtoFile.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="173" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -251,5 +268,10 @@
         <watch expression="this" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/game_server$LoginApplication.ic" NAME="LoginApplication Coverage Results" MODIFIED="1623512581603" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>.*</FILTER>
+    </SUITE>
   </component>
 </project>

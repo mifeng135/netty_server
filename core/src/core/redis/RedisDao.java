@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static core.Constants.LOCAL_SOCKET_RANGE;
+
 
 /**
  * Created by Administrator on 2020/6/12.
@@ -28,6 +30,7 @@ public class RedisDao {
     private static final Config config = new Config();
     private static RedissonClient redissonClient;
     private static final String incr = "_incr";
+    private static final String specialTable = "game_player_login_info";
     private Map<String, RedisInfo> classMap;
 
     private static class DefaultInstance {
@@ -148,6 +151,9 @@ public class RedisDao {
                 sql.setVar("tableName", redisInfo.getTableName()).setVar("name", redisInfo.getIncrName());
                 sql.setCallback(Sqls.callback.integer());
                 int increment = Ins.sql().execute(sql).getInt();
+                if (redisInfo.getTableName().equals(specialTable) && increment == 0) {
+                    increment = LOCAL_SOCKET_RANGE;
+                }
                 RAtomicLong rAtomicLong = redissonClient.getAtomicLong(redisInfo.getTableName() + incr);
                 rAtomicLong.set(increment);
             }
