@@ -7,7 +7,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Proto
 public class ReconnectReq {
     private int socketIndex;
 }

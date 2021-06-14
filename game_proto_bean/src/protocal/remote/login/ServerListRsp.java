@@ -10,7 +10,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@Proto
 public class ServerListRsp {
     private List<ServerListInfoBean> serverList;
     private List<SubPlayerServerInfoBean> selfServerList;

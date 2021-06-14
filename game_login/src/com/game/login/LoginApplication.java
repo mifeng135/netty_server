@@ -3,7 +3,7 @@ package com.game.login;
 import core.annotation.ctrl.CtrlA;
 import core.group.EventThreadGroup;
 import core.netty.http.HttpServer;
-import core.proto.ParseProtoFile;
+import core.annotation.proto.ParseProtoFile;
 import core.redis.RedisDao;
 import core.sql.*;
 import core.util.*;
@@ -16,7 +16,7 @@ import org.apache.log4j.PropertyConfigurator;
 public class LoginApplication {
     public static void main(String[] args) {
 
-        ParseProtoFile.init();
+        ParseProtoFile.createProtoFile();
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
 
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();

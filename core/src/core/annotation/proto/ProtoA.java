@@ -12,7 +12,7 @@ import java.util.*;
 
 
 public class ProtoA {
-    private final Map<String, List<Class>> classMap = new HashMap<>();
+    private final Map<String, List<ProtoInfo>> classMap = new TreeMap<>();
 
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
@@ -50,12 +50,23 @@ public class ProtoA {
         Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Proto.class);
         for (Class cl : classSet) {
             try {
-
-                String 
-                classMap.put(redis.name(), redisInfo);
+                ProtoInfo protoInfo = new ProtoInfo();
+                Proto proto = (Proto) cl.getAnnotation(Proto.class);
+                protoInfo.setCls(cl);
+                protoInfo.setImportFile(proto.importFile());
+                protoInfo.setProtoFile(proto.protoFile());
+                if (!classMap.containsKey(proto.protoFile())) {
+                    List<ProtoInfo> classList = new ArrayList<>();
+                    classMap.put(proto.protoFile(), classList);
+                }
+                classMap.get(proto.protoFile()).add(protoInfo);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Map<String, List<ProtoInfo>> getClassMap() {
+        return classMap;
     }
 }

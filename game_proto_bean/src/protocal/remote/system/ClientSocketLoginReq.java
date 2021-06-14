@@ -9,7 +9,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Proto
 public class ClientSocketLoginReq {
     private int playerIndex;
 }

@@ -9,7 +9,6 @@ import protocal.local.db.player.PlayerAllInfoDB;
 
 @Getter
 @Setter
-@Proto
 public class CreatePlayerRsp {
     private boolean success;
     private PlayerAllInfoDB playerAllInfoDB;

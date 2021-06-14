@@ -6,7 +6,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Proto
 public class ErrorRsp {
     private int errorCode;
     private int msgId;

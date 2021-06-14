@@ -10,7 +10,6 @@ import java.util.List;
 
 @Setter
 @Getter
-@Proto
 public class SyncPositionRsp {
     private Position position;
     private boolean move;

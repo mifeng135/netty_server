@@ -9,7 +9,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@Proto
 public class ServerNoticeRsp {
     private List<LoginNoticeBean> noticeList;
 }

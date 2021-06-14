@@ -8,7 +8,6 @@ import protocal.remote.common.Position;
 
 @Getter
 @Setter
-@Proto
 public class SyncPositionReq {
     private Position position;
     private int sceneId;
