@@ -69,7 +69,6 @@ public class RedisDao {
         initSqlTableIncrement();
     }
 
-    /************************* MAP BEGIN *******************************/
     public void put(String daoKey, String tableKey, BaseBean bean) {
         RedissonClient client = clientMap.get(daoKey);
         RedisInfo redisInfo = classMap.get(tableKey);
@@ -121,7 +120,6 @@ public class RedisDao {
         redissonClient.getMap(tableKey).putAll(value);
     }
 
-    /************************* SCORE SORT BEGIN *****************************/
 
     public void scoreSetAdd(String mapKey, double score, Object o) {
         RScoredSortedSet set = redissonClient.getScoredSortedSet(mapKey);

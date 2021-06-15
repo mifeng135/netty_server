@@ -45,7 +45,7 @@ public class DBCreatePlayerController {
         playerAllInfoDB.setPlayerRole(playerRoleBean);
         playerAllInfoDB.setPlayerInfo(playerInfoBean);
         playerAllInfoDB.setPlayerScene(playerSceneBean);
-        MsgUtil.sendToLogic(msg, playerAllInfoDB);
+        MsgUtil.sendMsg(msg, playerAllInfoDB);
     }
 
     private PlayerInfoBean initPlayer(int playerIndex, String name, String remoteIp, String openId) {

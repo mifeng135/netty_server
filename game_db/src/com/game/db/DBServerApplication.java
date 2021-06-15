@@ -3,6 +3,7 @@ package com.game.db;
 
 import core.annotation.ctrl.CtrlA;
 import core.group.EventThreadGroup;
+import core.netty.http.HttpServer;
 import core.netty.tcp.TcpServer;
 import core.redis.RedisConfig;
 import core.redis.RedisDao;
@@ -21,12 +22,11 @@ import static core.Constants.LOCAL;
 public class DBServerApplication {
 
     public static void main(String[] args) {
-
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
         CtrlA.getInstance().init(DBServerApplication.class.getPackage().getName());
         new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, DBServerApplication.class.getName());
         initDao();
-        new TcpServer(PropertiesConfig.dbServerIp, PropertiesConfig.dbServerPort, LOCAL).startServer();
+        new HttpServer(PropertiesConfig.dbServerIp, PropertiesConfig.dbServerPort);
     }
 
     public static void initDao() {

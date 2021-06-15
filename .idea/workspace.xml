@@ -203,7 +203,7 @@
       <workItem from="1623424820520" duration="627000" />
       <workItem from="1623505078716" duration="31925000" />
       <workItem from="1623672627915" duration="1613000" />
-      <workItem from="1623675027947" duration="12188000" />
+      <workItem from="1623675027947" duration="20372000" />
     </task>
     <servers />
   </component>
@@ -232,21 +232,6 @@
           <url>file://$PROJECT_DIR$/game_login/src/com/game/login/LoginSqlBinLog.java</url>
           <line>64</line>
           <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/core/redis/RedisDao.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="159" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/game_db/src/com/game/db/DBServerApplication.java</url>
-          <line>61</line>
-          <option name="timeStamp" value="160" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/game_login/src/com/game/login/LoginApplication.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="161" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -36,10 +36,10 @@ public class LocalRouterSocketManager {
         logger.info("addRouter success socketIndex = {}", socketIndex);
     }
 
-    public Map<Integer, Set<Integer>> getRouterMap() {
-        return routerMap;
-    }
-
+    /**
+     * 向已注册服务器转发消息
+     * @param msg
+     */
     public void sendRouterMsg(TransferMsg msg) {
         int msgId = msg.getHeaderProto().getMsgId();
         routerMap.forEach((socketIndex, value) -> {

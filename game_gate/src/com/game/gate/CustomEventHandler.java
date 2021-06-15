@@ -6,8 +6,6 @@ import core.annotation.ctrl.CtrlA;
 import core.group.EventHandler;
 import core.manager.LocalRouterSocketManager;
 import core.msg.TransferMsg;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -15,8 +13,6 @@ import java.util.List;
 import static core.Constants.MSG_TYPE_REMOTE;
 
 public class CustomEventHandler implements EventHandler {
-
-    private static Logger logger = LoggerFactory.getLogger(CustomEventHandler.class);
 
     @Override
     public void onEvent(TransferMsg transferMsg) {
@@ -47,6 +43,11 @@ public class CustomEventHandler implements EventHandler {
         }
     }
 
+    /**
+     * 向客户端发送消息
+     *
+     * @param msg
+     */
     private void sendRemoteMsg(TransferMsg msg) {
         List noticeList = msg.getHeaderProto().getNoticeList();
         int msgId = msg.getHeaderProto().getMsgId();

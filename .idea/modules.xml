@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/game_center/game_center.iml" filepath="$PROJECT_DIR$/game_center/game_center.iml" />
       <module fileurl="file://$PROJECT_DIR$/game_db/game_db.iml" filepath="$PROJECT_DIR$/game_db/game_db.iml" />
       <module fileurl="file://$PROJECT_DIR$/game_gate/game_gate.iml" filepath="$PROJECT_DIR$/game_gate/game_gate.iml" />
       <module fileurl="file://$PROJECT_DIR$/game_logic/game_logic.iml" filepath="$PROJECT_DIR$/game_logic/game_logic.iml" />
