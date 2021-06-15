@@ -13,10 +13,15 @@ public class PropertiesConfig {
     public static int redisNettyThreadCount;
     public static int redisDB;
 
+    public static String redisLoginIp;
+    public static String redisLoginPassword;
+    public static int redisLoginThreadCount;
+    public static int redisLoginNettyThreadCount;
+    public static int redisLoginDB;
+
+
     public static String dbServerIp;
     public static int dbServerPort;
-
-    public static int redisMaxCapacity;
 
     public static int logicDBSocketIndex;
 
@@ -36,10 +41,16 @@ public class PropertiesConfig {
         redisNettyThreadCount = ConfigUtil.getInt("db_redis_netty_thread_count");
         redisDB = ConfigUtil.getInt("db_redis_db");
 
+
+        redisLoginIp = ConfigUtil.getString("login_redis_ip");
+        redisLoginPassword = ConfigUtil.getString("login_redis_password");
+        redisLoginThreadCount = ConfigUtil.getInt("login_redis_thread_count");
+        redisLoginNettyThreadCount = ConfigUtil.getInt("login_redis_netty_thread_count");
+        redisLoginDB = ConfigUtil.getInt("login_redis_db");
+
+
         dbServerIp = ConfigUtil.getString("db_server_ip");
         dbServerPort = ConfigUtil.getInt("db_server_port");
-
-        redisMaxCapacity = ConfigUtil.getInt("db_redis_max_online_player_count");
 
         logicDBSocketIndex = ConfigUtil.getInt("logic_db_socket_index");
     }

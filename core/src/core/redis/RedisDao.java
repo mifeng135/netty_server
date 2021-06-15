@@ -11,11 +11,9 @@ import org.nutz.dao.sql.Sql;
 import org.redisson.Redisson;
 import org.redisson.api.*;
 import org.redisson.config.Config;
+import org.redisson.config.MasterSlaveServersConfig;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static core.Constants.LOCAL_SOCKET_RANGE;
@@ -31,6 +29,8 @@ public class RedisDao {
     private static final String incr = "_incr";
     private static final String specialTable = "game_player_login_info";
     private Map<String, RedisInfo> classMap;
+    private Map<String, RedissonClient> clientMap = new HashMap<>();
+
 
     private static class DefaultInstance {
         static final RedisDao INSTANCE = new RedisDao();
@@ -41,32 +41,42 @@ public class RedisDao {
     }
 
     private RedisDao() {
-
     }
 
-    public void init(String ip, String pwd) {
-        Config config = new Config();
-        config.useSingleServer().setAddress(ip);
-        config.useSingleServer().setPassword(pwd);
-        redissonClient = Redisson.create(config);
-        initSqlTableIncrement();
+    public void init(RedisConfig... redisConfigList) {
+        for (RedisConfig redisConfig : redisConfigList) {
+            Config config = new Config();
+            String pwd = redisConfig.getPwd();
+            int db = redisConfig.getDb();
+            MasterSlaveServersConfig masterSlaveServersConfig = config.useMasterSlaveServers();
+            masterSlaveServersConfig.setMasterAddress(redisConfig.getMasterStr()).setPassword(pwd).setDatabase(db);
+            List<String> slaveList = redisConfig.getSlaveStr();
+            if (slaveList != null) {
+                for (String str : slaveList) {
+                    masterSlaveServersConfig.addSlaveAddress(str).setPassword(pwd).setDatabase(db);
+                }
+            }
+            config.setThreads(redisConfig.getThread());
+            config.setNettyThreads(redisConfig.getNettyThread());
+            RedissonClient client = Redisson.create(config);
+            if (redisConfig.getKey().equals("default")) {
+                redissonClient = client;
+            }
+            clientMap.put(redisConfig.getKey(), client);
+        }
         classMap = RedisA.getInstance().getClassMap();
-    }
-
-    public void init(String ip, String pwd, int thread, int nettyThread, int db) {
-        Config config = new Config();
-        config.useSingleServer().setAddress(ip);
-        config.useSingleServer().setPassword(pwd);
-        config.useSingleServer().setDatabase(db);
-        config.setThreads(thread);
-        config.setNettyThreads(nettyThread);
-        config.setCodec(new FastJsonCodec());
-        redissonClient = Redisson.create(config);
         initSqlTableIncrement();
-        classMap = RedisA.getInstance().getClassMap();
     }
 
     /************************* MAP BEGIN *******************************/
+    public void put(String daoKey, String tableKey, BaseBean bean) {
+        RedissonClient client = clientMap.get(daoKey);
+        RedisInfo redisInfo = classMap.get(tableKey);
+        client.getMap(tableKey).fastPut(bean.getId(), bean);
+        if (redisInfo.isImmediately()) {
+            Ins.sql(daoKey).insertOrUpdate(bean);
+        }
+    }
 
     public void put(String tableKey, BaseBean bean) {
         RedisInfo redisInfo = classMap.get(tableKey);
