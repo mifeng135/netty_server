@@ -139,28 +139,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="bean.login.Test" />
-      <module name="game_proto_bean" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="bean.login.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -180,14 +165,12 @@
       <item itemvalue="Application.GateApplication" />
       <item itemvalue="Application.LogicApplication" />
       <item itemvalue="Application.LoginApplication" />
-      <item itemvalue="Application.Test" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoginApplication" />
-        <item itemvalue="Application.Test" />
         <item itemvalue="Application.LogicApplication" />
         <item itemvalue="Application.GateApplication" />
+        <item itemvalue="Application.LoginApplication" />
         <item itemvalue="Application.DBServerApplication" />
       </list>
     </recent_temporary>
@@ -219,7 +202,8 @@
       <workItem from="1623050641107" duration="106397000" />
       <workItem from="1623424820520" duration="627000" />
       <workItem from="1623505078716" duration="31925000" />
-      <workItem from="1623672627915" duration="905000" />
+      <workItem from="1623672627915" duration="1613000" />
+      <workItem from="1623675027947" duration="7703000" />
     </task>
     <servers />
   </component>
@@ -248,16 +232,6 @@
           <url>file://$PROJECT_DIR$/game_login/src/com/game/login/LoginSqlBinLog.java</url>
           <line>64</line>
           <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/game_login/src/com/game/login/controller/ServerListController.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="151" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/game_login/src/com/game/login/LoginEventHandler.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="152" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

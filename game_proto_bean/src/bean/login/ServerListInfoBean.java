@@ -34,4 +34,7 @@ public class ServerListInfoBean extends BaseIntBean {
 
     @Column("group_id")
     private int groupId;
+
+    @Column("group_name")
+    private String groupName;
 }

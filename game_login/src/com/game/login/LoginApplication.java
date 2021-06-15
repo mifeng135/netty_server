@@ -16,15 +16,14 @@ import org.apache.log4j.PropertyConfigurator;
 public class LoginApplication {
     public static void main(String[] args) {
 
-        ParseProtoFile.createProtoFile();
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
-
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
         loginSqlConfig.setMasterFileName("login/login-master-dao.properties");
         loginSqlConfig.setPreSqlName("pre-sql.sqls");
         SqlDao.getInstance().initWithConfigList(loginSqlConfig);
 
         CtrlA.getInstance().init(LoginApplication.class, new LoginExceptionHandler());
+        new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginEventHandler.class, LoginApplication.class.getName());
 
         new PropertiesConfig("config.properties");
 
@@ -32,8 +31,6 @@ public class LoginApplication {
                 PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.db);
 
         new HttpServer(PropertiesConfig.httpIp, PropertiesConfig.httpPort);
-        new EventThreadGroup(Runtime.getRuntime().availableProcessors(), LoginEventHandler.class, LoginApplication.class.getName());
-
 
     }
 }

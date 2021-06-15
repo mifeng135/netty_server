@@ -1,7 +1,6 @@
 package com.game.db;
 
 
-import com.game.db.redis.RedisCache;
 import core.annotation.ctrl.CtrlA;
 import core.group.EventThreadGroup;
 import core.netty.tcp.TcpServer;
@@ -27,7 +26,6 @@ public class DBServerApplication {
         SqlDaoConfig dbSqlConfig = new SqlDaoConfig();
         dbSqlConfig.setMasterFileName("db/db-master-dao.properties");
         dbSqlConfig.setPreSqlName("pre-sql.sqls");
-        //dbSqlConfig.getSlaveFileList().add("db/db-slave-dao.properties");
 
         SqlDaoConfig loginSqlConfig = new SqlDaoConfig();
         loginSqlConfig.setMasterFileName("db/db-login-dao.properties");
@@ -37,11 +35,13 @@ public class DBServerApplication {
 
         new PropertiesConfig("config.properties");
 
-        CtrlA.getInstance().init(DBServerApplication.class.getPackage().getName(), new DBExceptionHandler());
+        CtrlA.getInstance().init(DBServerApplication.class.getPackage().getName());
+        new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, DBServerApplication.class.getName());
+
+
         RedisDao.getInstance().init(PropertiesConfig.redisIp, PropertiesConfig.redisPassword,
                 PropertiesConfig.redisThreadCount, PropertiesConfig.redisNettyThreadCount, PropertiesConfig.redisDB);
-        RedisCache.getInstance();
+
         new TcpServer(PropertiesConfig.dbServerIp, PropertiesConfig.dbServerPort, LOCAL).startServer();
-        new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, DBServerApplication.class.getName());
     }
 }

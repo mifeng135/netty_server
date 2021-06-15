@@ -27,7 +27,6 @@ import static core.Constants.LOCAL_SOCKET_RANGE;
  */
 public class RedisDao {
 
-    private static final Config config = new Config();
     private static RedissonClient redissonClient;
     private static final String incr = "_incr";
     private static final String specialTable = "game_player_login_info";
@@ -46,6 +45,7 @@ public class RedisDao {
     }
 
     public void init(String ip, String pwd) {
+        Config config = new Config();
         config.useSingleServer().setAddress(ip);
         config.useSingleServer().setPassword(pwd);
         redissonClient = Redisson.create(config);
@@ -54,6 +54,7 @@ public class RedisDao {
     }
 
     public void init(String ip, String pwd, int thread, int nettyThread, int db) {
+        Config config = new Config();
         config.useSingleServer().setAddress(ip);
         config.useSingleServer().setPassword(pwd);
         config.useSingleServer().setDatabase(db);
@@ -65,12 +66,7 @@ public class RedisDao {
         classMap = RedisA.getInstance().getClassMap();
     }
 
-    public RedissonClient getRedisSon() {
-        return redissonClient;
-    }
-
     /************************* MAP BEGIN *******************************/
-
 
     public void put(String tableKey, BaseBean bean) {
         RedisInfo redisInfo = classMap.get(tableKey);

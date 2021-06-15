@@ -37,7 +37,7 @@ public class ConnectionListener implements ChannelFutureListener {
             int playerIndex = channelFuture.channel().attr(Constants.PLAYER_INDEX).get();
             String ip = channelFuture.channel().attr(Constants.CONNECT_IP).get();
             int port = channelFuture.channel().attr(Constants.PORT).get();
-            logger.info("connect success ip = {} port = {} playerIndex = {}", ip, port, playerIndex);
+            logger.info("connect ip = {} port = {} playerIndex = {} start", ip, port, playerIndex);
             LocalSocketManager.getInstance().putChannel(playerIndex, channelFuture.channel());
 
             HeaderProto headerProto = ProtoUtil.initHeaderProto(MSG_LOCAL_OPEN_SOCKET_PUSH, playerIndex);

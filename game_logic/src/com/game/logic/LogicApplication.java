@@ -20,9 +20,9 @@ public class LogicApplication {
         new LoadConfig().load();
         new PropertiesConfig("config.properties");
         CtrlA.getInstance().init(LogicApplication.class.getPackage().getName(), new LogicExceptionHandler());
+        new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, LogicApplication.class.getName());
         new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.serverPort, LOCAL).startServer();
         new TcpConnection(PropertiesConfig.logicDBSocketIndex).connect(PropertiesConfig.dbServerIp, PropertiesConfig.dbServerPort);
-        new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, LogicApplication.class.getName());
         SceneManager.initSceneMap();
     }
 }

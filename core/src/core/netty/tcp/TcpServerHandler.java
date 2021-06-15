@@ -38,10 +38,9 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        super.userEventTriggered(ctx, evt);
         if (evt instanceof IdleStateEvent) {
             ctx.close();
-        } else {
-            super.userEventTriggered(ctx, evt);
         }
     }
 

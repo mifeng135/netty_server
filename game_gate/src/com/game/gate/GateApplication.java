@@ -19,9 +19,8 @@ public class GateApplication {
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
         CtrlA.getInstance().init(GateApplication.class.getPackage().getName(), new GateExceptionHandler());
         new PropertiesConfig("config.properties");
-        new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.port, REMOTE).startServer();
-//        new TcpConnection(PropertiesConfig.connectCenterSocketIndex).connect(PropertiesConfig.connectCenterServerIp, PropertiesConfig.connectCenterServerPort);
-        new TcpConnection(PropertiesConfig.connectLogicSocketIndex).connect(PropertiesConfig.connectLogicServerIp, PropertiesConfig.connectLogicServerPort);
         new EventThreadGroup(Runtime.getRuntime().availableProcessors(), CustomEventHandler.class, GateApplication.class.getName());
+        new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.port, REMOTE).startServer();
+        new TcpConnection(PropertiesConfig.connectLogicSocketIndex).connect(PropertiesConfig.connectLogicServerIp, PropertiesConfig.connectLogicServerPort);
     }
 }

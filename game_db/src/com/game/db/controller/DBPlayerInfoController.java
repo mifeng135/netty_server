@@ -5,14 +5,12 @@ import bean.player.PlayerInfoBean;
 import bean.player.PlayerItemBean;
 import bean.player.PlayerRoleBean;
 import bean.player.PlayerSceneBean;
-import com.game.db.query.PlayerInfoQuery;
-import com.game.db.query.PlayerItemQuery;
-import com.game.db.query.PlayerRoleQuery;
-import com.game.db.query.PlayerSceneQuery;
 import com.game.db.util.MsgUtil;
+import constants.TableKey;
 import core.annotation.ctrl.Ctrl;
 import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
+import core.util.Ins;
 import protocal.local.db.player.PlayerAllInfoDB;
 
 import java.util.List;
@@ -27,15 +25,15 @@ public class DBPlayerInfoController {
     public void getPlayerInfo(TransferMsg msg) {
         msg.getHeaderProto().setMsgId(DB_CMD_QUERY_ALL_PLAYER_INFO_RSP);
         int playerIndex = msg.getHeaderProto().getPlayerIndex();
-        PlayerInfoBean playerBean = PlayerInfoQuery.queryPlayer(playerIndex);
+        PlayerInfoBean playerBean = Ins.redis().fetch(TableKey.GAME_PLAYER, playerIndex);
         if (playerBean == null) {
             PlayerAllInfoDB playerAllInfoDB = new PlayerAllInfoDB();
             MsgUtil.sendToLogic(msg, playerAllInfoDB);
             return;
         }
-        PlayerSceneBean playerSceneBean = PlayerSceneQuery.queryScene(playerIndex);
-        List<PlayerItemBean> playerItemList = PlayerItemQuery.queryPlayerItem(playerIndex);
-        PlayerRoleBean playerRoleBean = PlayerRoleQuery.queryPlayerRole(playerIndex);
+        PlayerSceneBean playerSceneBean = Ins.redis().fetch(TableKey.GAME_PLAYER_SCENE, playerIndex);
+        List<PlayerItemBean> playerItemList = Ins.redis().fetch(TableKey.GAME_PLAYER_ITEM, playerIndex);
+        PlayerRoleBean playerRoleBean = Ins.redis().fetch(TableKey.GAME_PLAYER_ROLE, playerIndex);
 
         PlayerAllInfoDB playerAllInfoDB = new PlayerAllInfoDB();
         playerAllInfoDB.setPlayerInfo(playerBean);

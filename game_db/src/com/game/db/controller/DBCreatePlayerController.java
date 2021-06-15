@@ -5,13 +5,12 @@ import bean.player.PlayerInfoBean;
 import bean.player.PlayerRoleBean;
 import bean.player.PlayerSceneBean;
 import com.game.db.PropertiesConfig;
-import com.game.db.query.PlayerInfoQuery;
-import com.game.db.query.PlayerRoleQuery;
-import com.game.db.query.PlayerSceneQuery;
 import com.game.db.util.MsgUtil;
+import constants.TableKey;
 import core.annotation.ctrl.Ctrl;
 import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
+import core.util.Ins;
 import core.util.ProtoUtil;
 import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.CreatePlayerReq;
@@ -32,24 +31,20 @@ public class DBCreatePlayerController {
         String openId = createPlayerReq.getOpenId();
 
         PlayerInfoBean playerInfoBean = initPlayer(playerIndex, name, msg.getHeaderProto().getRemoteIp(), openId);
-        boolean playerResult = PlayerInfoQuery.createPlayer(playerInfoBean);
+        Ins.redis().put(TableKey.GAME_PLAYER, playerInfoBean);
 
         PlayerSceneBean playerSceneBean = initPlayerScene(playerIndex);
-        boolean sceneResult = PlayerSceneQuery.createScene(playerSceneBean);
+        Ins.redis().put(TableKey.GAME_PLAYER_SCENE, playerSceneBean);
 
         PlayerRoleBean playerRoleBean = initPlayerRole(playerIndex, job, sex);
-        boolean playerRoleResult = PlayerRoleQuery.createPlayerRole(playerRoleBean);
+        Ins.redis().put(TableKey.GAME_PLAYER_ROLE, playerRoleBean);
 
-        boolean updateLoginServer = insertLoginServerInfo(playerIndex);
+        insertLoginServerInfo(playerIndex);
 
         PlayerAllInfoDB playerAllInfoDB = new PlayerAllInfoDB();
-        if (playerResult && sceneResult && playerRoleResult && updateLoginServer) {
-            playerAllInfoDB.setPlayerRole(playerRoleBean);
-            playerAllInfoDB.setPlayerInfo(playerInfoBean);
-            playerAllInfoDB.setPlayerScene(playerSceneBean);
-            MsgUtil.sendToLogic(msg, playerAllInfoDB);
-            return;
-        }
+        playerAllInfoDB.setPlayerRole(playerRoleBean);
+        playerAllInfoDB.setPlayerInfo(playerInfoBean);
+        playerAllInfoDB.setPlayerScene(playerSceneBean);
         MsgUtil.sendToLogic(msg, playerAllInfoDB);
     }
 

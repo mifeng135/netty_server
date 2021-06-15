@@ -2,6 +2,7 @@ package core.annotation.ctrl;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
+import core.exception.BaseExceptionHandler;
 import core.exception.ExceptionHandler;
 import core.msg.TransferMsg;
 import core.util.Util;
@@ -38,7 +39,7 @@ public class CtrlA {
     private ConfigurationBuilder configurationBuilder;
     private Reflections reflections;
     private String packName = "";
-    private ExceptionHandler exceptionHandler;
+    private ExceptionHandler exceptionHandler = new BaseExceptionHandler();
 
     private static class DefaultInstance {
         static final CtrlA INSTANCE = new CtrlA();
@@ -177,11 +178,7 @@ public class CtrlA {
         try {
             methodAccess.invoke(oc, methodName, msg);
         } catch (Throwable err) {
-            if (exceptionHandler != null) {
-                exceptionHandler.onException(err, msg);
-            } else {
-                err.printStackTrace();
-            }
+            exceptionHandler.onException(err, msg);
         }
     }
 }
