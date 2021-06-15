@@ -58,6 +58,7 @@ public class RedisDao {
             }
             config.setThreads(redisConfig.getThread());
             config.setNettyThreads(redisConfig.getNettyThread());
+            config.setCodec(new FastJsonCodec());
             RedissonClient client = Redisson.create(config);
             if (redisConfig.getKey().equals("default")) {
                 redissonClient = client;
