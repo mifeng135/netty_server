@@ -6,6 +6,8 @@ import core.annotation.ctrl.Ctrl;
 import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.ProtoUtil;
+import org.asynchttpclient.AsyncCompletionHandler;
+import org.asynchttpclient.Response;
 import protocal.local.db.player.PlayerAllInfoDB;
 import protocal.remote.user.CreatePlayerRsp;
 
@@ -13,7 +15,7 @@ import static constants.MsgConstant.*;
 
 
 @Ctrl
-public class CreatePlayerController {
+public class CreatePlayerController extends AsyncCompletionHandler {
 
     @CtrlCmd(cmd = MsgConstant.MSG_CREATE_PLAYER_REQ)
     public void createPlayer(TransferMsg msg) {
@@ -21,8 +23,9 @@ public class CreatePlayerController {
         MsgUtil.sendToDB(msg);
     }
 
-    @CtrlCmd(cmd = MsgConstant.DB_CMD_CREATE_PLAYER_RSP)
-    public void dbCreatePlayerRsp(TransferMsg msg) {
+    @Override
+    public Integer onCompleted(Response response) throws Exception {
+        TransferMsg msg = ProtoUtil.decodeDBHttpMsg(response.getResponseBodyAsBytes());
         msg.getHeaderProto().setMsgId(MSG_CREATE_PLAYER_RSP);
         PlayerAllInfoDB playerAllInfoDB = ProtoUtil.deserializer(msg.getData(), PlayerAllInfoDB.class);
         CreatePlayerRsp createPlayerRsp = new CreatePlayerRsp();
@@ -33,5 +36,6 @@ public class CreatePlayerController {
         } else {
             MsgUtil.sendErrorMsg(msg.getHeaderProto(), 1);
         }
+        return 1;
     }
 }

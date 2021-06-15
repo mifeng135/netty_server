@@ -5,6 +5,7 @@ import com.game.logic.manager.SceneManager;
 import core.annotation.ctrl.CtrlA;
 import core.annotation.table.TableA;
 import core.group.EventThreadGroup;
+import core.netty.asyncHttp.AsyncHttp;
 import core.netty.tcp.TcpConnection;
 import core.netty.tcp.TcpServer;
 import core.util.FileUtil;
@@ -22,7 +23,8 @@ public class LogicApplication {
         CtrlA.getInstance().init(LogicApplication.class.getPackage().getName(), new LogicExceptionHandler());
         new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, LogicApplication.class.getName());
         new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.serverPort, LOCAL).startServer();
-        new TcpConnection(PropertiesConfig.logicDBSocketIndex).connect(PropertiesConfig.dbServerIp, PropertiesConfig.dbServerPort);
         SceneManager.initSceneMap();
+
+        AsyncHttp.getInstance().initBaseUrl(PropertiesConfig.dbServerIp + ":" + PropertiesConfig.dbServerPort);
     }
 }

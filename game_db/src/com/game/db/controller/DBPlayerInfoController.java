@@ -11,6 +11,8 @@ import core.annotation.ctrl.Ctrl;
 import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.Ins;
+import org.asynchttpclient.AsyncCompletionHandler;
+import org.asynchttpclient.Response;
 import protocal.local.db.player.PlayerAllInfoDB;
 
 import java.util.List;
@@ -19,7 +21,7 @@ import static constants.MsgConstant.*;
 
 
 @Ctrl
-public class DBPlayerInfoController {
+public class DBPlayerInfoController  {
 
     @CtrlCmd(cmd = DB_CMD_QUERY_ALL_PLAYER_INFO_REQ)
     public void getPlayerInfo(TransferMsg msg) {
