@@ -37,7 +37,6 @@ public class LocalSocketManager {
         channelMap.put(playerIndex, channel);
         channelIdMap.put(playerIndex, channel.id());
         channelGroup.add(channel);
-        logger.info("connect success playerIndex = {}", playerIndex);
     }
 
     public void removeChannel(int playerIndex) {

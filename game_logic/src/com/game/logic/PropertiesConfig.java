@@ -29,6 +29,5 @@ public class PropertiesConfig {
         dbServerIp = ConfigUtil.getString("db_server_ip");
         dbServerPort = ConfigUtil.getInt("db_server_port");
         logicDBSocketIndex = ConfigUtil.getInt("logic_db_socket_index");
-
     }
 }

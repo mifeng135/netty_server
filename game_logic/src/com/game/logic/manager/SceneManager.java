@@ -1,13 +1,10 @@
 package com.game.logic.manager;
 
-import com.game.logic.common.Position;
-import com.game.logic.common.Rect;
-import com.game.logic.common.WatchTowerIndex;
+import com.game.logic.aoi.Grid;
 import com.game.logic.config.MapConfig;
 import com.game.logic.model.Player;
 import com.game.logic.model.Scene;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,43 +25,40 @@ public class SceneManager {
         return sceneMap.get(sceneId);
     }
 
-    public static WatchTower getWatchTower(Player player) {
-        Scene scene = getScene(player.getSceneId());
-        Position position = player.getPosition();
-        for (int i = 0; i < scene.getWatchTowerList().length; i++) {
-            for (int j = 0; i < scene.getWatchTowerList()[i].length; j++) {
-                WatchTower watchTower = scene.getWatchTowerList()[i][j];
-                Rect rect = watchTower.getRect();
-                if (rect.containsPoint(position)) {
-                    return watchTower;
-                }
-            }
-        }
-        return null;
+    /**
+     * 通过sceneId gridId 获取 Grid
+     *
+     * @param sceneId
+     * @param gridId
+     * @return
+     */
+    public static Grid getGrid(int sceneId, int gridId) {
+        return sceneMap.get(sceneId).getAoiManager().getGrid(gridId);
     }
 
-    public static List<Integer> getPlayerNearbyList(Player player) {
-        Scene scene = getScene(player.getSceneId());
-        List<Integer> playerList = new ArrayList<>();
+    /**
+     * 获取某个场景下的
+     *
+     * @param sceneId
+     * @param gridId
+     * @return
+     */
+    public static List<Player> getPlayerList(int sceneId, int gridId) {
+        return sceneMap.get(sceneId).getAoiManager().playerList(gridId);
+    }
 
-        WatchTower[][] watchTowers = scene.getWatchTowerList();
-        WatchTower watchTower = getWatchTower(player);
-        if (watchTower != null) {
-            WatchTowerIndex watchTowerIndex = watchTower.getWatchTowerIndex();
-            int xIndex = watchTowerIndex.getX();
-            int yIndex = watchTowerIndex.getY();
-            for (int i = -1; i < 2; i++) {
-                int x = xIndex + i;
-                if (x >= 0) {
-                    for (int j = -1; j < 2; j++) {
-                        int y = yIndex + j;
-                        if (y >= 0) {
-                            playerList.addAll(watchTowers[x][y].getPlayerIndexSet());
-                        }
-                    }
-                }
-            }
-        }
-        return playerList;
+
+    public static void changeGrid(Player player, int oldGridId, int newGridId) {
+        int sceneId = player.getSceneId();
+        Scene scene = sceneMap.get(sceneId);
+        scene.getAoiManager().getGrid(oldGridId).removePlayer(player);
+        scene.getAoiManager().getGrid(newGridId).addPlayer(player);
+    }
+
+    public static void changeScene(Player player, int oldSceneId, int newSceneId, int oldGridId, int newGridId) {
+        Scene oldScene = sceneMap.get(oldSceneId);
+        oldScene.getAoiManager().getGrid(oldGridId).removePlayer(player);
+        Scene newScene = sceneMap.get(newSceneId);
+        newScene.getAoiManager().getGrid(newGridId).addPlayer(player);
     }
 }

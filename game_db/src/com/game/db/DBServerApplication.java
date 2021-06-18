@@ -4,7 +4,6 @@ package com.game.db;
 import core.annotation.ctrl.CtrlA;
 import core.group.EventThreadGroup;
 import core.netty.http.HttpServer;
-import core.netty.tcp.TcpServer;
 import core.redis.RedisConfig;
 import core.redis.RedisDao;
 import core.sql.SqlDao;
@@ -13,7 +12,6 @@ import core.util.FileUtil;
 import org.apache.log4j.PropertyConfigurator;
 
 import static com.game.db.constant.GameConstant.KEY_LOGIN;
-import static core.Constants.LOCAL;
 
 
 /**
@@ -57,7 +55,6 @@ public class DBServerApplication {
         redisLoginConfig.setNettyThread(PropertiesConfig.redisLoginNettyThreadCount);
         redisLoginConfig.setDb(PropertiesConfig.redisLoginDB);
         redisLoginConfig.setKey(KEY_LOGIN);
-
 
         RedisDao.getInstance().init(redisDBConfig, redisLoginConfig);
     }
