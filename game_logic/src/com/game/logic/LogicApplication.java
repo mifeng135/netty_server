@@ -23,7 +23,7 @@ public class LogicApplication {
         new LoadConfig().load();
         new PropertiesConfig("config.properties");
         CtrlA.getInstance().init(Util.getPackageName(LogicApplication.class), new LogicExceptionHandler());
-        new EventThreadGroup(Util.getRunProcessor() * 2, LogicApplication.class.getName());
+        new EventThreadGroup(Util.getRunProcessor() * 2, LogicEventHandler.class, LogicApplication.class.getName());
         new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.serverPort, LOCAL).startServer();
         SceneManager.initSceneMap();
         AsyncHttp.getInstance().initBaseUrl("http://" + PropertiesConfig.dbServerIp + ":" + PropertiesConfig.dbServerPort);

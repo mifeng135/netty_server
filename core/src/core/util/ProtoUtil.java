@@ -36,17 +36,17 @@ public class ProtoUtil {
 
     public static ByteBuf encodeDBHttpMsg(TransferMsg transferMsg, Object msg) {
         byte[] headerData = ProtoUtil.serialize(transferMsg.getHeaderProto());
-        byte[] bodyData = ProtoUtil.serialize(msg);
-        byte[] attackData = transferMsg.getData();
-        ByteBuf buf = Unpooled.buffer(6 + headerData.length + bodyData.length + attackData.length);
+        byte[] data = transferMsg.getData();
+        byte[] dbData = ProtoUtil.serialize(msg);
+        ByteBuf buf = Unpooled.buffer(6 + headerData.length + dbData.length + data.length);
 
         buf.writeShort(headerData.length);
-        buf.writeShort(bodyData.length);
-        buf.writeShort(attackData.length);
+        buf.writeShort(data.length);
+        buf.writeShort(dbData.length);
 
         buf.writeBytes(headerData);
-        buf.writeBytes(bodyData);
-        buf.writeBytes(attackData);
+        buf.writeBytes(data);
+        buf.writeBytes(dbData);
         return buf;
     }
 
@@ -64,14 +64,14 @@ public class ProtoUtil {
         byte[] bodyData = new byte[bodyLen];
         buf.readBytes(bodyData);
 
-        byte[] attackData = new byte[attackLen];
+        byte[] dbData = new byte[attackLen];
         buf.readBytes(bodyData);
 
         HeaderProto headerProto = ProtoUtil.deserializer(headerData, HeaderProto.class);
         TransferMsg transferMsg = new TransferMsg();
         transferMsg.setHeaderProto(headerProto);
         transferMsg.setData(bodyData);
-        transferMsg.setAttackData(attackData);
+        transferMsg.setDbData(dbData);
         return transferMsg;
     }
 

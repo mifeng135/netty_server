@@ -1,6 +1,5 @@
 package com.game.gate;
 
-import com.esotericsoftware.reflectasm.MethodAccess;
 import com.game.gate.util.TcpUtil;
 import core.annotation.ctrl.CtrlA;
 import core.group.EventHandler;
@@ -23,15 +22,7 @@ public class GateEventHandler implements EventHandler {
             transmitMsg(transferMsg);
             return;
         }
-        String declaringClassName = method.getDeclaringClass().getName();
-        Object oc = ctrlAnnotation.getClassMap().get(declaringClassName);
-        MethodAccess methodAccess = ctrlAnnotation.getMethodAccessMap().get(declaringClassName);
-        String methodName = method.getName();
-        try {
-            methodAccess.invoke(oc, methodName, transferMsg);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        CtrlA.getInstance().invokeMethod(transferMsg);
     }
 
     private void transmitMsg(TransferMsg transferMsg) {

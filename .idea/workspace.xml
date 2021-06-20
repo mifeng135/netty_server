@@ -203,7 +203,7 @@
       <workItem from="1623424820520" duration="627000" />
       <workItem from="1623505078716" duration="31925000" />
       <workItem from="1623672627915" duration="1613000" />
-      <workItem from="1623675027947" duration="84502000" />
+      <workItem from="1623675027947" duration="89499000" />
     </task>
     <servers />
   </component>
@@ -235,23 +235,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/CreatePlayerController.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="210" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/CreatePlayerController.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="211" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/EnterGameController.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="212" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/EnterGameController.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="215" />
+          <line>19</line>
+          <option name="timeStamp" value="217" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

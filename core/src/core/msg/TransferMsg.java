@@ -18,7 +18,7 @@ import static core.Constants.HTTP_DECODER_TYPE_PROTO_BUFFER;
 public class TransferMsg {
     private HeaderProto headerProto;
     private byte[] data;
-    private byte[] attackData; // db msg
+    private byte[] dbData; // db msg
 
     private transient ChannelHandlerContext context;
     private transient Map<String, String> params;

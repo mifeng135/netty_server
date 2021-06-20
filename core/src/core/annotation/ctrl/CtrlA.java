@@ -33,6 +33,7 @@ public class CtrlA {
     private final Map<String, Method> httpMethodMap = new HashMap<>();
     private final Map<String, Object> classMap = new HashMap<>();
     private final Map<String, MethodAccess> methodAccessMap = new HashMap<>();
+    private final Map<Integer, CtrlCmd> ctrlCmdMap = new HashMap<>();
 
 
     private final List<Integer> msgList = new ArrayList<>();
@@ -93,13 +94,15 @@ public class CtrlA {
     private void scanMethodMap() {
         Set<Method> methodSet = reflections.getMethodsAnnotatedWith(CtrlCmd.class);
         for (Method method : methodSet) {
-            int cmd = method.getAnnotation(CtrlCmd.class).cmd();
-            String httpCmd = method.getAnnotation(CtrlCmd.class).httpCmd();
+            CtrlCmd ctrlCmd = method.getAnnotation(CtrlCmd.class);
+            int cmd = ctrlCmd.cmd();
+            String httpCmd = ctrlCmd.httpCmd();
             if (httpCmd.length() > 0) {
                 httpMethodMap.put(httpCmd, method);
             }
             methodMap.put(cmd, method);
             msgList.add(cmd);
+            ctrlCmdMap.put(cmd, ctrlCmd);
         }
     }
 
@@ -140,6 +143,9 @@ public class CtrlA {
         return msgList;
     }
 
+    public Map<Integer, CtrlCmd> getCtrlCmdMap() {
+        return ctrlCmdMap;
+    }
 
     public void invokeHttpMethod(TransferMsg msg) {
         String httpUrl = msg.getHttpUrl();

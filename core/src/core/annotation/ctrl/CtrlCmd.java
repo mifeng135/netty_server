@@ -10,5 +10,8 @@ import java.lang.annotation.*;
 @Documented
 public @interface CtrlCmd {
     int cmd() default -1;
+
     String httpCmd() default "";
+
+    int beforeCmd() default 0;
 }
