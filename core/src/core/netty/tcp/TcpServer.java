@@ -46,7 +46,7 @@ public class TcpServer {
     public TcpServer(String ip, int port, int socketType) {
         mIp = ip;
         mPort = port;
-        this.tcpServerHandler = new TcpServerHandler();
+        tcpServerHandler = new TcpServerHandler();
         this.socketType = socketType;
         init();
     }
@@ -98,7 +98,7 @@ public class TcpServer {
             if (channelFutureListener != null) {
                 channelFuture.addListener(channelFutureListener);
             } else {
-                logger.error("start tcp center success");
+                logger.error("start tcp success ip = {}, prot = {}", mIp, mPort);
             }
         } catch (InterruptedException e) {
             doStop();

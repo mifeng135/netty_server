@@ -18,7 +18,7 @@ public class GateApplication {
     public static void main(String[] arg) {
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
         CtrlA.getInstance().init(GateApplication.class.getPackage().getName(), new GateExceptionHandler());
-        new EventThreadGroup(Runtime.getRuntime().availableProcessors(), CustomEventHandler.class, GateApplication.class.getName());
+        new EventThreadGroup(Runtime.getRuntime().availableProcessors(), GateEventHandler.class, GateApplication.class.getName());
 
         new PropertiesConfig("config.properties");
         new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.port, REMOTE).startServer();

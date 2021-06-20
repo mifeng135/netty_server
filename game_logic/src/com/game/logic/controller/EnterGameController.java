@@ -4,6 +4,7 @@ import com.game.logic.util.MsgUtil;
 import core.annotation.ctrl.Ctrl;
 import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
+import core.netty.asyncHttp.AsyncHttp;
 import core.util.ProtoUtil;
 import constants.MsgConstant;
 import org.asynchttpclient.AsyncCompletionHandler;
@@ -18,8 +19,8 @@ public class EnterGameController extends AsyncCompletionHandler<Integer> {
 
     @CtrlCmd(cmd = MsgConstant.MSG_ENTER_GAME_REQ)
     public void playerEnterGame(TransferMsg msg) {
-        msg.getHeaderProto().setMsgId(DB_CMD_QUERY_ALL_PLAYER_INFO_REQ);
-        MsgUtil.sendToDB(msg);
+        msg.getHeaderProto().setMsgId(DB_CMD_QUERY_PLAYER_ALL_INFO_REQ);
+        AsyncHttp.getInstance().postAsync(msg.getHeaderProto(), msg.getData(), this);
     }
 
     @Override
@@ -34,6 +35,6 @@ public class EnterGameController extends AsyncCompletionHandler<Integer> {
         } else {
             MsgUtil.sendErrorMsg(msg.getHeaderProto(), 1);
         }
-        return null;
+        return 1;
     }
 }

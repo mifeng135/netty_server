@@ -35,7 +35,6 @@ public class EventThreadGroup {
         initTaskThread(null);
     }
 
-
     /**
      *
      * @param count 处理的线程数量

@@ -43,7 +43,7 @@ public class RedisDao {
     private RedisDao() {
     }
 
-    public void init(RedisConfig... redisConfigList) {
+    public void init(String dbName, RedisConfig... redisConfigList) {
         for (RedisConfig redisConfig : redisConfigList) {
             Config config = new Config();
             String pwd = redisConfig.getPwd();
@@ -65,7 +65,7 @@ public class RedisDao {
             }
             clientMap.put(redisConfig.getKey(), client);
         }
-        classMap = RedisA.getInstance().getClassMap();
+        classMap = new RedisA(dbName).getClassMap();
         initSqlTableIncrement();
     }
 
@@ -149,7 +149,7 @@ public class RedisDao {
 
 
     public void initSqlTableIncrement() {
-        List<RedisInfo> list = RedisA.getInstance().getClassList();
+        List<RedisInfo> list = new ArrayList<>(classMap.values());
         for (RedisInfo redisInfo : list) {
             if (redisInfo.getIncrName().length() > 0) {
                 Sql sql = Ins.sql().sqls().create("table_max.data");

@@ -12,7 +12,7 @@ import java.util.List;
 
 import static core.Constants.MSG_TYPE_REMOTE;
 
-public class CustomEventHandler implements EventHandler {
+public class GateEventHandler implements EventHandler {
 
     @Override
     public void onEvent(TransferMsg transferMsg) {

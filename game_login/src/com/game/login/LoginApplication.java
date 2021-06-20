@@ -41,6 +41,6 @@ public class LoginApplication {
         redisConfig.setThread(PropertiesConfig.redisThreadCount);
         redisConfig.setNettyThread(PropertiesConfig.redisNettyThreadCount);
 
-        RedisDao.getInstance().init(redisConfig);
+        RedisDao.getInstance().init("bean.login", redisConfig);
     }
 }

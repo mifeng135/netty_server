@@ -18,15 +18,8 @@ public class RedisA {
     private Reflections reflections;
     private String packName = "";
 
-    private static class DefaultInstance {
-        static final RedisA INSTANCE = new RedisA();
-    }
-
-    public static RedisA getInstance() {
-        return RedisA.DefaultInstance.INSTANCE;
-    }
-
-    private RedisA() {
+    public RedisA(String packName) {
+        this.packName = packName;
         initReflection();
         scanClassMap();
     }
@@ -36,7 +29,7 @@ public class RedisA {
      */
     private void initReflection() {
         configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.forPackages("bean.login");
+        configurationBuilder.forPackages(packName);
         configurationBuilder.setScanners(new SubTypesScanner(false), new TypeAnnotationsScanner(), new MethodAnnotationsScanner());
         configurationBuilder.filterInputsBy(new FilterBuilder().includePackage(packName));
         reflections = new Reflections(configurationBuilder);
@@ -67,9 +60,5 @@ public class RedisA {
 
     public Map<String, RedisInfo> getClassMap() {
         return classMap;
-    }
-
-    public List<RedisInfo> getClassList() {
-        return new ArrayList<>(classMap.values());
     }
 }

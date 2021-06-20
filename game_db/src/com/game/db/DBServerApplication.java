@@ -9,6 +9,7 @@ import core.redis.RedisDao;
 import core.sql.SqlDao;
 import core.sql.SqlDaoConfig;
 import core.util.FileUtil;
+import core.util.Util;
 import org.apache.log4j.PropertyConfigurator;
 
 import static com.game.db.constant.GameConstant.KEY_LOGIN;
@@ -21,8 +22,8 @@ public class DBServerApplication {
 
     public static void main(String[] args) {
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
-        CtrlA.getInstance().init(DBServerApplication.class.getPackage().getName());
-        new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, DBServerApplication.class.getName());
+        CtrlA.getInstance().init(Util.getPackageName(DBServerApplication.class));
+        new EventThreadGroup(Util.getRunProcessor() * 2, DBServerApplication.class.getName());
         initDao();
         new HttpServer(PropertiesConfig.dbServerIp, PropertiesConfig.dbServerPort);
     }
@@ -56,6 +57,6 @@ public class DBServerApplication {
         redisLoginConfig.setDb(PropertiesConfig.redisLoginDB);
         redisLoginConfig.setKey(KEY_LOGIN);
 
-        RedisDao.getInstance().init(redisDBConfig, redisLoginConfig);
+        RedisDao.getInstance().init("bean.db", redisDBConfig, redisLoginConfig);
     }
 }

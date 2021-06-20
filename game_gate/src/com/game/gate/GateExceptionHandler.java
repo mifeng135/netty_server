@@ -16,7 +16,7 @@ import static core.msg.SysMsgConstants.MSG_SYSTEM_EXCEPTION_PUSH;
 public class GateExceptionHandler implements ExceptionHandler {
 
 
-    private static Logger logger = LoggerFactory.getLogger(CustomEventHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(GateEventHandler.class);
 
 
     @Override

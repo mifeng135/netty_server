@@ -79,7 +79,7 @@ public class HttpServer {
         try {
             ChannelFuture channelFuture = mChannelFuture = mServerBootstrap.bind(new InetSocketAddress(mIp, mPort)).sync();
             if (channelFuture.isSuccess()) {
-                logger.error("http center start success");
+                logger.error("start http success ip = {}, port = {}", mIp, mPort);
             }
         } catch (InterruptedException e) {
             doStop();

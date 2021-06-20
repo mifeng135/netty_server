@@ -55,7 +55,7 @@
   </component>
   <component name="ProjectId" id="1sIczryHhNzJmBwQ2qAIZEbX2Az" />
   <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -86,13 +86,13 @@
       <recent name="D:\server\netty_server\server_config" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LoginApplication">
+  <component name="RunManager" selected="Application.DBServerApplication">
     <configuration name="DBServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.game.db.DBServerApplication" />
       <module name="game_db" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.game.db.*" />
+          <option name="PATTERN" value="com.game.logic.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -168,10 +168,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoginApplication" />
+        <item itemvalue="Application.DBServerApplication" />
         <item itemvalue="Application.LogicApplication" />
         <item itemvalue="Application.GateApplication" />
-        <item itemvalue="Application.DBServerApplication" />
+        <item itemvalue="Application.LoginApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -203,7 +203,7 @@
       <workItem from="1623424820520" duration="627000" />
       <workItem from="1623505078716" duration="31925000" />
       <workItem from="1623672627915" duration="1613000" />
-      <workItem from="1623675027947" duration="65462000" />
+      <workItem from="1623675027947" duration="84502000" />
     </task>
     <servers />
   </component>
@@ -232,6 +232,26 @@
           <url>file://$PROJECT_DIR$/game_login/src/com/game/login/LoginSqlBinLog.java</url>
           <line>64</line>
           <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/CreatePlayerController.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="210" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/CreatePlayerController.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/EnterGameController.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="212" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/game_logic/src/com/game/logic/controller/EnterGameController.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="215" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

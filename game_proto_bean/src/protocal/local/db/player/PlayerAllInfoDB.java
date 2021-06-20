@@ -1,10 +1,10 @@
 package protocal.local.db.player;
 
 
-import bean.player.PlayerInfoBean;
-import bean.player.PlayerItemBean;
-import bean.player.PlayerRoleBean;
-import bean.player.PlayerSceneBean;
+import bean.db.player.PlayerInfoBean;
+import bean.db.player.PlayerItemBean;
+import bean.db.player.PlayerRoleBean;
+import bean.db.player.PlayerSceneBean;
 import lombok.Getter;
 import lombok.Setter;
 

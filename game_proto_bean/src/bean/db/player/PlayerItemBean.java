@@ -1,7 +1,8 @@
-package bean.player;
+package bean.db.player;
 
 import bean.sub.SubItemInfoBean;
 import com.alibaba.fastjson.JSON;
+import core.annotation.redis.Redis;
 import core.sql.BaseIntBean;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @Setter
 @Table("game_player_item")
+@Redis(name = "game_player")
 public class PlayerItemBean extends BaseIntBean {
     @Column("item_info")
     private String itemInfo;

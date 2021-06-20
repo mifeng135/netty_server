@@ -1,18 +1,16 @@
 package com.game.db.controller;
 
 
-import bean.player.PlayerInfoBean;
-import bean.player.PlayerItemBean;
-import bean.player.PlayerRoleBean;
-import bean.player.PlayerSceneBean;
+import bean.db.player.PlayerInfoBean;
+import bean.db.player.PlayerItemBean;
+import bean.db.player.PlayerRoleBean;
+import bean.db.player.PlayerSceneBean;
 import com.game.db.util.MsgUtil;
 import constants.TableKey;
 import core.annotation.ctrl.Ctrl;
 import core.annotation.ctrl.CtrlCmd;
 import core.msg.TransferMsg;
 import core.util.Ins;
-import org.asynchttpclient.AsyncCompletionHandler;
-import org.asynchttpclient.Response;
 import protocal.local.db.player.PlayerAllInfoDB;
 
 import java.util.List;
@@ -21,11 +19,10 @@ import static constants.MsgConstant.*;
 
 
 @Ctrl
-public class DBPlayerInfoController  {
+public class DBPlayerInfoController {
 
-    @CtrlCmd(cmd = DB_CMD_QUERY_ALL_PLAYER_INFO_REQ)
+    @CtrlCmd(cmd = DB_CMD_QUERY_PLAYER_ALL_INFO_REQ)
     public void getPlayerInfo(TransferMsg msg) {
-        msg.getHeaderProto().setMsgId(DB_CMD_QUERY_ALL_PLAYER_INFO_RSP);
         int playerIndex = msg.getHeaderProto().getPlayerIndex();
         PlayerInfoBean playerBean = Ins.redis().fetch(TableKey.GAME_PLAYER, playerIndex);
         if (playerBean == null) {

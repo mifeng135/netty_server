@@ -1,9 +1,9 @@
 package com.game.db.controller;
 
 
-import bean.player.PlayerInfoBean;
-import bean.player.PlayerRoleBean;
-import bean.player.PlayerSceneBean;
+import bean.db.player.PlayerInfoBean;
+import bean.db.player.PlayerRoleBean;
+import bean.db.player.PlayerSceneBean;
 import com.game.db.PropertiesConfig;
 import com.game.db.util.MsgUtil;
 import constants.TableKey;

@@ -8,6 +8,7 @@ import core.group.EventThreadGroup;
 import core.netty.asyncHttp.AsyncHttp;
 import core.netty.tcp.TcpServer;
 import core.util.FileUtil;
+import core.util.Util;
 import org.apache.log4j.PropertyConfigurator;
 
 
@@ -18,11 +19,11 @@ public class LogicApplication {
     public static void main(String[] args) {
 
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
-        TableA.getInstance().init(LogicApplication.class.getPackage().getName());
+        TableA.getInstance().init(Util.getPackageName(LogicApplication.class));
         new LoadConfig().load();
         new PropertiesConfig("config.properties");
-        CtrlA.getInstance().init(LogicApplication.class.getPackage().getName(), new LogicExceptionHandler());
-        new EventThreadGroup(Runtime.getRuntime().availableProcessors() * 2, LogicApplication.class.getName());
+        CtrlA.getInstance().init(Util.getPackageName(LogicApplication.class), new LogicExceptionHandler());
+        new EventThreadGroup(Util.getRunProcessor() * 2, LogicApplication.class.getName());
         new TcpServer(PropertiesConfig.serverIp, PropertiesConfig.serverPort, LOCAL).startServer();
         SceneManager.initSceneMap();
         AsyncHttp.getInstance().initBaseUrl("http://" + PropertiesConfig.dbServerIp + ":" + PropertiesConfig.dbServerPort);
