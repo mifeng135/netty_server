@@ -1,11 +1,10 @@
 package core.util;
 
 
-import core.msg.ClientExceptionMsg;
+import core.msg.ClientExceptionPush;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtil {
@@ -80,7 +79,7 @@ public class FileUtil {
         }
     }
 
-    public static void writeClientError(List<ClientExceptionMsg> errorList) {
+    public static void writeClientError(List<ClientExceptionPush> errorList) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < errorList.size(); i++) {
             builder.append(TimeUtil.stampToDate(errorList.get(i).getTime()));

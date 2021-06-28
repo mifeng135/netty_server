@@ -1,7 +1,6 @@
 package core.util;
 
-import core.group.MessageGroup;
-import core.msg.ClientExceptionMsg;
+import core.msg.ClientExceptionPush;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SaveClientErrorUtil {
 
-    private ConcurrentLinkedDeque<ClientExceptionMsg> queue = new ConcurrentLinkedDeque();
+    private ConcurrentLinkedDeque<ClientExceptionPush> queue = new ConcurrentLinkedDeque();
 
     private static class DefaultInstance {
         static final SaveClientErrorUtil INSTANCE = new SaveClientErrorUtil();
@@ -32,15 +31,15 @@ public class SaveClientErrorUtil {
         }, 0, 30, TimeUnit.SECONDS);
     }
 
-    public void pushErrorMsg(ClientExceptionMsg exceptionMsg) {
+    public void pushErrorMsg(ClientExceptionPush exceptionMsg) {
         queue.offer(exceptionMsg);
     }
 
     public void process() {
         if (!queue.isEmpty()) {
-            List<ClientExceptionMsg> errorList = new ArrayList<>();
+            List<ClientExceptionPush> errorList = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
-                ClientExceptionMsg exceptionMsg = queue.poll();
+                ClientExceptionPush exceptionMsg = queue.poll();
                 if (exceptionMsg == null) {
                     break;
                 }

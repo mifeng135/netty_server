@@ -16,7 +16,7 @@ import static core.Constants.REMOTE_MSG_ENCODER_HEADER_LEN;
 //  msg total len(short + int + short + bytes)  |   msg id    |  result    | body bytes|
 //--------------------------------------------------------------------------------------
 
-public class GEncoder extends MessageToByteEncoder<TransferClientMsg> {
+public class RemoteEncoder extends MessageToByteEncoder<TransferClientMsg> {
 
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, TransferClientMsg in, ByteBuf out) {

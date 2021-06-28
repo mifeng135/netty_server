@@ -6,7 +6,8 @@ import core.msg.TransferMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2020/6/18.
@@ -16,7 +17,7 @@ public class MessageGroup {
     private static final int queueCapacity = 2048;
     private static Logger logger = LoggerFactory.getLogger(MessageGroup.class);
 
-    private ConcurrentHashMap<Integer, MultithreadConcurrentQueue<TransferMsg>> mMessageMap = new ConcurrentHashMap();
+    private Map<Integer, MultithreadConcurrentQueue<TransferMsg>> mMessageMap = new HashMap<>();
     private int threadCount;
 
     private static class DefaultInstance {

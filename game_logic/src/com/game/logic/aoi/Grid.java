@@ -15,9 +15,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Grid {
 
     private int id;
-    private float gridPositionX;
-    private float gridPositionY;
+    private float gridPositionX; //横向起始坐标
+    private float gridPositionY; //纵向起始坐标
     private Map<Integer, Player> playerMap = new ConcurrentHashMap<>();
+    private List<Grid> surroundList = new ArrayList<>();
 
     public Grid(int id, float gridPositionX, float gridPositionY) {
         this.id = id;

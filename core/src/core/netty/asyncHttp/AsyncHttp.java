@@ -1,17 +1,16 @@
 package core.netty.asyncHttp;
 
 import core.msg.HeaderProto;
-import core.msg.TransferMsg;
 import core.util.ProtoUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.handler.codec.http.HttpHeaderNames;
+import io.netty.handler.codec.http.HttpHeaderValues;
 import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.AsyncHttpClient;
 
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 
-
-import java.util.concurrent.ExecutionException;
 
 import static org.asynchttpclient.Dsl.asyncHttpClient;
 
@@ -64,48 +63,6 @@ public class AsyncHttp {
     public void postAsync(HeaderProto headerDBProto, byte[] data, AsyncCompletionHandler handler) {
         ByteBuf byteBuf = assignByteBuf(headerDBProto, data);
         asyncHttpClient.preparePost(baseUrl).setBody(byteBuf.array()).execute(handler);
-    }
-
-    /**
-     * 同步请求
-     *
-     * @param headerDBProto
-     * @param msg
-     */
-    public TransferMsg postSync(HeaderProto headerDBProto, Object msg) {
-        byte[] data = ProtoUtil.serialize(msg);
-        ByteBuf byteBuf = assignByteBuf(headerDBProto, data);
-        TransferMsg transferMsg = null;
-        try {
-            byte[] responseData = asyncHttpClient.preparePost(baseUrl).setBody(byteBuf.array()).execute().get().getResponseBodyAsBytes();
-            transferMsg = ProtoUtil.decodeDBHttpMsg(responseData);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return transferMsg;
-    }
-
-
-    /**
-     * 同步请求
-     *
-     * @param headerDBProto
-     * @param data
-     */
-    public TransferMsg postSync(HeaderProto headerDBProto, byte[] data) {
-        ByteBuf byteBuf = assignByteBuf(headerDBProto, data);
-        TransferMsg transferMsg = null;
-        try {
-            byte[] responseData = asyncHttpClient.preparePost(baseUrl).setBody(byteBuf.array()).execute().get().getResponseBodyAsBytes();
-            transferMsg = ProtoUtil.decodeDBHttpMsg(responseData);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return transferMsg;
     }
 
 

@@ -39,6 +39,7 @@ public class Constants {
     public static final AttributeKey<TcpConnection> TCP = AttributeKey.valueOf("TcpConnection");
     public static final AttributeKey<String> CONNECT_IP = AttributeKey.valueOf("CONNECT_IP");
     public static final AttributeKey<Integer> PORT = AttributeKey.valueOf("PORT");
+    public static final AttributeKey<Float> NET_DELAY = AttributeKey.valueOf("NET_DELAY");
 
     public static final int TCP_MSG_LEN = 6;
 
@@ -62,5 +63,7 @@ public class Constants {
     public static final int HTTP_DECODER_TYPE_PROTO_BUFFER = 2;
 
     public static final String HTTP_HEADER_PATH = "PATH";
+
+    public static final float CLIENT_FRAME_COUNT = 0.016f; //客户端帧率(60)
 
 }

@@ -25,8 +25,8 @@ public class AoiManager {
 
     private float gridWidth;
     private float gridHeight;
-    private int gridCntX;
-    private int gridCntY;
+    private int gridCntX; //列数
+    private int gridCntY; //行数
     private Map<Integer, Grid> gridMap = new HashMap<>();
 
     public AoiManager(float gridWidth, float gridHeight, int sceneWidth, int sceneHeight) {
@@ -37,7 +37,6 @@ public class AoiManager {
         initGrid();
     }
 
-
     /**
      * 初始化地图格子
      */
@@ -45,9 +44,17 @@ public class AoiManager {
         for (int y = 0; y < gridCntY; y++) {
             for (int x = 0; x < gridCntX; x++) {
                 int id = y * gridCntX + x;
-                Grid grid = new Grid(id, gridWidth * x,gridHeight * y);
+                Grid grid = new Grid(id, gridWidth * x, gridHeight * y);
                 gridMap.put(id, grid);
             }
+        }
+        for (Map.Entry<Integer, Grid> m : gridMap.entrySet()) {
+            List<Grid> gridList = getSurroundGridsByGid(m.getKey());
+            List<Grid> surroundList = new ArrayList<>();
+            for (int i = 0; i < gridList.size(); i++) {
+                surroundList.add(gridList.get(i));
+            }
+            m.getValue().setSurroundList(surroundList);
         }
     }
 
@@ -57,39 +64,45 @@ public class AoiManager {
      * @param id
      * @return
      */
-    public List<Grid> getSurroundGridsByGid(int id) {
+    private List<Grid> getSurroundGridsByGid(int id) {
         Grid grid = gridMap.get(id);
         List<Grid> gridList = new ArrayList<>();
         gridList.add(grid);
 
-        int idx = id % gridCntX;
+        int column = getColumnByGridId(id); //列数
 
         //获得左边是否有格子
-        if (idx > 0) {
+        if (column > 0) {
             gridList.add(gridMap.get(id - 1));
         }
         //获得右边是否有格子
-        if (idx < gridCntX - 1) {
+        if (column < gridCntX - 1) {
             gridList.add(gridMap.get(id + 1));
         }
         //寻找周围的格子
         List<Grid> otherGrid = new ArrayList<>();
         for (int i = 0; i < gridList.size(); i++) {
             int gridId = gridList.get(i).getId();
-            int idy = gridId / gridCntY;
-            if (idy > 0) {
-                otherGrid.add(gridMap.get(idy - gridCntX));
+            int row = getRowByGridId(gridId); //行数
+            if (row > 0) {
+                otherGrid.add(gridMap.get(gridId - gridCntX));
             }
-            if (idy < gridCntY - 1) {
-                otherGrid.add(gridMap.get(idy + gridCntX));
+            if (row < gridCntY - 1) {
+                otherGrid.add(gridMap.get(gridId + gridCntX));
             }
         }
         gridList.addAll(otherGrid);
         return gridList;
     }
 
+    /**
+     * 获取以gridId为中心的所有player
+     *
+     * @param gridId
+     * @return
+     */
     public List<Player> playerList(int gridId) {
-        List<Grid> gridList = getSurroundGridsByGid(gridId);
+        List<Grid> gridList = getGrid(gridId).getSurroundList();
         List<Player> playerList = new ArrayList<>();
         for (Grid grid : gridList) {
             playerList.addAll(grid.getPlayerList());
@@ -97,15 +110,61 @@ public class AoiManager {
         return playerList;
     }
 
+    /**
+     * 获取以gridId为中心的周围gridList
+     *
+     * @param gridId
+     * @return
+     */
+    public List<Grid> getGridList(int gridId) {
+        return getGrid(gridId).getSurroundList();
+    }
+
+    /**
+     * 获取grid
+     *
+     * @param gridId
+     * @return
+     */
     public Grid getGrid(int gridId) {
         return gridMap.get(gridId);
     }
 
+    /**
+     * 获得列数
+     *
+     * @return
+     */
     public int getGridCntX() {
         return gridCntX;
     }
 
+    /**
+     * 获得行数
+     *
+     * @return
+     */
     public int getGridCntY() {
         return gridCntY;
+    }
+
+    /**
+     * 获取所在行数[0, gridCntX - 1]
+     *
+     * @param gridId
+     * @return
+     */
+    public int getRowByGridId(int gridId) {
+        return gridId / gridCntX;
+    }
+
+    /**
+     * 获取所在列数[0, gridCntX - 1]
+     *
+     * @param gridId
+     * @return
+     */
+    public int getColumnByGridId(int gridId) {
+        return gridId % gridCntX;
     }
 }

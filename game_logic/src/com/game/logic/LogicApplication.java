@@ -17,7 +17,6 @@ import static core.Constants.LOCAL;
 public class LogicApplication {
 
     public static void main(String[] args) {
-
         PropertyConfigurator.configure(FileUtil.getFilePath("log4j.properties"));
         TableA.getInstance().init(Util.getPackageName(LogicApplication.class));
         new LoadConfig().load();

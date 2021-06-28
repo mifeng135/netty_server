@@ -71,11 +71,11 @@ public class TcpServer {
                 ChannelPipeline pipeline = channel.pipeline();
 
                 if (socketType == LOCAL) {
-                    pipeline.addLast(new CDecoder());
-                    pipeline.addLast(new CEncode());
+                    pipeline.addLast(new LocalDecoder());
+                    pipeline.addLast(new LocalEncode());
                 } else if (socketType == REMOTE) {
-                    pipeline.addLast(new GDecoder());
-                    pipeline.addLast(new GEncoder());
+                    pipeline.addLast(new RemoteDecoder());
+                    pipeline.addLast(new RemoteEncoder());
                     if (Constants.NETTY_OPEN_IDLE) {
                         pipeline.addLast(IDLE_STATE_HANDLER, new IdleStateHandler(Constants.TCP_SERVER_IDLE_DEFAULT, 0, 0));
                     }

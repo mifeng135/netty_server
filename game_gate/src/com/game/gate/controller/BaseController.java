@@ -17,6 +17,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import protocal.local.system.RegisterMsgCmdPush;
+import protocal.push.NetDelayPush;
 import protocal.remote.system.*;
 
 import java.util.HashSet;
@@ -41,9 +42,9 @@ public class BaseController {
 
     @CtrlCmd(cmd = MSG_HEART_BEAT_REQ)
     public void heartBeat(TransferMsg msg) {
-        HeartBeateRsp heartBeateRsp = new HeartBeateRsp();
-        heartBeateRsp.setTime(TimeUtil.getCurrentTimeSecond());
-        TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), MsgConstant.MSG_HEART_BEAT_RSP, heartBeateRsp);
+        HeartBeatRsp heartBeatRsp = new HeartBeatRsp();
+        heartBeatRsp.setTime(TimeUtil.getCurrentTimeSecond());
+        TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), MsgConstant.MSG_HEART_BEAT_RSP, heartBeatRsp);
     }
 
     @CtrlCmd(cmd = MSG_RECONNECT_REQ)
@@ -71,6 +72,12 @@ public class BaseController {
         Set<Integer> set = new HashSet<>();
         set.addAll(registerMsgCmdReq.getMsgList());
         LocalRouterSocketManager.getInstance().addRouter(msg.getHeaderProto().getPlayerIndex(), set);
+    }
+
+    @CtrlCmd(cmd = MSG_NET_DELAY_PUSH)
+    public void netDelay(TransferMsg msg) {
+        NetDelayPush delayPush = ProtoUtil.deserializer(msg.getData(), NetDelayPush.class);
+        msg.getContext().channel().attr(Constants.NET_DELAY).set(delayPush.getDelayTime());
     }
 
     private void process(ChannelHandlerContext context, int playerIndex) {

@@ -6,7 +6,6 @@ import core.group.EventHandler;
 import core.manager.LocalRouterSocketManager;
 import core.msg.TransferMsg;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import static core.Constants.MSG_TYPE_REMOTE;
@@ -17,8 +16,7 @@ public class GateEventHandler implements EventHandler {
     public void onEvent(TransferMsg transferMsg) {
         CtrlA ctrlAnnotation = CtrlA.getInstance();
         int msgId = transferMsg.getHeaderProto().getMsgId();
-        Method method = ctrlAnnotation.getMethodMap().get(msgId);
-        if (method == null) {
+        if (!ctrlAnnotation.getMethodMap().containsKey(msgId)) {
             transmitMsg(transferMsg);
             return;
         }

@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @Setter
 @Table("game_player_login_info")
-@Redis(name = "game_player_login_info", IncrName = "player_index", immediately = true)
+@Redis(name = "game_player_login_info", IncrName = "player_index", immediately = true, incrId = 100000)
 public class LoginPlayerInfoBean extends BaseStringBean {
     @Column("player_index")
     private int playerIndex;

@@ -1,10 +1,12 @@
 package com.game.logic.model;
 
+import com.game.logic.aoi.Grid;
 import com.game.logic.common.Position;
 import com.game.logic.manager.SceneManager;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -17,6 +19,7 @@ public class Player {
     private int sceneId = -1;
     private Position position;
     private int currentGridId = -1;
+    private float speed;
 
     public Player(int playerIndex, Position position, int sceneId) {
         this.playerIndex = playerIndex;
@@ -54,11 +57,34 @@ public class Player {
         int newGridId = position.getGridId(scene.getAoiManager().getGridCntX());
         boolean changeScene = false;
         if (sceneId != newSceneId) {
+
             SceneManager.changeScene(this, sceneId, newSceneId, currentGridId, newGridId);
-            this.sceneId = newSceneId;
+            sceneId = newSceneId;
+            currentGridId = newGridId;
             changeScene = true;
         }
         sendSyncMsg(changeScene, false);
+    }
+
+
+    private List<Grid> getEnterGridList(List<Grid> newGridPlayerList, List<Grid> oldGridPlayerList) {
+        List<Grid> enterList = new ArrayList<>();
+        for (Grid player : newGridPlayerList) {
+            if (!oldGridPlayerList.contains(player)) {
+                enterList.add(player);
+            }
+        }
+        return enterList;
+    }
+
+    private List<Grid> getLeftGridList(List<Grid> newGridPlayerList, List<Grid> oldGridPlayerList) {
+        List<Grid> leftGridList = new ArrayList<>();
+        for (Grid player : oldGridPlayerList) {
+            if (!newGridPlayerList.contains(player)) {
+                leftGridList.add(player);
+            }
+        }
+        return leftGridList;
     }
 
     /**

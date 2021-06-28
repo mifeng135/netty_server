@@ -15,4 +15,6 @@ public @interface Redis {
     String dbName() default "";
 
     boolean immediately() default false;
+
+    int incrId() default 0;
 }

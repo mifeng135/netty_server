@@ -57,6 +57,11 @@ public class SqlHelper {
         return Ins.sql().execute(sql).getList(SqlTableInfo.class);
     }
 
+    /**
+     * 获取某个表的行数
+     * @param tableName
+     * @return
+     */
     public static int getTableCount(String tableName) {
         Sql sql = Ins.sql().sqls().create("table_count.data");
         sql.setVar("tableName", tableName).setVar("name", "id");

@@ -43,8 +43,8 @@ public class TcpConnection {
             @Override
             protected void initChannel(SocketChannel channel) throws Exception {
                 ChannelPipeline pipeline = channel.pipeline();
-                pipeline.addLast(new CDecoder());
-                pipeline.addLast(new CEncode());
+                pipeline.addLast(new LocalDecoder());
+                pipeline.addLast(new LocalEncode());
                 pipeline.addLast("clientHandler", handler);
             }
         });

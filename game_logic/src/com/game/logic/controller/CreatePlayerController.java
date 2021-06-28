@@ -19,12 +19,12 @@ public class CreatePlayerController {
     public void createPlayer(TransferMsg msg) {
         PlayerAllInfoDB playerAllInfoDB = ProtoUtil.deserializer(msg.getDbData(), PlayerAllInfoDB.class);
         CreatePlayerRsp createPlayerRsp = new CreatePlayerRsp();
-        if (playerAllInfoDB != null) {
-            createPlayerRsp.setSuccess(true);
-            createPlayerRsp.setPlayerAllInfoDB(playerAllInfoDB);
-            MsgUtil.sendMsg(msg.getHeaderProto(), createPlayerRsp);
-        } else {
+        if (playerAllInfoDB == null) {
             MsgUtil.sendErrorMsg(msg.getHeaderProto(), 1);
+            return;
         }
+        createPlayerRsp.setSuccess(true);
+        createPlayerRsp.setPlayerAllInfoDB(playerAllInfoDB);
+        MsgUtil.sendMsg(msg.getHeaderProto(), createPlayerRsp);
     }
 }

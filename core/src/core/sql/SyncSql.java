@@ -2,6 +2,7 @@ package core.sql;
 
 
 import com.conversantmedia.util.concurrent.MultithreadConcurrentQueue;
+import core.util.Ins;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,7 @@ public class SyncSql extends Thread {
 
     private static Logger logger = LoggerFactory.getLogger(SyncSql.class);
 
-    private MultithreadConcurrentQueue<String> queue = new MultithreadConcurrentQueue(2048);
+    private MultithreadConcurrentQueue<SqlSyncInfo> queue = new MultithreadConcurrentQueue(2048);
     private volatile boolean quit = false;
 
     private static class DefaultInstance {
@@ -25,17 +26,17 @@ public class SyncSql extends Thread {
 
     }
 
-    public void add(String playerIndex) {
-        queue.offer(playerIndex);
+    public void add(SqlSyncInfo sqlSyncInfo) {
+        queue.offer(sqlSyncInfo);
     }
 
     @Override
     public void run() {
         while (!quit) {
             try {
-                String playerIndex = queue.poll();
-                if (playerIndex != null) {
-                    process(playerIndex);
+                SqlSyncInfo info = queue.poll();
+                if (info != null) {
+                    process(info);
                 }
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -48,18 +49,18 @@ public class SyncSql extends Thread {
     public void quit() {
         quit = true;
         while (!queue.isEmpty()) {
-            String playerIndex = queue.poll();
-            process(playerIndex);
+            SqlSyncInfo sqlSyncInfo = queue.poll();
+            process(sqlSyncInfo);
         }
     }
 
-
-    public void process(String playerIndex) {
-        try {
-            Thread.sleep(2000);
-            logger.info("playerIndex = {}", playerIndex);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    private void process(SqlSyncInfo sqlSyncInfo) {
+        String dbName = sqlSyncInfo.getDbName();
+        BaseBean bean = sqlSyncInfo.getBean();
+        if (dbName.length() > 0) {
+            Ins.sql(dbName).insertOrUpdate(bean);
+        } else {
+            Ins.sql().insertOrUpdate(bean);
         }
     }
 }

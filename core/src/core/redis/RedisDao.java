@@ -2,8 +2,7 @@ package core.redis;
 
 import core.annotation.redis.RedisA;
 import core.annotation.redis.RedisInfo;
-import core.sql.BaseBean;
-import core.sql.SqlHelper;
+import core.sql.*;
 import core.util.Ins;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Sqls;
@@ -67,29 +66,70 @@ public class RedisDao {
         }
         classMap = new RedisA(dbName).getClassMap();
         initSqlTableIncrement();
+        SyncSql.getInstance().start();
     }
 
+    /**
+     * 指定数据库 插入
+     *
+     * @param daoKey   数据库名称
+     * @param tableKey 表名
+     * @param bean     数据bean
+     */
     public void put(String daoKey, String tableKey, BaseBean bean) {
         RedissonClient client = clientMap.get(daoKey);
         RedisInfo redisInfo = classMap.get(tableKey);
         client.getMap(tableKey).fastPut(bean.getId(), bean);
         if (redisInfo.isImmediately()) {
             Ins.sql(daoKey).insertOrUpdate(bean);
+        } else {
+            SqlSyncInfo sqlSyncInfo = new SqlSyncInfo();
+            sqlSyncInfo.setBean(bean);
+            sqlSyncInfo.setDbName(daoKey);
+            SyncSql.getInstance().add(sqlSyncInfo);
         }
     }
 
+
+    /**
+     * 通过默认的数据库插入
+     *
+     * @param tableKey
+     * @param bean
+     */
     public void put(String tableKey, BaseBean bean) {
         RedisInfo redisInfo = classMap.get(tableKey);
         redissonClient.getMap(tableKey).fastPut(bean.getId(), bean);
         if (redisInfo.isImmediately()) {
             Ins.sql().insertOrUpdate(bean);
+        } else {
+            SqlSyncInfo sqlSyncInfo = new SqlSyncInfo();
+            sqlSyncInfo.setBean(bean);
+            SyncSql.getInstance().add(sqlSyncInfo);
         }
     }
 
+
+    /**
+     * 删除 某个表名下的 id为key的数据
+     *
+     * @param tableKey 表名
+     * @param key      id
+     */
     public void delete(String tableKey, Object key) {
         redissonClient.getMap(tableKey).fastRemove(key);
+        Class cls = classMap.get(tableKey).getCls();
+        Ins.sql().clear(cls, Cnd.where("id", "=", key));
     }
 
+    /**
+     * 查询 某个表名下 id为 key的数据
+     *
+     * @param tableKey 表名
+     * @param key      id
+     * @param <T>
+     * @return
+     */
     public <T> T fetch(String tableKey, Object key) {
         Object data = redissonClient.getMap(tableKey).get(key);
         if (data == null) {
@@ -102,6 +142,12 @@ public class RedisDao {
         return (T) data;
     }
 
+    /**
+     * 询 某个表名下的所有数据
+     *
+     * @param tableKey
+     * @return
+     */
     public List fetchAll(String tableKey) {
         RMap map = redissonClient.getMap(tableKey);
         int cacheCount = map.size();
@@ -112,14 +158,9 @@ public class RedisDao {
         Class cls = classMap.get(tableKey).getCls();
         List<BaseBean> data = Ins.sql().query(cls, null);
         Map mapData = data.stream().collect(Collectors.toMap(BaseBean::getId, (p) -> p));
-        putAll(tableKey, mapData);
+        map.putAll(mapData);
         return data;
     }
-
-    public void putAll(String tableKey, Map value) {
-        redissonClient.getMap(tableKey).putAll(value);
-    }
-
 
     public void scoreSetAdd(String mapKey, double score, Object o) {
         RScoredSortedSet set = redissonClient.getScoredSortedSet(mapKey);
@@ -147,7 +188,9 @@ public class RedisDao {
         redissonClient.getScoredSortedSet(mapKey).clear();
     }
 
-
+    /**
+     * 初始化sql 某人自增长id
+     */
     public void initSqlTableIncrement() {
         List<RedisInfo> list = new ArrayList<>(classMap.values());
         for (RedisInfo redisInfo : list) {
@@ -156,8 +199,8 @@ public class RedisDao {
                 sql.setVar("tableName", redisInfo.getTableName()).setVar("name", redisInfo.getIncrName());
                 sql.setCallback(Sqls.callback.integer());
                 int increment = Ins.sql().execute(sql).getInt();
-                if (redisInfo.getTableName().equals(specialTable) && increment == 0) {
-                    increment = LOCAL_SOCKET_RANGE;
+                if (increment == 0) {
+                    increment = redisInfo.getIncr();
                 }
                 RAtomicLong rAtomicLong = redissonClient.getAtomicLong(redisInfo.getTableName() + incr);
                 rAtomicLong.set(increment);
@@ -165,6 +208,12 @@ public class RedisDao {
         }
     }
 
+    /**
+     * 获取某个表名的下一个自增长id
+     *
+     * @param tableName
+     * @return
+     */
     public int getNextIncrement(String tableName) {
         return (int) redissonClient.getAtomicLong(tableName + incr).incrementAndGet();
     }

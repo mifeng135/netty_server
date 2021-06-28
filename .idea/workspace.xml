@@ -68,7 +68,8 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -139,17 +140,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="lua.app" factoryName="Lua Application">
       <option name="program" value="lua.exe" />
       <option name="file" value="" />
@@ -168,9 +158,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GateApplication" />
         <item itemvalue="Application.DBServerApplication" />
         <item itemvalue="Application.LogicApplication" />
-        <item itemvalue="Application.GateApplication" />
         <item itemvalue="Application.LoginApplication" />
       </list>
     </recent_temporary>
@@ -203,7 +193,9 @@
       <workItem from="1623424820520" duration="627000" />
       <workItem from="1623505078716" duration="31925000" />
       <workItem from="1623672627915" duration="1613000" />
-      <workItem from="1623675027947" duration="89499000" />
+      <workItem from="1623675027947" duration="96281000" />
+      <workItem from="1624277081467" duration="67419000" />
+      <workItem from="1624809874581" duration="4426000" />
     </task>
     <servers />
   </component>
@@ -238,6 +230,11 @@
           <line>19</line>
           <option name="timeStamp" value="217" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/game_logic/src/com/game/logic/manager/SceneManager.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="245" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -246,6 +243,10 @@
         <watch expression="((HashMap)mapClass).entrySet().toArray()[0]" custom="java.util.HashMap" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/game_server$LoginApplication.ic" NAME="LoginApplication Coverage Results" MODIFIED="1623512581603" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

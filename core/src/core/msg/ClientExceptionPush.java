@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ClientExceptionMsg {
+public class ClientExceptionPush {
     private String exception;
     private transient long time;
 }

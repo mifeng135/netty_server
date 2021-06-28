@@ -12,4 +12,5 @@ public class RedisInfo {
     private String incrName;
     private String dbName;
     private boolean immediately;
+    private int incr;
 }

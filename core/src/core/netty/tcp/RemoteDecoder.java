@@ -17,7 +17,7 @@ import static core.Constants.TCP_MSG_LEN;
 //|              short                             |   short               |  short     | bytes           | bytes       |
 //|  msg total len(short short short bytes bytes)  |   header proto len    |  body len  | header bytes    | body bytes  |
 //-----------------------------------------------------------------------------------------------------------------------
-public class GDecoder extends ByteToMessageDecoder {
+public class RemoteDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext context, ByteBuf byteBuf, List<Object> list) {

@@ -46,10 +46,15 @@ public class MsgConstant {
     public static final int MSG_REPLACE_ACCOUNT_PUSH = 200000;                   //顶号
 
 
-    /*********************************HTTP URL**********************************************************/
 
-    public static final int MSG_CLIENT_ERROR_REPORT = 10000000;                 //客户端异常上报
+
+    /*********************************HTTP URL**********************************************************/
 
     public static final String HTTP_URL_GET_SERVER_LIST = "/getServerList";
     public static final String HTTP_URL_GET_NOTICE = "/getNotice";
+
+    /*********************************help**********************************************************/
+    public static final int MSG_CLIENT_ERROR_REPORT_PUSH = 10000000;                 //客户端异常上报
+    public static final int MSG_NET_DELAY_PUSH = 10000001;                           //客户端上报网络延迟
+
 }

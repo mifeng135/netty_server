@@ -15,12 +15,10 @@ import static constants.MsgConstant.*;
 public class SyncPositionController {
 
     @CtrlCmd(cmd = MSG_SYNC_POSITION_REQ)
-    public void openSession(TransferMsg msg) {
+    public void syncPlayerPosition(TransferMsg msg) {
         SyncPositionReq sycPositionReq = ProtoUtil.deserializer(msg.getData(), SyncPositionReq.class);
         SyncPositionRsp syncPositionRsp = new SyncPositionRsp();
         syncPositionRsp.setPosition(sycPositionReq.getPosition());
         msg.getHeaderProto().setMsgId(MSG_SYNC_POSITION_RSP);
-        syncPositionRsp.setMove(true);
-        MsgUtil.sendMsg(msg.getHeaderProto(), syncPositionRsp);
     }
 }
