@@ -31,9 +31,6 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
         TransferMsg transferMsg = (TransferMsg) msg;
         transferMsg.setContext(ctx);
         MessageGroup.getInstance().pushMessage(transferMsg);
-        if (transferMsg.getHeaderProto().getMsgId() != 10010) {
-            logger.info("receive msg msgId = {}, playerIndex = {}", transferMsg.getHeaderProto().getMsgId(), transferMsg.getHeaderProto().getPlayerIndex());
-        }
     }
 
     @Override

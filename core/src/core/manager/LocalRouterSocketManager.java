@@ -33,7 +33,6 @@ public class LocalRouterSocketManager {
 
     public void addRouter(int socketIndex, Set<Integer> set) {
         routerMap.put(socketIndex, set);
-        logger.info("addRouter success socketIndex = {}", socketIndex);
     }
 
     /**
@@ -44,7 +43,6 @@ public class LocalRouterSocketManager {
         int msgId = msg.getHeaderProto().getMsgId();
         routerMap.forEach((socketIndex, value) -> {
             if (value.contains(msgId)) {
-                logger.info("sendRouterMsg socketIndex = {},msgId = {}", socketIndex, msgId);
                 Channel channel = LocalSocketManager.getInstance().getChanel(socketIndex);
                 if (channel != null && channel.isActive()) {
                     channel.writeAndFlush(msg);
