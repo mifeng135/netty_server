@@ -35,10 +35,6 @@ public class MsgConstant {
     public static final int MSG_RECONNECT_REQ = 10012;                          //客户端重连
     public static final int MSG_RECONNECT_RSP = 10013;
 
-    public static final int MSG_SYNC_POSITION_REQ = 10016;                       //位置同步
-    public static final int MSG_SYNC_POSITION_RSP = 10017;
-
-
     /*********************************PUSH**********************************************************/
     /**
      * 主动推送
@@ -46,15 +42,21 @@ public class MsgConstant {
     public static final int MSG_REPLACE_ACCOUNT_PUSH = 200000;                   //顶号
 
 
-
-
     /*********************************HTTP URL**********************************************************/
 
     public static final String HTTP_URL_GET_SERVER_LIST = "/getServerList";
     public static final String HTTP_URL_GET_NOTICE = "/getNotice";
 
-    /*********************************help**********************************************************/
+    /*********************************client push**********************************************************/
     public static final int MSG_CLIENT_ERROR_REPORT_PUSH = 10000000;                 //客户端异常上报
     public static final int MSG_NET_DELAY_PUSH = 10000001;                           //客户端上报网络延迟
+    public static final int MSG_POSITION_SYNC_PUSH = 10000002;                       //玩家位置同步
+    public static final int MSG_ENTER_SCENE_FINISH = 10000003;                       //玩家进入某个场景
 
+    /*********************************server push**********************************************************/
+    public static final int MSG_SCENE_OTHER_PLAYER_ENTER_PUSH = 20000001;            //其他玩家进入场景
+    public static final int MSG_SCENE_PLAYER_ENTER_PUSH = 20000002;                  //玩家进入某个场景 将周围的人的信息同步给他
+    public static final int MSG_SCENE_PLAYER_LEAVE_PUSH = 20000003;                  //玩家离开某个场景
+    public static final int MSG_SCENE_PLAYER_CHANGE_GRID = 20000004;                 //玩家切换grid
+    public static final int MSG_SCENE_SYNC_POSITION_PUSH = 20000005;                 //推送位置同步
 }

@@ -56,7 +56,7 @@ public class ProtoUtil {
 
         int headerLen = buf.readShort();
         int bodyLen = buf.readShort();
-        int attackLen = buf.readShort();
+        int dbDataLen = buf.readShort();
 
         byte[] headerData = new byte[headerLen];
         buf.readBytes(headerData);
@@ -64,8 +64,8 @@ public class ProtoUtil {
         byte[] bodyData = new byte[bodyLen];
         buf.readBytes(bodyData);
 
-        byte[] dbData = new byte[attackLen];
-        buf.readBytes(bodyData);
+        byte[] dbData = new byte[dbDataLen];
+        buf.readBytes(dbData);
 
         HeaderProto headerProto = ProtoUtil.deserializer(headerData, HeaderProto.class);
         TransferMsg transferMsg = new TransferMsg();
@@ -79,6 +79,12 @@ public class ProtoUtil {
         HeaderProto headerProto = new HeaderProto();
         headerProto.setMsgId(msgId);
         headerProto.setPlayerIndex(playerIndex);
+        return headerProto;
+    }
+
+    public static HeaderProto initHeaderProto(int msgId) {
+        HeaderProto headerProto = new HeaderProto();
+        headerProto.setMsgId(msgId);
         return headerProto;
     }
 }

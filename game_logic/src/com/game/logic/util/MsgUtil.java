@@ -43,12 +43,18 @@ public class MsgUtil {
     }
 
     public static void sendMsgWithList(HeaderProto headerProto, Object msg, List<Integer> playerList) {
+        if (playerList.size() <= 0) {
+            return;
+        }
         byte[] data = ProtoUtil.serialize(msg);
         headerProto.setNoticeList(playerList);
         executeSendMsg(headerProto, data);
     }
 
     public static void sendMsgWithList(HeaderProto headerProto, byte[] data, List<Integer> playerList) {
+        if (playerList.size() <= 0) {
+            return;
+        }
         headerProto.setNoticeList(playerList);
         executeSendMsg(headerProto, data);
     }
@@ -70,13 +76,6 @@ public class MsgUtil {
         transferMsg.setData(data);
 
         Channel channel = LocalSocketManager.getInstance().getChanel(PropertiesConfig.gateLogicSocketIndex);
-        if (channel != null && channel.isActive()) {
-            channel.writeAndFlush(transferMsg);
-        }
-    }
-
-    public static void sendToDB(TransferMsg transferMsg) {
-        Channel channel = LocalSocketManager.getInstance().getChanel(PropertiesConfig.logicDBSocketIndex);
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(transferMsg);
         }

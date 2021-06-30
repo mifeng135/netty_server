@@ -1,12 +1,15 @@
 package com.game.logic.manager;
 
+import com.game.logic.aoi.AoiSendMsgHelp;
 import com.game.logic.aoi.EnterLeftInfo;
 import com.game.logic.aoi.Grid;
 import com.game.logic.config.MapConfig;
 import com.game.logic.model.Player;
 import com.game.logic.model.Scene;
+import com.game.logic.util.MathUtil;
 
 import java.util.*;
+
 
 public class SceneManager {
 
@@ -36,15 +39,20 @@ public class SceneManager {
     }
 
     /**
-     * 获取某个场景下的
+     * 获取某个场景下的以gridId为中心的所有player
      *
      * @param sceneId
      * @param gridId
      * @return
      */
     public static List<Player> getPlayerList(int sceneId, int gridId) {
-        return sceneMap.get(sceneId).getAoiManager().playerList(gridId);
+        return sceneMap.get(sceneId).getAoiManager().getPlayerList(gridId);
     }
+
+    public static List<Integer> getPlayerIndexList(int sceneId, int gridId) {
+        return sceneMap.get(sceneId).getAoiManager().getPlayerIndexList(gridId);
+    }
+
 
     public static void changeGrid(Player player, int oldGridId, int newGridId) {
         int sceneId = player.getSceneId();
@@ -60,21 +68,58 @@ public class SceneManager {
         newScene.getAoiManager().getGrid(newGridId).addPlayer(player);
     }
 
+    /***
+     *
+     * @param sceneId
+     * @param oldGridId
+     * @param newGridId
+     * @return
+     */
     public static EnterLeftInfo getEnterLeftList(int sceneId, int oldGridId, int newGridId) {
         Scene scene = sceneMap.get(sceneId);
-        List<Grid> leftGridList = scene.getAoiManager().getGridList(oldGridId);
-        List<Grid> enterGridList = scene.getAoiManager().getGridList(newGridId);
+        List<Grid> leaveGridList = new ArrayList<>(scene.getAoiManager().getGridList(oldGridId));
+        List<Grid> enterGridList = new ArrayList<>(scene.getAoiManager().getGridList(newGridId));
 
-        Collection left = new ArrayList<>(leftGridList);
+        Collection leave = new ArrayList<>(leaveGridList);
         Collection enter = new ArrayList<>(enterGridList);
 
-        leftGridList.removeAll(enter);
-        enterGridList.removeAll(left);
-
+        leaveGridList.removeAll(enter);
+        enterGridList.removeAll(leave);
 
         EnterLeftInfo enterLeftInfo = new EnterLeftInfo();
         enterLeftInfo.setEnterList(enterGridList);
-        enterLeftInfo.setLeftList(leftGridList);
+        enterLeftInfo.setLeaveList(leaveGridList);
         return enterLeftInfo;
+    }
+
+
+    /**
+     * 玩家进入某个场景
+     *
+     * @param sceneId
+     * @param player
+     */
+    public static void playerEnterScene(int sceneId, Player player) {
+        Scene scene = sceneMap.get(sceneId);
+        int gridId = MathUtil.getGridId(player.getPlayerSceneBean().getPlayerPositionX(), player.getPlayerSceneBean().getPlayerPositionY(),
+                scene.getAoiManager().getGridCntX());
+
+        scene.getAoiManager().getGrid(gridId).addPlayer(player);
+        List<Player> playerList = scene.getAoiManager().getPlayerList(gridId);
+        AoiSendMsgHelp.sendPlayerEnterScene(playerList, player);
+    }
+
+    /**
+     * 玩家离开场景
+     *
+     * @param sceneId
+     * @param player
+     */
+    public static void playerLeaveScene(int sceneId, Player player) {
+        int gridId = player.getCurrentGridId();
+        Scene scene = sceneMap.get(sceneId);
+        scene.getAoiManager().getGrid(gridId).removePlayer(player);
+        List<Integer> playerList = scene.getAoiManager().getPlayerIndexList(gridId);
+        AoiSendMsgHelp.sendPlayerLeaveScene(player, playerList);
     }
 }

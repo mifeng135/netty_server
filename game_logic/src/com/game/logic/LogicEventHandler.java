@@ -8,9 +8,13 @@ import core.netty.asyncHttp.AsyncHttp;
 import core.util.ProtoUtil;
 import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class LogicEventHandler extends AsyncCompletionHandler implements EventHandler {
+
+    private static Logger logger = LoggerFactory.getLogger(LogicEventHandler.class);
 
     @Override
     public void onEvent(TransferMsg transferMsg) {
@@ -31,6 +35,7 @@ public class LogicEventHandler extends AsyncCompletionHandler implements EventHa
         TransferMsg msg = ProtoUtil.decodeDBHttpMsg(response.getResponseBodyAsBytes());
         msg.getHeaderProto().setMsgId(msg.getHeaderProto().getMsdType());
         CtrlA.getInstance().invokeMethod(msg);
+        logger.info("db process success msgId = {}" , msg.getHeaderProto().getMsgId());
         return 1;
     }
 }

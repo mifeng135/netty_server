@@ -57,7 +57,7 @@ public class SyncSql extends Thread {
     private void process(SqlSyncInfo sqlSyncInfo) {
         String dbName = sqlSyncInfo.getDbName();
         BaseBean bean = sqlSyncInfo.getBean();
-        if (dbName.length() > 0) {
+        if (dbName != null && dbName.length() > 0) {
             Ins.sql(dbName).insertOrUpdate(bean);
         } else {
             Ins.sql().insertOrUpdate(bean);

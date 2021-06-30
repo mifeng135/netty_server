@@ -1,12 +1,14 @@
 package com.game.logic.aoi;
 
 import com.game.logic.model.Player;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 import static com.game.logic.Constants.GRID_HEIGHT;
 import static com.game.logic.Constants.GRID_WIDTH;
@@ -22,7 +24,6 @@ import static com.game.logic.Constants.GRID_WIDTH;
 // |  8  |  9  |  10 |  11 | 100
 // |-----------------------|
 public class AoiManager {
-
     private float gridWidth;
     private float gridHeight;
     private int gridCntX; //列数
@@ -50,11 +51,7 @@ public class AoiManager {
         }
         for (Map.Entry<Integer, Grid> m : gridMap.entrySet()) {
             List<Grid> gridList = getSurroundGridsByGid(m.getKey());
-            List<Grid> surroundList = new ArrayList<>();
-            for (int i = 0; i < gridList.size(); i++) {
-                surroundList.add(gridList.get(i));
-            }
-            m.getValue().setSurroundList(surroundList);
+            m.getValue().setSurroundList(gridList);
         }
     }
 
@@ -101,13 +98,28 @@ public class AoiManager {
      * @param gridId
      * @return
      */
-    public List<Player> playerList(int gridId) {
+    public List<Player> getPlayerList(int gridId) {
         List<Grid> gridList = getGrid(gridId).getSurroundList();
         List<Player> playerList = new ArrayList<>();
         for (Grid grid : gridList) {
             playerList.addAll(grid.getPlayerList());
         }
         return playerList;
+    }
+
+
+    /**
+     * 获取以gridId为中心的所有playerIndex
+     * @param gridId
+     * @return
+     */
+    public List<Integer> getPlayerIndexList(int gridId) {
+        List<Grid> gridList = getGrid(gridId).getSurroundList();
+        List<Integer> playerIndexList = new ArrayList<>();
+        for (Grid grid : gridList) {
+            playerIndexList.addAll(grid.getPlayerIndexList());
+        }
+        return playerIndexList;
     }
 
     /**

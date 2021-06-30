@@ -9,8 +9,8 @@ public class Position {
     private int x;
     private int y;
 
-    public void sub(int subX, int subY) {
-        x = x - subX;
-        y = y - subY;
+    public Position(int playerPositionX, int playerPositionY) {
+        x = playerPositionX;
+        y = playerPositionY;
     }
 }

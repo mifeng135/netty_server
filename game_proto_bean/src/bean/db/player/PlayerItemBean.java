@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @Setter
 @Table("game_player_item")
-@Redis(name = "game_player")
+@Redis(name = "game_player_item")
 public class PlayerItemBean extends BaseIntBean {
     @Column("item_info")
     private String itemInfo;

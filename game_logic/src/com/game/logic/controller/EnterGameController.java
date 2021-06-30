@@ -1,5 +1,7 @@
 package com.game.logic.controller;
 
+import com.game.logic.manager.PlayerManager;
+import com.game.logic.model.Player;
 import com.game.logic.util.MsgUtil;
 import core.annotation.ctrl.Ctrl;
 import core.annotation.ctrl.CtrlCmd;
@@ -23,7 +25,13 @@ public class EnterGameController {
             return;
         }
         EnterGameRsp enterGameRsp = new EnterGameRsp();
-        enterGameRsp.setPlayerAllInfoDB(playerAllInfoDB);
+        enterGameRsp.setHasRole(true);
+        enterGameRsp.setPlayerItemList(playerAllInfoDB.getPlayerItemList());
+        enterGameRsp.setPlayerRoleBean(playerAllInfoDB.getPlayerRole());
+        enterGameRsp.setPlayerSceneBean(playerAllInfoDB.getPlayerScene());
         MsgUtil.sendMsg(msg.getHeaderProto(), enterGameRsp);
+
+        Player player = new Player(playerAllInfoDB.getPlayerScene(), playerAllInfoDB.getPlayerRole(), playerAllInfoDB.getPlayerInfo());
+        PlayerManager.addPlayer(player);
     }
 }

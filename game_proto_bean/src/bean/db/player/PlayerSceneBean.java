@@ -11,7 +11,7 @@ import org.nutz.dao.entity.annotation.Table;
 @Getter
 @Setter
 @Table("game_player_scene")
-@Redis(name = "game_player")
+@Redis(name = "game_player_scene")
 public class PlayerSceneBean extends BaseIntBean {
     @Column("player_position_x")
     private int playerPositionX;

@@ -9,6 +9,7 @@ import protocal.remote.common.Position;
 @Setter
 public class SyncPositionReq {
     private Position position;
-    private int direction;
+    private float moveAngle;
     private float delayTime;
+    private boolean firstMove;
 }

@@ -12,7 +12,7 @@ import org.nutz.dao.entity.annotation.Table;
 @Getter
 @Setter
 @Table("game_player_role")
-@Redis(name = "game_player")
+@Redis(name = "game_player_role")
 public class PlayerRoleBean extends BaseIntBean {
     @Column()
     private int job;

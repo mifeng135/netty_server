@@ -9,11 +9,15 @@ public class PlayerManager {
 
     private static Map<Integer, Player> playerMap = new ConcurrentHashMap<>();
 
-    public Player getPlayer(int playerIndex) {
+    public static Player getPlayer(int playerIndex) {
         return playerMap.get(playerIndex);
     }
 
-    public void removePlayer(int playerIndex) {
+    public static void removePlayer(int playerIndex) {
         playerMap.remove(playerIndex);
+    }
+
+    public static void addPlayer(Player player) {
+        playerMap.put(player.getPlayerIndex(), player);
     }
 }

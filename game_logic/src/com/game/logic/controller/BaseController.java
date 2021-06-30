@@ -1,5 +1,7 @@
 package com.game.logic.controller;
 
+import com.game.logic.manager.PlayerManager;
+import com.game.logic.manager.SceneManager;
 import com.game.logic.util.MsgUtil;
 import core.Constants;
 import core.annotation.ctrl.CtrlA;
@@ -24,12 +26,6 @@ public class BaseController {
         msg.getHeaderProto().setMsgId(MSG_REGISTER_MSG_CMD_PUSH);
         registerMsgCmdReq.setMsgList(CtrlA.getInstance().getMsgList());
         MsgUtil.sendMsg(msg.getHeaderProto(), registerMsgCmdReq);
-    }
-
-    @CtrlCmd(cmd = MSG_REMOTE_SOCKET_CLOSE_PUSH)
-    public void remoteSocketClose(TransferMsg msg) {
-        // TODO: 2021/4/14
-        //need process socket close
     }
 
     @CtrlCmd(cmd = MSG_LOCAL_SOCKET_CLOSE_PUSH)

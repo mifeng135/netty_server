@@ -31,9 +31,9 @@ public class AsyncHttp {
         asyncHttpClient = asyncHttpClient(new DefaultAsyncHttpClientConfig.Builder()
                 .setFollowRedirect(true)
                 .setIoThreadsCount(Runtime.getRuntime().availableProcessors() * 2)
-                .setConnectTimeout(3000)
-                .setReadTimeout(3000)
-                .setRequestTimeout(3000)
+                .setConnectTimeout(10000)
+                .setReadTimeout(10000)
+                .setRequestTimeout(10000)
                 .setMaxRequestRetry(2)
                 .setThreadPoolName("AsyncHttp"));
     }
