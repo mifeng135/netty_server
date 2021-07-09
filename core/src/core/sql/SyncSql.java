@@ -1,18 +1,17 @@
 package core.sql;
 
-
-import com.conversantmedia.util.concurrent.MultithreadConcurrentQueue;
 import core.util.Ins;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.*;
 
-public class SyncSql extends Thread {
+
+public class SyncSql {
 
     private static Logger logger = LoggerFactory.getLogger(SyncSql.class);
 
-    private MultithreadConcurrentQueue<SqlSyncInfo> queue = new MultithreadConcurrentQueue(2048);
-    private volatile boolean quit = false;
+    ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
 
     private static class DefaultInstance {
         static final SyncSql INSTANCE = new SyncSql();
@@ -27,40 +26,34 @@ public class SyncSql extends Thread {
     }
 
     public void add(SqlSyncInfo sqlSyncInfo) {
-        queue.offer(sqlSyncInfo);
+        singleThreadExecutor.submit(new DBTask(sqlSyncInfo));
     }
 
-    @Override
-    public void run() {
-        while (!quit) {
+    private class DBTask implements Runnable {
+
+        private final SqlSyncInfo info;
+
+        public DBTask(SqlSyncInfo info) {
+            this.info = info;
+        }
+
+        @Override
+        public void run() {
+            process(info);
+        }
+
+        private void process(SqlSyncInfo sqlSyncInfo) {
+            String dbName = sqlSyncInfo.getDbName();
+            BaseBean bean = sqlSyncInfo.getBean();
             try {
-                SqlSyncInfo info = queue.poll();
-                if (info != null) {
-                    process(info);
+                if (dbName != null && dbName.length() > 0) {
+                    Ins.sql(dbName).insertOrUpdate(bean);
+                } else {
+                    Ins.sql().insertOrUpdate(bean);
                 }
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                logger.error(e.toString());
             }
-        }
-    }
-
-
-    public void quit() {
-        quit = true;
-        while (!queue.isEmpty()) {
-            SqlSyncInfo sqlSyncInfo = queue.poll();
-            process(sqlSyncInfo);
-        }
-    }
-
-    private void process(SqlSyncInfo sqlSyncInfo) {
-        String dbName = sqlSyncInfo.getDbName();
-        BaseBean bean = sqlSyncInfo.getBean();
-        if (dbName != null && dbName.length() > 0) {
-            Ins.sql(dbName).insertOrUpdate(bean);
-        } else {
-            Ins.sql().insertOrUpdate(bean);
         }
     }
 }

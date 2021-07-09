@@ -57,6 +57,17 @@ public class AsyncHttp {
     /**
      * 异步请求
      *
+     * @param msg
+     */
+    public void postAsync(HeaderProto headerDBProto, Object msg) {
+        byte[] data = ProtoUtil.serialize(msg);
+        ByteBuf byteBuf = assignByteBuf(headerDBProto, data);
+        asyncHttpClient.preparePost(baseUrl).setBody(byteBuf.array()).execute();
+    }
+
+    /**
+     * 异步请求
+     *
      * @param data
      * @param handler
      */

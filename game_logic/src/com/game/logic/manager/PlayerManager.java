@@ -18,6 +18,6 @@ public class PlayerManager {
     }
 
     public static void addPlayer(Player player) {
-        playerMap.put(player.getPlayerIndex(), player);
+        playerMap.putIfAbsent(player.getPlayerIndex(), player);
     }
 }

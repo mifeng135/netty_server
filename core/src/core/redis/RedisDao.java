@@ -66,7 +66,6 @@ public class RedisDao {
         }
         classMap = new RedisA(dbName).getClassMap();
         initSqlTableIncrement();
-        SyncSql.getInstance().start();
     }
 
     /**
@@ -86,6 +85,7 @@ public class RedisDao {
             SqlSyncInfo sqlSyncInfo = new SqlSyncInfo();
             sqlSyncInfo.setBean(bean);
             sqlSyncInfo.setDbName(daoKey);
+            sqlSyncInfo.setTableKey(tableKey);
             SyncSql.getInstance().add(sqlSyncInfo);
         }
     }
@@ -105,6 +105,7 @@ public class RedisDao {
         } else {
             SqlSyncInfo sqlSyncInfo = new SqlSyncInfo();
             sqlSyncInfo.setBean(bean);
+            sqlSyncInfo.setTableKey(tableKey);
             SyncSql.getInstance().add(sqlSyncInfo);
         }
     }

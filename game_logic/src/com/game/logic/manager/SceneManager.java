@@ -4,14 +4,19 @@ import com.game.logic.aoi.AoiSendMsgHelp;
 import com.game.logic.aoi.EnterLeftInfo;
 import com.game.logic.aoi.Grid;
 import com.game.logic.config.MapConfig;
+import com.game.logic.controller.SocketCloseController;
 import com.game.logic.model.Player;
 import com.game.logic.model.Scene;
 import com.game.logic.util.MathUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 
 public class SceneManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(SceneManager.class);
 
     private static Map<Integer, Scene> sceneMap = new HashMap<>();
 
@@ -101,10 +106,7 @@ public class SceneManager {
      */
     public static void playerEnterScene(int sceneId, Player player) {
         Scene scene = sceneMap.get(sceneId);
-        int gridId = MathUtil.getGridId(player.getPlayerSceneBean().getPlayerPositionX(), player.getPlayerSceneBean().getPlayerPositionY(),
-                scene.getAoiManager().getGridCntX());
-
-        scene.getAoiManager().getGrid(gridId).addPlayer(player);
+        int gridId = player.getCurrentGridId();
         List<Player> playerList = scene.getAoiManager().getPlayerList(gridId);
         AoiSendMsgHelp.sendPlayerEnterScene(playerList, player);
     }

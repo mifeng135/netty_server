@@ -9,4 +9,5 @@ import lombok.Setter;
 public class SqlSyncInfo {
     private String dbName;
     private BaseBean bean;
+    private String tableKey;
 }

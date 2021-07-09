@@ -8,6 +8,7 @@ public class MsgConstant {
     public static final int DB_CMD_BEGIN = 1000;
     public static final int DB_CMD_QUERY_PLAYER_ALL_INFO_REQ = 1001;                //查询玩家信息
     public static final int DB_CMD_CREATE_PLAYER_REQ = 1003;                        //创建角色
+    public static final int DB_CMD_PLAYER_OFFLINE = 1004;
     public static final int DB_CMD_END = 9999;
 
     /************************************login******************************************************/

@@ -4,6 +4,7 @@ import com.game.logic.model.Player;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class Grid {
      * @param player
      */
     public void addPlayer(Player player) {
-        playerMap.put(player.getPlayerIndex(), player);
+        playerMap.putIfAbsent(player.getPlayerIndex(), player);
         playerIndexList = playerMap.values().stream().map(Player::getPlayerIndex).collect(Collectors.toList());
     }
 

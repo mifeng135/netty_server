@@ -35,7 +35,6 @@ public class LogicEventHandler extends AsyncCompletionHandler implements EventHa
         TransferMsg msg = ProtoUtil.decodeDBHttpMsg(response.getResponseBodyAsBytes());
         msg.getHeaderProto().setMsgId(msg.getHeaderProto().getMsdType());
         CtrlA.getInstance().invokeMethod(msg);
-        logger.info("db process success msgId = {}" , msg.getHeaderProto().getMsgId());
         return 1;
     }
 }

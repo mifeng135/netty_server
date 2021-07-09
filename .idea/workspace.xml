@@ -170,8 +170,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.LogicApplication" />
-        <item itemvalue="Application.GateApplication" />
         <item itemvalue="Application.DBServerApplication" />
+        <item itemvalue="Application.GateApplication" />
         <item itemvalue="Application.LoginApplication" />
       </list>
     </recent_temporary>
@@ -206,7 +206,7 @@
       <workItem from="1623672627915" duration="1613000" />
       <workItem from="1623675027947" duration="96281000" />
       <workItem from="1624277081467" duration="67419000" />
-      <workItem from="1624809874581" duration="50322000" />
+      <workItem from="1624809874581" duration="69446000" />
     </task>
     <servers />
   </component>
