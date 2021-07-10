@@ -4,6 +4,7 @@ package core.annotation.proto;
 import lombok.Getter;
 import lombok.Setter;
 
+@Deprecated
 @Getter
 @Setter
 public class ProtoInfo {

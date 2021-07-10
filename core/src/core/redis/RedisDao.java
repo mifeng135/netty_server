@@ -86,6 +86,7 @@ public class RedisDao {
             sqlSyncInfo.setBean(bean);
             sqlSyncInfo.setDbName(daoKey);
             sqlSyncInfo.setTableKey(tableKey);
+            sqlSyncInfo.setDelete(redisInfo.isDelete());
             SyncSql.getInstance().add(sqlSyncInfo);
         }
     }
@@ -106,6 +107,7 @@ public class RedisDao {
             SqlSyncInfo sqlSyncInfo = new SqlSyncInfo();
             sqlSyncInfo.setBean(bean);
             sqlSyncInfo.setTableKey(tableKey);
+            sqlSyncInfo.setDelete(redisInfo.isDelete());
             SyncSql.getInstance().add(sqlSyncInfo);
         }
     }

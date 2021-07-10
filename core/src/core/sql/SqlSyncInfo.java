@@ -10,4 +10,5 @@ public class SqlSyncInfo {
     private String dbName;
     private BaseBean bean;
     private String tableKey;
+    private boolean delete;
 }

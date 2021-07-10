@@ -7,6 +7,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
+
+@Deprecated
 public class ParseProtoFile {
 
     private static final String writePath = "proto_file/";

@@ -1,5 +1,6 @@
 package core.sql;
 
+import core.redis.RedisDao;
 import core.util.Ins;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +51,9 @@ public class SyncSql {
                     Ins.sql(dbName).insertOrUpdate(bean);
                 } else {
                     Ins.sql().insertOrUpdate(bean);
+                }
+                if (sqlSyncInfo.isDelete()) {
+                    RedisDao.getInstance().delete(sqlSyncInfo.getTableKey(), bean.getId());
                 }
             } catch (Exception e) {
                 logger.error(e.toString());

@@ -10,7 +10,7 @@ import org.reflections.util.FilterBuilder;
 
 import java.util.*;
 
-
+@Deprecated
 public class ProtoA {
     private final Map<String, List<ProtoInfo>> classMap = new TreeMap<>();
 

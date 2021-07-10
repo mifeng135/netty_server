@@ -13,4 +13,5 @@ public class RedisInfo {
     private String dbName;
     private boolean immediately;
     private int incr;
+    private boolean delete;
 }
