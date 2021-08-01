@@ -1,6 +1,5 @@
 package com.game.logic.aoi;
 
-import com.game.logic.controller.PlayerEnterSceneController;
 import com.game.logic.model.Player;
 import com.game.logic.util.MsgUtil;
 import core.msg.HeaderProto;

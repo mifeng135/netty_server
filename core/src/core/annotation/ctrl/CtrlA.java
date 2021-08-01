@@ -131,6 +131,10 @@ public class CtrlA {
         return methodMap;
     }
 
+    public boolean containMethod(int msgId) {
+        return methodMap.containsKey(msgId);
+    }
+
     public Map<String, Object> getClassMap() {
         return classMap;
     }

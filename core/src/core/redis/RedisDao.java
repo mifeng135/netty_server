@@ -26,7 +26,6 @@ public class RedisDao {
 
     private static RedissonClient redissonClient;
     private static final String incr = "_incr";
-    private static final String specialTable = "game_player_login_info";
     private Map<String, RedisInfo> classMap;
     private Map<String, RedissonClient> clientMap = new HashMap<>();
 
@@ -146,7 +145,7 @@ public class RedisDao {
     }
 
     /**
-     * 询 某个表名下的所有数据
+     * 查询某个表名下的所有数据
      *
      * @param tableKey
      * @return

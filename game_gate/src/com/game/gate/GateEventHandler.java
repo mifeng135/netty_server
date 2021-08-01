@@ -16,7 +16,7 @@ public class GateEventHandler implements EventHandler {
     public void onEvent(TransferMsg transferMsg) {
         CtrlA ctrlAnnotation = CtrlA.getInstance();
         int msgId = transferMsg.getHeaderProto().getMsgId();
-        if (!ctrlAnnotation.getMethodMap().containsKey(msgId)) {
+        if (!ctrlAnnotation.containMethod(msgId)) {
             transmitMsg(transferMsg);
             return;
         }

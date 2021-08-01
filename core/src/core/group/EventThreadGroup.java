@@ -1,5 +1,7 @@
 package core.group;
 
+import core.util.Util;
+
 /**
  * Created by Administrator on 2020/6/18.
  */
@@ -37,6 +39,13 @@ public class EventThreadGroup {
     public EventThreadGroup(int count) {
         mThreadCount = count;
         mMessageGroup.setThreadCount(count);
+        initMessageGroup();
+        initTaskThread();
+    }
+
+    public EventThreadGroup() {
+        mThreadCount = Util.getRunProcessor() * 2;
+        mMessageGroup.setThreadCount(mThreadCount);
         initMessageGroup();
         initTaskThread();
     }
