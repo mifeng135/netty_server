@@ -42,14 +42,16 @@ public class GateEventHandler implements EventHandler {
         int msgId = msg.getHeaderProto().getMsgId();
         if (noticeList != null) {
             TcpUtil.sendToClientWithList(noticeList, msgId, msg.getData());
-        } else if (msg.getHeaderProto().isBroadcast()) {
-            TcpUtil.sendAllClient(msgId, msg.getData());
-        } else {
-            if (msg.getHeaderProto().isSuccess()) {
-                TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), msgId, msg.getData());
-            } else {
-                TcpUtil.sendToClientError(msg.getHeaderProto().getPlayerIndex(), msgId, msg.getData());
-            }
+            return;
         }
+        if (msg.getHeaderProto().isBroadcast()) {
+            TcpUtil.sendAllClient(msgId, msg.getData());
+            return;
+        }
+        if (msg.getHeaderProto().isSuccess()) {
+            TcpUtil.sendToClient(msg.getHeaderProto().getPlayerIndex(), msgId, msg.getData());
+            return;
+        }
+        TcpUtil.sendToClientError(msg.getHeaderProto().getPlayerIndex(), msgId, msg.getData());
     }
 }

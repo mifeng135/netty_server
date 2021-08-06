@@ -18,7 +18,6 @@ public class LocalSocketManager {
     private static Logger logger = LoggerFactory.getLogger(LocalSocketManager.class);
 
     private ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-    private Map<Integer, ChannelId> channelIdMap = new ConcurrentHashMap<>();
     private Map<Integer, Channel> channelMap = new ConcurrentHashMap<>();
 
     private static class DefaultInstance {
@@ -35,13 +34,11 @@ public class LocalSocketManager {
 
     public void putChannel(int playerIndex, Channel channel) {
         channelMap.put(playerIndex, channel);
-        channelIdMap.put(playerIndex, channel.id());
         channelGroup.add(channel);
     }
 
     public void removeChannel(int playerIndex) {
         channelMap.remove(playerIndex);
-        channelIdMap.remove(playerIndex);
     }
 
     public void removeChannel(Channel channel) {

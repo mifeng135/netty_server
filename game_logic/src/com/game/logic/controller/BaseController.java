@@ -1,7 +1,5 @@
 package com.game.logic.controller;
 
-import com.game.logic.manager.PlayerManager;
-import com.game.logic.manager.SceneManager;
 import com.game.logic.util.MsgUtil;
 import core.Constants;
 import core.annotation.ctrl.CtrlA;

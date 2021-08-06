@@ -16,6 +16,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -72,6 +73,9 @@
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.game.logic.controller" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\server\netty_server\proto_file" />
       <recent name="D:\server\netty_server\json_config" />
@@ -140,6 +144,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="lua.app" factoryName="Lua Application">
       <option name="program" value="lua.exe" />
       <option name="file" value="" />
@@ -158,10 +173,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.LoginApplication" />
         <item itemvalue="Application.LogicApplication" />
         <item itemvalue="Application.DBServerApplication" />
         <item itemvalue="Application.GateApplication" />
-        <item itemvalue="Application.LoginApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -196,6 +211,7 @@
       <workItem from="1623675027947" duration="96281000" />
       <workItem from="1624277081467" duration="67419000" />
       <workItem from="1624809874581" duration="69446000" />
+      <workItem from="1627745427283" duration="16165000" />
     </task>
     <servers />
   </component>
@@ -206,9 +222,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/core/netty/tcp/RemoteDecoder.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="1" />
+          <url>jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/Class.java</url>
+          <line>395</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

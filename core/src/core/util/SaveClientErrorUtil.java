@@ -45,7 +45,10 @@ public class SaveClientErrorUtil {
                 }
                 errorList.add(exceptionMsg);
             }
-            FileUtil.writeClientError(errorList);
+
+            if (errorList.size() > 0) {
+                FileUtil.writeClientError(errorList);
+            }
         }
     }
 }
